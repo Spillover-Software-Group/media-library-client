@@ -1,0 +1,31 @@
+.main-window-container{
+    margin: auto;
+    max-width: 700px;
+    background: #E2E2E2;
+    border: 1px solid #333333;
+    padding: 10px;
+}
+
+.media-library-tabs{
+    display: flex;
+    justify-content: center;
+    border: 1px solid #333333;
+    border-radius: 1px;
+    padding: 5px;
+    background: #FFF;
+
+    li{
+        border: 1px solid #E2E2E2;
+        list-style: none;
+        padding: 5px 15px;
+    }
+
+    .list-tab {
+        &.active{
+            background: #E2E2E2;
+        }
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}

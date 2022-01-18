@@ -1,0 +1,35 @@
+{
+  "name": "media-library-client",
+  "version": "1.0.0",
+  "description": "Library for media templates",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c",
+    "start": "rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Spillover-Software-Group/media-library-client.git"
+  },
+  "files": ["dist"],
+  "keywords": [],
+  "author": "Spillover Software Ltd.",
+  "bugs": {
+    "url": "https://github.com/Spillover-Software-Group/media-library-client/issues"
+  },
+  "homepage": "https://github.com/Spillover-Software-Group/media-library-client#readme",
+  "devDependencies": {
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "axios": "^0.24.0",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "rollup": "^2.63.0",
+    "rollup-plugin-sass": "^1.2.10",
+    "rollup-plugin-typescript2": "^0.31.1",
+    "typescript": "^4.5.4"
+  }
+}

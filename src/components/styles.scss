@@ -1,0 +1,37 @@
+.media-preview{
+    max-width: 150px;
+    max-height: 150px;
+    margin: 10px;
+    border: 2px solid white;
+
+}
+
+.file-name-display{
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.image-holder:hover{
+    cursor: pointer;
+    .media-preview{
+        border: 1px solid#F3F3F3;
+        cursor: pointer;
+    }
+    .file-name-display{
+        white-space: nowrap;
+        overflow: visible;
+    }
+}
+
+.files-list, .folder-section{
+    display: flex;
+}
+
+.folder-section{
+    justify-content: center;
+    .folder-item.add-new{
+        margin-left: 10px;
+    }
+}
