@@ -24,8 +24,8 @@ const MediaList: React.FC<Props> = ({handleSelected}:Props) => {
         return;
     }, []);
 
-    const handleMediaClick = (e) => {
-        console.log("DEBUG_file: ", e.target.src);
+    const handleMediaClick = (e: React.MouseEvent<HTMLElement>) => {
+        console.log("DEBUG_file: ", (e.target as any).src);
         handleSelected(e);   
     }
     console.log("DEBUG_LIST: ", mediaList);
