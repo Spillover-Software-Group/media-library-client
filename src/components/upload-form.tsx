@@ -1,9 +1,5 @@
 import * as React from 'react';
 
-// interface FilesArrayElement{
-//     files: any[]
-// }
-
 const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
     const files = document.getElementById("media-uploads") as any;
