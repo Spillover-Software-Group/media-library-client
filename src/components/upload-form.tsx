@@ -18,7 +18,7 @@ const submitForm = (e: React.FormEvent) => {
     .catch((err) => ("Error occured: " + err));
 }
 
-const UploadForm = () => {
+const UploadForm: React.FC = () => {
     return(
         <div className="container">
           <h1>File Upload</h1>

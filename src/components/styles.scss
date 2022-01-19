@@ -25,11 +25,14 @@
     }
 }
 
-.files-list, .folder-section{
-    display: flex;
+.files-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+
 .folder-section{
+    display: flex;
     justify-content: center;
     .folder-item.add-new{
         margin-left: 10px;
