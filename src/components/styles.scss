@@ -1,6 +1,6 @@
 .media-preview{
-    max-width: 150px;
-    max-height: 150px;
+    max-width: 120px;
+    max-height: 120px;
     margin: 10px;
     border: 2px solid white;
 
@@ -27,14 +27,27 @@
 
 .files-list{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
+.files-list-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
 
 .folder-section{
-    display: flex;
-    justify-content: center;
+    border: 1px solid #333333;
+    border-top: none;
+    background: #FFFFFF;
+    margin-right: 5px;
+    .folder-item{
+        padding-left: 5px;
+    }
     .folder-item.add-new{
-        margin-left: 10px;
+        border-bottom: 1px solid #333333;
+        &:hover{
+            cursor: pointer;
+            background-color: #F3F3F3;
+        }
     }
 }
