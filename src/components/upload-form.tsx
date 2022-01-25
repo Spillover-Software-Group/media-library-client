@@ -21,7 +21,6 @@ const submitForm = (e: React.FormEvent) => {
 const UploadForm: React.FC = () => {
     return(
         <div className="container">
-          <h1>File Upload</h1>
           <form id='media-upload-form' onSubmit={submitForm}>
               <div className="input-group">
                   <label htmlFor='media-uploads'>Select file(s)</label>

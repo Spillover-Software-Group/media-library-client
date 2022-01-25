@@ -1,0 +1,31 @@
+.modal-container{
+    position: absolute;
+    left: 20%;
+    top: 50%;
+    width: 400px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+}
+
+.modal-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    background: #E2E2E2;
+    border-bottom: 1px solid #E3E3E3;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    .modal-title{
+        font-size: 20px;
+        flex-basis: 90%;
+    }
+    .close-modal-button{
+        font-weight: 700;
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}

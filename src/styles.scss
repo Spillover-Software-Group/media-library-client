@@ -2,31 +2,64 @@
     margin: auto;
     width: auto;
     max-width: 700px;
-    background: #E2E2E2;
-    border: 1px solid #333333;
+    background: #FFFFFF;
+    border: 1px solid #BCBEC0;
     padding: 10px;
 }
 
 .media-library-tabs{
     display: flex;
-    justify-content: center;
-    border: 1px solid #333333;
+    justify-content: flex-start;
+    border: 1px solid #BCBEC0;
     border-radius: 1px;
     padding: 5px;
     background: #FFF;
 
     li{
-        border: 1px solid #E2E2E2;
+        // border: 1px solid #E2E2E2;
         list-style: none;
-        padding: 5px 15px;
+        padding: 5px 5px;
     }
 
-    .list-tab {
-        &.active{
-            background: #E2E2E2;
+}
+
+.business-list-selection{
+    position: relative;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    width: 100%;
+    // max-width: 180px;
+    // select {
+    //     display: none;
+    // }
+    // .select-items{
+    //     position: absolute;
+    //     top: 100%;
+    //     left: 0;
+    //     right: 0;
+    //     z-index: 999;
+    //     background-color: #FFFFFF;
+    // }
+
+    .business-select{
+        &-options__control{
+            // border: none;
+            width: 220px;
         }
+        .business-select-options__indicator-separator{
+            display: none;
+        }
+    }
+}
+
+.form-input-group{
+    display: flex;
+    .submit-btn{
+        padding: 5px 12px;
+        border-radius: 4px;
+        background: #FFF;
         &:hover{
-            cursor: pointer;
+            background: #F3F3F3;
         }
     }
 }

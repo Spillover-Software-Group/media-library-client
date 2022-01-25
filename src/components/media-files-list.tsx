@@ -4,19 +4,27 @@ import './styles.scss';
 import Modal from '../utils/modal';
 
 interface Props{
-    handleSelected: Function 
+    handleSelected: Function,
+    selectedBusiness: string 
 }
 
 const baseUrl = "http://localhost:3030/";
 
-const MediaList: React.FC<Props> = ({handleSelected}:Props) => {    
+const MediaList: React.FC<Props> = ({handleSelected, selectedBusiness}:Props) => {    
     const [mediaList, setMediaList] = React.useState<any[]>([]);
     const [foldersList, setFoldersList] = React.useState<any[]>([]);
-    const [addNewIsOpen, setAddNewIsOpen] = React.useState<boolean>(false)
+    const [addNewIsOpen, setAddNewIsOpen] = React.useState<boolean>(false);
+    const [formValues, setFormValues] = React.useState({folderName: ''});
+
+    const getFoldersList = async () => {
+        const folderListUrl = selectedBusiness ? baseUrl + `folders_list/${selectedBusiness}` : baseUrl + "folders_list";
+        const foldersResponse = await axios.get(folderListUrl);
+        console.log("DEBUG_FOLDERS_LIST_RESPONSE: ", foldersResponse);
+        return setFoldersList(foldersResponse.data);
+    }
 
     React.useEffect(() => {
         const getMediaList = async () => {
-            // change for server url once API is hosted.
             const filesResponse = await axios.get(baseUrl + "files");
             if (filesResponse.status !== 200) {
                 console.log("DEBUG_ERROR_DURING_FILE_RETRIEVAL: ", filesResponse);
@@ -25,17 +33,12 @@ const MediaList: React.FC<Props> = ({handleSelected}:Props) => {
             console.log("MEDIA_LIST: ", filesResponse.data);
             return setMediaList(filesResponse.data);
         }
-        const getFoldersList = async () => {
-            const foldersResponse = await axios.get(baseUrl+"folders_list");
-            console.log("DEBUG_FOLDERS_LIST: ", foldersResponse);
-            return setFoldersList(foldersResponse.data);
-        }
         getMediaList();
         getFoldersList();
         return;
     }, []);
 
-    const handleMediaClick = (e: React.MouseEvent<HTMLElement>) => {
+    const handleMediaClick = (e: React.MouseEvent<HTMLImageElement>) => {
         console.log("DEBUG_file: ", (e.target as any).src);
         handleSelected(e);   
     }
@@ -43,6 +46,33 @@ const MediaList: React.FC<Props> = ({handleSelected}:Props) => {
     const handleFolderAddNewClick = () => {
         setAddNewIsOpen(!addNewIsOpen);
         console.log("DEBUG_FOLDER_ADD_NEW_OPEN_STATE: ", addNewIsOpen);
+    }
+
+    const handleFolderRemoveClick = (event: React.MouseEvent<HTMLDivElement>) => {
+        return console.log("DEBUG_EVENT: ", event);
+        // console.log(`DEBUG_FOLDER_WITH_ID_${folderId}_IS_SELECTED_FOR_REMOVAL...`);
+    }
+
+    const handleFolderClick = () => {
+        console.log("DEBUG_FOLDER_CLICKED...");
+    }
+    const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        setFormValues({...formValues, [ev.target.name]: ev.target.value})
+    }
+    
+    const addNewFolderSubmit = async () => {
+        const newFolderValues = Object.assign({}, formValues, {businessId: selectedBusiness});
+        console.log("DEBUG_FORM_VALUES: ", formValues);
+        console.log("DEBUG_FULL_FOLDER_VALUES: ", newFolderValues);
+        const newFolderResponse = await axios.post(baseUrl+"create_folder", newFolderValues, {headers: {
+            'content-type': 'application/json'
+        }});
+
+        console.log("DEBUG_NEW_FOLDER_CREATION_RESPONSE: ", newFolderResponse);
+        if (newFolderResponse.status === 200) {
+            getFoldersList();
+        }
+        setAddNewIsOpen(!addNewIsOpen);
     }
 
     console.log("DEBUG_LIST: ", mediaList);
@@ -63,26 +93,48 @@ const MediaList: React.FC<Props> = ({handleSelected}:Props) => {
         })
     })
 
-    const folderNameList = foldersList.map(f => {
-        return(<div>{f.folderName || ''}</div>)
+    const folderNameList = foldersList.map((f, index) => {
+        return(
+            <div className="folder-item-row" id={'folder-item-row-'+index} key={'folder-item-row-'+index}>
+                <div className={"folder-name"} onClick={handleFolderClick}>{f.folderName || ''}</div>
+                {f.business_id === "TEST_SPILLOVER_ID" ? null : <div key={`folder-remove-btn-${index}`} className='folder-remove-icon' onClick={handleFolderRemoveClick}>X</div>}
+            </div>
+        )
     })
 
     const displayModal = (
         <Modal 
             modalTitle={"Add New Folder"}
             handleClose={() => setAddNewIsOpen(false)}>
-            <div>Add New Folder Form goes here...</div>
+            <div className='form-container'>
+                <form className='folder-add-form' onSubmit={addNewFolderSubmit}>
+                    <div className='input-fields'>
+                        <input 
+                            className='folder-add-input'
+                            name="folderName"
+                            id='folderName'
+                            placeholder='Folder Name'
+                            onChange={onChange}
+                            required
+                        />
+                    </div>
+                    <div className='form-buttons'>
+                        <button className='form-button' onClick={() => setAddNewIsOpen(false)}>Cancel</button>
+                        <button className='form-button' type='submit'>Add</button>
+                    </div>
+                </form>
+            </div>
         </Modal>
     )
 
    return(
        <div className="files-list-container">
-           <div className="folder-section">
-               <div className='folder-item add-new' onClick={handleFolderAddNewClick}>Add New</div>
+           <div className="folder-section" id="folder-list-section">
+               <div className='folder-item add-new' onClick={handleFolderAddNewClick}>+ New Folder</div>
                <div className='folder-item'>{folderNameList}</div>
             </div>
             {addNewIsOpen ? displayModal : null}
-           <div className="files-list">{filesList}</div>
+           <div className="files-list" id="files-list-section">{filesList}</div>
        </div>
    ) ;
 

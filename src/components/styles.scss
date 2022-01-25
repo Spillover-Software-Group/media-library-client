@@ -11,6 +11,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 14px;
 }
 
 .image-holder:hover{
@@ -36,18 +37,60 @@
 }
 
 .folder-section{
-    border: 1px solid #333333;
+    border: 1px solid #BCBEC0;
     border-top: none;
     background: #FFFFFF;
     margin-right: 5px;
     .folder-item{
         padding-left: 5px;
+
+        .folder-item-row{
+            padding: 5px 10px 5px 0px;
+            display: flex;
+            justify-content: space-between;
+
+            .folder-name{
+                font-size: 16px;
+            }
+            .folder-remove-icon{
+                padding: 0px 3px;
+            }
+            &:hover{
+                cursor: pointer;
+            }
+        }
     }
     .folder-item.add-new{
-        border-bottom: 1px solid #333333;
+        border-bottom: 1px solid #BCBEC0;
         &:hover{
             cursor: pointer;
             background-color: #F3F3F3;
+        }
+    }
+}
+
+.folder-add-form{
+    .input-fields{
+        .folder-add-input{
+            margin-bottom: 15px;
+            width: 100%;
+        }
+    }
+    .form-buttons{
+        padding: 10px 0px;
+        display: flex;
+        justify-content: flex-end;
+        :first-child{
+            margin-right: 15px;
+        }
+
+        .form-button{
+            background: #FFFFFF;
+            border-radius: 4px;
+            padding: 5px 12px;
+            &:hover{
+                background: #F3F3F3;
+            }
         }
     }
 }
