@@ -10,16 +10,23 @@ interface Props{
 
 const baseUrl = "http://localhost:3030/";
 
-const MediaList: React.FC<Props> = ({handleSelected, selectedBusiness}:Props) => {    
+const MediaList: React.FC<Props> = ({handleSelected, selectedBusiness}:Props) => {   
+    // Some of these will need to move up to the parent element. I need to know when new files are added, and 
+    // which folder is active. This calls for storing some data in the main index component. 
     const [mediaList, setMediaList] = React.useState<any[]>([]);
     const [foldersList, setFoldersList] = React.useState<any[]>([]);
+    const [activeFolder, setActiveFolder] = React.useState<any>(null);
     const [addNewIsOpen, setAddNewIsOpen] = React.useState<boolean>(false);
     const [formValues, setFormValues] = React.useState({folderName: ''});
+
 
     const getFoldersList = async () => {
         const folderListUrl = selectedBusiness ? baseUrl + `folders_list/${selectedBusiness}` : baseUrl + "folders_list";
         const foldersResponse = await axios.get(folderListUrl);
-        console.log("DEBUG_FOLDERS_LIST_RESPONSE: ", foldersResponse);
+        console.log("DEBUG_FOLDERS: ", foldersResponse.data);
+        if (!activeFolder) {
+            setActiveFolder(foldersResponse.data[0].id);
+        }
         return setFoldersList(foldersResponse.data);
     }
 
@@ -45,35 +52,41 @@ const MediaList: React.FC<Props> = ({handleSelected, selectedBusiness}:Props) =>
 
     const handleFolderAddNewClick = () => {
         setAddNewIsOpen(!addNewIsOpen);
-        console.log("DEBUG_FOLDER_ADD_NEW_OPEN_STATE: ", addNewIsOpen);
     }
 
-    const handleFolderRemoveClick = (event: React.MouseEvent<HTMLDivElement>) => {
-        return console.log("DEBUG_EVENT: ", event);
-        // console.log(`DEBUG_FOLDER_WITH_ID_${folderId}_IS_SELECTED_FOR_REMOVAL...`);
-    }
-
-    const handleFolderClick = () => {
-        console.log("DEBUG_FOLDER_CLICKED...");
-    }
-    const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        setFormValues({...formValues, [ev.target.name]: ev.target.value})
-    }
-    
     const addNewFolderSubmit = async () => {
         const newFolderValues = Object.assign({}, formValues, {businessId: selectedBusiness});
-        console.log("DEBUG_FORM_VALUES: ", formValues);
-        console.log("DEBUG_FULL_FOLDER_VALUES: ", newFolderValues);
         const newFolderResponse = await axios.post(baseUrl+"create_folder", newFolderValues, {headers: {
             'content-type': 'application/json'
         }});
 
-        console.log("DEBUG_NEW_FOLDER_CREATION_RESPONSE: ", newFolderResponse);
         if (newFolderResponse.status === 200) {
             getFoldersList();
         }
         setAddNewIsOpen(!addNewIsOpen);
     }
+
+    const handleFolderRemoveClick = async (folderId: React.MouseEvent<Element>) => {
+        const removeFolderResponse = await axios.post(baseUrl+"delete_folder", {folderId});
+
+        if (removeFolderResponse && removeFolderResponse.status === 200) {
+            getFoldersList();
+        }
+    }
+    
+
+    const handleFolderClick = (folderId: React.MouseEvent<Element>) => {
+        console.log("DEBUG_FOLDER_CLICKED...");
+        // Set active folder for now...
+        setActiveFolder(folderId);
+        // Return filtered file list for that folder.
+        // Better to do this after adding feature to move files into folders via ctx menu.
+    }
+
+    const onChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        setFormValues({...formValues, [ev.target.name]: ev.target.value})
+    }
+    
 
     console.log("DEBUG_LIST: ", mediaList);
     const filesList = mediaList.map(item => {
@@ -95,9 +108,11 @@ const MediaList: React.FC<Props> = ({handleSelected, selectedBusiness}:Props) =>
 
     const folderNameList = foldersList.map((f, index) => {
         return(
-            <div className="folder-item-row" id={'folder-item-row-'+index} key={'folder-item-row-'+index}>
-                <div className={"folder-name"} onClick={handleFolderClick}>{f.folderName || ''}</div>
-                {f.business_id === "TEST_SPILLOVER_ID" ? null : <div key={`folder-remove-btn-${index}`} className='folder-remove-icon' onClick={handleFolderRemoveClick}>X</div>}
+            <div className={`folder-item-row${activeFolder === f.id ? ' is-active' : ''}`} id={'folder-item-row-'+index} key={'folder-item-row-'+index}>
+                <div className={`folder-name`} onClick={() => handleFolderClick(f.id)}>{f.folderName || ''}</div>
+                {f.business_id === "TEST_SPILLOVER_ID" ? 
+                    null : 
+                    <div key={`folder-remove-btn-${index}`} className='folder-remove-icon' onClick={() => handleFolderRemoveClick(f.id)}>X</div>}
             </div>
         )
     })
