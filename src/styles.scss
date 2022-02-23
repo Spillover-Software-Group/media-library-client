@@ -5,6 +5,13 @@
     background: #FFFFFF;
     border: 1px solid #BCBEC0;
     padding: 10px;
+
+    .main-spinner{
+        position: absolute;
+        left: 46%;
+        top: 70%;
+        font-size: 42px;
+    }
 }
 
 .media-library-tabs{
@@ -15,8 +22,22 @@
     padding: 5px;
     background: #FFF;
 
+    .file-input-form-section{
+        display: flex;
+        flex-basis: 75%;
+
+        .media-upload-form{
+            padding: 5px 15px 0px 10px;
+            border: 1px dashed #BCBEC0;
+            border-radius: 4px;
+
+            .input-placeholder-text{
+                margin: 0;
+            }
+        }
+    }
+
     li{
-        // border: 1px solid #E2E2E2;
         list-style: none;
         padding: 5px 5px;
     }
@@ -46,7 +67,7 @@
             // border: none;
             width: 220px;
         }
-        .business-select-options__indicator-separator{
+        &-options__indicator-separator{
             display: none;
         }
     }
@@ -54,12 +75,34 @@
 
 .form-input-group{
     display: flex;
-    .submit-btn{
-        padding: 5px 12px;
+    justify-content: space-between;
+
+    .file-upload-spinner{
+        margin-right: 15px;
+        font-size: 20px;
+    }
+
+    .file-input-element{
+        visibility: hidden;
+        position: absolute;
+    }
+
+    .file-upload-input{
+        padding: 5px 10px;
+        border: 1px solid #BCBEC0;
+        font-weight: 400;
         border-radius: 4px;
-        background: #FFF;
         &:hover{
-            background: #F3F3F3;
+            cursor: pointer;
+            background: #F3F3F3
         }
     }
+    // .submit-btn{
+    //     padding: 5px 12px;
+    //     border-radius: 4px;
+    //     background: #FFF;
+    //     &:hover{
+    //         background: #F3F3F3;
+    //     }
+    // }
 }
