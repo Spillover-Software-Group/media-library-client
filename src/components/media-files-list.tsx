@@ -186,34 +186,36 @@ const MediaList: React.FC<Props> = ({
                             <img src={mediaSrc} alt="some media file" className="media-preview"/>
                             <div className='media-preview-menu-item'>
                                 <div className='media-menu-actions-list'>
-                                    <div className='fa fa-plus add-file-icon file-icon-menu-item' 
-                                        onClick={() => handleMediaClick(mediaSrc)}></div>
-                                    <div className={`fa fa-heart${isFavourite ? '' : '-o'} favorite-icon file-icon-menu-item`} 
-                                        onClick={() => handleFileFavoriteSetClick(fileId)}></div>
                                     {
                                         fileIsDeleted ? <div className='fa fa-undo restore-file file-icon-menu-item' 
-                                        onClick={() => handleFileRecover(fileId)}></div> : 
-                                        <div className='fa fa-trash delete-file file-icon-menu-item' 
-                                            onClick={() => handleDeleteFileClick(fileId)}></div>
-                                    }
-                                    <div className='fa fa-folder move-file-menu file-icon-menu-item' 
-                                        onClick={() => setSubMenuVisibility(!subMenuVisible)}
-                                        onMouseLeave={() => setSubMenuVisibility(false)}
-                                        >
-                                            {
-                                                subMenuVisible && <div className='folders-list-submenu'>
+                                        onClick={() => handleFileRecover(fileId)}></div> :
+                                        <>
+                                            <div className='fa fa-plus add-file-icon file-icon-menu-item' 
+                                                onClick={() => handleMediaClick(mediaSrc)}></div>
+                                            <div className={`fa fa-heart${isFavourite ? '' : '-o'} favorite-icon file-icon-menu-item`} 
+                                                onClick={() => handleFileFavoriteSetClick(fileId)}></div>
+                                            <div className='fa fa-trash delete-file file-icon-menu-item' 
+                                                onClick={() => handleDeleteFileClick(fileId)}></div>
+                                            <div className='fa fa-folder move-file-menu file-icon-menu-item' 
+                                                onClick={() => setSubMenuVisibility(!subMenuVisible)}
+                                                onMouseLeave={() => setSubMenuVisibility(false)}
+                                                >
                                                     {
-                                                        filteredFoldersList.map(folder => {
-                                                            return(
-                                                                <div className='submenu-folders-list-item list-item-text' onClick={() => handleMoveFileClick(fileId, folder.id)}>
-                                                                    {folder.folderName}
-                                                                </div>
-                                                            )
-                                                        })
+                                                        subMenuVisible && <div className='folders-list-submenu'>
+                                                            {
+                                                                filteredFoldersList.map(folder => {
+                                                                    return(
+                                                                        <div className='submenu-folders-list-item list-item-text' onClick={() => handleMoveFileClick(fileId, folder.id)}>
+                                                                            {folder.folderName}
+                                                                        </div>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </div>
                                                     }
-                                                </div>
-                                            }
-                                    </div>
+                                            </div>
+                                        </> 
+                                    }
                                 </div>
                             </div>
                         </div>
