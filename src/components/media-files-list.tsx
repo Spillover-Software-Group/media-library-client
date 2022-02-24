@@ -16,10 +16,9 @@ interface Props{
     setFoldersList: Function,
     filesUploading: boolean,
     getFilesForFolder: Function,
-    setFavouriteForCurrentUser: Function 
+    setFavouriteForCurrentUser: Function,
+    baseUrl: string 
 }
-
-const baseUrl = "http://localhost:3030/";
 
 const MediaList: React.FC<Props> = ({
     handleSelected, 
@@ -34,7 +33,8 @@ const MediaList: React.FC<Props> = ({
     setFoldersList,
     filesUploading,
     getFilesForFolder,
-    setFavouriteForCurrentUser
+    setFavouriteForCurrentUser,
+    baseUrl
     }:Props) => {   
     // Some of these will need to move up to the parent element. I need to know when new files are added, and 
     // which folder is active. This calls for storing some data in the main index component. 
@@ -49,7 +49,7 @@ const MediaList: React.FC<Props> = ({
 
 
     const getFoldersList = async () => {
-        const folderListUrl = selectedBusiness ? baseUrl + `folders_list/${selectedBusiness}` : baseUrl + "folders_list";
+        const folderListUrl = selectedBusiness ? baseUrl + `/folders_list/${selectedBusiness}` : baseUrl + "/folders_list";
         const foldersResponse = await axios.get(folderListUrl);
         const foldersList = foldersResponse.data;
         const folderExistsForBusiness = (activeFolder && selectedBusiness) && (foldersList.filter((f: any) => f.id === activeFolder)).length > 0;
@@ -82,7 +82,7 @@ const MediaList: React.FC<Props> = ({
 
     const addNewFolderSubmit = async () => {
         const newFolderValues = Object.assign({}, formValues, {businessId: selectedBusiness});
-        const newFolderResponse = await axios.post(baseUrl+"create_folder", newFolderValues, {headers: {
+        const newFolderResponse = await axios.post(baseUrl+"/create_folder", newFolderValues, {headers: {
             'content-type': 'application/json'
         }});
 
@@ -93,7 +93,7 @@ const MediaList: React.FC<Props> = ({
     }
 
     const deleteFolder = async (folderId: React.MouseEvent<Element>) => {
-        const removeFolderResponse = await axios.post(baseUrl+"delete_folder", {folderId});
+        const removeFolderResponse = await axios.post(baseUrl+"/delete_folder", {folderId});
     
         if (removeFolderResponse && removeFolderResponse.status === 200) {
             getFoldersList();

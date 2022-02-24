@@ -22,7 +22,9 @@ type selectOption = {
 
 let dropZoneRef = React.createRef();
 
+// Base URL for the API server requests. <-- Change it once the API service is deployed
 const baseUrl = "http://localhost:3030";
+
 const allowedFileTypes= [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG", ".mp4", ".mpeg4", ".mov", ".MOV"];
 
 const MediaLibrary: React.FC<Props> = ({handleSelected, businessList, userId}:Props) => {
@@ -34,7 +36,7 @@ const MediaLibrary: React.FC<Props> = ({handleSelected, businessList, userId}:Pr
     const [fileIsUploading, setFileIsUploading] = React.useState<boolean>(false); // Set to default false once dev work is done.
     
     const getFoldersList = async () => {
-        const folderListUrl = selectedBusiness ? baseUrl + `folders_list/${selectedBusiness}` : baseUrl + "folders_list";
+        const folderListUrl = selectedBusiness ? baseUrl + `/folders_list/${selectedBusiness}` : baseUrl + "/folders_list";
         const foldersResponse = await axios.get(folderListUrl);
         const foldersList = foldersResponse.data;
         const folderExistsForBusiness = (activeFolder && selectedBusiness) && (foldersList.filter((f: any) => f.id === activeFolder)).length > 0;
@@ -183,7 +185,8 @@ const MediaLibrary: React.FC<Props> = ({handleSelected, businessList, userId}:Pr
                 {
                     fileIsUploading ? <FontAwesomeIcon className='file-upload-spinner main-spinner' icon={faSpinner} spin/> : null
                 } 
-                <MediaList 
+                <MediaList
+                    baseUrl={baseUrl} 
                     handleSelected={handleSelected} 
                     selectedBusiness={selectedBusiness}
                     activeFolder={activeFolder}
