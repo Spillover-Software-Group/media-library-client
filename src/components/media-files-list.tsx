@@ -20,6 +20,8 @@ interface Props{
     baseUrl: string 
 }
 
+const allowedImageTypes = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"];
+
 const MediaList: React.FC<Props> = ({
     handleSelected, 
     selectedBusiness, 
@@ -173,7 +175,9 @@ const MediaList: React.FC<Props> = ({
                 const fileName:string = item['filename'].split('.')[0];
                 const fileId = item['id'];
                 const fileIsDeleted = item['deleted'];
-                const filteredFoldersList = foldersList.filter(folder => folder.id !== activeFolder);   
+                const filteredFoldersList = foldersList.filter(folder => folder.id !== activeFolder);
+                // Need to make sure images get displayed as images and video files as video for preview.   
+                const isImage = allowedImageTypes.includes('.'+item['filename'].split('.').pop()); 
                 return (
                     <div 
                         className="image-holder" 
@@ -181,7 +185,14 @@ const MediaList: React.FC<Props> = ({
                         key={`file-template-key-${fileId}`}
                     >
                         <div className='media-preview-container'>
-                            <img src={mediaSrc} alt="some media file" className="media-preview"/>
+                            {
+                                isImage ? 
+                                    <img src={mediaSrc} alt="some media file" className="media-preview"/>
+                                    : 
+                                    <video className={`preview-file`} controls>
+                                        <source src={mediaSrc}/>
+                                    </video>
+                            }
                             <div className='media-preview-menu-item'>
                                 <div className='media-menu-actions-list'>
                                     {
