@@ -8,6 +8,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import Dropzone from 'react-dropzone';
+import config from './config';
 
 interface Props{
     handleSelected: Function,
@@ -22,10 +23,8 @@ type selectOption = {
 
 let dropZoneRef = React.createRef();
 
-// Base URL for the API server requests. <-- Change it once the API service is deployed
-const baseUrl = "http://localhost:3030";
-
-const allowedFileTypes= [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG", ".mp4", ".mpeg4", ".mov", ".MOV"];
+const baseUrl = config.baseUrl;
+const allowedFileTypes= config.allowedFileTypes;
 
 const MediaLibrary: React.FC<Props> = ({handleSelected, businessList, userId}:Props) => {
     const defaultBusiness = businessList && businessList.length > 0 ? businessList[0].id : '';

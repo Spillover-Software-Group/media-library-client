@@ -167,8 +167,6 @@ const MediaList: React.FC<Props> = ({
     console.log("DEBUG_LIST: ", mediaList);
     const filesList = mediaList.map(item => {
 
-        console.log("DEBUG_ITEM: ", item);
-
         return Object.entries(item).map(([key, value]) => {
             if (key === 'url') {
                 const mediaSrc = value as any as string;     // type as anytype then set as string to keep mediaSrc from causing complaints with img tag src prop.   
