@@ -10,7 +10,7 @@
 // //     if (files && files.files) {
 // //         for(let i =0; i < files.files.length; i++) {
 // //             formData.append("media-uploads", files.files[i]);
-// //         }        
+// //         }
 // //     }
 // //     fetch("http://localhost:3030/upload_files", {
 // //         method: 'post',

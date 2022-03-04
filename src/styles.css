@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .main-window-container{
     margin: auto;
     width: auto;
@@ -49,22 +53,9 @@
     font-family: Arial, sans-serif;
     font-size: 16px;
     width: 100%;
-    // max-width: 180px;
-    // select {
-    //     display: none;
-    // }
-    // .select-items{
-    //     position: absolute;
-    //     top: 100%;
-    //     left: 0;
-    //     right: 0;
-    //     z-index: 999;
-    //     background-color: #FFFFFF;
-    // }
 
     .business-select{
         &-options__control{
-            // border: none;
             width: 220px;
         }
         &-options__indicator-separator{
@@ -97,12 +88,4 @@
             background: #F3F3F3
         }
     }
-    // .submit-btn{
-    //     padding: 5px 12px;
-    //     border-radius: 4px;
-    //     background: #FFF;
-    //     &:hover{
-    //         background: #F3F3F3;
-    //     }
-    // }
 }
