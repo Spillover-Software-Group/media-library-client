@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.main-window-container{
+.main-window-container {
     margin: auto;
     width: auto;
     max-width: 700px;
@@ -10,7 +10,7 @@
     border: 1px solid #BCBEC0;
     padding: 10px;
 
-    .main-spinner{
+    .main-spinner {
         position: absolute;
         left: 46%;
         top: 70%;

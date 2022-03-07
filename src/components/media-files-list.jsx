@@ -4,6 +4,8 @@ import axios from 'axios';
 import './styles.scss';
 
 import Modal from '../utils/modal';
+import RegularIcon from './icons/RegularIcon';
+import MediaFile from './MediaFile';
 
 const allowedImageTypes = ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG'];
 
@@ -165,70 +167,21 @@ function MediaList({
       // Need to make sure images get displayed as images and video files as video for preview.
       const isImage = allowedImageTypes.includes(`.${item.fileName.split('.').pop()}`);
       return (
-        <div
-          className="image-holder"
-          id={`file-template-${fileId}`}
-          key={`file-template-key-${fileId}`}
-        >
-          <div className="media-preview-container">
-            {
-                                isImage
-                                  ? <img src={mediaSrc} alt="some media file" className="media-preview" />
-                                  : (
-                                    <video className="preview-file" controls>
-                                      <source src={mediaSrc} />
-                                    </video>
-                                  )
-                            }
-            <div className="media-preview-menu-item">
-              <div className="media-menu-actions-list">
-                {
-                                        fileIsDeleted ? (
-                                          <div
-                                            className="fa fa-undo restore-file file-icon-menu-item"
-                                            onClick={() => handleFileRecover(fileId)}
-                                          />
-                                        ) : (
-                                          <>
-                                            <div
-                                              className="fa fa-plus add-file-icon file-icon-menu-item"
-                                              onClick={() => handleMediaClick(mediaSrc)}
-                                            />
-                                            <div
-                                              className={`fa fa-heart${isFavorite ? '' : '-o'} favorite-icon file-icon-menu-item`}
-                                              onClick={() => handleFileFavoriteSetClick(fileId)}
-                                            />
-                                            <div
-                                              className="fa fa-trash delete-file file-icon-menu-item"
-                                              onClick={() => handleDeleteFileClick(fileId)}
-                                            />
-                                            <div
-                                              className="fa fa-folder move-file-menu file-icon-menu-item"
-                                              onClick={() => setSubMenuVisibility(!subMenuVisible)}
-                                              onMouseLeave={() => setSubMenuVisibility(false)}
-                                            >
-                                              {
-                                                        subMenuVisible && (
-                                                        <div className="folders-list-submenu">
-                                                          {
-                                                                filteredFoldersList.map((folder) => (
-                                                                  <div className="submenu-folders-list-item list-item-text" onClick={() => handleMoveFileClick(fileId, folder.id)}>
-                                                                    {folder.folderName}
-                                                                  </div>
-                                                                ))
-                                                            }
-                                                        </div>
-                                                        )
-                                                    }
-                                            </div>
-                                          </>
-                                        )
-}
-              </div>
-            </div>
-          </div>
-          <p className="file-name-display">{fileName}</p>
-        </div>
+        <MediaFile 
+          fileId={fileId}
+          fileName={fileName}
+          isImage={isImage}
+          mediaSrc={mediaSrc}
+          handleFileRecover={handleFileRecover}
+          handleMediaClick={handleMediaClick}
+          handleFileFavoriteSetClick={handleFileFavoriteSetClick}
+          isFavorite={isFavorite}
+          setSubMenuVisibility={setSubMenuVisibility}
+          subMenuVisible={subMenuVisible}
+          filteredFoldersList={filteredFoldersList}
+          handleMoveFileClick={handleMoveFileClick}
+          fileIsDeleted={fileIsDeleted}
+        />
       );
     }
     return null;
@@ -309,15 +262,15 @@ function MediaList({
   );
 
   return (
-    <div className={`files-list-container${filesUploading ? ' loading' : ''}`} key={activeFolder}>
-      <div className="folder-section" id="folder-list-section">
+    <div className={`w-full flex border border-yellow-400 ${filesUploading ? ' loading' : ''}`} key={activeFolder}>
+      <div className="w-1/5 border border-green-500" id="folder-list-section">
         <div className="folder-item add-new" onClick={handleFolderAddNewClick}>+ New Folder</div>
         <div className="folder-item">{folderNameList}</div>
       </div>
       {addNewIsOpen ? displayModal : null}
       {folderNotEmptyWarningIsOpen ? folderDeletionWarningModal : null}
       {fileDeletionWarningOpen ? fileDeletionWarningModal : null}
-      <div className="files-list" id="files-list-section">{filesList}</div>
+      <div className="border border-blue-500 p-4 w-full flex justify-center items-center flex-wrap" id="files-list-section">{filesList}</div>
     </div>
   );
 }
