@@ -299,7 +299,7 @@ function MediaList({
 
   return (
     <div
-      className={`w-full h-screen flex border border-yellow-400 ${
+      className={`w-full h-screen flex ${
         filesUploading ? " loading" : ""
       }`}
       key={activeFolder}
@@ -315,9 +315,10 @@ function MediaList({
       {folderNotEmptyWarningIsOpen ? folderDeletionWarningModal : null}
       {fileDeletionWarningOpen ? fileDeletionWarningModal : null}
       <div
-        className="border border-blue-500 p-4 w-full h-fit flex justify-start items-center flex-wrap"
+        className="p-4 w-full h-fit flex justify-start items-center flex-wrap border border-spillover-color3"
         id="files-list-section"
       >
+        {/* <h1>{activeFolder.name}</h1> */}
         {filesList}
       </div>
     </div>

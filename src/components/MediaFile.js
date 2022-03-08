@@ -18,7 +18,7 @@ function MediaFile({
 }) {
   return (
     <div
-      className="border border-spillover-color7 flex flex-col justify-between rounded-2xl w-64 sm:w-36 md:w-60 h-52 m-2 pb-2"
+      className="border border-spillover-color7 flex flex-col justify-between rounded-2xl w-64 sm:w-36 md:w-56 h-52 m-2 pb-2"
       id={`file-template-${fileId}`}
       key={`file-template-key-${fileId}`}
     >
