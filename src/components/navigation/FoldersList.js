@@ -30,7 +30,7 @@ function Folder({
       {folder.businessId === "TEST_SPILLOVER_ID" ? null : (
         <span onClick={() => handleFolderRemoveClick(folder.id)}>
           <RegularIcon
-            name="trash"
+            name="trash-alt"
             iconStyle="fas"
             className="text-spillover-color4 hover:text-spillover-color4"
           />

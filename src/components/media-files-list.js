@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Select from "react-select";
 
 import "./styles.scss";
 
@@ -26,6 +27,8 @@ function MediaList({
   getFilesForFolder,
   setFavoriteForCurrentUser,
   baseUrl,
+  changeBusiness,
+  renderSelectOptions,
 }) {
   // Some of these will need to move up to the parent element. I need to know when new files are added, and
   // which folder is active. This calls for storing some data in the main index component.
@@ -173,46 +176,6 @@ function MediaList({
     }
   };
 
-  console.log("DEBUG_LIST: ", mediaList);
-  // const filesList = mediaList.map((item) =>
-  //   Object.entries(item).map(([key, value]) => {
-  //     console.log({ key, value });
-  //     if (key === "url") {
-  //       const mediaSrc = value;
-  //       const fileName = item.fileName.split(".")[0];
-  //       const fileId = item.id;
-  //       // const fileIsDeleted = item.deleted;
-  //       const fileIsDeleted = false;
-
-  //       const filteredFoldersList = foldersList.filter(
-  //         (folder) => folder.id !== activeFolder
-  //       );
-  //       // Need to make sure images get displayed as images and video files as video for preview.
-  //       const isImage = allowedImageTypes.includes(
-  //         `.${item.fileName.split(".").pop()}`
-  //       );
-  //       return (
-  //         <MediaFile
-  //           fileId={fileId}
-  //           fileName={fileName}
-  //           isImage={isImage}
-  //           mediaSrc={mediaSrc}
-  //           handleFileRecover={handleFileRecover}
-  //           handleMediaClick={handleMediaClick}
-  //           handleFileFavoriteSetClick={handleFileFavoriteSetClick}
-  //           handleDeleteFileClick={handleDeleteFileClick}
-  //           isFavorite={isFavorite}
-  //           setSubMenuVisibility={setSubMenuVisibility}
-  //           subMenuVisible={subMenuVisible}
-  //           handleMoveFileClick={handleMoveFileClick}
-  //           fileIsDeleted={fileIsDeleted}
-  //         />
-  //       );
-  //     }
-  //     return null;
-  //   })
-  // );
-
   const folderDeletionWarningModal = (
     <Modal
       modalTitle="Folder is not empty!"
@@ -310,21 +273,34 @@ function MediaList({
         setActiveFolder={setActiveFolder}
         activeFolder={activeFolder}
       />
+
       {addNewIsOpen ? displayModal : null}
       {folderNotEmptyWarningIsOpen ? folderDeletionWarningModal : null}
       {fileDeletionWarningOpen ? fileDeletionWarningModal : null}
 
-      <MediaFilesContainer
-        mediaList={mediaList}
-        handleFileRecover={handleFileRecover}
-        handleMediaClick={handleMediaClick}
-        handleFileFavoriteSetClick={handleFileFavoriteSetClick}
-        handleDeleteFileClick={handleDeleteFileClick}
-        isFavorite={isFavorite}
-        setSubMenuVisibility={setSubMenuVisibility}
-        subMenuVisible={subMenuVisible}
-        handleMoveFileClick={handleMoveFileClick}
-      />
+      <div className="flex flex-col border border-blue-600 w-3/4">
+        <div className="business-list-selection">
+          <Select
+            className="business-select w-1/2"
+            classNamePrefix="business-select-options"
+            defaultValue={renderSelectOptions()[0]}
+            onChange={changeBusiness}
+            options={renderSelectOptions()}
+          />
+        </div>
+
+        <MediaFilesContainer
+          mediaList={mediaList}
+          handleFileRecover={handleFileRecover}
+          handleMediaClick={handleMediaClick}
+          handleFileFavoriteSetClick={handleFileFavoriteSetClick}
+          handleDeleteFileClick={handleDeleteFileClick}
+          isFavorite={isFavorite}
+          setSubMenuVisibility={setSubMenuVisibility}
+          subMenuVisible={subMenuVisible}
+          handleMoveFileClick={handleMoveFileClick}
+        />
+      </div>
     </div>
   );
 }

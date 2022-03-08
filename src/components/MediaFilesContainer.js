@@ -15,7 +15,6 @@ function MediaFilesContainer({
   isFavorite,
   setSubMenuVisibility,
   subMenuVisible,
-  filteredFoldersList,
   handleMoveFileClick,
 }) {
   const isImage = (item) =>
@@ -23,7 +22,7 @@ function MediaFilesContainer({
 
   return (
     <div
-      className="p-4 w-full h-fit flex justify-start items-center flex-wrap border border-spillover-color3"
+      className="p-4 w-full h-fit flex justify-center items-center flex-wrap border border-spillover-color3"
       id="files-list-section"
     >
       {mediaList?.map((item) => (
@@ -39,7 +38,7 @@ function MediaFilesContainer({
           isFavorite={isFavorite}
           setSubMenuVisibility={setSubMenuVisibility}
           subMenuVisible={subMenuVisible}
-          filteredFoldersList={filteredFoldersList}
+          foldersList={foldersList}
           handleMoveFileClick={handleMoveFileClick}
           fileIsDeleted={false}
         />

@@ -156,7 +156,7 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
     <div className=" flex justify-center items-center">
       <div className="w-full container  flex flex-col justify-center">
         <ul className="nav media-library-tabs ">
-          <li className={`list-tab library-tab${" library"}`}>
+          {/* <li className={`list-tab library-tab${" library"}`}>
             <div className="business-list-selection">
               <Select
                 className="business-select"
@@ -166,7 +166,7 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
                 options={renderSelectOptions()}
               />
             </div>
-          </li>
+          </li> */}
           <li className="file-input-form-section">
             <form
               name="uploadForm"
@@ -212,6 +212,7 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
             />
           ) : null}
           <MediaList
+            renderSelectOptions={renderSelectOptions}
             baseUrl={baseUrl}
             handleSelected={handleSelected}
             selectedBusiness={selectedBusiness}
@@ -228,6 +229,7 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
             filesUploading={fileIsUploading}
             getFilesForFolder={getFilesForFolder}
             setFavoriteForCurrentUser={setFavoriteForCurrentUser}
+            changeBusiness={changeBusiness}
           />
         </div>
       </div>

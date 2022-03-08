@@ -11,7 +11,7 @@ function FoldersNavigation({
   activeFolder,
 }) {
   return (
-    <div className="w-72 bg-spillover-color10" id="folder-list-section">
+    <div className="w-64 bg-spillover-color10" id="folder-list-section">
       <p className="border-b border-spillover-color7 my-2 p-2 font-bold flex items-center justify-between text-white">
         <span>Media Library</span>
         <span onClick={handleFolderAddNewClick}>
