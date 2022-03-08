@@ -8,6 +8,10 @@ module.exports = {
       screens: {
         xs: "480px",
       },
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+        robotoCondensed: ["Roboto Condensed", "sans-serif"],
+      },
       colors: {
         spillover: {
           color1: "#000000", // Black

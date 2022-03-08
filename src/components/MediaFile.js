@@ -18,25 +18,25 @@ function MediaFile({
 }) {
   return (
     <div
-      className="border border-spillover-color7 rounded-2xl w-64 sm:w-36 md:w-52 m-2 pb-2"
+      className="border border-spillover-color7 flex flex-col justify-between rounded-2xl w-64 sm:w-36 md:w-60 h-52 m-2 pb-2"
       id={`file-template-${fileId}`}
       key={`file-template-key-${fileId}`}
     >
-      <div className="">
+      <div>
         {isImage ? (
-          // <img src={mediaSrc} alt="some media file" className="" />
+          // <img src={mediaSrc} alt="some media file" className="object-fill p-4" />
           <img
-            src="https://images.unsplash.com/photo-1646611110763-19fb642a6800?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1476&q=80"
+            src="https://images.unsplash.com/photo-1646697525966-50a59fa433dc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
             alt="some media file"
-            className="object-fill p-4"
+            className="object-cover h-40 w-full rounded-tl-2xl rounded-tr-2xl"
           />
         ) : (
-          <video className="preview-file" controls>
+          <video className="p-4" controls width="320" height="240">
             <source src={mediaSrc} />
           </video>
         )}
 
-        <div className="media-preview-menu-item">
+        {/* <div className="media-preview-menu-item">
           <div className="media-menu-actions-list">
             {fileIsDeleted ? (
               <div
@@ -80,15 +80,18 @@ function MediaFile({
               </>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="px-4">
-        <span className="flex items-center text-sm">
+        <span className="flex items-center text-xs">
           <RegularIcon
-            name="image"
-            className="text-spillover-color4 mr-2 text-2xl"
+            name={isImage ? "file-image" : "file-video"}
+            className={`${
+              isImage ? "text-spillover-color4" : "text-spillover-color2"
+            } mr-2 text-xl`}
           />
-          {fileName}
+          {/* TODO: If more than X characters, slice and ... */}
+          {fileName.slice(0, 20)}...
         </span>
       </div>
     </div>
