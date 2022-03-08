@@ -7,6 +7,7 @@ import Modal from "../utils/modal";
 import RegularIcon from "./icons/RegularIcon";
 import MediaFile from "./MediaFile";
 import FoldersNavigation from "./navigation/FoldersNavigation";
+import MediaFilesContainer from "./MediaFilesContainer";
 
 const allowedImageTypes = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"];
 
@@ -173,44 +174,44 @@ function MediaList({
   };
 
   console.log("DEBUG_LIST: ", mediaList);
-  const filesList = mediaList.map((item) =>
-    Object.entries(item).map(([key, value]) => {
-      if (key === "url") {
-        const mediaSrc = value;
-        const fileName = item.fileName.split(".")[0];
-        const fileId = item.id;
-        // const fileIsDeleted = item.deleted;
-        const fileIsDeleted = false;
+  // const filesList = mediaList.map((item) =>
+  //   Object.entries(item).map(([key, value]) => {
+  //     console.log({ key, value });
+  //     if (key === "url") {
+  //       const mediaSrc = value;
+  //       const fileName = item.fileName.split(".")[0];
+  //       const fileId = item.id;
+  //       // const fileIsDeleted = item.deleted;
+  //       const fileIsDeleted = false;
 
-        const filteredFoldersList = foldersList.filter(
-          (folder) => folder.id !== activeFolder
-        );
-        // Need to make sure images get displayed as images and video files as video for preview.
-        const isImage = allowedImageTypes.includes(
-          `.${item.fileName.split(".").pop()}`
-        );
-        return (
-          <MediaFile
-            fileId={fileId}
-            fileName={fileName}
-            isImage={isImage}
-            mediaSrc={mediaSrc}
-            handleFileRecover={handleFileRecover}
-            handleMediaClick={handleMediaClick}
-            handleFileFavoriteSetClick={handleFileFavoriteSetClick}
-            handleDeleteFileClick={handleDeleteFileClick}
-            isFavorite={isFavorite}
-            setSubMenuVisibility={setSubMenuVisibility}
-            subMenuVisible={subMenuVisible}
-            filteredFoldersList={filteredFoldersList}
-            handleMoveFileClick={handleMoveFileClick}
-            fileIsDeleted={fileIsDeleted}
-          />
-        );
-      }
-      return null;
-    })
-  );
+  //       const filteredFoldersList = foldersList.filter(
+  //         (folder) => folder.id !== activeFolder
+  //       );
+  //       // Need to make sure images get displayed as images and video files as video for preview.
+  //       const isImage = allowedImageTypes.includes(
+  //         `.${item.fileName.split(".").pop()}`
+  //       );
+  //       return (
+  //         <MediaFile
+  //           fileId={fileId}
+  //           fileName={fileName}
+  //           isImage={isImage}
+  //           mediaSrc={mediaSrc}
+  //           handleFileRecover={handleFileRecover}
+  //           handleMediaClick={handleMediaClick}
+  //           handleFileFavoriteSetClick={handleFileFavoriteSetClick}
+  //           handleDeleteFileClick={handleDeleteFileClick}
+  //           isFavorite={isFavorite}
+  //           setSubMenuVisibility={setSubMenuVisibility}
+  //           subMenuVisible={subMenuVisible}
+  //           handleMoveFileClick={handleMoveFileClick}
+  //           fileIsDeleted={fileIsDeleted}
+  //         />
+  //       );
+  //     }
+  //     return null;
+  //   })
+  // );
 
   const folderDeletionWarningModal = (
     <Modal
@@ -299,9 +300,7 @@ function MediaList({
 
   return (
     <div
-      className={`w-full h-screen flex ${
-        filesUploading ? " loading" : ""
-      }`}
+      className={`w-full h-screen flex ${filesUploading ? " loading" : ""}`}
       key={activeFolder}
     >
       <FoldersNavigation
@@ -314,13 +313,18 @@ function MediaList({
       {addNewIsOpen ? displayModal : null}
       {folderNotEmptyWarningIsOpen ? folderDeletionWarningModal : null}
       {fileDeletionWarningOpen ? fileDeletionWarningModal : null}
-      <div
-        className="p-4 w-full h-fit flex justify-start items-center flex-wrap border border-spillover-color3"
-        id="files-list-section"
-      >
-        {/* <h1>{activeFolder.name}</h1> */}
-        {filesList}
-      </div>
+
+      <MediaFilesContainer
+        mediaList={mediaList}
+        handleFileRecover={handleFileRecover}
+        handleMediaClick={handleMediaClick}
+        handleFileFavoriteSetClick={handleFileFavoriteSetClick}
+        handleDeleteFileClick={handleDeleteFileClick}
+        isFavorite={isFavorite}
+        setSubMenuVisibility={setSubMenuVisibility}
+        subMenuVisible={subMenuVisible}
+        handleMoveFileClick={handleMoveFileClick}
+      />
     </div>
   );
 }
