@@ -278,7 +278,7 @@ function MediaList({
       {folderNotEmptyWarningIsOpen ? folderDeletionWarningModal : null}
       {fileDeletionWarningOpen ? fileDeletionWarningModal : null}
 
-      <div className="flex flex-col border border-blue-600 w-3/4">
+      <div className="flex flex-col border border-red-600 w-3/4">
         <div className="business-list-selection">
           <Select
             className="business-select w-1/2"
@@ -287,6 +287,8 @@ function MediaList({
             onChange={changeBusiness}
             options={renderSelectOptions()}
           />
+          Gustavo CAmello
+          {/* <MainButton iconName="heart" text="Upload a File" btnType="button" /> */}
         </div>
 
         <MediaFilesContainer

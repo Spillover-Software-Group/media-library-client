@@ -190,7 +190,7 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
                           <div {...getRootProps()}>
                             <input {...getInputProps()} />
                             <p className="input-placeholder-text">
-                              Select to upload or drag files here
+                              Select GUSTAVO to upload or drag files here
                               <i className="fa fa-upload" />
                             </p>
                           </div>
