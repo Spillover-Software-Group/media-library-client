@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, createRef } from "react";
 import axios from "axios";
 import Select from "react-select";
+import Dropzone from "react-dropzone";
 
 import "./styles.scss";
 
+import config from "../config/index";
 import Modal from "../utils/modal";
 import RegularIcon from "./icons/RegularIcon";
 import MediaFile from "./MediaFile";
 import FoldersNavigation from "./navigation/FoldersNavigation";
 import MediaFilesContainer from "./MediaFilesContainer";
+import UploadButton from "./buttons/UploadButton";
 
 const allowedImageTypes = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"];
 
@@ -29,6 +32,8 @@ function MediaList({
   baseUrl,
   changeBusiness,
   renderSelectOptions,
+  userId,
+  submitForm,
 }) {
   // Some of these will need to move up to the parent element. I need to know when new files are added, and
   // which folder is active. This calls for storing some data in the main index component.
@@ -42,6 +47,11 @@ function MediaList({
     useState(false);
   const [selectedFileId, setSelectedFileId] = useState(null);
   const [isFavorite, setFavorite] = useState(false);
+  const [fileIsUploading, setFileIsUploading] = useState(false);
+
+  const inputRef = useRef();
+  const { allowedFileTypes } = config;
+  const dropZoneRef = createRef();
 
   const getFoldersList = async () => {
     const folderListUrl = selectedBusiness
@@ -261,6 +271,45 @@ function MediaList({
     </Modal>
   );
 
+  const openFileDialog = () => {
+    inputRef.current.click();
+  };
+
+  const uploadFiles = (event) => {
+    console.log("FROM UPLOAD FILE");
+    const files = event.target.files;
+    if (!files) return;
+
+    const filesArray = Array.from(files);
+    const formData = new FormData();
+
+    if (files && files.length > 0) {
+      formData.append("businessId", selectedBusiness);
+      formData.append("folderId", activeFolder);
+      formData.append("userId", userId);
+
+      filesArray.forEach((file) => {
+        formData.append("media-uploads", file);
+      });
+    }
+
+    setFileIsUploading(true);
+
+    fetch(`${baseUrl}/upload_files`, {
+      method: "post",
+      body: formData,
+    })
+      .then(async (res) => {
+        console.log(res);
+        await getFilesForFolder(activeFolder);
+        setFileIsUploading(false);
+      })
+      .catch((err) => {
+        console.log(`Error occured: ${err}`);
+        setFileIsUploading(false);
+      });
+  };
+
   return (
     <div
       className={`w-full h-screen flex ${filesUploading ? " loading" : ""}`}
@@ -279,7 +328,7 @@ function MediaList({
       {fileDeletionWarningOpen ? fileDeletionWarningModal : null}
 
       <div className="flex flex-col border border-red-600 w-3/4">
-        <div className="business-list-selection">
+        <div className="border border-green-400 flex justify-evenly py-2">
           <Select
             className="business-select w-1/2"
             classNamePrefix="business-select-options"
@@ -287,21 +336,74 @@ function MediaList({
             onChange={changeBusiness}
             options={renderSelectOptions()}
           />
-          Gustavo CAmello
-          {/* <MainButton iconName="heart" text="Upload a File" btnType="button" /> */}
+          <div>
+            <UploadButton
+              openFileDialog={openFileDialog}
+              inputRef={inputRef}
+              uploadFiles={uploadFiles}
+            />
+          </div>
         </div>
 
-        <MediaFilesContainer
-          mediaList={mediaList}
-          handleFileRecover={handleFileRecover}
-          handleMediaClick={handleMediaClick}
-          handleFileFavoriteSetClick={handleFileFavoriteSetClick}
-          handleDeleteFileClick={handleDeleteFileClick}
-          isFavorite={isFavorite}
-          setSubMenuVisibility={setSubMenuVisibility}
-          subMenuVisible={subMenuVisible}
-          handleMoveFileClick={handleMoveFileClick}
-        />
+        <Dropzone
+          onDrop={(files) => submitForm(files)}
+          multiple
+          accept={allowedFileTypes}
+          ref={() => dropZoneRef}
+          disabled={fileIsUploading}
+          noClick
+        >
+          {({ getRootProps, getInputProps, isDragActive }) => (
+            <>
+              <section className="border border-green-500 relative h-15 cursor-pointer">
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <div>
+                    {isDragActive && (
+                      <div
+                        style={{
+                          border: "dashed grey 4px",
+                          backgroundColor: "rgba(255,255,255,.8)",
+                          position: "absolute",
+                          top: 0,
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          zIndex: 9999,
+                        }}
+                      >
+                        <div
+                          style={{
+                            position: "absolute",
+                            top: "50%",
+                            right: 0,
+                            left: 0,
+                            textAlign: "center",
+                            color: "grey",
+                            fontSize: 36,
+                          }}
+                        >
+                          <div>drop here</div>
+                        </div>
+                      </div>
+                    )}
+                    <MediaFilesContainer
+                      mediaList={mediaList}
+                      handleFileRecover={handleFileRecover}
+                      handleMediaClick={handleMediaClick}
+                      handleFileFavoriteSetClick={handleFileFavoriteSetClick}
+                      handleDeleteFileClick={handleDeleteFileClick}
+                      isFavorite={isFavorite}
+                      setSubMenuVisibility={setSubMenuVisibility}
+                      subMenuVisible={subMenuVisible}
+                      handleMoveFileClick={handleMoveFileClick}
+                    />
+                  </div>
+                </div>
+              </section>
+            </>
+          )}
+        </Dropzone>
       </div>
     </div>
   );

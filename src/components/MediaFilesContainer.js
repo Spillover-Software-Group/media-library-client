@@ -25,7 +25,7 @@ function MediaFilesContainer({
       className="p-4 w-full h-fit flex justify-center items-center flex-wrap border border-spillover-color3"
       id="files-list-section"
     >
-      {mediaList?.map((item) => (
+      {mediaList?.slice(0, 10)?.map((item) => (
         <MediaFile
           fileId={item.id}
           fileName={item?.fileName?.split(".")[0]}

@@ -1,19 +1,15 @@
-import React, { useState, createRef } from "react";
+import React, { useState, createRef, useRef } from "react";
 import axios from "axios";
-import Select from "react-select";
-import Dropzone from "react-dropzone";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 import "./css/style.scss";
 
 import MediaList from "./components/media-files-list";
 import config from "./config";
+import RegularIcon from "./components/icons/RegularIcon";
 
 const dropZoneRef = createRef();
 
 const { baseUrl } = config;
-const { allowedFileTypes } = config;
 
 function MediaLibrary({ handleSelected, businessList, userId }) {
   const defaultBusiness =
@@ -155,83 +151,28 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
   return (
     <div className=" flex justify-center items-center">
       <div className="w-full container  flex flex-col justify-center">
-        <ul className="nav media-library-tabs ">
-          {/* <li className={`list-tab library-tab${" library"}`}>
-            <div className="business-list-selection">
-              <Select
-                className="business-select"
-                classNamePrefix="business-select-options"
-                defaultValue={renderSelectOptions()[0]}
-                onChange={changeBusiness}
-                options={renderSelectOptions()}
-              />
-            </div>
-          </li> */}
-          <li className="file-input-form-section">
-            <form
-              name="uploadForm"
-              id="media-upload-form"
-              className="media-upload-form"
-            >
-              <div className="form-input-group">
-                <div className="input-group">
-                  {fileIsUploading ? (
-                    <div>Upload in progress...</div>
-                  ) : (
-                    <Dropzone
-                      onDrop={(files) => submitForm(files)}
-                      multiple
-                      accept={allowedFileTypes}
-                      ref={() => dropZoneRef}
-                      disabled={fileIsUploading}
-                    >
-                      {({ getRootProps, getInputProps }) => (
-                        <section>
-                          <div {...getRootProps()}>
-                            <input {...getInputProps()} />
-                            <p className="input-placeholder-text">
-                              Select GUSTAVO to upload or drag files here
-                              <i className="fa fa-upload" />
-                            </p>
-                          </div>
-                        </section>
-                      )}
-                    </Dropzone>
-                  )}
-                </div>
-              </div>
-            </form>
-          </li>
-        </ul>
-        <div className="">
-          {fileIsUploading ? (
-            <FontAwesomeIcon
-              className="file-upload-spinner main-spinner"
-              icon={faSpinner}
-              spin
-            />
-          ) : null}
-          <MediaList
-            renderSelectOptions={renderSelectOptions}
-            baseUrl={baseUrl}
-            handleSelected={handleSelected}
-            selectedBusiness={selectedBusiness}
-            activeFolder={activeFolder}
-            setActiveFolder={setActiveFolder}
-            key={`${selectedBusiness}-${activeFolder}`}
-            moveFile={moveFile}
-            deleteFile={deleteFile}
-            recoverFile={recoverFile}
-            mediaList={mediaList}
-            setMediaList={setMediaList}
-            foldersList={foldersList}
-            setFoldersList={setFoldersList}
-            filesUploading={fileIsUploading}
-            getFilesForFolder={getFilesForFolder}
-            setFavoriteForCurrentUser={setFavoriteForCurrentUser}
-            changeBusiness={changeBusiness}
-          />
-        </div>
+        <MediaList
+          renderSelectOptions={renderSelectOptions}
+          userId={userId}
+          baseUrl={baseUrl}
+          handleSelected={handleSelected}
+          selectedBusiness={selectedBusiness}
+          activeFolder={activeFolder}
+          setActiveFolder={setActiveFolder}
+          key={`${selectedBusiness}-${activeFolder}`}
+          moveFile={moveFile}
+          deleteFile={deleteFile}
+          recoverFile={recoverFile}
+          mediaList={mediaList}
+          setMediaList={setMediaList}
+          foldersList={foldersList}
+          setFoldersList={setFoldersList}
+          filesUploading={fileIsUploading}
+          getFilesForFolder={getFilesForFolder}
+          setFavoriteForCurrentUser={setFavoriteForCurrentUser}
+          changeBusiness={changeBusiness}
+          submitForm={submitForm}
+        />
       </div>
     </div>
   );
