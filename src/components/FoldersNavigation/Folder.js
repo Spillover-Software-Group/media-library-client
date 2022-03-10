@@ -1,4 +1,5 @@
 import React from "react";
+
 import RegularIcon from "../icons/RegularIcon";
 
 function Folder({
@@ -12,7 +13,7 @@ function Folder({
       className={`${
         activeFolder === folder.id
           ? "text-spillover-color11 font-bold"
-          : "text-white font-medium"
+          : "text-spillover-color10 font-medium"
       } py-1 px-4 text-sm  flex justify-between items-center cursor-pointer`}
     >
       <div
@@ -40,26 +41,4 @@ function Folder({
   );
 }
 
-function FoldersList({
-  foldersList,
-  setActiveFolder,
-  handleFolderRemoveClick,
-  activeFolder,
-}) {
-  return (
-    <>
-      {foldersList.map((folder, i) => (
-        <li key={`folder-item-row-${i}`} id={`folder-item-row-${i}`}>
-          <Folder
-            folder={folder}
-            setActiveFolder={setActiveFolder}
-            handleFolderRemoveClick={handleFolderRemoveClick}
-            activeFolder={activeFolder}
-          />
-        </li>
-      ))}
-    </>
-  );
-}
-
-export default FoldersList;
+export default Folder;

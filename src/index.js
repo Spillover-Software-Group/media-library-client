@@ -3,7 +3,7 @@ import axios from "axios";
 
 import "./css/style.scss";
 
-import MediaList from "./components/media-files-list";
+import MediaLibraryContainer from "./components/MediaLibraryContainer";
 import config from "./config";
 import RegularIcon from "./components/icons/RegularIcon";
 
@@ -52,38 +52,6 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
     getFoldersList();
   }
 
-  const submitForm = (files) => {
-    console.log("DEBUG_FILES: ", files);
-
-    const formData = new FormData();
-
-    if (files && files.length > 0) {
-      formData.append("businessId", selectedBusiness);
-      formData.append("folderId", activeFolder);
-      formData.append("userId", userId);
-
-      files.forEach((file) => {
-        formData.append("media-uploads", file);
-      });
-    }
-
-    setFileIsUploading(true);
-
-    fetch(`${baseUrl}/upload_files`, {
-      method: "post",
-      body: formData,
-    })
-      .then(async (res) => {
-        console.log(res);
-        await getFilesForFolder(activeFolder);
-        setFileIsUploading(false);
-      })
-      .catch((err) => {
-        console.log(`Error occured: ${err}`);
-        setFileIsUploading(false);
-      });
-  };
-
   const setFavoriteForCurrentUser = async (fileId) => {
     const newFavorite = {
       fileId,
@@ -106,17 +74,6 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
     await getFilesForFolder(activeFolder);
   };
 
-  const deleteFile = async (fileId) => {
-    console.log("DEBUG_DELETE_FILE_WITH_ID: ", fileId);
-
-    const deleteFileResponse = await axios.post(`${baseUrl}/delete_file`, {
-      fileId,
-    });
-
-    console.log("DEBUG_FILE_DELETE_RESPONSE: ", deleteFileResponse);
-    await getFilesForFolder(activeFolder);
-  };
-
   const recoverFile = async (fileId) => {
     await axios.post(`${baseUrl}/update_file/${fileId}`, {
       updatedFields: {
@@ -126,14 +83,6 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
     });
 
     await getFilesForFolder(activeFolder);
-  };
-
-  const changeBusiness = (option) => {
-    console.log("DEBUG_OPTION_SELECTED: ", option);
-    console.log("DEBUG_ACTIVE_FOLDER: ", activeFolder);
-    if (option) {
-      setSelectedBusiness(option.value);
-    }
   };
 
   const renderSelectOptions = () => {
@@ -149,32 +98,26 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
   };
 
   return (
-    <div className=" flex justify-center items-center">
-      <div className="w-full container  flex flex-col justify-center">
-        <MediaList
-          renderSelectOptions={renderSelectOptions}
-          userId={userId}
-          baseUrl={baseUrl}
-          handleSelected={handleSelected}
-          selectedBusiness={selectedBusiness}
-          activeFolder={activeFolder}
-          setActiveFolder={setActiveFolder}
-          key={`${selectedBusiness}-${activeFolder}`}
-          moveFile={moveFile}
-          deleteFile={deleteFile}
-          recoverFile={recoverFile}
-          mediaList={mediaList}
-          setMediaList={setMediaList}
-          foldersList={foldersList}
-          setFoldersList={setFoldersList}
-          filesUploading={fileIsUploading}
-          getFilesForFolder={getFilesForFolder}
-          setFavoriteForCurrentUser={setFavoriteForCurrentUser}
-          changeBusiness={changeBusiness}
-          submitForm={submitForm}
-        />
-      </div>
-    </div>
+    <MediaLibraryContainer
+      renderSelectOptions={renderSelectOptions}
+      userId={userId}
+      baseUrl={baseUrl}
+      handleSelected={handleSelected}
+      selectedBusiness={selectedBusiness}
+      setSelectedBusiness={setSelectedBusiness}
+      activeFolder={activeFolder}
+      setActiveFolder={setActiveFolder}
+      key={`${selectedBusiness}-${activeFolder}`}
+      moveFile={moveFile}
+      recoverFile={recoverFile}
+      mediaList={mediaList}
+      setMediaList={setMediaList}
+      foldersList={foldersList}
+      setFoldersList={setFoldersList}
+      filesUploading={fileIsUploading}
+      getFilesForFolder={getFilesForFolder}
+      setFavoriteForCurrentUser={setFavoriteForCurrentUser}
+    />
   );
 }
 

@@ -3,21 +3,20 @@ import axios from "axios";
 import Select from "react-select";
 import Dropzone from "react-dropzone";
 
-import "./styles.scss";
-
 import config from "../config/index";
 import Modal from "../utils/modal";
 import RegularIcon from "./icons/RegularIcon";
-import MediaFile from "./MediaFile";
-import FoldersNavigation from "./navigation/FoldersNavigation";
-import MediaFilesContainer from "./MediaFilesContainer";
-import UploadButton from "./buttons/UploadButton";
+import MediaFile from "./FilesContainer/MediaFile";
+import FoldersNavigation from "./FoldersNavigation";
+import FilesContainer from "./FilesContainer";
+import UploadFileButton from "./buttons/UploadFileButton";
 
 const allowedImageTypes = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"];
 
 function MediaList({
   handleSelected,
   selectedBusiness,
+  setSelectedBusiness,
   activeFolder,
   setActiveFolder,
   moveFile,
@@ -30,10 +29,8 @@ function MediaList({
   getFilesForFolder,
   setFavoriteForCurrentUser,
   baseUrl,
-  changeBusiness,
   renderSelectOptions,
   userId,
-  submitForm,
 }) {
   // Some of these will need to move up to the parent element. I need to know when new files are added, and
   // which folder is active. This calls for storing some data in the main index component.
@@ -271,6 +268,14 @@ function MediaList({
     </Modal>
   );
 
+  const changeBusiness = (option) => {
+    console.log("DEBUG_OPTION_SELECTED: ", option);
+    console.log("DEBUG_ACTIVE_FOLDER: ", activeFolder);
+    if (option) {
+      setSelectedBusiness(option.value);
+    }
+  };
+
   const openFileDialog = () => {
     inputRef.current.click();
   };
@@ -311,99 +316,61 @@ function MediaList({
   };
 
   return (
-    <div
-      className={`w-full h-screen flex ${filesUploading ? " loading" : ""}`}
-      key={activeFolder}
-    >
-      <FoldersNavigation
-        handleFolderAddNewClick={handleFolderAddNewClick}
-        handleFolderRemoveClick={handleFolderRemoveClick}
-        foldersList={foldersList}
-        setActiveFolder={setActiveFolder}
-        activeFolder={activeFolder}
-      />
+    <div className="flex justify-center items-center mx-28">
+      <div className={`w-full h-screen border border-spillover-color6 flex`}>
+        <FoldersNavigation
+          handleFolderAddNewClick={handleFolderAddNewClick}
+          handleFolderRemoveClick={handleFolderRemoveClick}
+          foldersList={foldersList}
+          setActiveFolder={setActiveFolder}
+          activeFolder={activeFolder}
+        />
 
-      {addNewIsOpen ? displayModal : null}
-      {folderNotEmptyWarningIsOpen ? folderDeletionWarningModal : null}
-      {fileDeletionWarningOpen ? fileDeletionWarningModal : null}
+        {/* {addNewIsOpen ? displayModal : null}
+        {folderNotEmptyWarningIsOpen ? folderDeletionWarningModal : null}
+        {fileDeletionWarningOpen ? fileDeletionWarningModal : null} */}
 
-      <div className="flex flex-col border border-red-600 w-3/4">
-        <div className="border border-green-400 flex justify-evenly py-2">
-          <Select
-            className="business-select w-1/2"
-            classNamePrefix="business-select-options"
-            defaultValue={renderSelectOptions()[0]}
-            onChange={changeBusiness}
-            options={renderSelectOptions()}
-          />
-          <div>
-            <UploadButton
-              openFileDialog={openFileDialog}
-              inputRef={inputRef}
-              uploadFiles={uploadFiles}
+        <div className="w-full h-screen">
+          <div className="flex bg-gray-50 flex-col w-full pb-0.5 border-b border-spillover-color3">
+            <div className="flex justify-evenly py-2">
+              <Select
+                className="business-select w-1/2"
+                classNamePrefix="business-select-options"
+                defaultValue={renderSelectOptions()[0]}
+                onChange={changeBusiness}
+                options={renderSelectOptions()}
+              />
+              <div>
+                <UploadFileButton
+                  openFileDialog={openFileDialog}
+                  inputRef={inputRef}
+                  uploadFiles={uploadFiles}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="p-4 h-[calc(100%_-_4rem)]">
+            <FilesContainer
+              mediaList={mediaList}
+              handleFileRecover={handleFileRecover}
+              handleMediaClick={handleMediaClick}
+              handleFileFavoriteSetClick={handleFileFavoriteSetClick}
+              handleDeleteFileClick={handleDeleteFileClick}
+              isFavorite={isFavorite}
+              setSubMenuVisibility={setSubMenuVisibility}
+              subMenuVisible={subMenuVisible}
+              handleMoveFileClick={handleMoveFileClick}
+              activeFolder={activeFolder}
+              foldersList={foldersList}
+              selectedBusiness={selectedBusiness}
+              setSelectedBusiness={setSelectedBusiness}
+              userId={userId}
+              baseUrl={baseUrl}
+              getFilesForFolder={getFilesForFolder}
             />
           </div>
         </div>
-
-        <Dropzone
-          onDrop={(files) => submitForm(files)}
-          multiple
-          accept={allowedFileTypes}
-          ref={() => dropZoneRef}
-          disabled={fileIsUploading}
-          noClick
-        >
-          {({ getRootProps, getInputProps, isDragActive }) => (
-            <>
-              <section className="border border-green-500 relative h-15 cursor-pointer">
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <div>
-                    {isDragActive && (
-                      <div
-                        style={{
-                          border: "dashed grey 4px",
-                          backgroundColor: "rgba(255,255,255,.8)",
-                          position: "absolute",
-                          top: 0,
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          zIndex: 9999,
-                        }}
-                      >
-                        <div
-                          style={{
-                            position: "absolute",
-                            top: "50%",
-                            right: 0,
-                            left: 0,
-                            textAlign: "center",
-                            color: "grey",
-                            fontSize: 36,
-                          }}
-                        >
-                          <div>drop here</div>
-                        </div>
-                      </div>
-                    )}
-                    <MediaFilesContainer
-                      mediaList={mediaList}
-                      handleFileRecover={handleFileRecover}
-                      handleMediaClick={handleMediaClick}
-                      handleFileFavoriteSetClick={handleFileFavoriteSetClick}
-                      handleDeleteFileClick={handleDeleteFileClick}
-                      isFavorite={isFavorite}
-                      setSubMenuVisibility={setSubMenuVisibility}
-                      subMenuVisible={subMenuVisible}
-                      handleMoveFileClick={handleMoveFileClick}
-                    />
-                  </div>
-                </div>
-              </section>
-            </>
-          )}
-        </Dropzone>
       </div>
     </div>
   );
