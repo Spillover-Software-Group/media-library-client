@@ -15,10 +15,12 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
   const defaultBusiness =
     businessList && businessList.length > 0 ? businessList[0].id : "";
   const [selectedBusiness, setSelectedBusiness] = useState(defaultBusiness);
-  const [activeFolder, setActiveFolder] = useState(null);
+  const [activeFolderId, setActiveFolderId] = useState(null);
   const [mediaList, setMediaList] = useState([]);
   const [foldersList, setFoldersList] = useState([]);
   const [fileIsUploading, setFileIsUploading] = useState(false);
+
+  console.log({ mediaList });
 
   const getFoldersList = async () => {
     const folderListUrl = selectedBusiness
@@ -28,12 +30,12 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
     const list = foldersResponse.data;
 
     const folderExistsForBusiness =
-      activeFolder &&
+      activeFolderId &&
       selectedBusiness &&
-      list.filter((f) => f.id === activeFolder).length > 0;
+      list.filter((f) => f.id === activeFolderId).length > 0;
 
-    if (!activeFolder || !folderExistsForBusiness) {
-      setActiveFolder(foldersResponse.data[0].id);
+    if (!activeFolderId || !folderExistsForBusiness) {
+      setActiveFolderId(foldersResponse.data[0].id);
     }
 
     return setFoldersList(foldersResponse.data);
@@ -48,7 +50,7 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
     setMediaList(filesResponse.data);
   };
 
-  if (!activeFolder) {
+  if (!activeFolderId) {
     getFoldersList();
   }
 
@@ -71,7 +73,7 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
       { updatedFields: { folderId: newFolderId } }
     );
     console.log("DEBUG_FILE_UPDATE_RESPONSE: ", moveFileResponse);
-    await getFilesForFolder(activeFolder);
+    await getFilesForFolder(activeFolderId);
   };
 
   const recoverFile = async (fileId) => {
@@ -82,7 +84,7 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
       },
     });
 
-    await getFilesForFolder(activeFolder);
+    await getFilesForFolder(activeFolderId);
   };
 
   const renderSelectOptions = () => {
@@ -105,9 +107,9 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
       handleSelected={handleSelected}
       selectedBusiness={selectedBusiness}
       setSelectedBusiness={setSelectedBusiness}
-      activeFolder={activeFolder}
-      setActiveFolder={setActiveFolder}
-      key={`${selectedBusiness}-${activeFolder}`}
+      activeFolderId={activeFolderId}
+      setActiveFolderId={setActiveFolderId}
+      key={`${selectedBusiness}-${activeFolderId}`}
       moveFile={moveFile}
       recoverFile={recoverFile}
       mediaList={mediaList}

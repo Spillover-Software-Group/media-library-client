@@ -2,6 +2,7 @@ import React from "react";
 
 import CreateFolderButton from "../buttons/CreateFolderButton";
 import RegularIcon from "../icons/RegularIcon";
+import NewFolderModal from "../modals/NewFolderModal";
 import FoldersList from "./FoldersList";
 
 function FoldersNavigation({
@@ -9,8 +10,13 @@ function FoldersNavigation({
   handleFolderRemoveClick,
   folderNameList,
   foldersList,
-  setActiveFolder,
-  activeFolder,
+  setActiveFolderId,
+  activeFolderId,
+  getFoldersList,
+  selectedBusiness,
+  mediaList,
+  getFilesForFolder,
+  userId,
 }) {
   return (
     <div className="w-72 bg-gray-50">
@@ -19,7 +25,12 @@ function FoldersNavigation({
       </p>
       <div className="ml-2 mt-6">
         <span onClick={handleFolderAddNewClick}>
-          <CreateFolderButton />
+          <NewFolderModal
+            selectedBusiness={selectedBusiness}
+            getFoldersList={getFoldersList}
+          >
+            <CreateFolderButton />
+          </NewFolderModal>
         </span>
       </div>
       <div>
@@ -27,10 +38,14 @@ function FoldersNavigation({
         <ul>
           <FoldersList
             foldersList={foldersList}
-            setActiveFolder={setActiveFolder}
-            activeFolder={activeFolder}
+            setActiveFolderId={setActiveFolderId}
+            activeFolderId={activeFolderId}
             handleFolderRemoveClick={handleFolderRemoveClick}
             handleFolderAddNewClick={handleFolderAddNewClick}
+            mediaList={mediaList}
+            getFoldersList={getFoldersList}
+            getFilesForFolder={getFilesForFolder}
+            userId={userId}
           />
         </ul>
       </div>

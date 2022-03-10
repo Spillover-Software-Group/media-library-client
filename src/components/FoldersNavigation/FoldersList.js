@@ -4,9 +4,13 @@ import Folder from "./Folder";
 
 function FoldersList({
   foldersList,
-  setActiveFolder,
+  setActiveFolderId,
   handleFolderRemoveClick,
-  activeFolder,
+  activeFolderId,
+  mediaList,
+  getFoldersList,
+  getFilesForFolder,
+  userId,
 }) {
   return (
     <>
@@ -14,9 +18,13 @@ function FoldersList({
         <li key={`folder-item-row-${i}`} id={`folder-item-row-${i}`}>
           <Folder
             folder={folder}
-            setActiveFolder={setActiveFolder}
+            setActiveFolderId={setActiveFolderId}
             handleFolderRemoveClick={handleFolderRemoveClick}
-            activeFolder={activeFolder}
+            activeFolderId={activeFolderId}
+            mediaList={mediaList}
+            getFoldersList={getFoldersList}
+            getFilesForFolder={getFilesForFolder}
+            userId={userId}
           />
         </li>
       ))}

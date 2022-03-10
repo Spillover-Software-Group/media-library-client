@@ -20,13 +20,13 @@ function MediaFile({
   handleMoveFileClick,
   handleDeleteFileClick,
   foldersList,
-  activeFolder,
+  activeFolderId,
   getFilesForFolder,
 }) {
   const [showActions, setShowActions] = useState(false);
 
   const filteredFoldersList = foldersList?.filter(
-    (folder) => folder.id !== activeFolder
+    (folder) => folder.id !== activeFolderId
   );
 
   return (
@@ -73,7 +73,7 @@ function MediaFile({
               handleFileFavoriteSetClick={handleFileFavoriteSetClick}
               handleMediaClick={handleMediaClick}
               fileId={fileId}
-              activeFolder={activeFolder}
+              activeFolderId={activeFolderId}
               getFilesForFolder={getFilesForFolder}
             />
           </div>

@@ -10,7 +10,7 @@ const allowedImageTypes = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"];
 function FilesContainer({
   mediaList,
   foldersList,
-  activeFolder,
+  activeFolderId,
   handleFileRecover,
   handleMediaClick,
   handleFileFavoriteSetClick,
@@ -32,8 +32,8 @@ function FilesContainer({
   const isImage = (item) =>
     allowedImageTypes.includes(`.${item.fileName.split(".").pop()}`);
 
-  const activeFolderOb = foldersList?.find(
-    (folder) => folder.id === activeFolder
+  const activeFolder = foldersList?.find(
+    (folder) => folder.id === activeFolderId
   );
 
   const uploadFilesFromDrag = (files) => {
@@ -43,7 +43,7 @@ function FilesContainer({
 
     if (files && files.length > 0) {
       formData.append("businessId", selectedBusiness);
-      formData.append("folderId", activeFolder);
+      formData.append("folderId", activeFolderId);
       formData.append("userId", userId);
 
       files.forEach((file) => {
@@ -59,7 +59,7 @@ function FilesContainer({
     })
       .then(async (res) => {
         console.log(res);
-        await getFilesForFolder(activeFolder);
+        await getFilesForFolder(activeFolderId);
         setFileIsUploading(false);
       })
       .catch((err) => {
@@ -77,7 +77,7 @@ function FilesContainer({
             iconStyle="fas"
             className="mr-2 text-xl text-spillover-color2"
           />
-          {activeFolderOb?.folderName}
+          {activeFolder?.folderName}
         </div>
         <span className="text-xs text-spillover-color3">
           {mediaList?.length} results
@@ -126,8 +126,8 @@ function FilesContainer({
                     </div>
                   )}
                   <div className="w-full h-[calc(100vh_-_10rem)] overflow-y-auto cursor-default">
-                    <div className="flex flex-wrap justify-center">
-                      {mediaList?.slice(0, 10)?.map((item) => (
+                    <div className="flex flex-wrap justify-start p-2">
+                      {mediaList?.map((item) => (
                         <MediaFile
                           key={item.id}
                           fileId={item.id}
@@ -147,7 +147,7 @@ function FilesContainer({
                           handleMoveFileClick={handleMoveFileClick}
                           fileIsDeleted={false}
                           getFilesForFolder={getFilesForFolder}
-                          activeFolder={activeFolder}
+                          activeFolderId={activeFolderId}
                         />
                       ))}
                     </div>

@@ -11,10 +11,11 @@ function FilesActions({
   handleFileFavoriteSetClick,
   fileId,
   getFilesForFolder,
-  activeFolder,
+  activeFolderId,
 }) {
   const { baseUrl } = config;
 
+  // TODO: Move this functions to somewhere
   const deleteFile = async (fileId) => {
     console.log("DEBUG_DELETE_FILE_WITH_ID: ", fileId);
 
@@ -23,7 +24,7 @@ function FilesActions({
     });
 
     console.log("DEBUG_FILE_DELETE_RESPONSE: ", deleteFileResponse);
-    await getFilesForFolder(activeFolder);
+    await getFilesForFolder(activeFolderId);
   };
 
   return (
