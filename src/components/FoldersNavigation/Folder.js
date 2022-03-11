@@ -75,10 +75,10 @@ function Folder({
           activeFolderId === folder.id
             ? "text-spillover-color11 font-bold"
             : "text-spillover-color10 font-medium"
-        } py-1 px-4 text-sm  flex justify-between items-center cursor-pointer`}
+        } py-1 px-4 text-sm flex justify-between items-center cursor-pointer`}
       >
         <div
-          className="flex items-center"
+          className="flex items-center w-full"
           onClick={() => setActiveFolderId(folder.id)}
         >
           <RegularIcon
@@ -86,9 +86,11 @@ function Folder({
             iconStyle="fas"
             className="mr-2 text-xl"
           />
-          <span>{folder.folderName}</span>
+          <span>
+            {folder.folderName} / {folder.id}
+          </span>
         </div>
-        {folder.businessId !== "TEST_SPILLOVER_ID" ? null : (
+        {folder.businessId === "TEST_SPILLOVER_ID" ? null : (
           <span onClick={() => deleteFolder(folder.id)}>
             <RegularIcon
               name="trash-alt"

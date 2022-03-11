@@ -2,7 +2,14 @@ import React from "react";
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-function Modal({ children, title, subtitle, isOpen, closeModal }) {
+function Modal({
+  children,
+  title,
+  subtitle,
+  isOpen,
+  closeModal,
+  customStyles,
+}) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -10,7 +17,7 @@ function Modal({ children, title, subtitle, isOpen, closeModal }) {
         className="fixed inset-0 z-10 overflow-y-auto"
         onClose={closeModal}
       >
-        <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+        <Dialog.Overlay className="fixed inset-0 bg-black opacity-80" />
 
         <div className="min-h-screen px-4 text-center">
           <Transition.Child
@@ -41,17 +48,24 @@ function Modal({ children, title, subtitle, isOpen, closeModal }) {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="inline-block w-fit  p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl border">
-              <Dialog.Title
-                as="h3"
-                className="text-lg font-medium text-gray-900"
-              >
-                {title}
-                <div className="mb-4 border-b border-spillover-color7">
-                  <p className="text-sm text-gray-500">{subtitle}</p>
-                </div>
-              </Dialog.Title>
-
+            <div
+              className={`${
+                customStyles
+                  ? customStyles
+                  : "inline-block w-fit p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl border"
+              }`}
+            >
+              {title && (
+                <Dialog.Title
+                  as="h3"
+                  className="text-lg font-medium text-gray-900"
+                >
+                  {title}
+                  <div className="mb-4 border-b border-spillover-color7">
+                    <p className="text-sm text-gray-500">{subtitle}</p>
+                  </div>
+                </Dialog.Title>
+              )}
               {children}
             </div>
           </Transition.Child>

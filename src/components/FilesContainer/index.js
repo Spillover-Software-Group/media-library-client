@@ -1,9 +1,11 @@
 import React, { useState, createRef } from "react";
 import Dropzone from "react-dropzone";
+
 import config from "../../config";
 import RegularIcon from "../icons/RegularIcon";
-
 import MediaFile from "./MediaFile";
+import EmptyFolder from "./EmptyFolder";
+import { auto } from "@popperjs/core";
 
 const allowedImageTypes = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"];
 
@@ -11,20 +13,11 @@ function FilesContainer({
   mediaList,
   foldersList,
   activeFolderId,
-  handleFileRecover,
-  handleMediaClick,
-  handleFileFavoriteSetClick,
-  handleDeleteFileClick,
-  isFavorite,
-  setSubMenuVisibility,
-  subMenuVisible,
-  handleMoveFileClick,
   selectedBusiness,
   userId,
-  baseUrl,
   getFilesForFolder,
 }) {
-  const { allowedFileTypes } = config;
+  const { allowedFileTypes, baseUrl } = config;
   const dropZoneRef = createRef();
 
   const [fileIsUploading, setFileIsUploading] = useState(false);
@@ -100,8 +93,8 @@ function FilesContainer({
                   {isDragActive && (
                     <div
                       style={{
-                        border: "dashed grey 4px",
-                        backgroundColor: "rgba(255,255,255,.8)",
+                        border: "solid #0E7F82 1px",
+                        backgroundColor: "rgba(14,127,130,.1)",
                         position: "absolute",
                         top: 0,
                         bottom: 0,
@@ -110,46 +103,49 @@ function FilesContainer({
                         zIndex: 9999,
                       }}
                     >
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: "50%",
-                          right: 0,
-                          left: 0,
-                          textAlign: "center",
-                          color: "grey",
-                          fontSize: 36,
-                        }}
-                      >
-                        <div>drop here</div>
+                      <div className="absolute bottom-10 w-full text-white text-center flex flex-col justify-center">
+                        <div className="animate-bounce flex justify-center">
+                          <RegularIcon
+                            name="cloud-upload"
+                            iconStyle="fas"
+                            className="text-spillover-color4 text-4xl shadow-2xl"
+                          />
+                        </div>
+                        <div className="w-full flex justify-center">
+                          <div className="bg-spillover-color4  text-sm w-fit text-center p-4 rounded-2xl">
+                            <p>Drag the files to upload them to:</p>
+                            <p>
+                              <RegularIcon
+                                name="folder"
+                                className="mr-2"
+                                iconStyle="fas"
+                              />
+                              {activeFolder?.folderName}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   )}
                   <div className="w-full h-[calc(100vh_-_10rem)] overflow-y-auto cursor-default">
                     <div className="flex flex-wrap justify-start p-2">
-                      {mediaList?.map((item) => (
-                        <MediaFile
-                          key={item.id}
-                          fileId={item.id}
-                          fileName={item?.fileName?.split(".")[0]}
-                          isImage={isImage(item)}
-                          mediaSrc={item.url}
-                          handleFileRecover={handleFileRecover}
-                          handleMediaClick={handleMediaClick}
-                          handleFileFavoriteSetClick={
-                            handleFileFavoriteSetClick
-                          }
-                          handleDeleteFileClick={handleDeleteFileClick}
-                          isFavorite={isFavorite}
-                          setSubMenuVisibility={setSubMenuVisibility}
-                          subMenuVisible={subMenuVisible}
-                          foldersList={foldersList}
-                          handleMoveFileClick={handleMoveFileClick}
-                          fileIsDeleted={false}
-                          getFilesForFolder={getFilesForFolder}
-                          activeFolderId={activeFolderId}
-                        />
-                      ))}
+                      {mediaList?.length <= 0 ? (
+                        <EmptyFolder />
+                      ) : (
+                        mediaList?.map((file) => (
+                          <MediaFile
+                            key={file.id}
+                            file={file}
+                            isImage={isImage(file)}
+                            mediaSrc={file.url}
+                            foldersList={foldersList}
+                            fileIsDeleted={false}
+                            getFilesForFolder={getFilesForFolder}
+                            activeFolderId={activeFolderId}
+                            userId={userId}
+                          />
+                        ))
+                      )}
                     </div>
                   </div>
                 </div>

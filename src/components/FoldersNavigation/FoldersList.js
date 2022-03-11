@@ -5,9 +5,7 @@ import Folder from "./Folder";
 function FoldersList({
   foldersList,
   setActiveFolderId,
-  handleFolderRemoveClick,
   activeFolderId,
-  mediaList,
   getFoldersList,
   getFilesForFolder,
   userId,
@@ -19,9 +17,7 @@ function FoldersList({
           <Folder
             folder={folder}
             setActiveFolderId={setActiveFolderId}
-            handleFolderRemoveClick={handleFolderRemoveClick}
             activeFolderId={activeFolderId}
-            mediaList={mediaList}
             getFoldersList={getFoldersList}
             getFilesForFolder={getFilesForFolder}
             userId={userId}

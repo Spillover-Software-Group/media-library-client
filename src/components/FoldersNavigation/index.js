@@ -1,20 +1,16 @@
 import React from "react";
 
 import CreateFolderButton from "../buttons/CreateFolderButton";
-import RegularIcon from "../icons/RegularIcon";
 import NewFolderModal from "../modals/NewFolderModal";
 import FoldersList from "./FoldersList";
 
 function FoldersNavigation({
   handleFolderAddNewClick,
-  handleFolderRemoveClick,
-  folderNameList,
   foldersList,
   setActiveFolderId,
   activeFolderId,
   getFoldersList,
   selectedBusiness,
-  mediaList,
   getFilesForFolder,
   userId,
 }) {
@@ -40,9 +36,6 @@ function FoldersNavigation({
             foldersList={foldersList}
             setActiveFolderId={setActiveFolderId}
             activeFolderId={activeFolderId}
-            handleFolderRemoveClick={handleFolderRemoveClick}
-            handleFolderAddNewClick={handleFolderAddNewClick}
-            mediaList={mediaList}
             getFoldersList={getFoldersList}
             getFilesForFolder={getFilesForFolder}
             userId={userId}

@@ -4,18 +4,20 @@ import axios from "axios";
 import config from "../../config";
 import RegularIconTooltip from "../icons/RegularIconTooltip";
 import DeleteFileConfirmationModal from "../modals/DeleteFileConfirmationModal";
+import MoveFileToFolder from "./MoveFileToFolder";
+import ShowImageModal from "../modals/ShowImageModal";
 
 function FilesActions({
-  handleMediaClick,
-  handleDeleteFileClick,
-  handleFileFavoriteSetClick,
   fileId,
   getFilesForFolder,
   activeFolderId,
+  userId,
+  mediaSrc,
+  foldersList,
 }) {
   const { baseUrl } = config;
 
-  // TODO: Move this functions to somewhere
+  // TODO: This function is repeated in the Folder.js component, needs to move somewhere else
   const deleteFile = async (fileId) => {
     console.log("DEBUG_DELETE_FILE_WITH_ID: ", fileId);
 
@@ -27,8 +29,38 @@ function FilesActions({
     await getFilesForFolder(activeFolderId);
   };
 
+  // TODO: Fix the error on the API side when fav.
+  const setFavoriteForCurrentUser = async () => {
+    const newFavorite = {
+      fileId,
+      userId,
+    };
+
+    const newFavoriteResponse = await axios.post(`${baseUrl}/favorites_add`, {
+      newFavorite,
+    });
+    console.log("DEBUG_NEW_FAVOURITE_RESPONSE: ", newFavoriteResponse);
+  };
+
+  // TODO: Not sure about what the handleSelected should does
+  const handleMediaClick = (mediaSrc) => {
+    console.log("DEBUG_file: ", mediaSrc);
+    // handleSelected(mediaSrc);
+  };
+
+  const moveFile = async (fileId, newFolderId) => {
+    console.log(`DEBUG: Moving file ${fileId} to folder ${newFolderId}`);
+
+    const moveFileResponse = await axios.post(
+      `${baseUrl}/update_file/${fileId}`,
+      { updatedFields: { folderId: newFolderId } }
+    );
+    console.log("DEBUG_FILE_UPDATE_RESPONSE: ", moveFileResponse);
+    await getFilesForFolder(activeFolderId);
+  };
+
   return (
-    <ul className="flex justify-evenly items-center text-spillover-color3">
+    <ul className="flex justify-evenly items-center">
       <li className="cursor-pointer" onClick={() => handleMediaClick(mediaSrc)}>
         <RegularIconTooltip
           iconName="plus-square"
@@ -37,10 +69,7 @@ function FilesActions({
           placement="top"
         />
       </li>
-      <li
-        className="cursor-pointer"
-        onClick={() => handleFileFavoriteSetClick(fileId)}
-      >
+      <li className="cursor-pointer" onClick={setFavoriteForCurrentUser}>
         <RegularIconTooltip
           iconName="heart"
           iconStyle="fas"
@@ -49,40 +78,22 @@ function FilesActions({
         />
       </li>
       <li className="cursor-pointer">
-        <RegularIconTooltip
-          iconName="folder-tree"
-          iconStyle="fas"
-          tooltip="Move"
-          placement="top"
+        <MoveFileToFolder
+          foldersList={foldersList}
+          activeFolderId={activeFolderId}
+          fileId={fileId}
+          moveFile={moveFile}
         />
-
-        {/* TODO: Menu to move the file to another folder */}
-        {/* <div
-        className="border border-yellow-700 h-10 w-10 move-file-menu file-icon-menu-item"
-        onClick={() => setSubMenuVisibility(!subMenuVisible)}
-        onMouseLeave={() => setSubMenuVisibility(false)}
-      >
-        {subMenuVisible && (
-          <div className="folders-list-submenu">
-            {filteredFoldersList?.map((folder) => (
-              <div
-                className="submenu-folders-list-item list-item-text"
-                onClick={() => handleMoveFileClick(fileId, folder.id)}
-              >
-                {folder.folderName}
-              </div>
-            ))}
-          </div>
-        )}
-      </div> */}
       </li>
       <li className="cursor-pointer">
-        <RegularIconTooltip
-          iconName="eye"
-          iconStyle="fas"
-          tooltip="Image"
-          placement="top"
-        />
+        <ShowImageModal mediaSrc={mediaSrc}>
+          <RegularIconTooltip
+            iconName="eye"
+            iconStyle="fas"
+            tooltip="Image"
+            placement="top"
+          />
+        </ShowImageModal>
       </li>
       <li className="cursor-pointer">
         <DeleteFileConfirmationModal deleteFile={deleteFile}>
