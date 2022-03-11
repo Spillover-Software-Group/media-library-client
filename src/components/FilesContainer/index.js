@@ -5,7 +5,6 @@ import config from "../../config";
 import RegularIcon from "../icons/RegularIcon";
 import MediaFile from "./MediaFile";
 import EmptyFolder from "./EmptyFolder";
-import { auto } from "@popperjs/core";
 import SearchBar from "../SearchBar";
 
 const allowedImageTypes = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"];
@@ -72,7 +71,7 @@ function FilesContainer({
   };
 
   return (
-    <div className="h-[calc(100%_-_3.5rem)] border border-red-500">
+    <div className="h-[calc(100%_-_3.5rem)]">
       <div className="px-4 py-2 flex justify-between">
         <div>
           <div>

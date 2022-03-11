@@ -5,7 +5,7 @@ import RegularIcon from "../icons/RegularIcon";
 function UploadFileButton({ openFileDialog, inputRef, uploadFiles }) {
   return (
     <button
-      className={`btn bg-spillover-color2 text-white hover:bg-spillover-color1 transition ease-in-out duration-300 rounded-2xl p-2 text-sm`}
+      className={`btn bg-spillover-color2 text-white hover:bg-spillover-color1 transition ease-in-out duration-300 rounded-2xl p-2 px-3 text-sm`}
       type="button"
       onClick={openFileDialog}
     >
