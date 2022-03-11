@@ -4,7 +4,7 @@ import axios from "axios";
 import Modal from "./Modal";
 import config from "../../config";
 
-function NewFolderModal({ children, selectedBusiness, getFoldersList }) {
+function NewFolderModal({ children, selectedBusinessId, getFoldersList }) {
   const [isOpen, setIsOpen] = useState(false);
   const [formValues, setFormValues] = useState({ folderName: "" });
 
@@ -25,7 +25,7 @@ function NewFolderModal({ children, selectedBusiness, getFoldersList }) {
   const addNewFolder = async (e) => {
     e.preventDefault();
 
-    const newFolderValues = { ...formValues, businessId: selectedBusiness };
+    const newFolderValues = { ...formValues, businessId: selectedBusinessId };
     const newFolderResponse = await axios.post(
       `${baseUrl}/create_folder`,
       newFolderValues,

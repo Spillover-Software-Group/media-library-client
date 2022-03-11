@@ -6,6 +6,7 @@ import RegularIcon from "../icons/RegularIcon";
 import MediaFile from "./MediaFile";
 import EmptyFolder from "./EmptyFolder";
 import { auto } from "@popperjs/core";
+import SearchBar from "../SearchBar";
 
 const allowedImageTypes = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"];
 
@@ -13,7 +14,7 @@ function FilesContainer({
   mediaList,
   foldersList,
   activeFolderId,
-  selectedBusiness,
+  selectedBusinessId,
   userId,
   getFilesForFolder,
 }) {
@@ -21,6 +22,15 @@ function FilesContainer({
   const dropZoneRef = createRef();
 
   const [fileIsUploading, setFileIsUploading] = useState(false);
+  const [query, setQuery] = useState("");
+
+  const filteredFiles = mediaList?.filter((file) => {
+    if (
+      file?.fileName.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+    ) {
+      return file;
+    }
+  });
 
   const isImage = (item) =>
     allowedImageTypes.includes(`.${item.fileName.split(".").pop()}`);
@@ -35,7 +45,7 @@ function FilesContainer({
     const formData = new FormData();
 
     if (files && files.length > 0) {
-      formData.append("businessId", selectedBusiness);
+      formData.append("businessId", selectedBusinessId);
       formData.append("folderId", activeFolderId);
       formData.append("userId", userId);
 
@@ -62,19 +72,24 @@ function FilesContainer({
   };
 
   return (
-    <div className="h-[calc(100%_-_3.5rem)]">
-      <div className="px-4 py-2">
+    <div className="h-[calc(100%_-_3.5rem)] border border-red-500">
+      <div className="px-4 py-2 flex justify-between">
         <div>
-          <RegularIcon
-            name="folder-open"
-            iconStyle="fas"
-            className="mr-2 text-xl text-spillover-color2"
-          />
-          {activeFolder?.folderName}
+          <div>
+            <RegularIcon
+              name="folder-open"
+              iconStyle="fas"
+              className="mr-2 text-xl text-spillover-color2"
+            />
+            {activeFolder?.folderName}
+          </div>
+          <span className="text-xs text-spillover-color3">
+            {mediaList?.length} results
+          </span>
         </div>
-        <span className="text-xs text-spillover-color3">
-          {mediaList?.length} results
-        </span>
+        <div className="w-1/3">
+          <SearchBar setQuery={setQuery} />
+        </div>
       </div>
       <Dropzone
         onDrop={(files) => uploadFilesFromDrag(files)}
@@ -129,10 +144,10 @@ function FilesContainer({
                   )}
                   <div className="w-full h-[calc(100vh_-_10rem)] overflow-y-auto cursor-default">
                     <div className="flex flex-wrap justify-start p-2">
-                      {mediaList?.length <= 0 ? (
+                      {filteredFiles?.length <= 0 ? (
                         <EmptyFolder />
                       ) : (
-                        mediaList?.map((file) => (
+                        filteredFiles?.map((file) => (
                           <MediaFile
                             key={file.id}
                             file={file}

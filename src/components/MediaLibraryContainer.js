@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import Select from "react-select";
 
 import FoldersNavigation from "./FoldersNavigation";
 import FilesContainer from "./FilesContainer";
 import UploadFileButton from "./buttons/UploadFileButton";
+import BusinessSwitcher from "./BusinessSwitcher";
 
 function MediaLibraryContainer({
-  selectedBusiness,
-  setSelectedBusiness,
+  selectedBusinessId,
+  setselectedBusinessId,
   activeFolderId,
   setActiveFolderId,
   mediaList,
@@ -25,18 +24,6 @@ function MediaLibraryContainer({
 
   const inputRef = useRef();
 
-  const renderSelectOptions = () => {
-    console.log("DEBUG_SELECTED_BUSINESS_VALUE: ", selectedBusiness);
-    if (businessList && businessList.length > 0) {
-      return businessList.map((b) => ({
-        value: b.id,
-        label: b.name,
-      }));
-    }
-
-    return [];
-  };
-
   useEffect(() => {
     getFoldersList();
     const getMediaList = async () => {
@@ -47,14 +34,6 @@ function MediaLibraryContainer({
       getMediaList();
     }
   }, []);
-
-  const changeBusiness = (option) => {
-    console.log("DEBUG_OPTION_SELECTED: ", option);
-    console.log("DEBUG_ACTIVE_FOLDER: ", activeFolderId);
-    if (option) {
-      setSelectedBusiness(option.value);
-    }
-  };
 
   const openFileDialog = () => {
     inputRef.current.click();
@@ -69,7 +48,7 @@ function MediaLibraryContainer({
     const formData = new FormData();
 
     if (files && files.length > 0) {
-      formData.append("businessId", selectedBusiness);
+      formData.append("businessId", selectedBusinessId);
       formData.append("folderId", activeFolderId);
       formData.append("userId", userId);
 
@@ -103,7 +82,7 @@ function MediaLibraryContainer({
           setActiveFolderId={setActiveFolderId}
           activeFolderId={activeFolderId}
           getFoldersList={getFoldersList}
-          selectedBusiness={selectedBusiness}
+          selectedBusinessId={selectedBusinessId}
           getFilesForFolder={getFilesForFolder}
           userId={userId}
         />
@@ -111,12 +90,10 @@ function MediaLibraryContainer({
         <div className="w-full h-screen">
           <div className="flex bg-gray-50 flex-col w-full pb-0.5 border-b border-spillover-color3">
             <div className="flex justify-evenly py-2">
-              <Select
-                className="business-select w-1/2"
-                classNamePrefix="business-select-options"
-                defaultValue={renderSelectOptions()[0]}
-                onChange={changeBusiness}
-                options={renderSelectOptions()}
+              <BusinessSwitcher
+                businessList={businessList}
+                selectedBusinessId={selectedBusinessId}
+                setselectedBusinessId={setselectedBusinessId}
               />
               <div>
                 <UploadFileButton
@@ -133,7 +110,7 @@ function MediaLibraryContainer({
               mediaList={mediaList}
               activeFolderId={activeFolderId}
               foldersList={foldersList}
-              selectedBusiness={selectedBusiness}
+              selectedBusinessId={selectedBusinessId}
               userId={userId}
               getFilesForFolder={getFilesForFolder}
             />

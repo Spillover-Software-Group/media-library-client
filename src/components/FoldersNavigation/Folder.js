@@ -86,9 +86,7 @@ function Folder({
             iconStyle="fas"
             className="mr-2 text-xl"
           />
-          <span>
-            {folder.folderName} / {folder.id}
-          </span>
+          <span>{folder.folderName}</span>
         </div>
         {folder.businessId === "TEST_SPILLOVER_ID" ? null : (
           <span onClick={() => deleteFolder(folder.id)}>

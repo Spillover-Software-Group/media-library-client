@@ -39,7 +39,12 @@ function MediaFile({
           </>
         ) : (
           <div>
-            <video className="p-4 h-40" controls width="320" height="240">
+            <video
+              className="h-36 rounded-tl-2xl rounded-tr-2xl"
+              controls
+              width="320"
+              height="240"
+            >
               <source src={file.url} />
             </video>
           </div>

@@ -28,6 +28,9 @@ module.exports = {
       height: {
         128: "40rem",
       },
+      transitionProperty: {
+        width: "width",
+      },
       colors: {
         spillover: {
           color1: "#000000", // Black

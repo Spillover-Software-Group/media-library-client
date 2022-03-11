@@ -11,22 +11,22 @@ const { baseUrl } = config;
 function MediaLibrary({ handleSelected, businessList, userId }) {
   const defaultBusiness =
     businessList && businessList.length > 0 ? businessList[0].id : "";
-  const [selectedBusiness, setSelectedBusiness] = useState(defaultBusiness);
+  const [selectedBusinessId, setselectedBusinessId] = useState(defaultBusiness);
   const [activeFolderId, setActiveFolderId] = useState(null);
   const [mediaList, setMediaList] = useState([]);
   const [foldersList, setFoldersList] = useState([]);
   const [fileIsUploading, setFileIsUploading] = useState(false);
 
   const getFoldersList = async () => {
-    const folderListUrl = selectedBusiness
-      ? `${baseUrl}/folders_list/${selectedBusiness}`
+    const folderListUrl = selectedBusinessId
+      ? `${baseUrl}/folders_list/${selectedBusinessId}`
       : `${baseUrl}/folders_list`;
     const foldersResponse = await axios.get(folderListUrl);
     const list = foldersResponse.data;
 
     const folderExistsForBusiness =
       activeFolderId &&
-      selectedBusiness &&
+      selectedBusinessId &&
       list.filter((f) => f.id === activeFolderId).length > 0;
 
     if (!activeFolderId || !folderExistsForBusiness) {
@@ -65,11 +65,11 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
       userId={userId}
       baseUrl={baseUrl}
       handleSelected={handleSelected}
-      selectedBusiness={selectedBusiness}
-      setSelectedBusiness={setSelectedBusiness}
+      selectedBusinessId={selectedBusinessId}
+      setselectedBusinessId={setselectedBusinessId}
       activeFolderId={activeFolderId}
       setActiveFolderId={setActiveFolderId}
-      key={`${selectedBusiness}-${activeFolderId}`}
+      key={`${selectedBusinessId}-${activeFolderId}`}
       recoverFile={recoverFile}
       mediaList={mediaList}
       setMediaList={setMediaList}

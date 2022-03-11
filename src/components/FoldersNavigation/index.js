@@ -10,7 +10,7 @@ function FoldersNavigation({
   setActiveFolderId,
   activeFolderId,
   getFoldersList,
-  selectedBusiness,
+  selectedBusinessId,
   getFilesForFolder,
   userId,
 }) {
@@ -22,7 +22,7 @@ function FoldersNavigation({
       <div className="ml-2 mt-6">
         <span onClick={handleFolderAddNewClick}>
           <NewFolderModal
-            selectedBusiness={selectedBusiness}
+            selectedBusinessId={selectedBusinessId}
             getFoldersList={getFoldersList}
           >
             <CreateFolderButton />
