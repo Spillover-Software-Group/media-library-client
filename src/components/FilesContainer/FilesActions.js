@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import config from "../../config";
 import RegularIconTooltip from "../icons/RegularIconTooltip";
@@ -55,8 +56,14 @@ function FilesActions({
       `${baseUrl}/update_file/${fileId}`,
       { updatedFields: { folderId: newFolderId } }
     );
+
     console.log("DEBUG_FILE_UPDATE_RESPONSE: ", moveFileResponse);
-    await getFilesForFolder(activeFolderId);
+
+    toast.promise(getFilesForFolder(activeFolderId), {
+      pending: "Moving file...",
+      success: "Moved Susscesfully.",
+      error: "Something went wrong!",
+    });
   };
 
   return (

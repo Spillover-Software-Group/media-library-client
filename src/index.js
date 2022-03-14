@@ -37,12 +37,15 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
   };
 
   const getFilesForFolder = async (folderId) => {
-    const filesResponse = await axios.get(`${baseUrl}/${folderId}/files`, {
-      params: { userId },
-    });
+    const filesResponse = await axios.get(
+      `${baseUrl}/${folderId}/files?pageNum=${1}`,
+      {
+        params: { userId },
+      }
+    );
 
     console.log("DEBUG_FILES_FOR_FOLDER: ", filesResponse);
-    setMediaList(filesResponse.data);
+    setMediaList(filesResponse.data.filesFromPage);
   };
 
   if (!activeFolderId) {

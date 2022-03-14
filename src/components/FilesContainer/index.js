@@ -1,5 +1,6 @@
 import React, { useState, createRef } from "react";
 import Dropzone from "react-dropzone";
+import { toast } from "react-toastify";
 
 import config from "../../config";
 import RegularIcon from "../icons/RegularIcon";
@@ -20,7 +21,6 @@ function FilesContainer({
   const { allowedFileTypes, baseUrl } = config;
   const dropZoneRef = createRef();
 
-  const [fileIsUploading, setFileIsUploading] = useState(false);
   const [query, setQuery] = useState("");
 
   const filteredFiles = mediaList?.filter((file) => {
@@ -53,21 +53,24 @@ function FilesContainer({
       });
     }
 
-    setFileIsUploading(true);
-
-    fetch(`${baseUrl}/upload_files`, {
-      method: "post",
-      body: formData,
-    })
-      .then(async (res) => {
-        console.log(res);
-        await getFilesForFolder(activeFolderId);
-        setFileIsUploading(false);
+    toast.promise(
+      fetch(`${baseUrl}/upload_files`, {
+        method: "post",
+        body: formData,
       })
-      .catch((err) => {
-        console.log(`Error occured: ${err}`);
-        setFileIsUploading(false);
-      });
+        .then(async (res) => {
+          console.log(res);
+          await getFilesForFolder(activeFolderId);
+        })
+        .catch((err) => {
+          console.log(`Error occured: ${err}`);
+        }),
+      {
+        pending: "Uploading files...",
+        success: "Uploaded Susscesfully.",
+        error: "Something went wrong!",
+      }
+    );
   };
 
   return (
@@ -95,7 +98,6 @@ function FilesContainer({
         multiple
         accept={allowedFileTypes}
         ref={() => dropZoneRef}
-        disabled={fileIsUploading}
         noClick
       >
         {({ getRootProps, getInputProps, isDragActive }) => (

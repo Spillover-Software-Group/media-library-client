@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import FoldersNavigation from "./FoldersNavigation";
 import FilesContainer from "./FilesContainer";
 import UploadFileButton from "./buttons/UploadFileButton";
 import BusinessSwitcher from "./BusinessSwitcher";
+
+import "react-toastify/dist/ReactToastify.min.css";
 
 function MediaLibraryContainer({
   selectedBusinessId,
@@ -47,7 +50,7 @@ function MediaLibraryContainer({
     const filesArray = Array.from(files);
     const formData = new FormData();
 
-    if (files && files.length > 0) {
+    if (filesArray && filesArray.length > 0) {
       formData.append("businessId", selectedBusinessId);
       formData.append("folderId", activeFolderId);
       formData.append("userId", userId);
@@ -57,21 +60,24 @@ function MediaLibraryContainer({
       });
     }
 
-    setFileIsUploading(true);
-
-    fetch(`${baseUrl}/upload_files`, {
-      method: "post",
-      body: formData,
-    })
-      .then(async (res) => {
-        console.log(res);
-        await getFilesForFolder(activeFolderId);
-        setFileIsUploading(false);
+    toast.promise(
+      fetch(`${baseUrl}/upload_files`, {
+        method: "post",
+        body: formData,
       })
-      .catch((err) => {
-        console.log(`Error occured: ${err}`);
-        setFileIsUploading(false);
-      });
+        .then(async (res) => {
+          console.log(res);
+          await getFilesForFolder(activeFolderId);
+        })
+        .catch((err) => {
+          console.log(`Error occured: ${err}`);
+        }),
+      {
+        pending: "Uploading files...",
+        success: "Uploaded Susscesfully.",
+        error: "Something went wrong!",
+      }
+    );
   };
 
   return (
@@ -116,6 +122,7 @@ function MediaLibraryContainer({
             />
           </div>
         </div>
+        <ToastContainer position="bottom-right" autoClose={2500} />
       </div>
     </div>
   );
