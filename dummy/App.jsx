@@ -14,6 +14,7 @@ const businessList = [
 ];
 
 function App() {
+  console.log("APP RENDERED")
   return <MediaLibrary businessList={businessList} />;
 }
 

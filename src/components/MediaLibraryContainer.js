@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 
 function MediaLibraryContainer({
   selectedBusinessId,
-  setselectedBusinessId,
+  setSelectedBusinessId,
   activeFolderId,
   setActiveFolderId,
   mediaList,
@@ -29,19 +29,13 @@ function MediaLibraryContainer({
 
   useEffect(() => {
     getFoldersList();
-    const getMediaList = async () => {
-      await getFilesForFolder(activeFolderId);
-    };
-
-    if (activeFolderId) {
-      getMediaList();
-    }
   }, []);
 
   const openFileDialog = () => {
     inputRef.current.click();
   };
 
+  // TODO: we can improve this function, to be used on the dragFiles upload too.
   const uploadFiles = (event) => {
     console.log("FROM UPLOAD FILE");
     const files = event.target.files;
@@ -67,7 +61,6 @@ function MediaLibraryContainer({
       })
         .then(async (res) => {
           console.log(res);
-          await getFilesForFolder(activeFolderId);
         })
         .catch((err) => {
           console.log(`Error occured: ${err}`);
@@ -99,7 +92,7 @@ function MediaLibraryContainer({
               <BusinessSwitcher
                 businessList={businessList}
                 selectedBusinessId={selectedBusinessId}
-                setselectedBusinessId={setselectedBusinessId}
+                setSelectedBusinessId={setSelectedBusinessId}
               />
               <div>
                 <UploadFileButton

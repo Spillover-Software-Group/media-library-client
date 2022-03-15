@@ -1,4 +1,10 @@
-import React, { useState, createRef } from "react";
+import React, {
+  useState,
+  createRef,
+  useCallback,
+  useRef,
+  useEffect,
+} from "react";
 import Dropzone from "react-dropzone";
 import { toast } from "react-toastify";
 
@@ -7,17 +13,38 @@ import RegularIcon from "../icons/RegularIcon";
 import MediaFile from "./MediaFile";
 import EmptyFolder from "./EmptyFolder";
 import SearchBar from "../SearchBar";
+import useFetchFilesForFolder from "../hooks/useFetchFilesForFolder";
+import Loading from "../Loading";
 
 const allowedImageTypes = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"];
 
 function FilesContainer({
-  mediaList,
+  // mediaList,
   foldersList,
   activeFolderId,
   selectedBusinessId,
   userId,
   getFilesForFolder,
 }) {
+  const [pageNum, setPageNum] = useState(1);
+  const { isLoading, mediaList, setMediaList, hasMore, totalFiles, refetch } =
+    useFetchFilesForFolder(pageNum, userId, activeFolderId);
+
+  const observer = useRef();
+  const lastMediFileElementRef = useCallback(
+    (node) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPageNum((prev) => prev + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore]
+  );
+
   const { allowedFileTypes, baseUrl } = config;
   const dropZoneRef = createRef();
 
@@ -30,6 +57,8 @@ function FilesContainer({
       return file;
     }
   });
+
+  // console.log({ filteredFiles, mediaList });
 
   const isImage = (item) =>
     allowedImageTypes.includes(`.${item.fileName.split(".").pop()}`);
@@ -53,14 +82,16 @@ function FilesContainer({
       });
     }
 
+    // TODO: We need a better way to handle API calls, refetch, etc
     toast.promise(
       fetch(`${baseUrl}/upload_files`, {
         method: "post",
         body: formData,
       })
         .then(async (res) => {
-          console.log(res);
-          await getFilesForFolder(activeFolderId);
+          console.log({ res });
+          setPageNum(1);
+          refetch({});
         })
         .catch((err) => {
           console.log(`Error occured: ${err}`);
@@ -74,7 +105,7 @@ function FilesContainer({
   };
 
   return (
-    <div className="h-[calc(100%_-_3.5rem)]">
+    <div className="h-full">
       <div className="px-4 py-2 flex justify-between">
         <div>
           <div>
@@ -86,26 +117,28 @@ function FilesContainer({
             {activeFolder?.folderName}
           </div>
           <span className="text-xs text-spillover-color3">
-            {mediaList?.length} results
+            {totalFiles} results
           </span>
         </div>
         <div className="w-1/3">
           <SearchBar setQuery={setQuery} />
         </div>
       </div>
-      <Dropzone
-        onDrop={(files) => uploadFilesFromDrag(files)}
-        multiple
-        accept={allowedFileTypes}
-        ref={() => dropZoneRef}
-        noClick
-      >
-        {({ getRootProps, getInputProps, isDragActive }) => (
-          <>
-            <section className="relative cursor-default h-full">
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                <div className="h-[calc(100%_-_3.5rem)]">
+
+      <div className="h-[calc(100%_-_3rem)] overflow-y-auto">
+        <Dropzone
+          onDrop={(files) => uploadFilesFromDrag(files)}
+          multiple
+          accept={allowedFileTypes}
+          ref={() => dropZoneRef}
+          noClick
+        >
+          {({ getRootProps, getInputProps, isDragActive }) => (
+            <>
+              <section className="relative min-h-screen cursor-default">
+                <div {...getRootProps()} className="min-h-screen">
+                  <input {...getInputProps()} />
+
                   {isDragActive && (
                     <div
                       style={{
@@ -117,9 +150,10 @@ function FilesContainer({
                         left: 0,
                         right: 0,
                         zIndex: 9999,
+                        height: "auto",
                       }}
                     >
-                      <div className="absolute bottom-10 w-full text-white text-center flex flex-col justify-center">
+                      <div className="fixed bottom-10 -ml-60 w-full text-white text-center flex flex-col justify-center">
                         <div className="animate-bounce flex justify-center">
                           <RegularIcon
                             name="cloud-upload"
@@ -143,33 +177,61 @@ function FilesContainer({
                       </div>
                     </div>
                   )}
-                  <div className="w-full h-[calc(100vh_-_10rem)] overflow-y-auto cursor-default">
-                    <div className="flex flex-wrap justify-start p-2">
-                      {filteredFiles?.length <= 0 ? (
-                        <EmptyFolder />
-                      ) : (
-                        filteredFiles?.map((file) => (
-                          <MediaFile
-                            key={file.id}
-                            file={file}
-                            isImage={isImage(file)}
-                            mediaSrc={file.url}
-                            foldersList={foldersList}
-                            fileIsDeleted={false}
-                            getFilesForFolder={getFilesForFolder}
-                            activeFolderId={activeFolderId}
-                            userId={userId}
-                          />
-                        ))
-                      )}
+                  {isLoading ? (
+                    <Loading />
+                  ) : (
+                    <div className="w-full overflow-y-auto cursor-default">
+                      <div className="flex flex-wrap justify-center p-2">
+                        {filteredFiles?.length <= 0 ? (
+                          <EmptyFolder />
+                        ) : (
+                          filteredFiles?.map((file, i) => {
+                            if (filteredFiles?.length === i + 1) {
+                              return (
+                                <div key={i} ref={lastMediFileElementRef}>
+                                  <MediaFile
+                                    file={file}
+                                    isImage={isImage(file)}
+                                    mediaSrc={file.url}
+                                    foldersList={foldersList}
+                                    fileIsDeleted={false}
+                                    getFilesForFolder={getFilesForFolder}
+                                    activeFolderId={activeFolderId}
+                                    userId={userId}
+                                  />
+                                </div>
+                              );
+                            } else {
+                              return (
+                                <div key={i}>
+                                  <MediaFile
+                                    file={file}
+                                    isImage={isImage(file)}
+                                    mediaSrc={file.url}
+                                    foldersList={foldersList}
+                                    fileIsDeleted={false}
+                                    getFilesForFolder={getFilesForFolder}
+                                    activeFolderId={activeFolderId}
+                                    userId={userId}
+                                  />
+                                </div>
+                              );
+                            }
+                          })
+                        )}
+                      </div>
+
+                      <div className="flex justify-center">
+                        {isLoading && <Loading />}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-              </div>
-            </section>
-          </>
-        )}
-      </Dropzone>
+              </section>
+            </>
+          )}
+        </Dropzone>
+      </div>
     </div>
   );
 }

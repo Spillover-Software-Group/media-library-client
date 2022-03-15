@@ -57,6 +57,7 @@ function Folder({
     setIsOpen(false);
   };
 
+  // TODO: This function is repeated in the FilesAction.js component, needs to move somewhere else
   const deleteFile = async (fileId) => {
     console.log("DEBUG_DELETE_FILE_WITH_ID: ", fileId);
 
@@ -88,7 +89,7 @@ function Folder({
           />
           <span>{folder.folderName}</span>
         </div>
-        {folder.businessId === "TEST_SPILLOVER_ID" ? null : (
+        {folder.businessId !== "TEST_SPILLOVER_ID" && (
           <span onClick={() => deleteFolder(folder.id)}>
             <RegularIcon
               name="trash-alt"
