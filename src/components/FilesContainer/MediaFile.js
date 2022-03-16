@@ -13,6 +13,9 @@ function MediaFile({
   getFilesForFolder,
   userId,
   fileIsDeleted,
+  pageNum,
+  setPageNum,
+  refetch,
 }) {
   const [showActions, setShowActions] = useState(false);
 
@@ -70,6 +73,9 @@ function MediaFile({
                 userId={userId}
                 mediaSrc={mediaSrc}
                 foldersList={foldersList}
+                pageNum={pageNum}
+                setPageNum={setPageNum}
+                refetch={refetch}
               />
             </div>
           </Transition>
@@ -79,7 +85,7 @@ function MediaFile({
               name={isImage ? "file-image" : "file-video"}
               className={`${
                 isImage ? "text-spillover-color4" : "text-spillover-color2"
-              } mr-2 text-xl`}
+              } mr-2 text-xl z-0`}
             />
             {fileName.length < 15 ? fileName : `${fileName.slice(0, 15)} ...`}
           </span>

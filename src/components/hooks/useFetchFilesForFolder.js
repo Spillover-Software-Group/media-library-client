@@ -9,17 +9,23 @@ function useFetchFilesForFolder(pageNum, userId, activeFolderId) {
   const [mediaList, setMediaList] = useState([]);
   const [totalFiles, setTotalFiles] = useState(0);
   const [hasMore, setHasMore] = useState(false);
-  // const [shouldRefetch, refetch] = useState({});
+  const [shouldRefetch, refetch] = useState({});
 
   const { baseUrl } = config;
 
   useEffect(() => {
+    const CancelToken = axios.CancelToken;
+    let cancel;
+
     setIsLoading(true);
     setError(false);
+
+    console.log("FROM HERE");
 
     axios
       .get(`${baseUrl}/${activeFolderId}/files?pageNum=${pageNum}`, {
         params: { userId },
+        cancelToken: new CancelToken((c) => (cancel = c)),
       })
       .then((res) => {
         setMediaList((prev) => {
@@ -33,14 +39,25 @@ function useFetchFilesForFolder(pageNum, userId, activeFolderId) {
         if (axios.isCancel(err)) return;
         setError(err);
       });
+
+    return () => cancel();
   }, [pageNum]);
+
+  useEffect(() => {
+    console.log("FROM REFETCH");
+    setIsLoading(true);
+    setError(false);
+
+    setMediaList([]);
+  }, [shouldRefetch]);
+
   return {
     isLoading,
     error,
     mediaList,
     totalFiles,
     hasMore,
-    // refetch,
+    refetch,
   };
 }
 

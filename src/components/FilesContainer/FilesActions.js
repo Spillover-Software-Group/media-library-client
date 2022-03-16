@@ -15,6 +15,9 @@ function FilesActions({
   userId,
   mediaSrc,
   foldersList,
+  pageNum,
+  setPageNum,
+  refetch,
 }) {
   const { baseUrl } = config;
 
@@ -52,18 +55,20 @@ function FilesActions({
   const moveFile = async (fileId, newFolderId) => {
     console.log(`DEBUG: Moving file ${fileId} to folder ${newFolderId}`);
 
-    const moveFileResponse = await axios.post(
-      `${baseUrl}/update_file/${fileId}`,
-      { updatedFields: { folderId: newFolderId } }
+    toast.promise(
+      fetch(`${baseUrl}/update_file/${fileId}`, {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ updatedFields: { folderId: newFolderId } }),
+      })
+        .then(() => refetch({}))
+        .then(() => setPageNum(1)),
+      {
+        pending: "Moving file...",
+        success: "Moved Susscesfully.",
+        error: "Something went wrong!",
+      }
     );
-
-    console.log("DEBUG_FILE_UPDATE_RESPONSE: ", moveFileResponse);
-
-    toast.promise(getFilesForFolder(activeFolderId), {
-      pending: "Moving file...",
-      success: "Moved Susscesfully.",
-      error: "Something went wrong!",
-    });
   };
 
   return (

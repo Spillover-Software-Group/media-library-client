@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  createRef,
-  useCallback,
-  useRef,
-  useEffect,
-} from "react";
+import React, { useState, createRef, useCallback, useRef } from "react";
 import Dropzone from "react-dropzone";
 import { toast } from "react-toastify";
 
@@ -19,19 +13,18 @@ import Loading from "../Loading";
 const allowedImageTypes = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"];
 
 function FilesContainer({
-  // mediaList,
   foldersList,
   activeFolderId,
   selectedBusinessId,
   userId,
-  getFilesForFolder,
+  pageNum,
+  setPageNum,
 }) {
-  const [pageNum, setPageNum] = useState(1);
-  const { isLoading, mediaList, setMediaList, hasMore, totalFiles, refetch } =
+  const { isLoading, mediaList, hasMore, totalFiles, refetch } =
     useFetchFilesForFolder(pageNum, userId, activeFolderId);
 
   const observer = useRef();
-  const lastMediFileElementRef = useCallback(
+  const lastMediaFileElementRef = useCallback(
     (node) => {
       if (isLoading) return;
       if (observer.current) observer.current.disconnect();
@@ -58,8 +51,6 @@ function FilesContainer({
     }
   });
 
-  // console.log({ filteredFiles, mediaList });
-
   const isImage = (item) =>
     allowedImageTypes.includes(`.${item.fileName.split(".").pop()}`);
 
@@ -83,16 +74,18 @@ function FilesContainer({
     }
 
     // TODO: We need a better way to handle API calls, refetch, etc
+    // We need to change the page number to have a refetch. For now its a "ugly" solution, when
+    // we implement the new back end needs to fix this.
     toast.promise(
       fetch(`${baseUrl}/upload_files`, {
         method: "post",
         body: formData,
       })
-        .then(async (res) => {
-          console.log({ res });
-          setPageNum(1);
+        .then(async () => {
           refetch({});
         })
+        .then(() => setPageNum(0))
+        .then(() => setPageNum(1))
         .catch((err) => {
           console.log(`Error occured: ${err}`);
         }),
@@ -188,16 +181,18 @@ function FilesContainer({
                           filteredFiles?.map((file, i) => {
                             if (filteredFiles?.length === i + 1) {
                               return (
-                                <div key={i} ref={lastMediFileElementRef}>
+                                <div key={i} ref={lastMediaFileElementRef}>
                                   <MediaFile
                                     file={file}
                                     isImage={isImage(file)}
                                     mediaSrc={file.url}
                                     foldersList={foldersList}
                                     fileIsDeleted={false}
-                                    getFilesForFolder={getFilesForFolder}
                                     activeFolderId={activeFolderId}
                                     userId={userId}
+                                    pageNum={pageNum}
+                                    setPageNum={setPageNum}
+                                    refetch={refetch}
                                   />
                                 </div>
                               );
@@ -210,9 +205,11 @@ function FilesContainer({
                                     mediaSrc={file.url}
                                     foldersList={foldersList}
                                     fileIsDeleted={false}
-                                    getFilesForFolder={getFilesForFolder}
                                     activeFolderId={activeFolderId}
                                     userId={userId}
+                                    pageNum={pageNum}
+                                    setPageNum={setPageNum}
+                                    refetch={refetch}
                                   />
                                 </div>
                               );

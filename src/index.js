@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 import "./css/style.scss";
@@ -9,14 +9,11 @@ import config from "./config";
 const { baseUrl } = config;
 
 function MediaLibrary({ handleSelected, businessList, userId }) {
-  console.log("RENDERED MEDIA LIBRARY");
   const defaultBusiness =
     businessList && businessList.length > 0 ? businessList[0].id : "";
   const [selectedBusinessId, setSelectedBusinessId] = useState(defaultBusiness);
   const [activeFolderId, setActiveFolderId] = useState(null);
-  const [mediaList, setMediaList] = useState([]);
   const [foldersList, setFoldersList] = useState([]);
-  const [fileIsUploading, setFileIsUploading] = useState(false);
 
   const getFoldersList = async () => {
     const folderListUrl = selectedBusinessId
@@ -36,15 +33,6 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
 
     return setFoldersList(foldersResponse.data);
   };
-
-  // const getFilesForFolder = async (folderId) => {
-  //   const filesResponse = await axios.get(`${baseUrl}/${folderId}/files`, {
-  //     params: { userId },
-  //   });
-
-  //   console.log("DEBUG_FILES_FOR_FOLDER: ", filesResponse);
-  //   setMediaList(filesResponse.data);
-  // };
 
   if (!activeFolderId) {
     getFoldersList();
@@ -72,12 +60,8 @@ function MediaLibrary({ handleSelected, businessList, userId }) {
       setActiveFolderId={setActiveFolderId}
       key={`${selectedBusinessId}-${activeFolderId}`}
       recoverFile={recoverFile}
-      // mediaList={mediaList}
-      // setMediaList={setMediaList}
       getFoldersList={getFoldersList}
       foldersList={foldersList}
-      // filesUploading={fileIsUploading}
-      // getFilesForFolder={getFilesForFolder}
       businessList={businessList}
     />
   );

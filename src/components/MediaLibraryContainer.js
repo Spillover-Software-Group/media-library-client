@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
+import useFetchFilesForFolder from "./hooks/useFetchFilesForFolder";
 import FoldersNavigation from "./FoldersNavigation";
 import FilesContainer from "./FilesContainer";
 import UploadFileButton from "./buttons/UploadFileButton";
@@ -13,17 +14,16 @@ function MediaLibraryContainer({
   setSelectedBusinessId,
   activeFolderId,
   setActiveFolderId,
-  mediaList,
   foldersList,
   getFoldersList,
-  getFilesForFolder,
   baseUrl,
   userId,
   businessList,
 }) {
   // Some of these will need to move up to the parent element. I need to know when new files are added, and
   // which folder is active. This calls for storing some data in the main index component.
-  const [fileIsUploading, setFileIsUploading] = useState(false);
+  const [pageNum, setPageNum] = useState(1);
+  const { refetch } = useFetchFilesForFolder(pageNum, userId, activeFolderId);
 
   const inputRef = useRef();
 
@@ -59,9 +59,11 @@ function MediaLibraryContainer({
         method: "post",
         body: formData,
       })
-        .then(async (res) => {
-          console.log(res);
+        .then(async () => {
+          refetch({});
         })
+        .then(() => setPageNum(0))
+        .then(() => setPageNum(1))
         .catch((err) => {
           console.log(`Error occured: ${err}`);
         }),
@@ -82,7 +84,6 @@ function MediaLibraryContainer({
           activeFolderId={activeFolderId}
           getFoldersList={getFoldersList}
           selectedBusinessId={selectedBusinessId}
-          getFilesForFolder={getFilesForFolder}
           userId={userId}
         />
 
@@ -106,12 +107,12 @@ function MediaLibraryContainer({
 
           <div className="p-4 h-[calc(100%_-_4rem)]">
             <FilesContainer
-              mediaList={mediaList}
               activeFolderId={activeFolderId}
               foldersList={foldersList}
               selectedBusinessId={selectedBusinessId}
               userId={userId}
-              getFilesForFolder={getFilesForFolder}
+              pageNum={pageNum}
+              setPageNum={setPageNum}
             />
           </div>
         </div>

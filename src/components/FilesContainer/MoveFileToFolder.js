@@ -7,7 +7,7 @@ import RegularIcon from "../icons/RegularIcon";
 
 function MoveFileToFolder({ foldersList, activeFolderId, fileId, moveFile }) {
   const popperModifiers = {
-    placement: "bottom",
+    placement: "left",
     modifiers: [, { name: "offset", options: { offset: [0, 0] } }],
   };
 
