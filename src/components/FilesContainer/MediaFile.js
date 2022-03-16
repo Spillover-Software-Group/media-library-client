@@ -12,8 +12,6 @@ function MediaFile({
   activeFolderId,
   getFilesForFolder,
   userId,
-  fileIsDeleted,
-  pageNum,
   setPageNum,
   refetch,
 }) {
@@ -73,7 +71,6 @@ function MediaFile({
                 userId={userId}
                 mediaSrc={mediaSrc}
                 foldersList={foldersList}
-                pageNum={pageNum}
                 setPageNum={setPageNum}
                 refetch={refetch}
               />

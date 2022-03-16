@@ -10,7 +10,6 @@ function Folder({
   setActiveFolderId,
   activeFolderId,
   getFoldersList,
-  getFilesForFolder,
   userId,
 }) {
   const { baseUrl } = config;
@@ -66,7 +65,8 @@ function Folder({
     });
 
     console.log("DEBUG_FILE_DELETE_RESPONSE: ", deleteFileResponse);
-    await getFilesForFolder(activeFolderId);
+    // NOTE: there is no more getFilesForFolder function, it is the hook useFetchFilesForFolder
+    // await getFilesForFolder(activeFolderId);
   };
 
   return (

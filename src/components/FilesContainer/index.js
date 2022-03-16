@@ -4,25 +4,22 @@ import { toast } from "react-toastify";
 
 import config from "../../config";
 import RegularIcon from "../icons/RegularIcon";
-import MediaFile from "./MediaFile";
-import EmptyFolder from "./EmptyFolder";
 import SearchBar from "../SearchBar";
-import useFetchFilesForFolder from "../hooks/useFetchFilesForFolder";
 import Loading from "../Loading";
-
-const allowedImageTypes = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"];
+import MediaFileList from "./MediaFileList";
 
 function FilesContainer({
   foldersList,
   activeFolderId,
   selectedBusinessId,
   userId,
-  pageNum,
   setPageNum,
+  isLoading,
+  mediaList,
+  hasMore,
+  totalFiles,
+  refetch,
 }) {
-  const { isLoading, mediaList, hasMore, totalFiles, refetch } =
-    useFetchFilesForFolder(pageNum, userId, activeFolderId);
-
   const observer = useRef();
   const lastMediaFileElementRef = useCallback(
     (node) => {
@@ -50,9 +47,6 @@ function FilesContainer({
       return file;
     }
   });
-
-  const isImage = (item) =>
-    allowedImageTypes.includes(`.${item.fileName.split(".").pop()}`);
 
   const activeFolder = foldersList?.find(
     (folder) => folder.id === activeFolderId
@@ -173,50 +167,16 @@ function FilesContainer({
                   {isLoading ? (
                     <Loading />
                   ) : (
-                    <div className="w-full overflow-y-auto cursor-default">
-                      <div className="flex flex-wrap justify-center p-2">
-                        {filteredFiles?.length <= 0 ? (
-                          <EmptyFolder />
-                        ) : (
-                          filteredFiles?.map((file, i) => {
-                            if (filteredFiles?.length === i + 1) {
-                              return (
-                                <div key={i} ref={lastMediaFileElementRef}>
-                                  <MediaFile
-                                    file={file}
-                                    isImage={isImage(file)}
-                                    mediaSrc={file.url}
-                                    foldersList={foldersList}
-                                    fileIsDeleted={false}
-                                    activeFolderId={activeFolderId}
-                                    userId={userId}
-                                    pageNum={pageNum}
-                                    setPageNum={setPageNum}
-                                    refetch={refetch}
-                                  />
-                                </div>
-                              );
-                            } else {
-                              return (
-                                <div key={i}>
-                                  <MediaFile
-                                    file={file}
-                                    isImage={isImage(file)}
-                                    mediaSrc={file.url}
-                                    foldersList={foldersList}
-                                    fileIsDeleted={false}
-                                    activeFolderId={activeFolderId}
-                                    userId={userId}
-                                    pageNum={pageNum}
-                                    setPageNum={setPageNum}
-                                    refetch={refetch}
-                                  />
-                                </div>
-                              );
-                            }
-                          })
-                        )}
-                      </div>
+                    <div className="w-full overflow-y-auto cursor-default min-h-screen">
+                      <MediaFileList
+                        filteredFiles={filteredFiles}
+                        lastMediaFileElementRef={lastMediaFileElementRef}
+                        foldersList={foldersList}
+                        activeFolderId={activeFolderId}
+                        userId={userId}
+                        setPageNum={setPageNum}
+                        refetch={refetch}
+                      />
 
                       <div className="flex justify-center">
                         {isLoading && <Loading />}

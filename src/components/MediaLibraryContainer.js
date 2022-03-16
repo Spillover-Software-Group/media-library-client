@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ToastContainer, toast } from "react-toastify";
 
-import useFetchFilesForFolder from "./hooks/useFetchFilesForFolder";
+import useFetchFilesForFolder from "../hooks/useFetchFilesForFolder";
 import FoldersNavigation from "./FoldersNavigation";
 import FilesContainer from "./FilesContainer";
 import UploadFileButton from "./buttons/UploadFileButton";
@@ -23,7 +23,8 @@ function MediaLibraryContainer({
   // Some of these will need to move up to the parent element. I need to know when new files are added, and
   // which folder is active. This calls for storing some data in the main index component.
   const [pageNum, setPageNum] = useState(1);
-  const { refetch } = useFetchFilesForFolder(pageNum, userId, activeFolderId);
+  const { isLoading, mediaList, hasMore, totalFiles, refetch } =
+    useFetchFilesForFolder(pageNum, userId, activeFolderId);
 
   const inputRef = useRef();
 
@@ -54,6 +55,9 @@ function MediaLibraryContainer({
       });
     }
 
+    // TODO: We need a better way to handle API calls, refetch, etc
+    // We need to change the page number to have a refetch. For now its a "ugly" solution, when
+    // we implement the new back end needs to fix this.
     toast.promise(
       fetch(`${baseUrl}/upload_files`, {
         method: "post",
@@ -111,8 +115,12 @@ function MediaLibraryContainer({
               foldersList={foldersList}
               selectedBusinessId={selectedBusinessId}
               userId={userId}
-              pageNum={pageNum}
               setPageNum={setPageNum}
+              isLoading={isLoading}
+              mediaList={mediaList}
+              hasMore={hasMore}
+              totalFiles={totalFiles}
+              refetch={refetch}
             />
           </div>
         </div>

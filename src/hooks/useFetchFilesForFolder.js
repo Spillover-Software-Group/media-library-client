@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import config from "../../config";
+import config from "../config";
 
 function useFetchFilesForFolder(pageNum, userId, activeFolderId) {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,8 +19,6 @@ function useFetchFilesForFolder(pageNum, userId, activeFolderId) {
 
     setIsLoading(true);
     setError(false);
-
-    console.log("FROM HERE");
 
     axios
       .get(`${baseUrl}/${activeFolderId}/files?pageNum=${pageNum}`, {
@@ -44,7 +42,6 @@ function useFetchFilesForFolder(pageNum, userId, activeFolderId) {
   }, [pageNum]);
 
   useEffect(() => {
-    console.log("FROM REFETCH");
     setIsLoading(true);
     setError(false);
 

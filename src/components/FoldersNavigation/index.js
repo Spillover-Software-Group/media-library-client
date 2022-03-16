@@ -11,7 +11,6 @@ function FoldersNavigation({
   activeFolderId,
   getFoldersList,
   selectedBusinessId,
-  getFilesForFolder,
   userId,
 }) {
   return (
@@ -37,7 +36,6 @@ function FoldersNavigation({
             setActiveFolderId={setActiveFolderId}
             activeFolderId={activeFolderId}
             getFoldersList={getFoldersList}
-            getFilesForFolder={getFilesForFolder}
             userId={userId}
           />
         </ul>

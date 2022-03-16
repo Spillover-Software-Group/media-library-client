@@ -7,7 +7,6 @@ function FoldersList({
   setActiveFolderId,
   activeFolderId,
   getFoldersList,
-  getFilesForFolder,
   userId,
 }) {
   return (
@@ -19,7 +18,6 @@ function FoldersList({
             setActiveFolderId={setActiveFolderId}
             activeFolderId={activeFolderId}
             getFoldersList={getFoldersList}
-            getFilesForFolder={getFilesForFolder}
             userId={userId}
           />
         </li>

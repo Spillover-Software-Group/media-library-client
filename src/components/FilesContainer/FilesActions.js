@@ -15,7 +15,6 @@ function FilesActions({
   userId,
   mediaSrc,
   foldersList,
-  pageNum,
   setPageNum,
   refetch,
 }) {

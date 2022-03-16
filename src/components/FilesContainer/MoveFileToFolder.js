@@ -42,7 +42,7 @@ function MoveFileToFolder({ foldersList, activeFolderId, fileId, moveFile }) {
               style={styles.popper}
               {...attributes.popper}
               static
-              className="absolute w-44 text-xs bg-white p-2 border border-spillover-color3 rounded-2xl shadow-lg"
+              className="absolute w-44 text-xs bg-white p-2 border border-spillover-color3 rounded-2xl shadow-lg z-50"
             >
               <ul>
                 {filteredFoldersList?.map((folder) => (
