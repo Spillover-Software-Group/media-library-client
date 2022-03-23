@@ -5,11 +5,11 @@ import MediaLibrary from '../src';
 const businessList = [
   {
     id: 'TEST_SPILLOVER_ID',
-    name: 'Spillover',
+    label: 'Spillover',
   },
   {
     id: 2,
-    name: 'Test',
+    label: 'Test',
   },
 ];
 
