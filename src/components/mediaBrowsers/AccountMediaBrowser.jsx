@@ -11,7 +11,7 @@ import { toast } from 'react-toastify';
 
 import {
   ChonkyActions,
-  ChonkyIconName,
+  // ChonkyIconName,
   defineFileAction,
   FileBrowser,
   FileContextMenu,
@@ -22,7 +22,7 @@ import {
 
 import config from '../../config';
 import NewFolderPrompt from '../NewFolderPrompt';
-import ShowImageModal from '../modals/ShowImageModal';
+// import ShowImageModal from '../modals/ShowImageModal';
 import useFolderQuery from '../../hooks/useFolderQuery';
 import { splitFilesAndFolders } from './util';
 

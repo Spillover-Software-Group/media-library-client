@@ -13,7 +13,7 @@ function App() {
   };
 
   return (
-    <div className="sml-h-screen">
+    <div className="wrapper">
       <MediaLibrary
         mode="development"
         handleSelected={handleSelected}

@@ -130,7 +130,7 @@ function MediaLibraryContainer({
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="sml-flex sml-h-full sml-justify-center sml-items-center">
+      <div className="spillover-media-library sml-flex sml-h-full sml-justify-center sml-items-center">
         <div className="sml-w-full sml-h-full sml-flex">
           <Sidebar
             libraries={libraries}
@@ -140,7 +140,7 @@ function MediaLibraryContainer({
           />
 
           <div className="sml-w-full sml-h-full">
-            <div className="sml-flex sml-bg-gray-50 sml-flex-col sml-w-full sml-pb-0.5 sml-border-b sml-border-spillover-color3">
+            <div className="sml-flex sml-bg-gray-50 sml-flex-col sml-w-full sml-pb-0.5 sml-border-b sml-border-spillover-color3 sml-h-14">
               <div className="sml-flex sml-justify-evenly sml-py-2">
                 <AccountSwitcher
                   accounts={accounts}

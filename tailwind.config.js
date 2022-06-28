@@ -1,6 +1,9 @@
 module.exports = {
   content: ['./index.html', './src/**/*.{html,js,jsx}'],
   prefix: 'sml-',
+  corePlugins: {
+    preflight: false,
+  },
   theme: {
     extend: {
       screens: {

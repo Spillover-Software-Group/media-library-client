@@ -46,11 +46,11 @@ function NewFolderPrompt({ parentId, close }) {
           <Field
             name="name"
             placeholder="Folder name"
-            className="sml-bg-gray-50 sml-border sml-border-gray-300 sml-text-gray-900 sml-text-sm sml-rounded-lg sml-focus:ring-spillover-color2 sml-focus:border-spillover-color2 sml-block sml-p-2"
+            className="sml-border-solid sml-bg-gray-50 sml-border sml-border-gray-300 sml-text-gray-900 sml-text-sm sml-rounded-lg sml-focus:ring-spillover-color2 sml-focus:border-spillover-color2 sml-block sml-p-2"
           />
 
           <button
-            className="sml-bg-spillover-color2 sml-px-3 sml-py-1 sml-text-xs sml-md:text-sm sml-text-white sml-rounded-2xl"
+            className="sml-bg-spillover-color2 sml-px-3 sml-py-1 sml-text-xs sml-md:text-sm sml-text-white sml-rounded-2xl sml-border-none"
             type="submit"
             disabled={isSubmitting}
           >
@@ -58,7 +58,7 @@ function NewFolderPrompt({ parentId, close }) {
           </button>
 
           <button
-            className="sml-bg-spillover-color3 sml-px-3 sml-py-1 sml-text-xs sml-md:text-sm sml-text-black sml-rounded-2xl"
+            className="sml-bg-spillover-color3 sml-px-3 sml-py-1 sml-text-xs sml-md:text-sm sml-text-black sml-rounded-2xl sml-border-none"
             type="button"
             disabled={isSubmitting}
             onClick={() => close()}
