@@ -1,3 +1,3 @@
-# Media Library Client
+# Media Library React
 
-Client for the Media Library used by ENGAGE and Senalysis.
+Spillover Media Library react component.

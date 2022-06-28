@@ -1,7 +1,14 @@
-// Base URL for the API server requests. <-- Change it once the API service is deployed
+const acceptedImageTypes = ['image/jpeg', 'image/gif', 'image/png'];
+const acceptedVideoTypes = ['video/mp4', 'video/quicktime'];
+
 const config = {
-  baseUrl: 'http://localhost:3030',
-  allowedFileTypes: ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG', '.mp4', '.mpeg4', '.mov', '.MOV'],
+  graphqlEndpoint: 'https://media-library-api.spillover.com/graphql',
+  graphqlDevEndpoint: 'http://localhost:3030/graphql',
+  acceptedImageTypes,
+  acceptedVideoTypes,
+  acceptedFileTypes: [...acceptedImageTypes, ...acceptedVideoTypes],
+  maxImageSize: 52428800, // 5MB
+  maxVideoSize: 2147483648, // 2GB
 };
 
 export default config;
