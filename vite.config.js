@@ -12,23 +12,13 @@ export default defineConfig({
     host: true,
     port: 1234,
   },
-  resolve: {
-    dedupe: ['react', 'react-dom'],
-  },
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/main.jsx'),
-      name: 'MediaLibrary',
-      fileName: (format) => `media_library.${format}.js`,
+      formats: ['es'],
     },
     rollupOptions: {
       external: ['react', 'react-dom'],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-        },
-      },
     },
   },
 });

@@ -143,7 +143,7 @@ var reactIs_production_min$2 = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var b$4 = 60103, c$4 = 60106, d$4 = 60107, e$2 = 60108, f$5 = 60114, g$5 = 60109, h$5 = 60110, k$5 = 60112, l$4 = 60113, m$5 = 60120, n$4 = 60115, p$5 = 60116, q$5 = 60121, r$3 = 60122, u$3 = 60117, v$4 = 60129, w$5 = 60131;
+var b$4 = 60103, c$4 = 60106, d$4 = 60107, e$2 = 60108, f$5 = 60114, g$5 = 60109, h$5 = 60110, k$5 = 60112, l$3 = 60113, m$5 = 60120, n$4 = 60115, p$5 = 60116, q$5 = 60121, r$4 = 60122, u$3 = 60117, v$4 = 60129, w$5 = 60131;
 if (typeof Symbol === "function" && Symbol.for) {
   var x$4 = Symbol.for;
   b$4 = x$4("react.element");
@@ -154,12 +154,12 @@ if (typeof Symbol === "function" && Symbol.for) {
   g$5 = x$4("react.provider");
   h$5 = x$4("react.context");
   k$5 = x$4("react.forward_ref");
-  l$4 = x$4("react.suspense");
+  l$3 = x$4("react.suspense");
   m$5 = x$4("react.suspense_list");
   n$4 = x$4("react.memo");
   p$5 = x$4("react.lazy");
   q$5 = x$4("react.block");
-  r$3 = x$4("react.server.block");
+  r$4 = x$4("react.server.block");
   u$3 = x$4("react.fundamental");
   v$4 = x$4("react.debug_trace_mode");
   w$5 = x$4("react.legacy_hidden");
@@ -173,7 +173,7 @@ function y$4(a) {
           case d$4:
           case f$5:
           case e$2:
-          case l$4:
+          case l$3:
           case m$5:
             return a;
           default:
@@ -193,7 +193,7 @@ function y$4(a) {
     }
   }
 }
-var z$4 = g$5, A$4 = b$4, B$3 = k$5, C$2 = d$4, D$2 = p$5, E$3 = n$4, F$3 = c$4, G$3 = f$5, H$3 = e$2, I$3 = l$4;
+var z$4 = g$5, A$4 = b$4, B$3 = k$5, C$2 = d$4, D$2 = p$5, E$3 = n$4, F$3 = c$4, G$3 = f$5, H$3 = e$2, I$3 = l$3;
 reactIs_production_min$2.ContextConsumer = h$5;
 reactIs_production_min$2.ContextProvider = z$4;
 reactIs_production_min$2.Element = A$4;
@@ -242,10 +242,10 @@ reactIs_production_min$2.isStrictMode = function(a) {
   return y$4(a) === e$2;
 };
 reactIs_production_min$2.isSuspense = function(a) {
-  return y$4(a) === l$4;
+  return y$4(a) === l$3;
 };
 reactIs_production_min$2.isValidElementType = function(a) {
-  return typeof a === "string" || typeof a === "function" || a === d$4 || a === f$5 || a === v$4 || a === e$2 || a === l$4 || a === m$5 || a === w$5 || typeof a === "object" && a !== null && (a.$$typeof === p$5 || a.$$typeof === n$4 || a.$$typeof === g$5 || a.$$typeof === h$5 || a.$$typeof === k$5 || a.$$typeof === u$3 || a.$$typeof === q$5 || a[0] === r$3) ? true : false;
+  return typeof a === "string" || typeof a === "function" || a === d$4 || a === f$5 || a === v$4 || a === e$2 || a === l$3 || a === m$5 || a === w$5 || typeof a === "object" && a !== null && (a.$$typeof === p$5 || a.$$typeof === n$4 || a.$$typeof === g$5 || a.$$typeof === h$5 || a.$$typeof === k$5 || a.$$typeof === u$3 || a.$$typeof === q$5 || a[0] === r$4) ? true : false;
 };
 reactIs_production_min$2.typeOf = y$4;
 function clamp(value) {
@@ -3280,16 +3280,16 @@ function jssNested() {
 }
 var uppercasePattern = /[A-Z]/g;
 var msPattern = /^ms-/;
-var cache$2 = {};
+var cache$3 = {};
 function toHyphenLower(match2) {
   return "-" + match2.toLowerCase();
 }
 function hyphenateStyleName(name) {
-  if (cache$2.hasOwnProperty(name)) {
-    return cache$2[name];
+  if (cache$3.hasOwnProperty(name)) {
+    return cache$3[name];
   }
   var hName = name.replace(uppercasePattern, toHyphenLower);
-  return cache$2[name] = msPattern.test(hName) ? "-" + hName : hName;
+  return cache$3[name] = msPattern.test(hName) ? "-" + hName : hName;
 }
 function convertCase(style2) {
   var converted = {};
@@ -3797,16 +3797,16 @@ var noPrefill = plugins.filter(function(p2) {
   return a;
 }, []);
 var el;
-var cache$1 = {};
+var cache$2 = {};
 if (isBrowser$1) {
   el = document.createElement("p");
   var computed = window.getComputedStyle(document.documentElement, "");
   for (var key$1 in computed) {
     if (!isNaN(key$1))
-      cache$1[computed[key$1]] = computed[key$1];
+      cache$2[computed[key$1]] = computed[key$1];
   }
   noPrefill.forEach(function(x2) {
-    return delete cache$1[x2];
+    return delete cache$2[x2];
   });
 }
 function supportedProperty17(prop, options2) {
@@ -3815,15 +3815,15 @@ function supportedProperty17(prop, options2) {
   }
   if (!el)
     return prop;
-  if (cache$1[prop] != null) {
-    return cache$1[prop];
+  if (cache$2[prop] != null) {
+    return cache$2[prop];
   }
   if (prop === "transition" || prop === "transform") {
     options2[prop] = prop in el.style;
   }
   for (var i = 0; i < propertyDetectors.length; i++) {
-    cache$1[prop] = propertyDetectors[i](prop, el.style, options2);
-    if (cache$1[prop])
+    cache$2[prop] = propertyDetectors[i](prop, el.style, options2);
+    if (cache$2[prop])
       break;
   }
   try {
@@ -3831,7 +3831,7 @@ function supportedProperty17(prop, options2) {
   } catch (err) {
     return false;
   }
-  return cache$1[prop];
+  return cache$2[prop];
 }
 var cache$1$1 = {};
 var transitionProperties = {
@@ -4232,42 +4232,23 @@ function _classCallCheck$d(instance, Constructor) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
-function toVal(mix) {
-  var k2, y2, str = "";
-  if (typeof mix === "string" || typeof mix === "number") {
-    str += mix;
-  } else if (typeof mix === "object") {
-    if (Array.isArray(mix)) {
-      for (k2 = 0; k2 < mix.length; k2++) {
-        if (mix[k2]) {
-          if (y2 = toVal(mix[k2])) {
-            str && (str += " ");
-            str += y2;
-          }
-        }
-      }
-    } else {
-      for (k2 in mix) {
-        if (mix[k2]) {
-          str && (str += " ");
-          str += k2;
-        }
-      }
-    }
-  }
-  return str;
+function r$3(e2) {
+  var t2, f2, n2 = "";
+  if (typeof e2 == "string" || typeof e2 == "number")
+    n2 += e2;
+  else if (typeof e2 == "object")
+    if (Array.isArray(e2))
+      for (t2 = 0; t2 < e2.length; t2++)
+        e2[t2] && (f2 = r$3(e2[t2])) && (n2 && (n2 += " "), n2 += f2);
+    else
+      for (t2 in e2)
+        e2[t2] && (n2 && (n2 += " "), n2 += t2);
+  return n2;
 }
-function l$3() {
-  var i = 0, tmp, x2, str = "";
-  while (i < arguments.length) {
-    if (tmp = arguments[i++]) {
-      if (x2 = toVal(tmp)) {
-        str && (str += " ");
-        str += x2;
-      }
-    }
-  }
-  return str;
+function clsx() {
+  for (var e2, t2, f2 = 0, n2 = ""; f2 < arguments.length; )
+    (e2 = arguments[f2++]) && (t2 = r$3(e2)) && (n2 && (n2 += " "), n2 += t2);
+  return n2;
 }
 var reactIs$1 = { exports: {} };
 var reactIs_production_min$1 = {};
@@ -4493,14 +4474,14 @@ function styled$2(Component2) {
     var StyledComponent = /* @__PURE__ */ React__default.forwardRef(function StyledComponent2(props, ref) {
       var children = props.children, classNameProp = props.className, clone2 = props.clone, ComponentProp = props.component, other = _objectWithoutProperties$2(props, ["children", "className", "clone", "component"]);
       var classes = useStyles2(props);
-      var className = l$3(classes.root, classNameProp);
+      var className = clsx(classes.root, classNameProp);
       var spread = other;
       if (filterProps2) {
         spread = omit(spread, filterProps2);
       }
       if (clone2) {
         return /* @__PURE__ */ React__default.cloneElement(children, _extends$5({
-          className: l$3(children.props.className, className)
+          className: clsx(children.props.className, className)
         }, spread));
       }
       if (typeof children === "function") {
@@ -6362,9 +6343,9 @@ function createDragDropManager(backendFactory, globalContext, backendOptions, de
 var DndContext = React.createContext({
   dragDropManager: void 0
 });
-function createDndContext(backend, context, options2, debugMode) {
+function createDndContext(backend, context2, options2, debugMode) {
   return {
-    dragDropManager: createDragDropManager(backend, context, options2, debugMode)
+    dragDropManager: createDragDropManager(backend, context2, options2, debugMode)
   };
 }
 function _slicedToArray$8(arr, i) {
@@ -6469,8 +6450,8 @@ var DndProvider = memo(function(_ref3) {
       if (isGlobalInstance) {
         refCount--;
         if (refCount === 0) {
-          var context = getGlobalContext();
-          context[instanceSymbol] = null;
+          var context2 = getGlobalContext();
+          context2[instanceSymbol] = null;
         }
       }
     };
@@ -6493,12 +6474,12 @@ function getDndContextValue(props) {
 }
 var instanceSymbol = Symbol.for("__REACT_DND_CONTEXT_INSTANCE__");
 function createSingletonDndContext(backend) {
-  var context = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : getGlobalContext();
+  var context2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : getGlobalContext();
   var options2 = arguments.length > 2 ? arguments[2] : void 0;
   var debugMode = arguments.length > 3 ? arguments[3] : void 0;
-  var ctx = context;
+  var ctx = context2;
   if (!ctx[instanceSymbol]) {
-    ctx[instanceSymbol] = createDndContext(backend, context, options2, debugMode);
+    ctx[instanceSymbol] = createDndContext(backend, context2, options2, debugMode);
   }
   return ctx[instanceSymbol];
 }
@@ -8841,8 +8822,8 @@ function getEmptyImage() {
   }
   return emptyImage;
 }
-var HTML5Backend = function createBackend(manager, context) {
-  return new HTML5BackendImpl(manager, context);
+var HTML5Backend = function createBackend(manager, context2) {
+  return new HTML5BackendImpl(manager, context2);
 };
 var extendStatics = function(d2, b2) {
   extendStatics = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d3, b3) {
@@ -11677,8 +11658,8 @@ function variadic(fn2, cache2, serializer) {
   }
   return computedValue;
 }
-function assemble(fn2, context, strategy, cache2, serialize2) {
-  return strategy.bind(context, fn2, cache2, serialize2);
+function assemble(fn2, context2, strategy, cache2, serialize2) {
+  return strategy.bind(context2, fn2, cache2, serialize2);
 }
 function strategyDefault(fn2, options2) {
   var strategy = fn2.length === 1 ? monadic : variadic;
@@ -12968,7 +12949,7 @@ function _assertThisInitialized$2(self2) {
   }
   return self2;
 }
-function createThemeProvider(context) {
+function createThemeProvider(context2) {
   var ThemeProvider2 = /* @__PURE__ */ function(_React$Component) {
     _inheritsLoose$1(ThemeProvider3, _React$Component);
     function ThemeProvider3() {
@@ -12982,7 +12963,7 @@ function createThemeProvider(context) {
       _defineProperty$3(_assertThisInitialized$2(_assertThisInitialized$2(_this)), "lastTheme", void 0);
       _defineProperty$3(_assertThisInitialized$2(_assertThisInitialized$2(_this)), "renderProvider", function(outerTheme) {
         var children = _this.props.children;
-        return React__default.createElement(context.Provider, {
+        return React__default.createElement(context2.Provider, {
           value: _this.getTheme(outerTheme)
         }, children);
       });
@@ -13008,16 +12989,16 @@ function createThemeProvider(context) {
       if (!children) {
         return null;
       }
-      return React__default.createElement(context.Consumer, null, this.renderProvider);
+      return React__default.createElement(context2.Consumer, null, this.renderProvider);
     };
     return ThemeProvider3;
   }(React__default.Component);
   return ThemeProvider2;
 }
-function createWithTheme(context) {
+function createWithTheme(context2) {
   return function hoc(Component2) {
     var withTheme = React__default.forwardRef(function(props, ref) {
-      return React__default.createElement(context.Consumer, null, function(theme) {
+      return React__default.createElement(context2.Consumer, null, function(theme) {
         return /* @__PURE__ */ jsx$1(Component2, {
           theme,
           ref,
@@ -13029,19 +13010,19 @@ function createWithTheme(context) {
     return withTheme;
   };
 }
-function createUseTheme(context) {
+function createUseTheme(context2) {
   var useTheme2 = function useTheme3() {
-    var theme = React__default.useContext(context);
+    var theme = React__default.useContext(context2);
     return theme;
   };
   return useTheme2;
 }
-function createTheming(context) {
+function createTheming(context2) {
   return {
-    context,
-    withTheme: createWithTheme(context),
-    useTheme: createUseTheme(context),
-    ThemeProvider: createThemeProvider(context)
+    context: context2,
+    withTheme: createWithTheme(context2),
+    useTheme: createUseTheme(context2),
+    ThemeProvider: createThemeProvider(context2)
   };
 }
 var ThemeContext$1 = createContext();
@@ -13606,8 +13587,8 @@ var JssContext = createContext({
   disableStylesGeneration: false
 });
 var defaultManagers = /* @__PURE__ */ new Map();
-var getManager = function getManager2(context, managerId) {
-  var managers = context.managers;
+var getManager = function getManager2(context2, managerId) {
+  var managers = context2.managers;
   if (managers) {
     if (!managers[managerId]) {
       managers[managerId] = new SheetsManager();
@@ -13622,14 +13603,14 @@ var getManager = function getManager2(context, managerId) {
   return manager;
 };
 var manageSheet = function manageSheet2(options2) {
-  var sheet = options2.sheet, context = options2.context, index2 = options2.index, theme = options2.theme;
+  var sheet = options2.sheet, context2 = options2.context, index2 = options2.index, theme = options2.theme;
   if (!sheet) {
     return;
   }
-  var manager = getManager(context, index2);
+  var manager = getManager(context2, index2);
   manager.manage(theme);
-  if (context.registry) {
-    context.registry.add(sheet);
+  if (context2.registry) {
+    context2.registry.add(sheet);
   }
 };
 var unmanageSheet = function unmanageSheet2(options2) {
@@ -13756,11 +13737,11 @@ var createUseStyles = function createUseStyles2(styles22, options2) {
   var emptyObject = {};
   return function useStyles2(data) {
     var isFirstMount = useRef(true);
-    var context = useContext(JssContext);
+    var context2 = useContext(JssContext);
     var theme = useTheme2(data && data.theme);
     var _React$useMemo = useMemo(function() {
       var newSheet = createStyleSheet({
-        context,
+        context: context2,
         styles: styles22,
         name,
         theme,
@@ -13771,13 +13752,13 @@ var createUseStyles = function createUseStyles2(styles22, options2) {
       if (newSheet) {
         manageSheet({
           index: index2,
-          context,
+          context: context2,
           sheet: newSheet,
           theme
         });
       }
       return [newSheet, newDynamicRules];
-    }, [context, theme]), sheet = _React$useMemo[0], dynamicRules = _React$useMemo[1];
+    }, [context2, theme]), sheet = _React$useMemo[0], dynamicRules = _React$useMemo[1];
     useEffectOrLayoutEffect(function() {
       if (sheet && dynamicRules && !isFirstMount.current) {
         updateDynamicRules(data, sheet, dynamicRules);
@@ -13788,7 +13769,7 @@ var createUseStyles = function createUseStyles2(styles22, options2) {
         if (sheet) {
           unmanageSheet({
             index: index2,
-            context,
+            context: context2,
             sheet,
             theme
           });
@@ -13931,7 +13912,7 @@ function createSubscription(store, parentSub) {
 }
 var useIsomorphicLayoutEffect$1 = typeof window !== "undefined" && typeof window.document !== "undefined" && typeof window.document.createElement !== "undefined" ? useLayoutEffect : useEffect;
 function Provider(_ref3) {
-  var store = _ref3.store, context = _ref3.context, children = _ref3.children;
+  var store = _ref3.store, context2 = _ref3.context, children = _ref3.children;
   var contextValue = useMemo(function() {
     var subscription = createSubscription(store);
     return {
@@ -13954,7 +13935,7 @@ function Provider(_ref3) {
       subscription.onStateChange = null;
     };
   }, [contextValue, previousState]);
-  var Context2 = context || ReactReduxContext;
+  var Context2 = context2 || ReactReduxContext;
   return /* @__PURE__ */ jsx$1(Context2.Provider, {
     value: contextValue,
     children
@@ -14078,12 +14059,12 @@ function useReduxContext() {
   var contextValue = useContext(ReactReduxContext);
   return contextValue;
 }
-function createStoreHook(context) {
-  if (context === void 0) {
-    context = ReactReduxContext;
+function createStoreHook(context2) {
+  if (context2 === void 0) {
+    context2 = ReactReduxContext;
   }
-  var useReduxContext$1 = context === ReactReduxContext ? useReduxContext : function() {
-    return useContext(context);
+  var useReduxContext$1 = context2 === ReactReduxContext ? useReduxContext : function() {
+    return useContext(context2);
   };
   return function useStore2() {
     var _useReduxContext = useReduxContext$1(), store = _useReduxContext.store;
@@ -14091,11 +14072,11 @@ function createStoreHook(context) {
   };
 }
 var useStore = /* @__PURE__ */ createStoreHook();
-function createDispatchHook(context) {
-  if (context === void 0) {
-    context = ReactReduxContext;
+function createDispatchHook(context2) {
+  if (context2 === void 0) {
+    context2 = ReactReduxContext;
   }
-  var useStore$1 = context === ReactReduxContext ? useStore : createStoreHook(context);
+  var useStore$1 = context2 === ReactReduxContext ? useStore : createStoreHook(context2);
   return function useDispatch2() {
     var store = useStore$1();
     return store.dispatch;
@@ -14168,12 +14149,12 @@ function useSelectorWithStoreAndSubscription(selector, equalityFn, store, contex
   }, [store, subscription]);
   return selectedState;
 }
-function createSelectorHook(context) {
-  if (context === void 0) {
-    context = ReactReduxContext;
+function createSelectorHook(context2) {
+  if (context2 === void 0) {
+    context2 = ReactReduxContext;
   }
-  var useReduxContext$1 = context === ReactReduxContext ? useReduxContext : function() {
-    return useContext(context);
+  var useReduxContext$1 = context2 === ReactReduxContext ? useReduxContext : function() {
+    return useContext(context2);
   };
   return function useSelector2(selector, equalityFn) {
     if (equalityFn === void 0) {
@@ -14828,7 +14809,7 @@ an.setUseProxies.bind(an);
 an.applyPatches.bind(an);
 an.createDraft.bind(an);
 an.finishDraft.bind(an);
-var createNextState2 = fn;
+var createNextState3 = fn;
 var NOT_FOUND = "NOT_FOUND";
 function createSingletonCache(equals) {
   var entry;
@@ -15201,6 +15182,10 @@ var MiddlewareArray = function(_super) {
   };
   return MiddlewareArray2;
 }(Array);
+function freezeDraftable(val) {
+  return t(val) ? createNextState3(val, function() {
+  }) : val;
+}
 function isBoolean(x2) {
   return typeof x2 === "boolean";
 }
@@ -15321,12 +15306,10 @@ function createReducer(initialState2, mapOrBuilderCallback, actionMatchers, defa
   var getInitialState;
   if (isStateFunction(initialState2)) {
     getInitialState = function() {
-      return createNextState2(initialState2(), function() {
-      });
+      return freezeDraftable(initialState2());
     };
   } else {
-    var frozenInitialState_1 = createNextState2(initialState2, function() {
-    });
+    var frozenInitialState_1 = freezeDraftable(initialState2);
     getInitialState = function() {
       return frozenInitialState_1;
     };
@@ -15368,7 +15351,7 @@ function createReducer(initialState2, mapOrBuilderCallback, actionMatchers, defa
           }
           return result2;
         } else {
-          return createNextState2(previousState, function(draft2) {
+          return createNextState3(previousState, function(draft2) {
             return caseReducer(draft2, action);
           });
         }
@@ -15387,8 +15370,12 @@ function createSlice(options2) {
   if (!name) {
     throw new Error("`name` is a required option for createSlice");
   }
-  var initialState2 = typeof options2.initialState == "function" ? options2.initialState : createNextState2(options2.initialState, function() {
-  });
+  if (typeof process !== "undefined" && false) {
+    if (options2.initialState === void 0) {
+      console.error("You must provide an `initialState` value that is not `undefined`. You may have misspelled `initialState`");
+    }
+  }
+  var initialState2 = typeof options2.initialState == "function" ? options2.initialState : freezeDraftable(options2.initialState);
   var reducers2 = options2.reducers || {};
   var reducerNames = Object.keys(reducers2);
   var sliceCaseReducersByName = {};
@@ -15441,9 +15428,9 @@ var castComparer = function(comparer) {
     return comparer(a, b2, order2) * order2;
   };
 };
-var throwInvalidConfigErrorIfTrue = function(condition, context) {
+var throwInvalidConfigErrorIfTrue = function(condition, context2) {
   if (condition)
-    throw Error("Invalid sort config: " + context);
+    throw Error("Invalid sort config: " + context2);
 };
 var unpackObjectSorter = function(sortByObj) {
   var _a2 = sortByObj || {}, asc = _a2.asc, desc = _a2.desc;
@@ -16906,7 +16893,7 @@ var Typography = /* @__PURE__ */ React.forwardRef(function Typography2(props, re
   var _props$align = props.align, align = _props$align === void 0 ? "inherit" : _props$align, classes = props.classes, className = props.className, _props$color = props.color, color2 = _props$color === void 0 ? "initial" : _props$color, component = props.component, _props$display = props.display, display2 = _props$display === void 0 ? "initial" : _props$display, _props$gutterBottom = props.gutterBottom, gutterBottom = _props$gutterBottom === void 0 ? false : _props$gutterBottom, _props$noWrap = props.noWrap, noWrap = _props$noWrap === void 0 ? false : _props$noWrap, _props$paragraph = props.paragraph, paragraph = _props$paragraph === void 0 ? false : _props$paragraph, _props$variant = props.variant, variant = _props$variant === void 0 ? "body1" : _props$variant, _props$variantMapping = props.variantMapping, variantMapping = _props$variantMapping === void 0 ? defaultVariantMapping : _props$variantMapping, other = _objectWithoutProperties$2(props, ["align", "classes", "className", "color", "component", "display", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"]);
   var Component2 = component || (paragraph ? "p" : variantMapping[variant] || defaultVariantMapping[variant]) || "span";
   return /* @__PURE__ */ React.createElement(Component2, _extends$5({
-    className: l$3(classes.root, className, variant !== "inherit" && classes[variant], color2 !== "initial" && classes["color".concat(capitalize$1(color2))], noWrap && classes.noWrap, gutterBottom && classes.gutterBottom, paragraph && classes.paragraph, align !== "inherit" && classes["align".concat(capitalize$1(align))], display2 !== "initial" && classes["display".concat(capitalize$1(display2))]),
+    className: clsx(classes.root, className, variant !== "inherit" && classes[variant], color2 !== "initial" && classes["color".concat(capitalize$1(color2))], noWrap && classes.noWrap, gutterBottom && classes.gutterBottom, paragraph && classes.paragraph, align !== "inherit" && classes["align".concat(capitalize$1(align))], display2 !== "initial" && classes["display".concat(capitalize$1(display2))]),
     ref
   }, other));
 });
@@ -16956,7 +16943,7 @@ var styles$w = function styles2(theme) {
 var SvgIcon = /* @__PURE__ */ React.forwardRef(function SvgIcon2(props, ref) {
   var children = props.children, classes = props.classes, className = props.className, _props$color = props.color, color2 = _props$color === void 0 ? "inherit" : _props$color, _props$component = props.component, Component2 = _props$component === void 0 ? "svg" : _props$component, _props$fontSize = props.fontSize, fontSize2 = _props$fontSize === void 0 ? "default" : _props$fontSize, htmlColor = props.htmlColor, titleAccess = props.titleAccess, _props$viewBox = props.viewBox, viewBox = _props$viewBox === void 0 ? "0 0 24 24" : _props$viewBox, other = _objectWithoutProperties$2(props, ["children", "classes", "className", "color", "component", "fontSize", "htmlColor", "titleAccess", "viewBox"]);
   return /* @__PURE__ */ React.createElement(Component2, _extends$5({
-    className: l$3(classes.root, className, color2 !== "inherit" && classes["color".concat(capitalize$1(color2))], fontSize2 !== "default" && classes["fontSize".concat(capitalize$1(fontSize2))]),
+    className: clsx(classes.root, className, color2 !== "inherit" && classes["color".concat(capitalize$1(color2))], fontSize2 !== "default" && classes["fontSize".concat(capitalize$1(fontSize2))]),
     focusable: "false",
     viewBox,
     color: htmlColor,
@@ -17074,10 +17061,10 @@ var ENTERED = "entered";
 var EXITING = "exiting";
 var Transition = /* @__PURE__ */ function(_React$Component) {
   _inheritsLoose$2(Transition2, _React$Component);
-  function Transition2(props, context) {
+  function Transition2(props, context2) {
     var _this;
-    _this = _React$Component.call(this, props, context) || this;
-    var parentGroup = context;
+    _this = _React$Component.call(this, props, context2) || this;
+    var parentGroup = context2;
     var appear = parentGroup && !parentGroup.isMounting ? props.enter : props.appear;
     var initialStatus;
     _this.appearStatus = null;
@@ -17421,9 +17408,9 @@ var defaultProps$1 = {
 };
 var TransitionGroup = /* @__PURE__ */ function(_React$Component) {
   _inheritsLoose$2(TransitionGroup2, _React$Component);
-  function TransitionGroup2(props, context) {
+  function TransitionGroup2(props, context2) {
     var _this;
-    _this = _React$Component.call(this, props, context) || this;
+    _this = _React$Component.call(this, props, context2) || this;
     var handleExited = _this.handleExited.bind(_assertThisInitialized$3(_this));
     _this.state = {
       contextValue: {
@@ -17496,14 +17483,14 @@ function Ripple(props) {
   var classes = props.classes, _props$pulsate = props.pulsate, pulsate = _props$pulsate === void 0 ? false : _props$pulsate, rippleX = props.rippleX, rippleY = props.rippleY, rippleSize = props.rippleSize, inProp = props.in, _props$onExited = props.onExited, onExited = _props$onExited === void 0 ? function() {
   } : _props$onExited, timeout = props.timeout;
   var _React$useState = React.useState(false), leaving = _React$useState[0], setLeaving = _React$useState[1];
-  var rippleClassName = l$3(classes.ripple, classes.rippleVisible, pulsate && classes.ripplePulsate);
+  var rippleClassName = clsx(classes.ripple, classes.rippleVisible, pulsate && classes.ripplePulsate);
   var rippleStyles = {
     width: rippleSize,
     height: rippleSize,
     top: -(rippleSize / 2) + rippleY,
     left: -(rippleSize / 2) + rippleX
   };
-  var childClassName = l$3(classes.child, leaving && classes.childLeaving, pulsate && classes.childPulsate);
+  var childClassName = clsx(classes.child, leaving && classes.childLeaving, pulsate && classes.childPulsate);
   var handleExited = useEventCallback$1(onExited);
   useEnhancedEffect$5(function() {
     if (!inProp) {
@@ -17735,7 +17722,7 @@ var TouchRipple = /* @__PURE__ */ React.forwardRef(function TouchRipple2(props, 
     };
   }, [pulsate, start, stop]);
   return /* @__PURE__ */ React.createElement("span", _extends$5({
-    className: l$3(classes.root, className),
+    className: clsx(classes.root, className),
     ref: container
   }, other), /* @__PURE__ */ React.createElement(TransitionGroup$1, {
     component: null,
@@ -17919,7 +17906,7 @@ var ButtonBase = /* @__PURE__ */ React.forwardRef(function ButtonBase2(props, re
   }, []);
   var enableTouchRipple = mountedState && !disableRipple && !disabled;
   return /* @__PURE__ */ React.createElement(ComponentProp, _extends$5({
-    className: l$3(classes.root, className, focusVisible && [classes.focusVisible, focusVisibleClassName], disabled && classes.disabled),
+    className: clsx(classes.root, className, focusVisible && [classes.focusVisible, focusVisibleClassName], disabled && classes.disabled),
     onBlur: handleBlur,
     onClick,
     onFocus: handleFocus,
@@ -18043,7 +18030,7 @@ var Breadcrumbs = /* @__PURE__ */ React.forwardRef(function Breadcrumbs2(props, 
     ref,
     component: Component2,
     color: "textSecondary",
-    className: l$3(classes.root, className)
+    className: clsx(classes.root, className)
   }, other), /* @__PURE__ */ React.createElement("ol", {
     className: classes.ol
   }, insertSeparators(expanded || maxItems && allItems.length <= maxItems ? allItems : renderItemsBeforeAndAfter(allItems), classes.separator, separator)));
@@ -18268,17 +18255,17 @@ var styles$r = function styles5(theme) {
 var Button = /* @__PURE__ */ React.forwardRef(function Button2(props, ref) {
   var children = props.children, classes = props.classes, className = props.className, _props$color = props.color, color2 = _props$color === void 0 ? "default" : _props$color, _props$component = props.component, component = _props$component === void 0 ? "button" : _props$component, _props$disabled = props.disabled, disabled = _props$disabled === void 0 ? false : _props$disabled, _props$disableElevati = props.disableElevation, disableElevation = _props$disableElevati === void 0 ? false : _props$disableElevati, _props$disableFocusRi = props.disableFocusRipple, disableFocusRipple = _props$disableFocusRi === void 0 ? false : _props$disableFocusRi, endIconProp = props.endIcon, focusVisibleClassName = props.focusVisibleClassName, _props$fullWidth = props.fullWidth, fullWidth = _props$fullWidth === void 0 ? false : _props$fullWidth, _props$size = props.size, size2 = _props$size === void 0 ? "medium" : _props$size, startIconProp = props.startIcon, _props$type = props.type, type = _props$type === void 0 ? "button" : _props$type, _props$variant = props.variant, variant = _props$variant === void 0 ? "text" : _props$variant, other = _objectWithoutProperties$2(props, ["children", "classes", "className", "color", "component", "disabled", "disableElevation", "disableFocusRipple", "endIcon", "focusVisibleClassName", "fullWidth", "size", "startIcon", "type", "variant"]);
   var startIcon = startIconProp && /* @__PURE__ */ React.createElement("span", {
-    className: l$3(classes.startIcon, classes["iconSize".concat(capitalize$1(size2))])
+    className: clsx(classes.startIcon, classes["iconSize".concat(capitalize$1(size2))])
   }, startIconProp);
   var endIcon = endIconProp && /* @__PURE__ */ React.createElement("span", {
-    className: l$3(classes.endIcon, classes["iconSize".concat(capitalize$1(size2))])
+    className: clsx(classes.endIcon, classes["iconSize".concat(capitalize$1(size2))])
   }, endIconProp);
   return /* @__PURE__ */ React.createElement(ButtonBase$1, _extends$5({
-    className: l$3(classes.root, classes[variant], className, color2 === "inherit" ? classes.colorInherit : color2 !== "default" && classes["".concat(variant).concat(capitalize$1(color2))], size2 !== "medium" && [classes["".concat(variant, "Size").concat(capitalize$1(size2))], classes["size".concat(capitalize$1(size2))]], disableElevation && classes.disableElevation, disabled && classes.disabled, fullWidth && classes.fullWidth),
+    className: clsx(classes.root, classes[variant], className, color2 === "inherit" ? classes.colorInherit : color2 !== "default" && classes["".concat(variant).concat(capitalize$1(color2))], size2 !== "medium" && [classes["".concat(variant, "Size").concat(capitalize$1(size2))], classes["size".concat(capitalize$1(size2))]], disableElevation && classes.disableElevation, disabled && classes.disabled, fullWidth && classes.fullWidth),
     component,
     disabled,
     focusRipple: !disableFocusRipple,
-    focusVisibleClassName: l$3(classes.focusVisible, focusVisibleClassName),
+    focusVisibleClassName: clsx(classes.focusVisible, focusVisibleClassName),
     ref,
     type
   }, other), /* @__PURE__ */ React.createElement("span", {
@@ -18993,7 +18980,7 @@ var styles$n = function styles7(theme) {
 var Paper = /* @__PURE__ */ React.forwardRef(function Paper2(props, ref) {
   var classes = props.classes, className = props.className, _props$component = props.component, Component2 = _props$component === void 0 ? "div" : _props$component, _props$square = props.square, square = _props$square === void 0 ? false : _props$square, _props$elevation = props.elevation, elevation = _props$elevation === void 0 ? 1 : _props$elevation, _props$variant = props.variant, variant = _props$variant === void 0 ? "elevation" : _props$variant, other = _objectWithoutProperties$2(props, ["classes", "className", "component", "square", "elevation", "variant"]);
   return /* @__PURE__ */ React.createElement(Component2, _extends$5({
-    className: l$3(classes.root, className, variant === "outlined" ? classes.outlined : classes["elevation".concat(elevation)], !square && classes.rounded),
+    className: clsx(classes.root, className, variant === "outlined" ? classes.outlined : classes["elevation".concat(elevation)], !square && classes.rounded),
     ref
   }, other));
 });
@@ -19198,7 +19185,7 @@ var Popover = /* @__PURE__ */ React.forwardRef(function Popover2(props, ref) {
     BackdropProps: {
       invisible: true
     },
-    className: l$3(classes.root, className)
+    className: clsx(classes.root, className)
   }, other), /* @__PURE__ */ React.createElement(TransitionComponent, _extends$5({
     appear: true,
     in: open,
@@ -19214,7 +19201,7 @@ var Popover = /* @__PURE__ */ React.forwardRef(function Popover2(props, ref) {
     elevation,
     ref: handlePaperRef
   }, PaperProps, {
-    className: l$3(classes.paper, PaperProps.className)
+    className: clsx(classes.paper, PaperProps.className)
   }), children)));
 });
 var Popover$1 = withStyles2(styles$m, {
@@ -19240,15 +19227,15 @@ var styles$l = {
 };
 var List = /* @__PURE__ */ React.forwardRef(function List2(props, ref) {
   var children = props.children, classes = props.classes, className = props.className, _props$component = props.component, Component2 = _props$component === void 0 ? "ul" : _props$component, _props$dense = props.dense, dense = _props$dense === void 0 ? false : _props$dense, _props$disablePadding = props.disablePadding, disablePadding = _props$disablePadding === void 0 ? false : _props$disablePadding, subheader = props.subheader, other = _objectWithoutProperties$2(props, ["children", "classes", "className", "component", "dense", "disablePadding", "subheader"]);
-  var context = React.useMemo(function() {
+  var context2 = React.useMemo(function() {
     return {
       dense
     };
   }, [dense]);
   return /* @__PURE__ */ React.createElement(ListContext$1.Provider, {
-    value: context
+    value: context2
   }, /* @__PURE__ */ React.createElement(Component2, _extends$5({
-    className: l$3(classes.root, className, dense && classes.dense, !disablePadding && classes.padding, subheader && classes.subheader),
+    className: clsx(classes.root, className, dense && classes.dense, !disablePadding && classes.padding, subheader && classes.subheader),
     ref
   }, other), subheader, children));
 });
@@ -19506,7 +19493,7 @@ var Menu$1 = /* @__PURE__ */ React.forwardRef(function Menu(props, ref) {
     autoFocusItem,
     variant
   }, MenuListProps, {
-    className: l$3(classes.list, MenuListProps.className)
+    className: clsx(classes.list, MenuListProps.className)
   }), items2));
 });
 var Menu$2 = withStyles2(styles$k, {
@@ -19527,9 +19514,9 @@ var styles$j = function styles8(theme) {
 };
 var ListItemIcon = /* @__PURE__ */ React.forwardRef(function ListItemIcon2(props, ref) {
   var classes = props.classes, className = props.className, other = _objectWithoutProperties$2(props, ["classes", "className"]);
-  var context = React.useContext(ListContext$1);
+  var context2 = React.useContext(ListContext$1);
   return /* @__PURE__ */ React.createElement("div", _extends$5({
-    className: l$3(classes.root, className, context.alignItems === "flex-start" && classes.alignItemsFlexStart),
+    className: clsx(classes.root, className, context2.alignItems === "flex-start" && classes.alignItemsFlexStart),
     ref
   }, other));
 });
@@ -19576,7 +19563,7 @@ var ListItemText = /* @__PURE__ */ React.forwardRef(function ListItemText2(props
     }, secondaryTypographyProps), secondary);
   }
   return /* @__PURE__ */ React.createElement("div", _extends$5({
-    className: l$3(classes.root, className, dense && classes.dense, inset && classes.inset, primary && secondary && classes.multiline),
+    className: clsx(classes.root, className, dense && classes.dense, inset && classes.inset, primary && secondary && classes.multiline),
     ref
   }, other), primary, secondary);
 });
@@ -19652,9 +19639,9 @@ var ListItem = /* @__PURE__ */ React.forwardRef(function ListItem2(props, ref) {
   var _props$alignItems = props.alignItems, alignItems2 = _props$alignItems === void 0 ? "center" : _props$alignItems, _props$autoFocus = props.autoFocus, autoFocus = _props$autoFocus === void 0 ? false : _props$autoFocus, _props$button = props.button, button = _props$button === void 0 ? false : _props$button, childrenProp = props.children, classes = props.classes, className = props.className, componentProp = props.component, _props$ContainerCompo = props.ContainerComponent, ContainerComponent = _props$ContainerCompo === void 0 ? "li" : _props$ContainerCompo, _props$ContainerProps = props.ContainerProps;
   _props$ContainerProps = _props$ContainerProps === void 0 ? {} : _props$ContainerProps;
   var ContainerClassName = _props$ContainerProps.className, ContainerProps = _objectWithoutProperties$2(_props$ContainerProps, ["className"]), _props$dense = props.dense, dense = _props$dense === void 0 ? false : _props$dense, _props$disabled = props.disabled, disabled = _props$disabled === void 0 ? false : _props$disabled, _props$disableGutters = props.disableGutters, disableGutters = _props$disableGutters === void 0 ? false : _props$disableGutters, _props$divider = props.divider, divider = _props$divider === void 0 ? false : _props$divider, focusVisibleClassName = props.focusVisibleClassName, _props$selected = props.selected, selected = _props$selected === void 0 ? false : _props$selected, other = _objectWithoutProperties$2(props, ["alignItems", "autoFocus", "button", "children", "classes", "className", "component", "ContainerComponent", "ContainerProps", "dense", "disabled", "disableGutters", "divider", "focusVisibleClassName", "selected"]);
-  var context = React.useContext(ListContext$1);
+  var context2 = React.useContext(ListContext$1);
   var childContext = {
-    dense: dense || context.dense || false,
+    dense: dense || context2.dense || false,
     alignItems: alignItems2
   };
   var listItemRef = React.useRef(null);
@@ -19672,13 +19659,13 @@ var ListItem = /* @__PURE__ */ React.forwardRef(function ListItem2(props, ref) {
   }, []);
   var handleRef = useForkRef(handleOwnRef, ref);
   var componentProps = _extends$5({
-    className: l$3(classes.root, className, childContext.dense && classes.dense, !disableGutters && classes.gutters, divider && classes.divider, disabled && classes.disabled, button && classes.button, alignItems2 !== "center" && classes.alignItemsFlexStart, hasSecondaryAction && classes.secondaryAction, selected && classes.selected),
+    className: clsx(classes.root, className, childContext.dense && classes.dense, !disableGutters && classes.gutters, divider && classes.divider, disabled && classes.disabled, button && classes.button, alignItems2 !== "center" && classes.alignItemsFlexStart, hasSecondaryAction && classes.secondaryAction, selected && classes.selected),
     disabled
   }, other);
   var Component2 = componentProp || "li";
   if (button) {
     componentProps.component = componentProp || "div";
-    componentProps.focusVisibleClassName = l$3(classes.focusVisible, focusVisibleClassName);
+    componentProps.focusVisibleClassName = clsx(classes.focusVisible, focusVisibleClassName);
     Component2 = ButtonBase$1;
   }
   if (hasSecondaryAction) {
@@ -19693,7 +19680,7 @@ var ListItem = /* @__PURE__ */ React.forwardRef(function ListItem2(props, ref) {
     return /* @__PURE__ */ React.createElement(ListContext$1.Provider, {
       value: childContext
     }, /* @__PURE__ */ React.createElement(ContainerComponent, _extends$5({
-      className: l$3(classes.container, ContainerClassName),
+      className: clsx(classes.container, ContainerClassName),
       ref: handleRef
     }, ContainerProps), /* @__PURE__ */ React.createElement(Component2, componentProps, children), children.pop()));
   }
@@ -19742,7 +19729,7 @@ var MenuItem = /* @__PURE__ */ React.forwardRef(function MenuItem2(props, ref) {
     classes: _extends$5({
       dense: classes.dense
     }, ListItemClasses),
-    className: l$3(classes.root, className, selected && classes.selected, !disableGutters && classes.gutters),
+    className: clsx(classes.root, className, selected && classes.selected, !disableGutters && classes.gutters),
     ref
   }, other));
 });
@@ -19791,7 +19778,7 @@ var InputAdornment = /* @__PURE__ */ React.forwardRef(function InputAdornment2(p
   return /* @__PURE__ */ React.createElement(FormControlContext$1.Provider, {
     value: null
   }, /* @__PURE__ */ React.createElement(Component2, _extends$5({
-    className: l$3(classes.root, className, disablePointerEvents && classes.disablePointerEvents, muiFormControl.hiddenLabel && classes.hiddenLabel, variant === "filled" && classes.filled, {
+    className: clsx(classes.root, className, disablePointerEvents && classes.disablePointerEvents, muiFormControl.hiddenLabel && classes.hiddenLabel, variant === "filled" && classes.filled, {
       "start": classes.positionStart,
       "end": classes.positionEnd
     }[position2], muiFormControl.margin === "dense" && classes.marginDense),
@@ -20193,7 +20180,7 @@ var InputBase = /* @__PURE__ */ React.forwardRef(function InputBase2(props, ref)
     }
   }, [muiFormControl, startAdornment]);
   return /* @__PURE__ */ React.createElement("div", _extends$5({
-    className: l$3(classes.root, classes["color".concat(capitalize$1(fcs.color || "primary"))], className, fcs.disabled && classes.disabled, fcs.error && classes.error, fullWidth && classes.fullWidth, fcs.focused && classes.focused, muiFormControl && classes.formControl, multiline && classes.multiline, startAdornment && classes.adornedStart, endAdornment && classes.adornedEnd, fcs.margin === "dense" && classes.marginDense),
+    className: clsx(classes.root, classes["color".concat(capitalize$1(fcs.color || "primary"))], className, fcs.disabled && classes.disabled, fcs.error && classes.error, fullWidth && classes.fullWidth, fcs.focused && classes.focused, muiFormControl && classes.formControl, multiline && classes.multiline, startAdornment && classes.adornedStart, endAdornment && classes.adornedEnd, fcs.margin === "dense" && classes.marginDense),
     onClick: handleClick,
     ref
   }, other), startAdornment, /* @__PURE__ */ React.createElement(FormControlContext$1.Provider, {
@@ -20216,7 +20203,7 @@ var InputBase = /* @__PURE__ */ React.forwardRef(function InputBase2(props, ref)
     onKeyDown,
     onKeyUp
   }, inputProps, {
-    className: l$3(classes.input, inputPropsProp.className, fcs.disabled && classes.disabled, multiline && classes.inputMultiline, fcs.hiddenLabel && classes.inputHiddenLabel, startAdornment && classes.inputAdornedStart, endAdornment && classes.inputAdornedEnd, type === "search" && classes.inputTypeSearch, fcs.margin === "dense" && classes.inputMarginDense),
+    className: clsx(classes.input, inputPropsProp.className, fcs.disabled && classes.disabled, multiline && classes.inputMultiline, fcs.hiddenLabel && classes.inputHiddenLabel, startAdornment && classes.inputAdornedStart, endAdornment && classes.inputAdornedEnd, type === "search" && classes.inputTypeSearch, fcs.margin === "dense" && classes.inputMarginDense),
     onBlur: handleBlur,
     onChange: handleChange,
     onFocus: handleFocus
@@ -20304,7 +20291,7 @@ var Input$1 = /* @__PURE__ */ React.forwardRef(function Input(props, ref) {
   var disableUnderline = props.disableUnderline, classes = props.classes, _props$fullWidth = props.fullWidth, fullWidth = _props$fullWidth === void 0 ? false : _props$fullWidth, _props$inputComponent = props.inputComponent, inputComponent = _props$inputComponent === void 0 ? "input" : _props$inputComponent, _props$multiline = props.multiline, multiline = _props$multiline === void 0 ? false : _props$multiline, _props$type = props.type, type = _props$type === void 0 ? "text" : _props$type, other = _objectWithoutProperties$2(props, ["disableUnderline", "classes", "fullWidth", "inputComponent", "multiline", "type"]);
   return /* @__PURE__ */ React.createElement(InputBase$1, _extends$5({
     classes: _extends$5({}, classes, {
-      root: l$3(classes.root, !disableUnderline && classes.underline),
+      root: clsx(classes.root, !disableUnderline && classes.underline),
       underline: null
     }),
     fullWidth,
@@ -20445,7 +20432,7 @@ var FilledInput = /* @__PURE__ */ React.forwardRef(function FilledInput2(props, 
   var disableUnderline = props.disableUnderline, classes = props.classes, _props$fullWidth = props.fullWidth, fullWidth = _props$fullWidth === void 0 ? false : _props$fullWidth, _props$inputComponent = props.inputComponent, inputComponent = _props$inputComponent === void 0 ? "input" : _props$inputComponent, _props$multiline = props.multiline, multiline = _props$multiline === void 0 ? false : _props$multiline, _props$type = props.type, type = _props$type === void 0 ? "text" : _props$type, other = _objectWithoutProperties$2(props, ["disableUnderline", "classes", "fullWidth", "inputComponent", "multiline", "type"]);
   return /* @__PURE__ */ React.createElement(InputBase$1, _extends$5({
     classes: _extends$5({}, classes, {
-      root: l$3(classes.root, !disableUnderline && classes.underline),
+      root: clsx(classes.root, !disableUnderline && classes.underline),
       underline: null
     }),
     fullWidth,
@@ -20521,11 +20508,11 @@ var NotchedOutline = /* @__PURE__ */ React.forwardRef(function NotchedOutline2(p
   if (label !== void 0) {
     return /* @__PURE__ */ React.createElement("fieldset", _extends$5({
       "aria-hidden": true,
-      className: l$3(classes.root, className),
+      className: clsx(classes.root, className),
       ref,
       style: style2
     }, other), /* @__PURE__ */ React.createElement("legend", {
-      className: l$3(classes.legendLabelled, notched && classes.legendNotched)
+      className: clsx(classes.legendLabelled, notched && classes.legendNotched)
     }, label ? /* @__PURE__ */ React.createElement("span", null, label) : /* @__PURE__ */ React.createElement("span", {
       dangerouslySetInnerHTML: {
         __html: "&#8203;"
@@ -20536,7 +20523,7 @@ var NotchedOutline = /* @__PURE__ */ React.forwardRef(function NotchedOutline2(p
   return /* @__PURE__ */ React.createElement("fieldset", _extends$5({
     "aria-hidden": true,
     style: _extends$5(_defineProperty$a({}, "padding".concat(capitalize$1(align)), 8), style2),
-    className: l$3(classes.root, className),
+    className: clsx(classes.root, className),
     ref
   }, other), /* @__PURE__ */ React.createElement("legend", {
     className: classes.legend,
@@ -20638,7 +20625,7 @@ var OutlinedInput = /* @__PURE__ */ React.forwardRef(function OutlinedInput2(pro
       });
     },
     classes: _extends$5({}, classes, {
-      root: l$3(classes.root, classes.underline),
+      root: clsx(classes.root, classes.underline),
       notchedOutline: null
     }),
     fullWidth,
@@ -20706,11 +20693,11 @@ var FormLabel = /* @__PURE__ */ React.forwardRef(function FormLabel2(props, ref)
     states: ["color", "required", "focused", "disabled", "error", "filled"]
   });
   return /* @__PURE__ */ React.createElement(Component2, _extends$5({
-    className: l$3(classes.root, classes["color".concat(capitalize$1(fcs.color || "primary"))], className, fcs.disabled && classes.disabled, fcs.error && classes.error, fcs.filled && classes.filled, fcs.focused && classes.focused, fcs.required && classes.required),
+    className: clsx(classes.root, classes["color".concat(capitalize$1(fcs.color || "primary"))], className, fcs.disabled && classes.disabled, fcs.error && classes.error, fcs.filled && classes.filled, fcs.focused && classes.focused, fcs.required && classes.required),
     ref
   }, other), children, fcs.required && /* @__PURE__ */ React.createElement("span", {
     "aria-hidden": true,
-    className: l$3(classes.asterisk, fcs.error && classes.error)
+    className: clsx(classes.asterisk, fcs.error && classes.error)
   }, "\u2009", "*"));
 });
 var FormLabel$1 = withStyles2(styles$8, {
@@ -20791,7 +20778,7 @@ var InputLabel = /* @__PURE__ */ React.forwardRef(function InputLabel2(props, re
   });
   return /* @__PURE__ */ React.createElement(FormLabel$1, _extends$5({
     "data-shrink": shrink,
-    className: l$3(classes.root, className, muiFormControl && classes.formControl, !disableAnimation && classes.animated, shrink && classes.shrink, fcs.margin === "dense" && classes.marginDense, {
+    className: clsx(classes.root, className, muiFormControl && classes.formControl, !disableAnimation && classes.animated, shrink && classes.shrink, fcs.margin === "dense" && classes.marginDense, {
       "filled": classes.filled,
       "outlined": classes.outlined
     }[fcs.variant]),
@@ -20900,7 +20887,7 @@ var FormControl = /* @__PURE__ */ React.forwardRef(function FormControl2(props, 
   return /* @__PURE__ */ React.createElement(FormControlContext$1.Provider, {
     value: childContext
   }, /* @__PURE__ */ React.createElement(Component2, _extends$5({
-    className: l$3(classes.root, className, margin !== "none" && classes["margin".concat(capitalize$1(margin))], fullWidth && classes.fullWidth),
+    className: clsx(classes.root, className, margin !== "none" && classes["margin".concat(capitalize$1(margin))], fullWidth && classes.fullWidth),
     ref
   }, other), children));
 });
@@ -20953,7 +20940,7 @@ var FormHelperText = /* @__PURE__ */ React.forwardRef(function FormHelperText2(p
     states: ["variant", "margin", "disabled", "error", "filled", "focused", "required"]
   });
   return /* @__PURE__ */ React.createElement(Component2, _extends$5({
-    className: l$3(classes.root, (fcs.variant === "filled" || fcs.variant === "outlined") && classes.contained, className, fcs.disabled && classes.disabled, fcs.error && classes.error, fcs.filled && classes.filled, fcs.focused && classes.focused, fcs.required && classes.required, fcs.margin === "dense" && classes.marginDense),
+    className: clsx(classes.root, (fcs.variant === "filled" || fcs.variant === "outlined") && classes.contained, className, fcs.disabled && classes.disabled, fcs.error && classes.error, fcs.filled && classes.filled, fcs.focused && classes.focused, fcs.required && classes.required, fcs.margin === "dense" && classes.marginDense),
     ref
   }, other), children === " " ? /* @__PURE__ */ React.createElement("span", {
     dangerouslySetInnerHTML: {
@@ -21203,7 +21190,7 @@ var SelectInput = /* @__PURE__ */ React.forwardRef(function SelectInput2(props, 
   }
   var buttonId = SelectDisplayProps.id || (name ? "mui-component-select-".concat(name) : void 0);
   return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("div", _extends$5({
-    className: l$3(classes.root, classes.select, classes.selectMenu, classes[variant], className, disabled && classes.disabled),
+    className: clsx(classes.root, classes.select, classes.selectMenu, classes[variant], className, disabled && classes.disabled),
     ref: setDisplayNode,
     tabIndex,
     role: "button",
@@ -21232,7 +21219,7 @@ var SelectInput = /* @__PURE__ */ React.forwardRef(function SelectInput2(props, 
     className: classes.nativeInput,
     autoFocus
   }, other)), /* @__PURE__ */ React.createElement(IconComponent, {
-    className: l$3(classes.icon, classes["icon".concat(capitalize$1(variant))], open && classes.iconOpen, disabled && classes.disabled)
+    className: clsx(classes.icon, classes["icon".concat(capitalize$1(variant))], open && classes.iconOpen, disabled && classes.disabled)
   }), /* @__PURE__ */ React.createElement(Menu$2, _extends$5({
     id: "menu-".concat(name || ""),
     anchorEl: displayNode,
@@ -21258,11 +21245,11 @@ var ArrowDropDownIcon = createSvgIcon(/* @__PURE__ */ React.createElement("path"
 var NativeSelectInput = /* @__PURE__ */ React.forwardRef(function NativeSelectInput2(props, ref) {
   var classes = props.classes, className = props.className, disabled = props.disabled, IconComponent = props.IconComponent, inputRef = props.inputRef, _props$variant = props.variant, variant = _props$variant === void 0 ? "standard" : _props$variant, other = _objectWithoutProperties$2(props, ["classes", "className", "disabled", "IconComponent", "inputRef", "variant"]);
   return /* @__PURE__ */ React.createElement(React.Fragment, null, /* @__PURE__ */ React.createElement("select", _extends$5({
-    className: l$3(classes.root, classes.select, classes[variant], className, disabled && classes.disabled),
+    className: clsx(classes.root, classes.select, classes[variant], className, disabled && classes.disabled),
     disabled,
     ref: inputRef || ref
   }, other)), props.multiple ? null : /* @__PURE__ */ React.createElement(IconComponent, {
-    className: l$3(classes.icon, classes["icon".concat(capitalize$1(variant))], disabled && classes.disabled)
+    className: clsx(classes.icon, classes["icon".concat(capitalize$1(variant))], disabled && classes.disabled)
   }));
 });
 var NativeSelectInput$1 = NativeSelectInput;
@@ -21479,7 +21466,7 @@ var TextField = /* @__PURE__ */ React.forwardRef(function TextField2(props, ref)
     inputProps
   }, InputMore, InputProps));
   return /* @__PURE__ */ React.createElement(FormControl$1, _extends$5({
-    className: l$3(classes.root, className),
+    className: clsx(classes.root, className),
     disabled,
     error,
     fullWidth,
@@ -22964,7 +22951,7 @@ var styles$1 = function styles20(theme) {
 var ListSubheader = /* @__PURE__ */ React.forwardRef(function ListSubheader2(props, ref) {
   var classes = props.classes, className = props.className, _props$color = props.color, color2 = _props$color === void 0 ? "default" : _props$color, _props$component = props.component, Component2 = _props$component === void 0 ? "li" : _props$component, _props$disableGutters = props.disableGutters, disableGutters = _props$disableGutters === void 0 ? false : _props$disableGutters, _props$disableSticky = props.disableSticky, disableSticky = _props$disableSticky === void 0 ? false : _props$disableSticky, _props$inset = props.inset, inset = _props$inset === void 0 ? false : _props$inset, other = _objectWithoutProperties$2(props, ["classes", "className", "color", "component", "disableGutters", "disableSticky", "inset"]);
   return /* @__PURE__ */ React.createElement(Component2, _extends$5({
-    className: l$3(classes.root, className, color2 !== "default" && classes["color".concat(capitalize$1(color2))], inset && classes.inset, !disableSticky && classes.sticky, !disableGutters && classes.gutters),
+    className: clsx(classes.root, className, color2 !== "default" && classes["color".concat(capitalize$1(color2))], inset && classes.inset, !disableSticky && classes.sticky, !disableGutters && classes.gutters),
     ref
   }, other));
 });
@@ -30549,6 +30536,7 @@ function classList(props) {
     "fa-inverse": inverse,
     "fa-border": border2,
     "fa-li": listItem,
+    "fa-flip": flip === true,
     "fa-flip-horizontal": flip === "horizontal" || flip === "both",
     "fa-flip-vertical": flip === "vertical" || flip === "both"
   }, _defineProperty$1(_classes, "fa-".concat(size2), typeof size2 !== "undefined" && size2 !== null), _defineProperty$1(_classes, "fa-rotate-".concat(rotation), typeof rotation !== "undefined" && rotation !== null && rotation !== 0), _defineProperty$1(_classes, "fa-pull-".concat(pull), typeof pull !== "undefined" && pull !== null), _defineProperty$1(_classes, "fa-swap-opacity", props.swapOpacity), _classes);
@@ -30694,6 +30682,7 @@ FontAwesomeIcon.displayName = "FontAwesomeIcon";
 FontAwesomeIcon.propTypes = {
   beat: PropTypes.bool,
   border: PropTypes.bool,
+  beatFade: PropTypes.bool,
   bounce: PropTypes.bool,
   className: PropTypes.string,
   fade: PropTypes.bool,
@@ -30702,7 +30691,7 @@ FontAwesomeIcon.propTypes = {
   maskId: PropTypes.string,
   fixedWidth: PropTypes.bool,
   inverse: PropTypes.bool,
-  flip: PropTypes.oneOf(["horizontal", "vertical", "both"]),
+  flip: PropTypes.oneOf([true, false, "horizontal", "vertical", "both"]),
   icon: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.string]),
   listItem: PropTypes.bool,
   pull: PropTypes.oneOf(["right", "left"]),
@@ -30726,7 +30715,7 @@ FontAwesomeIcon.defaultProps = {
   maskId: null,
   fixedWidth: false,
   inverse: false,
-  flip: null,
+  flip: false,
   icon: null,
   listItem: false,
   pull: null,
@@ -30734,6 +30723,8 @@ FontAwesomeIcon.defaultProps = {
   rotation: null,
   size: null,
   spin: false,
+  spinPulse: false,
+  spinReverse: false,
   beat: false,
   fade: false,
   beatFade: false,
@@ -30826,7 +30817,7 @@ function maybe$1(thunk2) {
   } catch (_a2) {
   }
 }
-var global$1 = maybe$1(function() {
+var global$2 = maybe$1(function() {
   return globalThis;
 }) || maybe$1(function() {
   return window;
@@ -30843,7 +30834,7 @@ function getDEV() {
   try {
     return Boolean(__DEV__);
   } catch (_a2) {
-    Object.defineProperty(global$1, GLOBAL_KEY, {
+    Object.defineProperty(global$2, GLOBAL_KEY, {
       value: maybe$1(function() {
         return "production";
       }) !== "production",
@@ -30851,7 +30842,7 @@ function getDEV() {
       configurable: true,
       writable: true
     });
-    return global$1[GLOBAL_KEY];
+    return global$2[GLOBAL_KEY];
   }
 }
 var DEV = getDEV();
@@ -33555,13 +33546,13 @@ function getDefaultValues(definition) {
   }
   return defaultValues;
 }
-function filterInPlace(array, test, context) {
+function filterInPlace(array, test, context2) {
   var target = 0;
   array.forEach(function(elem, i) {
     if (test.call(this, elem, i, array)) {
       array[target++] = elem;
     }
-  }, context);
+  }, context2);
   array.length = target;
   return array;
 }
@@ -33851,16 +33842,16 @@ var DeepMerger = function() {
   }
   DeepMerger2.prototype.merge = function(target, source) {
     var _this = this;
-    var context = [];
+    var context2 = [];
     for (var _i = 2; _i < arguments.length; _i++) {
-      context[_i - 2] = arguments[_i];
+      context2[_i - 2] = arguments[_i];
     }
     if (isNonNullObject$1(source) && isNonNullObject$1(target)) {
       Object.keys(source).forEach(function(sourceKey) {
         if (hasOwnProperty$i.call(target, sourceKey)) {
           var targetValue = target[sourceKey];
           if (source[sourceKey] !== targetValue) {
-            var result2 = _this.reconciler.apply(_this, __spreadArray$1([target, source, sourceKey], context, false));
+            var result2 = _this.reconciler.apply(_this, __spreadArray$1([target, source, sourceKey], context2, false));
             if (result2 !== targetValue) {
               target = _this.shallowCopyForMerge(target);
               target[sourceKey] = result2;
@@ -34866,16 +34857,16 @@ function validateOperation(operation) {
   return operation;
 }
 function createOperation(starting, operation) {
-  var context = __assign({}, starting);
+  var context2 = __assign({}, starting);
   var setContext2 = function(next2) {
     if (typeof next2 === "function") {
-      context = __assign(__assign({}, context), next2(context));
+      context2 = __assign(__assign({}, context2), next2(context2));
     } else {
-      context = __assign(__assign({}, context), next2);
+      context2 = __assign(__assign({}, context2), next2);
     }
   };
   var getContext = function() {
-    return __assign({}, context);
+    return __assign({}, context2);
   };
   Object.defineProperty(operation, "setContext", {
     enumerable: false,
@@ -35123,8 +35114,8 @@ var createSignalIfSupported$1 = function() {
   return { controller, signal };
 };
 var selectURI$1 = function(operation, fallbackURI) {
-  var context = operation.getContext();
-  var contextURI = context.uri;
+  var context2 = operation.getContext();
+  var contextURI = context2.uri;
   if (contextURI) {
     return contextURI;
   } else if (typeof fallbackURI === "function") {
@@ -35191,10 +35182,10 @@ var createHttpLink = function(linkOptions) {
   };
   return new ApolloLink$1(function(operation) {
     var chosenURI = selectURI$1(operation, uri);
-    var context = operation.getContext();
+    var context2 = operation.getContext();
     var clientAwarenessHeaders = {};
-    if (context.clientAwareness) {
-      var _a3 = context.clientAwareness, name_1 = _a3.name, version2 = _a3.version;
+    if (context2.clientAwareness) {
+      var _a3 = context2.clientAwareness, name_1 = _a3.name, version2 = _a3.version;
       if (name_1) {
         clientAwarenessHeaders["apollographql-client-name"] = name_1;
       }
@@ -35202,11 +35193,11 @@ var createHttpLink = function(linkOptions) {
         clientAwarenessHeaders["apollographql-client-version"] = version2;
       }
     }
-    var contextHeaders = __assign(__assign({}, clientAwarenessHeaders), context.headers);
+    var contextHeaders = __assign(__assign({}, clientAwarenessHeaders), context2.headers);
     var contextConfig = {
-      http: context.http,
-      options: context.fetchOptions,
-      credentials: context.credentials,
+      http: context2.http,
+      options: context2.fetchOptions,
+      credentials: context2.credentials,
       headers: contextHeaders
     };
     var _b2 = selectHttpOptionsAndBodyInternal(operation, print2, fallbackHttpConfig$1, linkConfig, contextConfig), options2 = _b2.options, body = _b2.body;
@@ -35531,11 +35522,11 @@ var makeSlotClass = function() {
       }
     };
     Slot2.bind = function(callback) {
-      var context = currentContext;
+      var context2 = currentContext;
       return function() {
         var saved = currentContext;
         try {
-          currentContext = context;
+          currentContext = context2;
           return callback.apply(this, arguments);
         } finally {
           currentContext = saved;
@@ -36108,11 +36099,11 @@ var MissingFieldError = function() {
   return MissingFieldError2;
 }();
 var hasOwn = Object.prototype.hasOwnProperty;
-function defaultDataIdFromObject(_a2, context) {
+function defaultDataIdFromObject(_a2, context2) {
   var __typename = _a2.__typename, id = _a2.id, _id = _a2._id;
   if (typeof __typename === "string") {
-    if (context) {
-      context.keyObject = id !== void 0 ? { id } : _id !== void 0 ? { _id } : void 0;
+    if (context2) {
+      context2.keyObject = id !== void 0 ? { id } : _id !== void 0 ? { _id } : void 0;
     }
     if (id === void 0)
       id = _id;
@@ -36759,9 +36750,9 @@ var StoreReader = function() {
     }, {
       max: this.config.resultCacheMaxSize,
       keyArgs: execSelectionSetKeyArgs,
-      makeCacheKey: function(selectionSet, parent, context, canonizeResults) {
-        if (supportsResultCaching(context.store)) {
-          return context.store.makeCacheKey(selectionSet, isReference(parent) ? parent.__ref : parent, context.varString, canonizeResults);
+      makeCacheKey: function(selectionSet, parent, context2, canonizeResults) {
+        if (supportsResultCaching(context2.store)) {
+          return context2.store.makeCacheKey(selectionSet, isReference(parent) ? parent.__ref : parent, context2.varString, canonizeResults);
         }
       }
     });
@@ -36771,9 +36762,9 @@ var StoreReader = function() {
     }, {
       max: this.config.resultCacheMaxSize,
       makeCacheKey: function(_a2) {
-        var field = _a2.field, array = _a2.array, context = _a2.context;
-        if (supportsResultCaching(context.store)) {
-          return context.store.makeCacheKey(field, array, context.varString);
+        var field = _a2.field, array = _a2.array, context2 = _a2.context;
+        if (supportsResultCaching(context2.store)) {
+          return context2.store.makeCacheKey(field, array, context2.varString);
         }
       }
     });
@@ -36813,9 +36804,9 @@ var StoreReader = function() {
       missing
     };
   };
-  StoreReader2.prototype.isFresh = function(result2, parent, selectionSet, context) {
-    if (supportsResultCaching(context.store) && this.knownResults.get(result2) === selectionSet) {
-      var latest = this.executeSelectionSet.peek(selectionSet, parent, context, this.canon.isKnown(result2));
+  StoreReader2.prototype.isFresh = function(result2, parent, selectionSet, context2) {
+    if (supportsResultCaching(context2.store) && this.knownResults.get(result2) === selectionSet) {
+      var latest = this.executeSelectionSet.peek(selectionSet, parent, context2, this.canon.isKnown(result2));
       if (latest && result2 === latest.result) {
         return true;
       }
@@ -36824,14 +36815,14 @@ var StoreReader = function() {
   };
   StoreReader2.prototype.execSelectionSetImpl = function(_a2) {
     var _this = this;
-    var selectionSet = _a2.selectionSet, objectOrReference = _a2.objectOrReference, enclosingRef = _a2.enclosingRef, context = _a2.context;
-    if (isReference(objectOrReference) && !context.policies.rootTypenamesById[objectOrReference.__ref] && !context.store.has(objectOrReference.__ref)) {
+    var selectionSet = _a2.selectionSet, objectOrReference = _a2.objectOrReference, enclosingRef = _a2.enclosingRef, context2 = _a2.context;
+    if (isReference(objectOrReference) && !context2.policies.rootTypenamesById[objectOrReference.__ref] && !context2.store.has(objectOrReference.__ref)) {
       return {
         result: this.canon.empty,
         missing: "Dangling reference to missing ".concat(objectOrReference.__ref, " object")
       };
     }
-    var variables = context.variables, policies = context.policies, store = context.store;
+    var variables = context2.variables, policies = context2.policies, store = context2.store;
     var typename = store.getFieldValue(objectOrReference, "__typename");
     var objectsToMerge = [];
     var missing;
@@ -36855,9 +36846,9 @@ var StoreReader = function() {
         var fieldValue = policies.readField({
           fieldName: selection.name.value,
           field: selection,
-          variables: context.variables,
+          variables: context2.variables,
           from: objectOrReference
-        }, context);
+        }, context2);
         var resultName = resultKeyNameFromField(selection);
         if (fieldValue === void 0) {
           if (!addTypenameToDocument.added(selection)) {
@@ -36868,10 +36859,10 @@ var StoreReader = function() {
             field: selection,
             array: fieldValue,
             enclosingRef,
-            context
+            context: context2
           }), resultName);
         } else if (!selection.selectionSet) {
-          if (context.canonizeResults) {
+          if (context2.canonizeResults) {
             fieldValue = _this.canon.pass(fieldValue);
           }
         } else if (fieldValue != null) {
@@ -36879,14 +36870,14 @@ var StoreReader = function() {
             selectionSet: selection.selectionSet,
             objectOrReference: fieldValue,
             enclosingRef: isReference(fieldValue) ? fieldValue : enclosingRef,
-            context
+            context: context2
           }), resultName);
         }
         if (fieldValue !== void 0) {
           objectsToMerge.push((_b = {}, _b[resultName] = fieldValue, _b));
         }
       } else {
-        var fragment = getFragmentFromSelection(selection, context.fragmentMap);
+        var fragment = getFragmentFromSelection(selection, context2.fragmentMap);
         if (fragment && policies.fragmentMatches(fragment, typename)) {
           fragment.selectionSet.selections.forEach(workSet.add, workSet);
         }
@@ -36894,7 +36885,7 @@ var StoreReader = function() {
     });
     var result2 = mergeDeepArray(objectsToMerge);
     var finalResult = { result: result2, missing };
-    var frozen = context.canonizeResults ? this.canon.admit(finalResult) : maybeDeepFreeze(finalResult);
+    var frozen = context2.canonizeResults ? this.canon.admit(finalResult) : maybeDeepFreeze(finalResult);
     if (frozen.result) {
       this.knownResults.set(frozen.result, selectionSet);
     }
@@ -36902,7 +36893,7 @@ var StoreReader = function() {
   };
   StoreReader2.prototype.execSubSelectedArrayImpl = function(_a2) {
     var _this = this;
-    var field = _a2.field, array = _a2.array, enclosingRef = _a2.enclosingRef, context = _a2.context;
+    var field = _a2.field, array = _a2.array, enclosingRef = _a2.enclosingRef, context2 = _a2.context;
     var missing;
     var missingMerger = new DeepMerger();
     function handleMissing(childResult, i) {
@@ -36913,7 +36904,7 @@ var StoreReader = function() {
       return childResult.result;
     }
     if (field.selectionSet) {
-      array = array.filter(context.store.canRead);
+      array = array.filter(context2.store.canRead);
     }
     array = array.map(function(item, i) {
       if (item === null) {
@@ -36924,7 +36915,7 @@ var StoreReader = function() {
           field,
           array: item,
           enclosingRef,
-          context
+          context: context2
         }), i);
       }
       if (field.selectionSet) {
@@ -36932,16 +36923,16 @@ var StoreReader = function() {
           selectionSet: field.selectionSet,
           objectOrReference: item,
           enclosingRef: isReference(item) ? item : enclosingRef,
-          context
+          context: context2
         }), i);
       }
       if (__DEV__) {
-        assertSelectionSetForIdValue(context.store, field, item);
+        assertSelectionSetForIdValue(context2.store, field, item);
       }
       return item;
     });
     return {
-      result: context.canonizeResults ? this.canon.admit(array) : array,
+      result: context2.canonizeResults ? this.canon.admit(array) : array,
       missing
     };
   };
@@ -37045,19 +37036,19 @@ function lookupSpecifierInfo(spec) {
 }
 function keyFieldsFnFromSpecifier(specifier) {
   var info = lookupSpecifierInfo(specifier);
-  return info.keyFieldsFn || (info.keyFieldsFn = function(object, context) {
+  return info.keyFieldsFn || (info.keyFieldsFn = function(object, context2) {
     var extract = function(from2, key) {
-      return context.readField(key, from2);
+      return context2.readField(key, from2);
     };
-    var keyObject = context.keyObject = collectSpecifierPaths(specifier, function(schemaKeyPath) {
-      var extracted = extractKeyPath(context.storeObject, schemaKeyPath, extract);
-      if (extracted === void 0 && object !== context.storeObject && hasOwn.call(object, schemaKeyPath[0])) {
+    var keyObject = context2.keyObject = collectSpecifierPaths(specifier, function(schemaKeyPath) {
+      var extracted = extractKeyPath(context2.storeObject, schemaKeyPath, extract);
+      if (extracted === void 0 && object !== context2.storeObject && hasOwn.call(object, schemaKeyPath[0])) {
         extracted = extractKeyPath(object, schemaKeyPath, extractKey);
       }
       __DEV__ ? invariant$1(extracted !== void 0, "Missing field '".concat(schemaKeyPath.join("."), "' while extracting keyFields from ").concat(JSON.stringify(object))) : invariant$1(extracted !== void 0, 2);
       return extracted;
     });
-    return "".concat(context.typename, ":").concat(JSON.stringify(keyObject));
+    return "".concat(context2.typename, ":").concat(JSON.stringify(keyObject));
   });
 }
 function keyArgsFnFromSpecifier(specifier) {
@@ -37163,8 +37154,8 @@ function argsFromFieldSpecifier(spec) {
 var nullKeyFieldsFn = function() {
   return void 0;
 };
-var simpleKeyArgsFn = function(_args, context) {
-  return context.fieldName;
+var simpleKeyArgsFn = function(_args, context2) {
+  return context2.fieldName;
 };
 var mergeTrueFn = function(existing, incoming, _a2) {
   var mergeObjects = _a2.mergeObjects;
@@ -37203,7 +37194,7 @@ var Policies = function() {
       return ["ROOT_QUERY"];
     }
     var storeObject = partialContext && partialContext.storeObject || object;
-    var context = __assign(__assign({}, partialContext), { typename, storeObject, readField: partialContext && partialContext.readField || function() {
+    var context2 = __assign(__assign({}, partialContext), { typename, storeObject, readField: partialContext && partialContext.readField || function() {
       var options2 = normalizeReadFieldOptions(arguments, storeObject);
       return policies.readField(options2, {
         store: policies.cache["data"],
@@ -37214,7 +37205,7 @@ var Policies = function() {
     var policy = typename && this.getTypePolicy(typename);
     var keyFn = policy && policy.keyFn || this.config.dataIdFromObject;
     while (keyFn) {
-      var specifierOrId = keyFn(object, context);
+      var specifierOrId = keyFn(object, context2);
       if (isArray$4(specifierOrId)) {
         keyFn = keyFieldsFnFromSpecifier(specifierOrId);
       } else {
@@ -37223,7 +37214,7 @@ var Policies = function() {
       }
     }
     id = id ? String(id) : void 0;
-    return context.keyObject ? [id, context.keyObject] : [id];
+    return context2.keyObject ? [id, context2.keyObject] : [id];
   };
   Policies2.prototype.addTypePolicies = function(typePolicies) {
     var _this = this;
@@ -37390,7 +37381,7 @@ var Policies = function() {
     var storeFieldName;
     var keyFn = policy && policy.keyFn;
     if (keyFn && typename) {
-      var context = {
+      var context2 = {
         typename,
         fieldName,
         field: fieldSpec.field || null,
@@ -37398,7 +37389,7 @@ var Policies = function() {
       };
       var args = argsFromFieldSpecifier(fieldSpec);
       while (keyFn) {
-        var specifierOrString = keyFn(args, context);
+        var specifierOrString = keyFn(args, context2);
         if (isArray$4(specifierOrString)) {
           keyFn = keyArgsFnFromSpecifier(specifierOrString);
         } else {
@@ -37415,7 +37406,7 @@ var Policies = function() {
     }
     return fieldName === fieldNameFromStoreName(storeFieldName) ? storeFieldName : fieldName + ":" + storeFieldName;
   };
-  Policies2.prototype.readField = function(options2, context) {
+  Policies2.prototype.readField = function(options2, context2) {
     var objectOrReference = options2.from;
     if (!objectOrReference)
       return;
@@ -37423,17 +37414,17 @@ var Policies = function() {
     if (!nameOrField)
       return;
     if (options2.typename === void 0) {
-      var typename = context.store.getFieldValue(objectOrReference, "__typename");
+      var typename = context2.store.getFieldValue(objectOrReference, "__typename");
       if (typename)
         options2.typename = typename;
     }
     var storeFieldName = this.getStoreFieldName(options2);
     var fieldName = fieldNameFromStoreName(storeFieldName);
-    var existing = context.store.getFieldValue(objectOrReference, storeFieldName);
+    var existing = context2.store.getFieldValue(objectOrReference, storeFieldName);
     var policy = this.getFieldPolicy(options2.typename, fieldName, false);
     var read = policy && policy.read;
     if (read) {
-      var readOptions = makeFieldFunctionOptions(this, objectOrReference, options2, context, context.store.getStorage(isReference(objectOrReference) ? objectOrReference.__ref : objectOrReference, storeFieldName));
+      var readOptions = makeFieldFunctionOptions(this, objectOrReference, options2, context2, context2.store.getStorage(isReference(objectOrReference) ? objectOrReference.__ref : objectOrReference, storeFieldName));
       return cacheSlot.withValue(this.cache, read, [existing, readOptions]);
     }
     return existing;
@@ -37451,26 +37442,26 @@ var Policies = function() {
     }
     return merge2;
   };
-  Policies2.prototype.runMergeFunction = function(existing, incoming, _a2, context, storage) {
+  Policies2.prototype.runMergeFunction = function(existing, incoming, _a2, context2, storage) {
     var field = _a2.field, typename = _a2.typename, merge2 = _a2.merge;
     if (merge2 === mergeTrueFn) {
-      return makeMergeObjectsFunction(context.store)(existing, incoming);
+      return makeMergeObjectsFunction(context2.store)(existing, incoming);
     }
     if (merge2 === mergeFalseFn) {
       return incoming;
     }
-    if (context.overwrite) {
+    if (context2.overwrite) {
       existing = void 0;
     }
-    return merge2(existing, incoming, makeFieldFunctionOptions(this, void 0, { typename, fieldName: field.name.value, field, variables: context.variables }, context, storage || /* @__PURE__ */ Object.create(null)));
+    return merge2(existing, incoming, makeFieldFunctionOptions(this, void 0, { typename, fieldName: field.name.value, field, variables: context2.variables }, context2, storage || /* @__PURE__ */ Object.create(null)));
   };
   return Policies2;
 }();
-function makeFieldFunctionOptions(policies, objectOrReference, fieldSpec, context, storage) {
+function makeFieldFunctionOptions(policies, objectOrReference, fieldSpec, context2, storage) {
   var storeFieldName = policies.getStoreFieldName(fieldSpec);
   var fieldName = fieldNameFromStoreName(storeFieldName);
-  var variables = fieldSpec.variables || context.variables;
-  var _a2 = context.store, toReference = _a2.toReference, canRead = _a2.canRead;
+  var variables = fieldSpec.variables || context2.variables;
+  var _a2 = context2.store, toReference = _a2.toReference, canRead = _a2.canRead;
   return {
     args: argsFromFieldSpecifier(fieldSpec),
     field: fieldSpec.field || null,
@@ -37483,9 +37474,9 @@ function makeFieldFunctionOptions(policies, objectOrReference, fieldSpec, contex
     cache: policies.cache,
     canRead,
     readField: function() {
-      return policies.readField(normalizeReadFieldOptions(arguments, objectOrReference, variables), context);
+      return policies.readField(normalizeReadFieldOptions(arguments, objectOrReference, variables), context2);
     },
-    mergeObjects: makeMergeObjectsFunction(context.store)
+    mergeObjects: makeMergeObjectsFunction(context2.store)
   };
 }
 function normalizeReadFieldOptions(readFieldArgs, objectOrReference, variables) {
@@ -37537,11 +37528,11 @@ function makeMergeObjectsFunction(store) {
     return incoming;
   };
 }
-function getContextFlavor(context, clientOnly, deferred) {
+function getContextFlavor(context2, clientOnly, deferred) {
   var key = "".concat(clientOnly).concat(deferred);
-  var flavored = context.flavors.get(key);
+  var flavored = context2.flavors.get(key);
   if (!flavored) {
-    context.flavors.set(key, flavored = context.clientOnly === clientOnly && context.deferred === deferred ? context : __assign(__assign({}, context), { clientOnly, deferred }));
+    context2.flavors.set(key, flavored = context2.clientOnly === clientOnly && context2.deferred === deferred ? context2 : __assign(__assign({}, context2), { clientOnly, deferred }));
   }
   return flavored;
 }
@@ -37556,7 +37547,7 @@ var StoreWriter = function() {
     var operationDefinition = getOperationDefinition(query);
     var merger = makeProcessedFieldsMerger();
     variables = __assign(__assign({}, getDefaultValues(operationDefinition)), variables);
-    var context = {
+    var context2 = {
       store,
       written: /* @__PURE__ */ Object.create(null),
       merge: function(existing, incoming) {
@@ -37576,22 +37567,22 @@ var StoreWriter = function() {
       dataId,
       selectionSet: operationDefinition.selectionSet,
       mergeTree: { map: /* @__PURE__ */ new Map() },
-      context
+      context: context2
     });
     if (!isReference(ref)) {
       throw __DEV__ ? new InvariantError("Could not identify object ".concat(JSON.stringify(result2))) : new InvariantError(6);
     }
-    context.incomingById.forEach(function(_a3, dataId2) {
+    context2.incomingById.forEach(function(_a3, dataId2) {
       var storeObject = _a3.storeObject, mergeTree = _a3.mergeTree, fieldNodeSet = _a3.fieldNodeSet;
       var entityRef = makeReference(dataId2);
       if (mergeTree && mergeTree.map.size) {
-        var applied = _this.applyMerges(mergeTree, entityRef, storeObject, context);
+        var applied = _this.applyMerges(mergeTree, entityRef, storeObject, context2);
         if (isReference(applied)) {
           return;
         }
         storeObject = applied;
       }
-      if (__DEV__ && !context.overwrite) {
+      if (__DEV__ && !context2.overwrite) {
         var fieldsWithSelectionSets_1 = /* @__PURE__ */ Object.create(null);
         fieldNodeSet.forEach(function(field) {
           if (field.selectionSet) {
@@ -37607,7 +37598,7 @@ var StoreWriter = function() {
         };
         Object.keys(storeObject).forEach(function(storeFieldName) {
           if (hasSelectionSet_1(storeFieldName) && !hasMergeFunction_1(storeFieldName)) {
-            warnAboutDataLoss(entityRef, storeObject, storeFieldName, context.store);
+            warnAboutDataLoss(entityRef, storeObject, storeFieldName, context2.store);
           }
         });
       }
@@ -37618,28 +37609,28 @@ var StoreWriter = function() {
   };
   StoreWriter2.prototype.processSelectionSet = function(_a2) {
     var _this = this;
-    var dataId = _a2.dataId, result2 = _a2.result, selectionSet = _a2.selectionSet, context = _a2.context, mergeTree = _a2.mergeTree;
+    var dataId = _a2.dataId, result2 = _a2.result, selectionSet = _a2.selectionSet, context2 = _a2.context, mergeTree = _a2.mergeTree;
     var policies = this.cache.policies;
     var incoming = /* @__PURE__ */ Object.create(null);
-    var typename = dataId && policies.rootTypenamesById[dataId] || getTypenameFromResult(result2, selectionSet, context.fragmentMap) || dataId && context.store.get(dataId, "__typename");
+    var typename = dataId && policies.rootTypenamesById[dataId] || getTypenameFromResult(result2, selectionSet, context2.fragmentMap) || dataId && context2.store.get(dataId, "__typename");
     if (typeof typename === "string") {
       incoming.__typename = typename;
     }
     var readField = function() {
-      var options2 = normalizeReadFieldOptions(arguments, incoming, context.variables);
+      var options2 = normalizeReadFieldOptions(arguments, incoming, context2.variables);
       if (isReference(options2.from)) {
-        var info = context.incomingById.get(options2.from.__ref);
+        var info = context2.incomingById.get(options2.from.__ref);
         if (info) {
-          var result_1 = policies.readField(__assign(__assign({}, options2), { from: info.storeObject }), context);
+          var result_1 = policies.readField(__assign(__assign({}, options2), { from: info.storeObject }), context2);
           if (result_1 !== void 0) {
             return result_1;
           }
         }
       }
-      return policies.readField(options2, context);
+      return policies.readField(options2, context2);
     };
     var fieldNodeSet = /* @__PURE__ */ new Set();
-    this.flattenFields(selectionSet, result2, context, typename).forEach(function(context2, field) {
+    this.flattenFields(selectionSet, result2, context2, typename).forEach(function(context3, field) {
       var _a3;
       var resultFieldKey = resultKeyNameFromField(field);
       var value = result2[resultFieldKey];
@@ -37649,10 +37640,10 @@ var StoreWriter = function() {
           typename,
           fieldName: field.name.value,
           field,
-          variables: context2.variables
+          variables: context3.variables
         });
         var childTree = getChildMergeTree(mergeTree, storeFieldName);
-        var incomingValue = _this.processFieldValue(value, field, field.selectionSet ? getContextFlavor(context2, false, false) : context2, childTree);
+        var incomingValue = _this.processFieldValue(value, field, field.selectionSet ? getContextFlavor(context3, false, false) : context3, childTree);
         var childTypename = void 0;
         if (field.selectionSet && (isReference(incomingValue) || storeValueIsStoreObject(incomingValue))) {
           childTypename = readField("__typename", incomingValue);
@@ -37667,8 +37658,8 @@ var StoreWriter = function() {
         } else {
           maybeRecycleChildMergeTree(mergeTree, storeFieldName);
         }
-        incoming = context2.merge(incoming, (_a3 = {}, _a3[storeFieldName] = incomingValue, _a3));
-      } else if (__DEV__ && !context2.clientOnly && !context2.deferred && !addTypenameToDocument.added(field) && !policies.getReadFunction(typename, field.name.value)) {
+        incoming = context3.merge(incoming, (_a3 = {}, _a3[storeFieldName] = incomingValue, _a3));
+      } else if (__DEV__ && !context3.clientOnly && !context3.deferred && !addTypenameToDocument.added(field) && !policies.getReadFunction(typename, field.name.value)) {
         __DEV__ && invariant$1.error("Missing field '".concat(resultKeyNameFromField(field), "' while writing result ").concat(JSON.stringify(result2, null, 2)).substring(0, 1e3));
       }
     });
@@ -37676,13 +37667,13 @@ var StoreWriter = function() {
       var _b = policies.identify(result2, {
         typename,
         selectionSet,
-        fragmentMap: context.fragmentMap,
+        fragmentMap: context2.fragmentMap,
         storeObject: incoming,
         readField
       }), id = _b[0], keyObject = _b[1];
       dataId = dataId || id;
       if (keyObject) {
-        incoming = context.merge(incoming, keyObject);
+        incoming = context2.merge(incoming, keyObject);
       }
     } catch (e2) {
       if (!dataId)
@@ -37690,22 +37681,22 @@ var StoreWriter = function() {
     }
     if (typeof dataId === "string") {
       var dataRef = makeReference(dataId);
-      var sets = context.written[dataId] || (context.written[dataId] = []);
+      var sets = context2.written[dataId] || (context2.written[dataId] = []);
       if (sets.indexOf(selectionSet) >= 0)
         return dataRef;
       sets.push(selectionSet);
-      if (this.reader && this.reader.isFresh(result2, dataRef, selectionSet, context)) {
+      if (this.reader && this.reader.isFresh(result2, dataRef, selectionSet, context2)) {
         return dataRef;
       }
-      var previous_1 = context.incomingById.get(dataId);
+      var previous_1 = context2.incomingById.get(dataId);
       if (previous_1) {
-        previous_1.storeObject = context.merge(previous_1.storeObject, incoming);
+        previous_1.storeObject = context2.merge(previous_1.storeObject, incoming);
         previous_1.mergeTree = mergeMergeTrees(previous_1.mergeTree, mergeTree);
         fieldNodeSet.forEach(function(field) {
           return previous_1.fieldNodeSet.add(field);
         });
       } else {
-        context.incomingById.set(dataId, {
+        context2.incomingById.set(dataId, {
           storeObject: incoming,
           mergeTree: mergeTreeIsEmpty(mergeTree) ? void 0 : mergeTree,
           fieldNodeSet
@@ -37715,14 +37706,14 @@ var StoreWriter = function() {
     }
     return incoming;
   };
-  StoreWriter2.prototype.processFieldValue = function(value, field, context, mergeTree) {
+  StoreWriter2.prototype.processFieldValue = function(value, field, context2, mergeTree) {
     var _this = this;
     if (!field.selectionSet || value === null) {
       return __DEV__ ? cloneDeep$1(value) : value;
     }
     if (isArray$4(value)) {
       return value.map(function(item, i) {
-        var value2 = _this.processFieldValue(item, field, context, getChildMergeTree(mergeTree, i));
+        var value2 = _this.processFieldValue(item, field, context2, getChildMergeTree(mergeTree, i));
         maybeRecycleChildMergeTree(mergeTree, i);
         return value2;
       });
@@ -37730,13 +37721,13 @@ var StoreWriter = function() {
     return this.processSelectionSet({
       result: value,
       selectionSet: field.selectionSet,
-      context,
+      context: context2,
       mergeTree
     });
   };
-  StoreWriter2.prototype.flattenFields = function(selectionSet, result2, context, typename) {
+  StoreWriter2.prototype.flattenFields = function(selectionSet, result2, context2, typename) {
     if (typename === void 0) {
-      typename = getTypenameFromResult(result2, selectionSet, context.fragmentMap);
+      typename = getTypenameFromResult(result2, selectionSet, context2.fragmentMap);
     }
     var fieldMap = /* @__PURE__ */ new Map();
     var policies = this.cache.policies;
@@ -37747,7 +37738,7 @@ var StoreWriter = function() {
         return;
       visitedNode.visited = true;
       selectionSet2.selections.forEach(function(selection) {
-        if (!shouldInclude(selection, context.variables))
+        if (!shouldInclude(selection, context2.variables))
           return;
         var clientOnly = inheritedContext.clientOnly, deferred = inheritedContext.deferred;
         if (!(clientOnly && deferred) && isNonEmptyArray(selection.directives)) {
@@ -37756,7 +37747,7 @@ var StoreWriter = function() {
             if (name === "client")
               clientOnly = true;
             if (name === "defer") {
-              var args = argumentsObjectFromField(dir, context.variables);
+              var args = argumentsObjectFromField(dir, context2.variables);
               if (!args || args.if !== false) {
                 deferred = true;
               }
@@ -37769,18 +37760,18 @@ var StoreWriter = function() {
             clientOnly = clientOnly && existing.clientOnly;
             deferred = deferred && existing.deferred;
           }
-          fieldMap.set(selection, getContextFlavor(context, clientOnly, deferred));
+          fieldMap.set(selection, getContextFlavor(context2, clientOnly, deferred));
         } else {
-          var fragment = getFragmentFromSelection(selection, context.fragmentMap);
-          if (fragment && policies.fragmentMatches(fragment, typename, result2, context.variables)) {
-            flatten(fragment.selectionSet, getContextFlavor(context, clientOnly, deferred));
+          var fragment = getFragmentFromSelection(selection, context2.fragmentMap);
+          if (fragment && policies.fragmentMatches(fragment, typename, result2, context2.variables)) {
+            flatten(fragment.selectionSet, getContextFlavor(context2, clientOnly, deferred));
           }
         }
       });
-    })(selectionSet, context);
+    })(selectionSet, context2);
     return fieldMap;
   };
-  StoreWriter2.prototype.applyMerges = function(mergeTree, existing, incoming, context, getStorageArgs) {
+  StoreWriter2.prototype.applyMerges = function(mergeTree, existing, incoming, context2, getStorageArgs) {
     var _a2;
     var _this = this;
     if (mergeTree.map.size && !isReference(incoming)) {
@@ -37791,7 +37782,7 @@ var StoreWriter = function() {
       }
       var changedFields_1;
       var getValue_1 = function(from2, name) {
-        return isArray$4(from2) ? typeof name === "number" ? from2[name] : void 0 : context.store.getFieldValue(from2, String(name));
+        return isArray$4(from2) ? typeof name === "number" ? from2[name] : void 0 : context2.store.getFieldValue(from2, String(name));
       };
       mergeTree.map.forEach(function(childTree, storeFieldName) {
         var eVal = getValue_1(e_1, storeFieldName);
@@ -37801,7 +37792,7 @@ var StoreWriter = function() {
         if (getStorageArgs) {
           getStorageArgs.push(storeFieldName);
         }
-        var aVal = _this.applyMerges(childTree, eVal, iVal, context, getStorageArgs);
+        var aVal = _this.applyMerges(childTree, eVal, iVal, context2, getStorageArgs);
         if (aVal !== iVal) {
           changedFields_1 = changedFields_1 || /* @__PURE__ */ new Map();
           changedFields_1.set(storeFieldName, aVal);
@@ -37818,7 +37809,7 @@ var StoreWriter = function() {
       }
     }
     if (mergeTree.info) {
-      return this.cache.policies.runMergeFunction(existing, incoming, mergeTree.info, context, getStorageArgs && (_a2 = context.store).getStorage.apply(_a2, getStorageArgs));
+      return this.cache.policies.runMergeFunction(existing, incoming, mergeTree.info, context2, getStorageArgs && (_a2 = context2.store).getStorage.apply(_a2, getStorageArgs));
     }
     return incoming;
   };
@@ -38732,11 +38723,11 @@ var LocalState = function() {
     return this.resolvers || {};
   };
   LocalState2.prototype.runResolvers = function(_a2) {
-    var document2 = _a2.document, remoteResult = _a2.remoteResult, context = _a2.context, variables = _a2.variables, _b = _a2.onlyRunForcedResolvers, onlyRunForcedResolvers = _b === void 0 ? false : _b;
+    var document2 = _a2.document, remoteResult = _a2.remoteResult, context2 = _a2.context, variables = _a2.variables, _b = _a2.onlyRunForcedResolvers, onlyRunForcedResolvers = _b === void 0 ? false : _b;
     return __awaiter(this, void 0, void 0, function() {
       return __generator(this, function(_c) {
         if (document2) {
-          return [2, this.resolveDocument(document2, remoteResult.data, context, variables, this.fragmentMatcher, onlyRunForcedResolvers).then(function(localResult) {
+          return [2, this.resolveDocument(document2, remoteResult.data, context2, variables, this.fragmentMatcher, onlyRunForcedResolvers).then(function(localResult) {
             return __assign(__assign({}, remoteResult), { data: localResult.result });
           })];
         }
@@ -38761,23 +38752,23 @@ var LocalState = function() {
   LocalState2.prototype.serverQuery = function(document2) {
     return removeClientSetsFromDocument(document2);
   };
-  LocalState2.prototype.prepareContext = function(context) {
+  LocalState2.prototype.prepareContext = function(context2) {
     var cache2 = this.cache;
-    return __assign(__assign({}, context), { cache: cache2, getCacheKey: function(obj) {
+    return __assign(__assign({}, context2), { cache: cache2, getCacheKey: function(obj) {
       return cache2.identify(obj);
     } });
   };
-  LocalState2.prototype.addExportedVariables = function(document2, variables, context) {
+  LocalState2.prototype.addExportedVariables = function(document2, variables, context2) {
     if (variables === void 0) {
       variables = {};
     }
-    if (context === void 0) {
-      context = {};
+    if (context2 === void 0) {
+      context2 = {};
     }
     return __awaiter(this, void 0, void 0, function() {
       return __generator(this, function(_a2) {
         if (document2) {
-          return [2, this.resolveDocument(document2, this.buildRootValueFromCache(document2, variables) || {}, this.prepareContext(context), variables).then(function(data) {
+          return [2, this.resolveDocument(document2, this.buildRootValueFromCache(document2, variables) || {}, this.prepareContext(context2), variables).then(function(data) {
             return __assign(__assign({}, variables), data.exportedVariables);
           })];
         }
@@ -38811,9 +38802,9 @@ var LocalState = function() {
       optimistic: false
     }).result;
   };
-  LocalState2.prototype.resolveDocument = function(document2, rootValue, context, variables, fragmentMatcher, onlyRunForcedResolvers) {
-    if (context === void 0) {
-      context = {};
+  LocalState2.prototype.resolveDocument = function(document2, rootValue, context2, variables, fragmentMatcher, onlyRunForcedResolvers) {
+    if (context2 === void 0) {
+      context2 = {};
     }
     if (variables === void 0) {
       variables = {};
@@ -38837,7 +38828,7 @@ var LocalState = function() {
         _a2 = this, cache2 = _a2.cache, client = _a2.client;
         execContext = {
           fragmentMap,
-          context: __assign(__assign({}, context), { cache: cache2, client }),
+          context: __assign(__assign({}, context2), { cache: cache2, client }),
           variables,
           fragmentMatcher,
           defaultOperationType,
@@ -38855,10 +38846,10 @@ var LocalState = function() {
   };
   LocalState2.prototype.resolveSelectionSet = function(selectionSet, rootValue, execContext) {
     return __awaiter(this, void 0, void 0, function() {
-      var fragmentMap, context, variables, resultsToMerge, execute2;
+      var fragmentMap, context2, variables, resultsToMerge, execute2;
       var _this = this;
       return __generator(this, function(_a2) {
-        fragmentMap = execContext.fragmentMap, context = execContext.context, variables = execContext.variables;
+        fragmentMap = execContext.fragmentMap, context2 = execContext.context, variables = execContext.variables;
         resultsToMerge = [rootValue];
         execute2 = function(selection) {
           return __awaiter(_this, void 0, void 0, function() {
@@ -38883,7 +38874,7 @@ var LocalState = function() {
               }
               if (fragment && fragment.typeCondition) {
                 typeCondition = fragment.typeCondition.name.value;
-                if (execContext.fragmentMatcher(rootValue, typeCondition, context)) {
+                if (execContext.fragmentMatcher(rootValue, typeCondition, context2)) {
                   return [2, this.resolveSelectionSet(fragment.selectionSet, rootValue, execContext).then(function(fragmentResult) {
                     resultsToMerge.push(fragmentResult);
                   })];
@@ -39280,7 +39271,7 @@ var QueryManager = function() {
   };
   QueryManager2.prototype.mutate = function(_a2) {
     var _b, _c;
-    var mutation = _a2.mutation, variables = _a2.variables, optimisticResponse = _a2.optimisticResponse, updateQueries = _a2.updateQueries, _d = _a2.refetchQueries, refetchQueries = _d === void 0 ? [] : _d, _e = _a2.awaitRefetchQueries, awaitRefetchQueries = _e === void 0 ? false : _e, updateWithProxyFn = _a2.update, onQueryUpdated = _a2.onQueryUpdated, _f = _a2.fetchPolicy, fetchPolicy = _f === void 0 ? ((_b = this.defaultOptions.mutate) === null || _b === void 0 ? void 0 : _b.fetchPolicy) || "network-only" : _f, _g = _a2.errorPolicy, errorPolicy = _g === void 0 ? ((_c = this.defaultOptions.mutate) === null || _c === void 0 ? void 0 : _c.errorPolicy) || "none" : _g, keepRootFields = _a2.keepRootFields, context = _a2.context;
+    var mutation = _a2.mutation, variables = _a2.variables, optimisticResponse = _a2.optimisticResponse, updateQueries = _a2.updateQueries, _d = _a2.refetchQueries, refetchQueries = _d === void 0 ? [] : _d, _e = _a2.awaitRefetchQueries, awaitRefetchQueries = _e === void 0 ? false : _e, updateWithProxyFn = _a2.update, onQueryUpdated = _a2.onQueryUpdated, _f = _a2.fetchPolicy, fetchPolicy = _f === void 0 ? ((_b = this.defaultOptions.mutate) === null || _b === void 0 ? void 0 : _b.fetchPolicy) || "network-only" : _f, _g = _a2.errorPolicy, errorPolicy = _g === void 0 ? ((_c = this.defaultOptions.mutate) === null || _c === void 0 ? void 0 : _c.errorPolicy) || "none" : _g, keepRootFields = _a2.keepRootFields, context2 = _a2.context;
     return __awaiter(this, void 0, void 0, function() {
       var mutationId, mutationStoreValue, self2;
       return __generator(this, function(_h) {
@@ -39293,7 +39284,7 @@ var QueryManager = function() {
             variables = this.getVariables(mutation, variables);
             if (!this.transform(mutation).hasClientExports)
               return [3, 2];
-            return [4, this.localState.addExportedVariables(mutation, variables, context)];
+            return [4, this.localState.addExportedVariables(mutation, variables, context2)];
           case 1:
             variables = _h.sent();
             _h.label = 2;
@@ -39311,7 +39302,7 @@ var QueryManager = function() {
                 variables,
                 fetchPolicy,
                 errorPolicy,
-                context,
+                context: context2,
                 updateQueries,
                 update: updateWithProxyFn,
                 keepRootFields
@@ -39320,7 +39311,7 @@ var QueryManager = function() {
             this.broadcastQueries();
             self2 = this;
             return [2, new Promise(function(resolve2, reject2) {
-              return asyncMap(self2.getObservableFromLink(mutation, __assign(__assign({}, context), { optimisticResponse }), variables, false), function(result2) {
+              return asyncMap(self2.getObservableFromLink(mutation, __assign(__assign({}, context2), { optimisticResponse }), variables, false), function(result2) {
                 if (graphQLResultHasError(result2) && errorPolicy === "none") {
                   throw new ApolloError({
                     graphQLErrors: result2.errors
@@ -39344,7 +39335,7 @@ var QueryManager = function() {
                   variables,
                   fetchPolicy,
                   errorPolicy,
-                  context,
+                  context: context2,
                   update: updateWithProxyFn,
                   updateQueries,
                   awaitRefetchQueries,
@@ -39622,7 +39613,7 @@ var QueryManager = function() {
     if (include === void 0) {
       include = "active";
     }
-    var queries = /* @__PURE__ */ new Map();
+    var queries2 = /* @__PURE__ */ new Map();
     var queryNamesAndDocs = /* @__PURE__ */ new Map();
     var legacyQueryOptions = /* @__PURE__ */ new Set();
     if (Array.isArray(include)) {
@@ -39640,7 +39631,7 @@ var QueryManager = function() {
       var oq = _a2.observableQuery, document2 = _a2.document;
       if (oq) {
         if (include === "all") {
-          queries.set(queryId, oq);
+          queries2.set(queryId, oq);
           return;
         }
         var queryName = oq.queryName, fetchPolicy = oq.options.fetchPolicy;
@@ -39648,7 +39639,7 @@ var QueryManager = function() {
           return;
         }
         if (include === "active" || queryName && queryNamesAndDocs.has(queryName) || document2 && queryNamesAndDocs.has(document2)) {
-          queries.set(queryId, oq);
+          queries2.set(queryId, oq);
           if (queryName)
             queryNamesAndDocs.set(queryName, true);
           if (document2)
@@ -39670,7 +39661,7 @@ var QueryManager = function() {
         });
         invariant$1(oq.queryId === queryId);
         queryInfo.setObservableQuery(oq);
-        queries.set(queryId, oq);
+        queries2.set(queryId, oq);
       });
     }
     if (__DEV__ && queryNamesAndDocs.size) {
@@ -39680,7 +39671,7 @@ var QueryManager = function() {
         }
       });
     }
-    return queries;
+    return queries2;
   };
   QueryManager2.prototype.reFetchObservableQueries = function(includeStandby) {
     var _this = this;
@@ -39704,11 +39695,11 @@ var QueryManager = function() {
   };
   QueryManager2.prototype.startGraphQLSubscription = function(_a2) {
     var _this = this;
-    var query = _a2.query, fetchPolicy = _a2.fetchPolicy, errorPolicy = _a2.errorPolicy, variables = _a2.variables, _b = _a2.context, context = _b === void 0 ? {} : _b;
+    var query = _a2.query, fetchPolicy = _a2.fetchPolicy, errorPolicy = _a2.errorPolicy, variables = _a2.variables, _b = _a2.context, context2 = _b === void 0 ? {} : _b;
     query = this.transform(query).document;
     variables = this.getVariables(query, variables);
     var makeObservable = function(variables2) {
-      return _this.getObservableFromLink(query, context, variables2).map(function(result2) {
+      return _this.getObservableFromLink(query, context2, variables2).map(function(result2) {
         if (fetchPolicy !== "no-cache") {
           if (shouldWriteResult(result2, errorPolicy)) {
             _this.cache.write({
@@ -39729,7 +39720,7 @@ var QueryManager = function() {
       });
     };
     if (this.transform(query).hasClientExports) {
-      var observablePromise_1 = this.localState.addExportedVariables(query, variables, context).then(makeObservable);
+      var observablePromise_1 = this.localState.addExportedVariables(query, variables, context2).then(makeObservable);
       return new Observable$1(function(observer) {
         var sub = null;
         observablePromise_1.then(function(observable2) {
@@ -39767,11 +39758,11 @@ var QueryManager = function() {
   QueryManager2.prototype.getLocalState = function() {
     return this.localState;
   };
-  QueryManager2.prototype.getObservableFromLink = function(query, context, variables, deduplication) {
+  QueryManager2.prototype.getObservableFromLink = function(query, context2, variables, deduplication) {
     var _this = this;
     var _a2;
     if (deduplication === void 0) {
-      deduplication = (_a2 = context === null || context === void 0 ? void 0 : context.queryDeduplication) !== null && _a2 !== void 0 ? _a2 : this.queryDeduplication;
+      deduplication = (_a2 = context2 === null || context2 === void 0 ? void 0 : context2.queryDeduplication) !== null && _a2 !== void 0 ? _a2 : this.queryDeduplication;
     }
     var observable2;
     var serverQuery = this.transform(query).serverQuery;
@@ -39781,9 +39772,9 @@ var QueryManager = function() {
         query: serverQuery,
         variables,
         operationName: getOperationName(serverQuery) || void 0,
-        context: this.prepareContext(__assign(__assign({}, context), { forceFetch: !deduplication }))
+        context: this.prepareContext(__assign(__assign({}, context2), { forceFetch: !deduplication }))
       };
-      context = operation.context;
+      context2 = operation.context;
       if (deduplication) {
         var byVariables_1 = inFlightLinkObservables_1.get(serverQuery) || /* @__PURE__ */ new Map();
         inFlightLinkObservables_1.set(serverQuery, byVariables_1);
@@ -39809,7 +39800,7 @@ var QueryManager = function() {
       observable2 = new Concast([
         Observable$1.of({ data: {} })
       ]);
-      context = this.prepareContext(context);
+      context2 = this.prepareContext(context2);
     }
     var clientQuery = this.transform(query).clientQuery;
     if (clientQuery) {
@@ -39817,7 +39808,7 @@ var QueryManager = function() {
         return _this.localState.runResolvers({
           document: clientQuery,
           remoteResult: result2,
-          context,
+          context: context2,
           variables
         });
       });
@@ -39864,7 +39855,7 @@ var QueryManager = function() {
     var variables = this.getVariables(query, options2.variables);
     var queryInfo = this.getQuery(queryId);
     var defaults = this.defaultOptions.watchQuery;
-    var _a2 = options2.fetchPolicy, fetchPolicy = _a2 === void 0 ? defaults && defaults.fetchPolicy || "cache-first" : _a2, _b = options2.errorPolicy, errorPolicy = _b === void 0 ? defaults && defaults.errorPolicy || "none" : _b, _c = options2.returnPartialData, returnPartialData = _c === void 0 ? false : _c, _d = options2.notifyOnNetworkStatusChange, notifyOnNetworkStatusChange = _d === void 0 ? false : _d, _e = options2.context, context = _e === void 0 ? {} : _e;
+    var _a2 = options2.fetchPolicy, fetchPolicy = _a2 === void 0 ? defaults && defaults.fetchPolicy || "cache-first" : _a2, _b = options2.errorPolicy, errorPolicy = _b === void 0 ? defaults && defaults.errorPolicy || "none" : _b, _c = options2.returnPartialData, returnPartialData = _c === void 0 ? false : _c, _d = options2.notifyOnNetworkStatusChange, notifyOnNetworkStatusChange = _d === void 0 ? false : _d, _e = options2.context, context2 = _e === void 0 ? {} : _e;
     var normalized = Object.assign({}, options2, {
       query,
       variables,
@@ -39872,7 +39863,7 @@ var QueryManager = function() {
       errorPolicy,
       returnPartialData,
       notifyOnNetworkStatusChange,
-      context
+      context: context2
     });
     var fromVariables = function(variables2) {
       normalized.variables = variables2;
@@ -39964,7 +39955,7 @@ var QueryManager = function() {
   };
   QueryManager2.prototype.fetchQueryByPolicy = function(queryInfo, _a2, networkStatus) {
     var _this = this;
-    var query = _a2.query, variables = _a2.variables, fetchPolicy = _a2.fetchPolicy, refetchWritePolicy = _a2.refetchWritePolicy, errorPolicy = _a2.errorPolicy, returnPartialData = _a2.returnPartialData, context = _a2.context, notifyOnNetworkStatusChange = _a2.notifyOnNetworkStatusChange;
+    var query = _a2.query, variables = _a2.variables, fetchPolicy = _a2.fetchPolicy, refetchWritePolicy = _a2.refetchWritePolicy, errorPolicy = _a2.errorPolicy, returnPartialData = _a2.returnPartialData, context2 = _a2.context, notifyOnNetworkStatusChange = _a2.notifyOnNetworkStatusChange;
     var oldNetworkStatus = queryInfo.networkStatus;
     queryInfo.init({
       document: this.transform(query).document,
@@ -39989,7 +39980,7 @@ var QueryManager = function() {
         return _this.localState.runResolvers({
           document: query,
           remoteResult: { data },
-          context,
+          context: context2,
           variables,
           onlyRunForcedResolvers: true
         }).then(function(resolved) {
@@ -40002,7 +39993,7 @@ var QueryManager = function() {
     var resultsFromLink = function() {
       return _this.getResultsFromLink(queryInfo, cacheWriteBehavior, {
         variables,
-        context,
+        context: context2,
         fetchPolicy,
         errorPolicy
       });
@@ -40069,11 +40060,11 @@ var QueryManager = function() {
     }
     return this.queries.get(queryId);
   };
-  QueryManager2.prototype.prepareContext = function(context) {
-    if (context === void 0) {
-      context = {};
+  QueryManager2.prototype.prepareContext = function(context2) {
+    if (context2 === void 0) {
+      context2 = {};
     }
-    var newContext = this.localState.prepareContext(context);
+    var newContext = this.localState.prepareContext(context2);
     return __assign(__assign({}, newContext), { clientAwareness: this.clientAwareness });
   };
   return QueryManager2;
@@ -40268,14 +40259,14 @@ var ApolloClient = function() {
   };
   ApolloClient2.prototype.refetchQueries = function(options2) {
     var map = this.queryManager.refetchQueries(options2);
-    var queries = [];
+    var queries2 = [];
     var results = [];
     map.forEach(function(result3, obsQuery) {
-      queries.push(obsQuery);
+      queries2.push(obsQuery);
       results.push(result3);
     });
     var result2 = Promise.all(results);
-    result2.queries = queries;
+    result2.queries = queries2;
     result2.results = results;
     result2.catch(function(error) {
       __DEV__ && invariant$1.debug("In client.refetchQueries, Promise.all promise rejected with error ".concat(error));
@@ -40503,35 +40494,35 @@ function setContext(setter) {
 }
 var contextKey = canUseSymbol$1 ? Symbol.for("__APOLLO_CONTEXT__") : "__APOLLO_CONTEXT__";
 function getApolloContext() {
-  var context = React.createContext[contextKey];
-  if (!context) {
+  var context2 = React.createContext[contextKey];
+  if (!context2) {
     Object.defineProperty(React.createContext, contextKey, {
-      value: context = React.createContext({}),
+      value: context2 = React.createContext({}),
       enumerable: false,
       writable: false,
       configurable: true
     });
-    context.displayName = "ApolloContext";
+    context2.displayName = "ApolloContext";
   }
-  return context;
+  return context2;
 }
 var ApolloProvider = function(_a2) {
   var client = _a2.client, children = _a2.children;
   var ApolloContext = getApolloContext();
-  return React.createElement(ApolloContext.Consumer, null, function(context) {
-    if (context === void 0) {
-      context = {};
+  return React.createElement(ApolloContext.Consumer, null, function(context2) {
+    if (context2 === void 0) {
+      context2 = {};
     }
-    if (client && context.client !== client) {
-      context = Object.assign({}, context, { client });
+    if (client && context2.client !== client) {
+      context2 = Object.assign({}, context2, { client });
     }
-    __DEV__ ? invariant$1(context.client, 'ApolloProvider was not passed a client instance. Make sure you pass in your client via the "client" prop.') : invariant$1(context.client, 26);
-    return React.createElement(ApolloContext.Provider, { value: context }, children);
+    __DEV__ ? invariant$1(context2.client, 'ApolloProvider was not passed a client instance. Make sure you pass in your client via the "client" prop.') : invariant$1(context2.client, 26);
+    return React.createElement(ApolloContext.Provider, { value: context2 }, children);
   });
 };
 function useApolloClient(override) {
-  var context = useContext(getApolloContext());
-  var client = override || context.client;
+  var context2 = useContext(getApolloContext());
+  var client = override || context2.client;
   __DEV__ ? invariant$1(!!client, 'Could not find "client" in the context or passed in as an option. Wrap the root component in an <ApolloProvider>, or pass an ApolloClient instance in via options.') : invariant$1(!!client, 29);
   return client;
 }
@@ -40581,7 +40572,7 @@ var DocumentType;
   DocumentType2[DocumentType2["Mutation"] = 1] = "Mutation";
   DocumentType2[DocumentType2["Subscription"] = 2] = "Subscription";
 })(DocumentType || (DocumentType = {}));
-var cache = /* @__PURE__ */ new Map();
+var cache$1 = /* @__PURE__ */ new Map();
 function operationName(type) {
   var name;
   switch (type) {
@@ -40598,13 +40589,13 @@ function operationName(type) {
   return name;
 }
 function parser(document2) {
-  var cached = cache.get(document2);
+  var cached = cache$1.get(document2);
   if (cached)
     return cached;
   var variables, type, name;
   __DEV__ ? invariant$1(!!document2 && !!document2.kind, "Argument of ".concat(document2, " passed to parser was not a valid GraphQL ") + "DocumentNode. You may need to use 'graphql-tag' or another method to convert your operation into a document") : invariant$1(!!document2 && !!document2.kind, 30);
   var fragments = [];
-  var queries = [];
+  var queries2 = [];
   var mutations = [];
   var subscriptions = [];
   for (var _i = 0, _a2 = document2.definitions; _i < _a2.length; _i++) {
@@ -40616,7 +40607,7 @@ function parser(document2) {
     if (x2.kind === "OperationDefinition") {
       switch (x2.operation) {
         case "query":
-          queries.push(x2);
+          queries2.push(x2);
           break;
         case "mutation":
           mutations.push(x2);
@@ -40627,12 +40618,12 @@ function parser(document2) {
       }
     }
   }
-  __DEV__ ? invariant$1(!fragments.length || (queries.length || mutations.length || subscriptions.length), "Passing only a fragment to 'graphql' is not yet supported. You must include a query, subscription or mutation as well") : invariant$1(!fragments.length || (queries.length || mutations.length || subscriptions.length), 31);
-  __DEV__ ? invariant$1(queries.length + mutations.length + subscriptions.length <= 1, "react-apollo only supports a query, subscription, or a mutation per HOC. " + "".concat(document2, " had ").concat(queries.length, " queries, ").concat(subscriptions.length, " ") + "subscriptions and ".concat(mutations.length, " mutations. ") + "You can use 'compose' to join multiple operation types to a component") : invariant$1(queries.length + mutations.length + subscriptions.length <= 1, 32);
-  type = queries.length ? DocumentType.Query : DocumentType.Mutation;
-  if (!queries.length && !mutations.length)
+  __DEV__ ? invariant$1(!fragments.length || (queries2.length || mutations.length || subscriptions.length), "Passing only a fragment to 'graphql' is not yet supported. You must include a query, subscription or mutation as well") : invariant$1(!fragments.length || (queries2.length || mutations.length || subscriptions.length), 31);
+  __DEV__ ? invariant$1(queries2.length + mutations.length + subscriptions.length <= 1, "react-apollo only supports a query, subscription, or a mutation per HOC. " + "".concat(document2, " had ").concat(queries2.length, " queries, ").concat(subscriptions.length, " ") + "subscriptions and ".concat(mutations.length, " mutations. ") + "You can use 'compose' to join multiple operation types to a component") : invariant$1(queries2.length + mutations.length + subscriptions.length <= 1, 32);
+  type = queries2.length ? DocumentType.Query : DocumentType.Mutation;
+  if (!queries2.length && !mutations.length)
     type = DocumentType.Subscription;
-  var definitions = queries.length ? queries : mutations.length ? mutations : subscriptions;
+  var definitions = queries2.length ? queries2 : mutations.length ? mutations : subscriptions;
   __DEV__ ? invariant$1(definitions.length === 1, "react-apollo only supports one definition per HOC. ".concat(document2, " had ") + "".concat(definitions.length, " definitions. ") + "You can use 'compose' to join multiple operation types to a component") : invariant$1(definitions.length === 1, 33);
   var definition = definitions[0];
   variables = definition.variableDefinitions || [];
@@ -40642,7 +40633,7 @@ function parser(document2) {
     name = "data";
   }
   var payload = { name, type, variables };
-  cache.set(document2, payload);
+  cache$1.set(document2, payload);
   return payload;
 }
 function verifyDocumentType(document2, type) {
@@ -41004,6 +40995,19 @@ function useMutation(mutation, options2) {
   }, []);
   return [execute2, __assign({ reset: reset2 }, result2)];
 }
+function useReactiveVar(rv) {
+  var value = rv();
+  var setValue = useState(value)[1];
+  useEffect(function() {
+    var probablySameValue = rv();
+    if (value !== probablySameValue) {
+      setValue(probablySameValue);
+    } else {
+      return rv.onNextChange(setValue);
+    }
+  }, [value]);
+  return value;
+}
 var require$$0 = /* @__PURE__ */ getAugmentedNamespace(core);
 var require$$1 = /* @__PURE__ */ getAugmentedNamespace(http);
 var ReactNativeFile_1 = class ReactNativeFile {
@@ -41100,15 +41104,15 @@ var createUploadLink = function createUploadLink2({
     headers
   };
   return new ApolloLink((operation) => {
-    const context = operation.getContext();
+    const context2 = operation.getContext();
     const {
       clientAwareness: { name, version: version2 } = {},
       headers: headers2
-    } = context;
+    } = context2;
     const contextConfig = {
-      http: context.http,
-      options: context.fetchOptions,
-      credentials: context.credentials,
+      http: context2.http,
+      options: context2.fetchOptions,
+      credentials: context2.credentials,
       headers: {
         ...name && { "apollographql-client-name": name },
         ...version2 && { "apollographql-client-version": version2 },
@@ -41182,8 +41186,7 @@ var createUploadLink = function createUploadLink2({
   });
 };
 var createUploadLink$1 = createUploadLink;
-var style = /* @__PURE__ */ (() => `[type=text],[type=email],[type=url],[type=password],[type=number],[type=date],[type=datetime-local],[type=month],[type=search],[type=tel],[type=time],[type=week],[multiple],textarea,select{appearance:none;background-color:#fff;border-color:#6b7280;border-width:1px;border-radius:0;padding:.5rem .75rem;font-size:1rem;line-height:1.5rem;--tw-shadow: 0 0 #0000}[type=text]:focus,[type=email]:focus,[type=url]:focus,[type=password]:focus,[type=number]:focus,[type=date]:focus,[type=datetime-local]:focus,[type=month]:focus,[type=search]:focus,[type=tel]:focus,[type=time]:focus,[type=week]:focus,[multiple]:focus,textarea:focus,select:focus{outline:2px solid transparent;outline-offset:2px;--tw-ring-inset: var(--tw-empty, );--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: #2563eb;--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow);border-color:#2563eb}input::placeholder,textarea::placeholder{color:#6b7280;opacity:1}::-webkit-datetime-edit-fields-wrapper{padding:0}::-webkit-date-and-time-value{min-height:1.5em}::-webkit-datetime-edit,::-webkit-datetime-edit-year-field,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute-field,::-webkit-datetime-edit-second-field,::-webkit-datetime-edit-millisecond-field,::-webkit-datetime-edit-meridiem-field{padding-top:0;padding-bottom:0}select{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");background-position:right .5rem center;background-repeat:no-repeat;background-size:1.5em 1.5em;padding-right:2.5rem;print-color-adjust:exact}[multiple]{background-image:initial;background-position:initial;background-repeat:unset;background-size:initial;padding-right:.75rem;print-color-adjust:unset}[type=checkbox],[type=radio]{appearance:none;padding:0;print-color-adjust:exact;display:inline-block;vertical-align:middle;background-origin:border-box;user-select:none;flex-shrink:0;height:1rem;width:1rem;color:#2563eb;background-color:#fff;border-color:#6b7280;border-width:1px;--tw-shadow: 0 0 #0000}[type=checkbox]{border-radius:0}[type=radio]{border-radius:100%}[type=checkbox]:focus,[type=radio]:focus{outline:2px solid transparent;outline-offset:2px;--tw-ring-inset: var(--tw-empty, );--tw-ring-offset-width: 2px;--tw-ring-offset-color: #fff;--tw-ring-color: #2563eb;--tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}[type=checkbox]:checked,[type=radio]:checked{border-color:transparent;background-color:currentColor;background-size:100% 100%;background-position:center;background-repeat:no-repeat}[type=checkbox]:checked{background-image:url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3e%3c/svg%3e")}[type=radio]:checked{background-image:url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3ccircle cx='8' cy='8' r='3'/%3e%3c/svg%3e")}[type=checkbox]:checked:hover,[type=checkbox]:checked:focus,[type=radio]:checked:hover,[type=radio]:checked:focus{border-color:transparent;background-color:currentColor}[type=checkbox]:indeterminate{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 16 16'%3e%3cpath stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 8h8'/%3e%3c/svg%3e");border-color:transparent;background-color:currentColor;background-size:100% 100%;background-position:center;background-repeat:no-repeat}[type=checkbox]:indeterminate:hover,[type=checkbox]:indeterminate:focus{border-color:transparent;background-color:currentColor}[type=file]{background:unset;border-color:inherit;border-width:0;border-radius:0;padding:0;font-size:unset;line-height:inherit}[type=file]:focus{outline:1px solid ButtonText;outline:1px auto -webkit-focus-ring-color}*,:before,:after{--tw-border-spacing-x: 0;--tw-border-spacing-y: 0;--tw-translate-x: 0;--tw-translate-y: 0;--tw-rotate: 0;--tw-skew-x: 0;--tw-skew-y: 0;--tw-scale-x: 1;--tw-scale-y: 1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness: proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgb(59 130 246 / .5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;--tw-shadow: 0 0 #0000;--tw-shadow-colored: 0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::backdrop{--tw-border-spacing-x: 0;--tw-border-spacing-y: 0;--tw-translate-x: 0;--tw-translate-y: 0;--tw-rotate: 0;--tw-skew-x: 0;--tw-skew-y: 0;--tw-scale-x: 1;--tw-scale-y: 1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness: proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgb(59 130 246 / .5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;--tw-shadow: 0 0 #0000;--tw-shadow-colored: 0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }.spillover-media-library *,:before,:after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}.spillover-media-library{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"}.spillover-media-library ol,ul,menu{list-style:none;margin:0;padding:0}.sml-mb-4{margin-bottom:1rem}.sml-ml-4{margin-left:1rem}.sml-mt-2{margin-top:.5rem}.sml-mr-2{margin-right:.5rem}.sml-block{display:block}.sml-flex{display:flex}.sml-h-full{height:100%}.sml-h-14{height:3.5rem}.sml-h-\\[calc\\(100\\%_-_4rem\\)\\]{height:calc(100% - 4rem)}.sml-w-1\\/2{width:50%}.sml-w-full{width:100%}.sml-w-72{width:18rem}.sml-cursor-pointer{cursor:pointer}.sml-flex-row{flex-direction:row}.sml-flex-col{flex-direction:column}.sml-items-center{align-items:center}.sml-justify-center{justify-content:center}.sml-justify-between{justify-content:space-between}.sml-justify-evenly{justify-content:space-evenly}.sml-space-x-2>:not([hidden])~:not([hidden]){--tw-space-x-reverse: 0;margin-right:calc(.5rem * var(--tw-space-x-reverse));margin-left:calc(.5rem * calc(1 - var(--tw-space-x-reverse)))}.sml-rounded-lg{border-radius:.5rem}.sml-rounded-2xl{border-radius:1rem}.sml-border{border-width:1px}.sml-border-b{border-bottom-width:1px}.sml-border-solid{border-style:solid}.sml-border-none{border-style:none}.sml-border-spillover-color3{--tw-border-opacity: 1;border-color:rgb(175 183 188 / var(--tw-border-opacity))}.sml-border-gray-300{--tw-border-opacity: 1;border-color:rgb(209 213 219 / var(--tw-border-opacity))}.sml-bg-gray-50{--tw-bg-opacity: 1;background-color:rgb(249 250 251 / var(--tw-bg-opacity))}.sml-bg-spillover-color2{--tw-bg-opacity: 1;background-color:rgb(86 21 19 / var(--tw-bg-opacity))}.sml-bg-spillover-color3{--tw-bg-opacity: 1;background-color:rgb(175 183 188 / var(--tw-bg-opacity))}.sml-p-2{padding:.5rem}.sml-py-2{padding-top:.5rem;padding-bottom:.5rem}.sml-px-3{padding-left:.75rem;padding-right:.75rem}.sml-py-1{padding-top:.25rem;padding-bottom:.25rem}.sml-px-4{padding-left:1rem;padding-right:1rem}.sml-py-3{padding-top:.75rem;padding-bottom:.75rem}.sml-pb-0\\.5{padding-bottom:.125rem}.sml-pb-0{padding-bottom:0}.sml-text-sm{font-size:.875rem;line-height:1.5715}.sml-text-xs{font-size:.75rem;line-height:1.5}.sml-text-xl{font-size:1.25rem;line-height:1.5;letter-spacing:-.01em}.sml-font-bold{font-weight:700}.sml-font-medium{font-weight:500}.sml-uppercase{text-transform:uppercase}.sml-text-gray-900{--tw-text-opacity: 1;color:rgb(17 24 39 / var(--tw-text-opacity))}.sml-text-white{--tw-text-opacity: 1;color:rgb(255 255 255 / var(--tw-text-opacity))}.sml-text-black{--tw-text-opacity: 1;color:rgb(0 0 0 / var(--tw-text-opacity))}.sml-text-spillover-color2{--tw-text-opacity: 1;color:rgb(86 21 19 / var(--tw-text-opacity))}.sml-text-spillover-color11{--tw-text-opacity: 1;color:rgb(167 30 34 / var(--tw-text-opacity))}.sml-text-spillover-color10{--tw-text-opacity: 1;color:rgb(34 34 34 / var(--tw-text-opacity))}.hover\\:sml-bg-gray-200:hover{--tw-bg-opacity: 1;background-color:rgb(229 231 235 / var(--tw-bg-opacity))}
-`)();
+var style = /* @__PURE__ */ (() => '*,:before,:after{--tw-border-spacing-x: 0;--tw-border-spacing-y: 0;--tw-translate-x: 0;--tw-translate-y: 0;--tw-rotate: 0;--tw-skew-x: 0;--tw-skew-y: 0;--tw-scale-x: 1;--tw-scale-y: 1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness: proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgb(59 130 246 / .5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;--tw-shadow: 0 0 #0000;--tw-shadow-colored: 0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }::backdrop{--tw-border-spacing-x: 0;--tw-border-spacing-y: 0;--tw-translate-x: 0;--tw-translate-y: 0;--tw-rotate: 0;--tw-skew-x: 0;--tw-skew-y: 0;--tw-scale-x: 1;--tw-scale-y: 1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness: proximity;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgb(59 130 246 / .5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;--tw-shadow: 0 0 #0000;--tw-shadow-colored: 0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }.spillover-media-library *,:before,:after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}.spillover-media-library{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji"}.spillover-media-library ol,ul,menu{list-style:none;margin:0;padding:0}.sml-ml-4{margin-left:1rem}.sml-mt-4{margin-top:1rem}.sml-mr-2{margin-right:.5rem}.sml-mb-4{margin-bottom:1rem}.sml-block{display:block}.sml-flex{display:flex}.sml-h-full{height:100%}.sml-h-14{height:3.5rem}.sml-h-\\[calc\\(100\\%_-_4rem\\)\\]{height:calc(100% - 4rem)}.sml-w-1\\/2{width:50%}.sml-w-full{width:100%}.sml-w-72{width:18rem}.sml-cursor-pointer{cursor:pointer}.sml-flex-row{flex-direction:row}.sml-flex-col{flex-direction:column}.sml-items-center{align-items:center}.sml-justify-center{justify-content:center}.sml-justify-between{justify-content:space-between}.sml-justify-evenly{justify-content:space-evenly}.sml-space-x-2>:not([hidden])~:not([hidden]){--tw-space-x-reverse: 0;margin-right:calc(.5rem * var(--tw-space-x-reverse));margin-left:calc(.5rem * calc(1 - var(--tw-space-x-reverse)))}.sml-rounded-lg{border-radius:.5rem}.sml-rounded-2xl{border-radius:1rem}.sml-border{border-width:1px}.sml-border-b{border-bottom-width:1px}.sml-border-solid{border-style:solid}.sml-border-none{border-style:none}.sml-border-spillover-color3{--tw-border-opacity: 1;border-color:rgb(175 183 188 / var(--tw-border-opacity))}.sml-border-gray-300{--tw-border-opacity: 1;border-color:rgb(209 213 219 / var(--tw-border-opacity))}.sml-bg-gray-50{--tw-bg-opacity: 1;background-color:rgb(249 250 251 / var(--tw-bg-opacity))}.sml-bg-spillover-color2{--tw-bg-opacity: 1;background-color:rgb(86 21 19 / var(--tw-bg-opacity))}.sml-bg-spillover-color3{--tw-bg-opacity: 1;background-color:rgb(175 183 188 / var(--tw-bg-opacity))}.sml-p-2{padding:.5rem}.sml-py-2{padding-top:.5rem;padding-bottom:.5rem}.sml-py-1{padding-top:.25rem;padding-bottom:.25rem}.sml-px-4{padding-left:1rem;padding-right:1rem}.sml-px-3{padding-left:.75rem;padding-right:.75rem}.sml-pb-0\\.5{padding-bottom:.125rem}.sml-pb-0{padding-bottom:0}.sml-text-sm{font-size:.875rem;line-height:1.5715}.sml-text-xl{font-size:1.25rem;line-height:1.5;letter-spacing:-.01em}.sml-text-xs{font-size:.75rem;line-height:1.5}.sml-font-bold{font-weight:700}.sml-font-medium{font-weight:500}.sml-uppercase{text-transform:uppercase}.sml-text-spillover-color2{--tw-text-opacity: 1;color:rgb(86 21 19 / var(--tw-text-opacity))}.sml-text-spillover-color11{--tw-text-opacity: 1;color:rgb(167 30 34 / var(--tw-text-opacity))}.sml-text-spillover-color10{--tw-text-opacity: 1;color:rgb(34 34 34 / var(--tw-text-opacity))}.sml-text-gray-900{--tw-text-opacity: 1;color:rgb(17 24 39 / var(--tw-text-opacity))}.sml-text-white{--tw-text-opacity: 1;color:rgb(255 255 255 / var(--tw-text-opacity))}.sml-text-black{--tw-text-opacity: 1;color:rgb(0 0 0 / var(--tw-text-opacity))}.hover\\:sml-bg-gray-200:hover{--tw-bg-opacity: 1;background-color:rgb(229 231 235 / var(--tw-bg-opacity))}\n')();
 const acceptedImageTypes = ["image/jpeg", "image/gif", "image/png"];
 const acceptedVideoTypes = ["video/mp4", "video/quicktime"];
 const config = {
@@ -41195,6 +41198,32 @@ const config = {
   maxImageSize: 52428800,
   maxVideoSize: 2147483648
 };
+const currentAccountIdVar = makeVar(null);
+const currentMediaBrowserVar = makeVar("account");
+const currentFolderIdVar = makeVar(null);
+const cache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        currentAccountId: {
+          read() {
+            return currentAccountIdVar();
+          }
+        },
+        currentMediaBrowser: {
+          read() {
+            return currentMediaBrowserVar();
+          }
+        },
+        currentFolderId: {
+          read() {
+            return currentFolderIdVar();
+          }
+        }
+      }
+    }
+  }
+});
 function u(e2) {
   return typeof e2 == "number" && !isNaN(e2);
 }
@@ -41419,21 +41448,21 @@ function R(t2) {
   let { delay: n2, isRunning: o2, closeToast: s2, type: a, hide: r2, className: i, style: c2, controlledProgress: u2, progress: d2, rtl: p2, isIn: f2, theme: g2 } = t2;
   const y2 = { ...c2, animationDuration: n2 + "ms", animationPlayState: o2 ? "running" : "paused", opacity: r2 ? 0 : 1 };
   u2 && (y2.transform = "scaleX(" + d2 + ")");
-  const h2 = l$3("Toastify__progress-bar", u2 ? "Toastify__progress-bar--controlled" : "Toastify__progress-bar--animated", "Toastify__progress-bar-theme--" + g2, "Toastify__progress-bar--" + a, { "Toastify__progress-bar--rtl": p2 }), T2 = m(i) ? i({ rtl: p2, type: a, defaultClassName: h2 }) : l$3(h2, i);
+  const h2 = clsx("Toastify__progress-bar", u2 ? "Toastify__progress-bar--controlled" : "Toastify__progress-bar--animated", "Toastify__progress-bar-theme--" + g2, "Toastify__progress-bar--" + a, { "Toastify__progress-bar--rtl": p2 }), T2 = m(i) ? i({ rtl: p2, type: a, defaultClassName: h2 }) : clsx(h2, i);
   return React__default.createElement("div", { role: "progressbar", "aria-hidden": r2 ? "true" : "false", "aria-label": "notification timer", className: T2, style: y2, [u2 && d2 >= 1 ? "onTransitionEnd" : "onAnimationEnd"]: u2 && d2 < 1 ? null : () => {
     f2 && s2();
   } });
 }
 R.defaultProps = { type: T.DEFAULT, hide: false };
 const k = (t2) => {
-  const { isRunning: n2, preventExitTransition: o2, toastRef: s2, eventHandlers: a } = P(t2), { closeButton: r2, children: i, autoClose: c2, onClick: u2, type: d2, hideProgressBar: p2, closeToast: f2, transition: g2, position: y2, className: h2, style: T2, bodyClassName: v2, bodyStyle: E2, progressClassName: b2, progressStyle: C2, updateId: _2, role: I2, progress: O2, rtl: L2, toastId: N2, deleteToast: k2, isIn: B2, isLoading: M2, iconOut: D2, theme: w2 } = t2, A2 = l$3("Toastify__toast", "Toastify__toast-theme--" + w2, "Toastify__toast--" + d2, { "Toastify__toast--rtl": L2 }), F2 = m(h2) ? h2({ rtl: L2, position: y2, type: d2, defaultClassName: A2 }) : l$3(A2, h2), S2 = !!O2, z2 = { closeToast: f2, type: d2, theme: w2 };
+  const { isRunning: n2, preventExitTransition: o2, toastRef: s2, eventHandlers: a } = P(t2), { closeButton: r2, children: i, autoClose: c2, onClick: u2, type: d2, hideProgressBar: p2, closeToast: f2, transition: g2, position: y2, className: h2, style: T2, bodyClassName: v2, bodyStyle: E2, progressClassName: b2, progressStyle: C2, updateId: _2, role: I2, progress: O2, rtl: L2, toastId: N2, deleteToast: k2, isIn: B2, isLoading: M2, iconOut: D2, theme: w2 } = t2, A2 = clsx("Toastify__toast", "Toastify__toast-theme--" + w2, "Toastify__toast--" + d2, { "Toastify__toast--rtl": L2 }), F2 = m(h2) ? h2({ rtl: L2, position: y2, type: d2, defaultClassName: A2 }) : clsx(A2, h2), S2 = !!O2, z2 = { closeToast: f2, type: d2, theme: w2 };
   let H2 = null;
-  return r2 === false || (H2 = m(r2) ? r2(z2) : React__default.isValidElement(r2) ? React__default.cloneElement(r2, z2) : x(z2)), React__default.createElement(g2, { isIn: B2, done: k2, position: y2, preventExitTransition: o2, nodeRef: s2 }, React__default.createElement("div", { id: N2, onClick: u2, className: F2, ...a, style: T2, ref: s2 }, React__default.createElement("div", { ...B2 && { role: I2 }, className: m(v2) ? v2({ type: d2 }) : l$3("Toastify__toast-body", v2), style: E2 }, D2 != null && React__default.createElement("div", { className: l$3("Toastify__toast-icon", { "Toastify--animate-icon Toastify__zoom-enter": !M2 }) }, D2), React__default.createElement("div", null, i)), H2, (c2 || S2) && React__default.createElement(R, { ..._2 && !S2 ? { key: "pb-" + _2 } : {}, rtl: L2, theme: w2, delay: c2, isRunning: n2, isIn: B2, closeToast: f2, hide: p2, type: d2, style: C2, className: b2, controlledProgress: S2, progress: O2 })));
+  return r2 === false || (H2 = m(r2) ? r2(z2) : React__default.isValidElement(r2) ? React__default.cloneElement(r2, z2) : x(z2)), React__default.createElement(g2, { isIn: B2, done: k2, position: y2, preventExitTransition: o2, nodeRef: s2 }, React__default.createElement("div", { id: N2, onClick: u2, className: F2, ...a, style: T2, ref: s2 }, React__default.createElement("div", { ...B2 && { role: I2 }, className: m(v2) ? v2({ type: d2 }) : clsx("Toastify__toast-body", v2), style: E2 }, D2 != null && React__default.createElement("div", { className: clsx("Toastify__toast-icon", { "Toastify--animate-icon Toastify__zoom-enter": !M2 }) }, D2), React__default.createElement("div", null, i)), H2, (c2 || S2) && React__default.createElement(R, { ..._2 && !S2 ? { key: "pb-" + _2 } : {}, rtl: L2, theme: w2, delay: c2, isRunning: n2, isIn: B2, closeToast: f2, hide: p2, type: d2, style: C2, className: b2, controlledProgress: S2, progress: O2 })));
 }, B = E({ enter: "Toastify--animate Toastify__bounce-enter", exit: "Toastify--animate Toastify__bounce-exit", appendPosition: true }), A = forwardRef((t2, n2) => {
   const { getToastToRender: o2, containerRef: a, isToastActive: r2 } = O(t2), { className: i, style: c2, rtl: u2, containerId: d2 } = t2;
   function p2(e2) {
-    const t3 = l$3("Toastify__toast-container", "Toastify__toast-container--" + e2, { "Toastify__toast-container--rtl": u2 });
-    return m(i) ? i({ position: e2, rtl: u2, defaultClassName: t3 }) : l$3(t3, f(i));
+    const t3 = clsx("Toastify__toast-container", "Toastify__toast-container--" + e2, { "Toastify__toast-container--rtl": u2 });
+    return m(i) ? i({ position: e2, rtl: u2, defaultClassName: t3 }) : clsx(t3, f(i));
   }
   return useEffect(() => {
     n2 && (n2.current = a.current);
@@ -43886,8 +43915,8 @@ var A11yText = function A11yText2(props) {
 };
 var defaultAriaLiveMessages = {
   guidance: function guidance(props) {
-    var isSearchable = props.isSearchable, isMulti = props.isMulti, isDisabled = props.isDisabled, tabSelectsValue = props.tabSelectsValue, context = props.context;
-    switch (context) {
+    var isSearchable = props.isSearchable, isMulti = props.isMulti, isDisabled = props.isDisabled, tabSelectsValue = props.tabSelectsValue, context2 = props.context;
+    switch (context2) {
       case "menu":
         return "Use Up and Down to choose options".concat(isDisabled ? "" : ", press Enter to select the currently focused option", ", press Escape to exit the menu").concat(tabSelectsValue ? ", press Tab to select the option and exit the menu" : "", ".");
       case "input":
@@ -43916,14 +43945,14 @@ var defaultAriaLiveMessages = {
     }
   },
   onFocus: function onFocus(props) {
-    var context = props.context, focused = props.focused, options2 = props.options, _props$label2 = props.label, label = _props$label2 === void 0 ? "" : _props$label2, selectValue = props.selectValue, isDisabled = props.isDisabled, isSelected = props.isSelected;
+    var context2 = props.context, focused = props.focused, options2 = props.options, _props$label2 = props.label, label = _props$label2 === void 0 ? "" : _props$label2, selectValue = props.selectValue, isDisabled = props.isDisabled, isSelected = props.isSelected;
     var getArrayIndex = function getArrayIndex2(arr, item) {
       return arr && arr.length ? "".concat(arr.indexOf(item) + 1, " of ").concat(arr.length) : "";
     };
-    if (context === "value" && selectValue) {
+    if (context2 === "value" && selectValue) {
       return "value ".concat(label, " focused, ").concat(getArrayIndex(selectValue, focused), ".");
     }
-    if (context === "menu") {
+    if (context2 === "menu") {
       var disabled = isDisabled ? " disabled" : "";
       var status = "".concat(isSelected ? "selected" : "focused").concat(disabled);
       return "option ".concat(label, " ").concat(status, ", ").concat(getArrayIndex(options2, focused), ".");
@@ -43997,10 +44026,10 @@ var LiveRegion = function LiveRegion2(props) {
   var ariaGuidance = useMemo(function() {
     var guidanceMsg = "";
     if (messages.guidance) {
-      var context = focusedValue ? "value" : menuIsOpen ? "menu" : "input";
+      var context2 = focusedValue ? "value" : menuIsOpen ? "menu" : "input";
       guidanceMsg = messages.guidance({
         "aria-label": ariaLabel,
-        context,
+        context: context2,
         isDisabled: focusedOption && isOptionDisabled3(focusedOption, selectValue),
         isMulti,
         isSearchable,
@@ -45514,12 +45543,12 @@ var Select$1 = /* @__PURE__ */ function(_Component) {
     }
   }, {
     key: "formatOptionLabel",
-    value: function formatOptionLabel(data, context) {
+    value: function formatOptionLabel(data, context2) {
       if (typeof this.props.formatOptionLabel === "function") {
         var _inputValue = this.props.inputValue;
         var _selectValue = this.state.selectValue;
         return this.props.formatOptionLabel(data, {
-          context,
+          context: context2,
           inputValue: _inputValue,
           selectValue: _selectValue
         });
@@ -46013,41 +46042,134 @@ var StateManagedSelect = /* @__PURE__ */ forwardRef(function(props, ref) {
   }, baseSelectProps));
 });
 var Select2 = StateManagedSelect;
-function AccountSwitcher({
-  accounts,
-  selectedAccountId,
-  setSelectedAccountId
+function useCurrentAccountId() {
+  const currentAccountId = useReactiveVar(currentAccountIdVar);
+  return [
+    currentAccountId,
+    currentAccountIdVar
+  ];
+}
+function useCurrentFolderId() {
+  const currentFolderId = useReactiveVar(currentFolderIdVar);
+  const setCurrentFolderId = (folderId) => {
+    let id = folderId;
+    if (folderId == null ? void 0 : folderId.includes("/trash_bin")) {
+      id = null;
+    }
+    currentFolderIdVar(id);
+  };
+  return [
+    currentFolderId,
+    setCurrentFolderId
+  ];
+}
+const context = createContext({});
+const useOptions = () => useContext(context);
+function OptionsProvider({
+  children,
+  options: options2 = {}
 }) {
-  const options2 = accounts.map((a) => ({
-    value: a.id,
-    label: a.name
-  }));
-  const selectedOption = options2.find((o2) => o2.value === selectedAccountId);
+  return /* @__PURE__ */ jsx$1(context.Provider, {
+    value: options2,
+    children
+  });
+}
+function useCurrentMediaBrowser() {
+  const currentMediaBrowser = useReactiveVar(currentMediaBrowserVar);
+  return [
+    currentMediaBrowser,
+    currentMediaBrowserVar
+  ];
+}
+const QUERY = gql`
+  query GetCurrentUserWithAccounts {
+    currentUser {
+      id
+      role
+      accounts {
+        id
+        name
+        rootFolderId
+      }
+    }
+  }
+`;
+function AccountSwitcher() {
+  var _a2;
+  const {
+    onSelectedAccountChange,
+    defaultAccountId
+  } = useOptions();
+  const [currentAccountId, setCurrentAccountId] = useCurrentAccountId();
+  const [, setCurrentBrowser] = useCurrentMediaBrowser();
+  const [, setCurrentFolderId] = useCurrentFolderId();
+  const {
+    loading,
+    data
+  } = useQuery(QUERY);
+  const accounts = ((_a2 = data == null ? void 0 : data.currentUser) == null ? void 0 : _a2.accounts) || [];
+  const defaultAccount = accounts.find((a) => a.id === defaultAccountId);
+  const changeAccount = (newAccount) => {
+    if (!(newAccount == null ? void 0 : newAccount.id))
+      return;
+    setCurrentBrowser("account");
+    setCurrentAccountId(newAccount.id);
+    setCurrentFolderId(newAccount.rootFolderId);
+    if (onSelectedAccountChange)
+      onSelectedAccountChange(newAccount.id);
+  };
+  useEffect(() => {
+    if (!currentAccountId)
+      changeAccount(defaultAccount || accounts[0]);
+  }, [accounts, defaultAccount]);
+  const currentAccount = accounts.find((a) => a.id === currentAccountId);
   return /* @__PURE__ */ jsx$1(Select2, {
     className: "sml-business-select sml-w-1/2",
     classNamePrefix: "sml-business-select-options",
-    defaultValue: options2[0],
-    value: selectedOption,
-    onChange: (o2) => setSelectedAccountId(o2.value),
-    options: options2
+    isLoading: loading,
+    options: accounts,
+    value: currentAccount,
+    getOptionValue: (option) => option.id,
+    getOptionLabel: (option) => option.name,
+    onChange: (option) => changeAccount(option)
   });
 }
-function RegularIcon({
+function Icon({
   name,
   iconStyle,
   className
 }) {
-  iconStyle = iconStyle || "fad";
   return /* @__PURE__ */ jsx$1("i", {
-    className: `${iconStyle} fa-${name} ${className}`
+    className: `${iconStyle || "fad"} fa-${name} ${className}`
   });
 }
-function Sidebar({
-  libraries: libraries2,
-  activeLibrary,
-  setActiveLibrary,
-  icons
-}) {
+const mediaBrowsers = [{
+  key: "account",
+  name: "My Media",
+  icon: "home"
+}, {
+  key: "global",
+  name: "Global",
+  icon: "globe"
+}, {
+  key: "favorites",
+  name: "Favorites",
+  icon: "heart"
+}, {
+  key: "deleted",
+  name: "Deleted",
+  icon: "trash"
+}];
+function Sidebar() {
+  const {
+    icons
+  } = useOptions();
+  const [currentBrowser, setCurrentBrowser] = useCurrentMediaBrowser();
+  const [, setCurrentFolderId] = useCurrentFolderId();
+  const changeBrowser = (browser2) => {
+    setCurrentFolderId(null);
+    setCurrentBrowser(browser2);
+  };
   return /* @__PURE__ */ jsxs("div", {
     className: "sml-sidebar sml-w-72 sml-bg-gray-50",
     children: [/* @__PURE__ */ jsx$1("div", {
@@ -46056,30 +46178,28 @@ function Sidebar({
         className: "sml-title sml-ml-4 sml-uppercase",
         children: "Media Library"
       })
-    }), /* @__PURE__ */ jsxs("div", {
-      children: [/* @__PURE__ */ jsx$1("h5", {
-        className: "sml-libraries-title sml-px-4 sml-py-3 sml-mt-2 sml-font-medium sml-text-sm",
-        children: "Libraries"
-      }), /* @__PURE__ */ jsx$1("ul", {
-        children: libraries2.map((library2) => /* @__PURE__ */ jsx$1("li", {
+    }), /* @__PURE__ */ jsx$1("div", {
+      children: /* @__PURE__ */ jsx$1("ul", {
+        className: "sml-mt-4",
+        children: mediaBrowsers.map((browser2) => /* @__PURE__ */ jsx$1("li", {
           children: /* @__PURE__ */ jsx$1("div", {
-            onClick: () => setActiveLibrary(library2),
-            className: `${activeLibrary.key === library2.key ? "sml-text-spillover-color11 sml-font-bold" : "sml-text-spillover-color10 sml-font-medium"} sml-py-1 sml-px-4 sml-text-sm sml-flex sml-justify-between sml-items-center sml-cursor-pointer hover:sml-bg-gray-200 sml-library-name`,
+            onClick: () => changeBrowser(browser2.key),
+            className: `${currentBrowser === browser2.key ? "sml-text-spillover-color11 sml-font-bold" : "sml-text-spillover-color10 sml-font-medium"} sml-py-1 sml-px-4 sml-text-sm sml-flex sml-justify-between sml-items-center sml-cursor-pointer hover:sml-bg-gray-200 sml-media-browser-name`,
             children: /* @__PURE__ */ jsxs("div", {
               className: "sml-flex sml-items-center w-full",
-              children: [icons[library2.key] ? /* @__PURE__ */ jsx$1("i", {
-                className: `sml-library-icon sml-mr-2 sml-text-xl ${icons[library2.key]}`
-              }) : /* @__PURE__ */ jsx$1(RegularIcon, {
-                name: library2.icon,
+              children: [icons[browser2.key] ? /* @__PURE__ */ jsx$1("i", {
+                className: `sml-browser-icon sml-mr-2 sml-text-xl ${icons[browser2.key]}`
+              }) : /* @__PURE__ */ jsx$1(Icon, {
+                name: browser2.icon,
                 iconStyle: "fas",
-                className: "sml-library-icon sml-mr-2 sml-text-xl"
+                className: "sml-browser-icon sml-mr-2 sml-text-xl"
               }), /* @__PURE__ */ jsx$1("span", {
-                children: library2.name
+                children: browser2.name
               })]
             })
           })
-        }, library2.key))
-      })]
+        }, browser2.key))
+      })
     })]
   });
 }
@@ -47917,17 +48037,17 @@ function yupToFormErrors(yupError) {
   }
   return errors;
 }
-function validateYupSchema(values2, schema, sync, context) {
+function validateYupSchema(values2, schema, sync, context2) {
   if (sync === void 0) {
     sync = false;
   }
-  if (context === void 0) {
-    context = {};
+  if (context2 === void 0) {
+    context2 = {};
   }
   var validateData = prepareDataForValidation(values2);
   return schema[sync ? "validateSync" : "validate"](validateData, {
     abortEarly: false,
-    context
+    context: context2
   });
 }
 function prepareDataForValidation(values2) {
@@ -48298,11 +48418,111 @@ var FieldArrayInner = /* @__PURE__ */ function(_React$Component) {
 FieldArrayInner.defaultProps = {
   validateOnChange: true
 };
+const folderFieldsFragment = gql`
+  fragment FolderFields on Folder {
+    id
+    folderChain {
+      id
+      name
+      isDir
+    }
+    entries {
+      id
+      name
+      isDir
+      modDate
+      ... on FileEntry {
+        size
+        url
+        thumbnailUrl
+        mimetype
+      }
+      ... on FolderEntry {
+        childrenCount
+      }
+    }
+  }
+`;
+const account = {
+  extractFolder: (data) => data.account.folder,
+  query: gql`
+    ${folderFieldsFragment}
+    query GetAccountFolder(
+      $accountId: GID!,
+      $folderId: GID
+    ) {
+      currentAccountId @client @export(as: "accountId")
+      currentFolderId @client @export(as: "folderId")
+      account(accountId: $accountId) {
+        id
+        folder(folderId: $folderId) {
+          ...FolderFields
+        }
+      }
+    }
+  `
+};
+const global$1 = {
+  extractFolder: (data) => data.globalFolder,
+  query: gql`
+    ${folderFieldsFragment}
+    query GetGlobalFolder($folderId: GID) {
+      currentFolderId @client @export(as: "folderId")
+      globalFolder(folderId: $folderId) {
+        ...FolderFields
+      }
+    }
+  `
+};
+const favorites = {
+  extractFolder: (data) => data.account.favorites,
+  query: gql`
+    ${folderFieldsFragment}
+    query GetFavoritesFolder($accountId: GID!) {
+      currentAccountId @client @export(as: "accountId")
+      account(accountId: $accountId) {
+        id
+        favorites {
+          ...FolderFields
+        }
+      }
+    }
+  `
+};
+const deleted = {
+  extractFolder: (data) => data.account.trashBin,
+  query: gql`
+    ${folderFieldsFragment}
+    query GetTrashBinFolder($accountId: GID!, $folderId: GID) {
+      currentAccountId @client @export(as: "accountId")
+      currentFolderId @client @export(as: "folderId")
+      account(accountId: $accountId) {
+        id
+        trashBin(folderId: $folderId) {
+          ...FolderFields
+        }
+      }
+    }
+  `
+};
+var queries = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  account,
+  global: global$1,
+  favorites,
+  deleted
+}, Symbol.toStringTag, { value: "Module" }));
+function useMutationAndRefetch(mutation, options2 = {}) {
+  const [mediaBrowser] = useCurrentMediaBrowser();
+  const refetchQueries = [{ query: queries[mediaBrowser].query }];
+  return useMutation(mutation, { ...options2, refetchQueries });
+}
 const CREATE_FOLDER_MUTATION = gql`
   mutation CreateFolder(
-    $parentId: ID!
+    $parentId: GID!
     $name: String!
   ) {
+    currentFolderId @client @export(as: "parentId")
     createFolder(
       input: {
         parentId: $parentId,
@@ -48315,18 +48535,14 @@ const CREATE_FOLDER_MUTATION = gql`
   }
 `;
 function NewFolderPrompt({
-  parentId,
   close
 }) {
-  const [runCreateFolder] = useMutation(CREATE_FOLDER_MUTATION, {
-    refetchQueries: ["GetAccountFolderWithChildrenAndFiles", "GetGlobalFolder"]
-  });
+  const [runCreateFolder] = useMutationAndRefetch(CREATE_FOLDER_MUTATION);
   const createFolder = ({
     name
   }) => {
     runCreateFolder({
       variables: {
-        parentId,
         name
       }
     });
@@ -48361,130 +48577,12 @@ function NewFolderPrompt({
     })
   });
 }
-function useFolderQuery(query, extractFolder, variables = {}, options2 = {}) {
-  const [currentFolderId, setCurrentFolderId] = useState(null);
-  const { loading, data } = useQuery(query, {
-    variables: { ...variables, folderId: currentFolderId }
-  });
-  const folder = data ? extractFolder(data) : null;
-  useEffect(() => {
-    if (folder) {
-      setCurrentFolderId(folder.id);
-    }
-  }, [folder, setCurrentFolderId]);
-  if (loading)
-    return { loading: true };
-  const { children: folders, files: files2 } = folder;
-  const chonkyFolders = folders.map((f2) => ({
-    id: `folder${f2.id}`,
-    name: f2.name,
-    childrenCount: f2.totalChildrenCount,
-    modDate: f2.updatedAt,
-    realId: f2.id,
-    isDir: true
-  }));
-  const isSelectable = (f2) => {
-    if (options2.selectableFileTypes && (Array.isArray(options2.selectableFileTypes) && !options2.selectableFileTypes.includes(f2.mimetype) || typeof options2.selectableFileTypes === "function" && !options2.selectableFileTypes(f2))) {
-      return false;
-    }
-    if (options2.maxSelectableSize && (Number.isInteger(options2.maxSelectableSize) && f2.size > options2.maxSelectableSize || typeof options2.maxSelectableSize === "function" && !options2.maxSelectableSize(f2))) {
-      return false;
-    }
-    return true;
-  };
-  const chonkyFiles = files2.map((f2) => ({
-    id: `file${f2.id}`,
-    name: f2.name,
-    modDate: f2.updatedAt,
-    realId: f2.id,
-    size: f2.size,
-    url: f2.url,
-    thumbnailUrl: f2.thumbnailUrl,
-    type: f2.mimetype,
-    selectable: isSelectable(f2)
-  }));
-  const chonkyFoldersAndFiles = [...chonkyFolders, ...chonkyFiles];
-  const folderChain = [];
-  const { parent } = folder;
-  if (parent) {
-    folderChain.push({
-      id: parent.id,
-      name: parent.name,
-      modDate: parent.updatedAt,
-      childrenCount: parent.totalChildrenCount,
-      isDir: true
-    });
-  }
-  if (folder.id) {
-    folderChain.push({
-      id: folder.id,
-      name: folder.name,
-      modDate: folder.updatedAt,
-      childrenCount: folder.totalChildrenCount,
-      isDir: true
-    });
-  }
-  return {
-    loading: false,
-    folders,
-    files: files2,
-    chonkyFolders,
-    chonkyFiles,
-    chonkyFoldersAndFiles,
-    folderChain,
-    folder,
-    currentFolderId,
-    setCurrentFolderId
-  };
-}
-function splitFilesAndFolders(array) {
-  const fileIds = array.filter((f2) => !f2.isDir).map((f2) => f2.realId);
-  const folderIds = array.filter((f2) => f2.isDir).map((f2) => f2.realId);
-  return { fileIds, folderIds };
-}
-const QUERY$4 = gql`
-  query GetAccountFolderWithChildrenAndFiles(
-    $accountId: ID!,
-    $folderId: ID
-  ) {
-    account(accountId: $accountId) {
-      id
-      folder(folderId: $folderId) {
-        id
-        name
-        updatedAt
-        totalChildrenCount
-        parent {
-          id
-          name
-          updatedAt
-          totalChildrenCount
-        }
-        children {
-          id
-          name
-          updatedAt
-          totalChildrenCount
-        }
-        files {
-          id
-          name
-          mimetype
-          updatedAt
-          url
-          thumbnailUrl
-          size
-          favoritedAt
-        }
-      }
-    }
-  }
-`;
 const UPLOAD_FILES_MUTATION = gql`
   mutation UploadFiles(
-    $folderId: ID!
+    $folderId: GID!
     $files: [Upload!]!
   ) {
+    currentFolderId @client @export(as: "folderId")
     uploadFiles(
       input: {
         folderId: $folderId,
@@ -48502,81 +48600,6 @@ const UPLOAD_FILES_MUTATION = gql`
     }
   }
 `;
-const DELETE_FILES_MUTATION = gql`
-  mutation DeleteFiles(
-    $fileIds: [ID!]!
-  ) {
-    deleteFiles(
-      input: {
-        fileIds: $fileIds
-      }
-    ) {
-      id
-      name
-    }
-  }
-`;
-const DELETE_FOLDERS_MUTATION = gql`
-  mutation DeleteFolders(
-    $folderIds: [ID!]!
-  ) {
-    deleteFolders(
-      input: {
-        folderIds: $folderIds
-      }
-    ) {
-      id
-      name
-    }
-  }
-`;
-const MOVE_FILES_MUTATION = gql`
-  mutation MoveFiles(
-    $fileIds: [ID!]!
-    $destinationFolderId: ID!
-  ) {
-    moveFiles(
-      input: {
-        fileIds: $fileIds,
-        destinationFolderId: $destinationFolderId
-      }
-    ) {
-      id
-      name
-    }
-  }
-`;
-const MOVE_FOLDERS_MUTATION = gql`
-  mutation MoveFolders(
-    $folderIds: [ID!]!
-    $destinationFolderId: ID!
-  ) {
-    moveFolders(
-      input: {
-        folderIds: $folderIds,
-        destinationFolderId: $destinationFolderId
-      }
-    ) {
-      id
-      name
-    }
-  }
-`;
-const FAVORITE_FILES_MUTATION = gql`
-  mutation FavoriteFiles(
-    $fileIds: [ID!]!
-  ) {
-    favoriteFiles(
-      input: {
-        fileIds: $fileIds
-      }
-    ) {
-      id
-      name
-      favoritedAt
-    }
-  }
-`;
 function isImage(file) {
   return config.acceptedImageTypes.includes(file.type);
 }
@@ -48590,57 +48613,8 @@ function isValidFile(file) {
     return true;
   return false;
 }
-function AccountMediaBrowser({
-  accountId,
-  handleSelected,
-  selectableFileTypes,
-  maxSelectableSize,
-  maxSelectableFiles
-}) {
-  const [showNewFolderPrompt, setShowNewFolderPrompt] = useState(false);
-  const uploadInputRef = useRef();
-  const {
-    loading,
-    chonkyFoldersAndFiles,
-    folderChain,
-    currentFolderId,
-    setCurrentFolderId
-  } = useFolderQuery(QUERY$4, (data) => data.account.folder, {
-    accountId
-  }, {
-    selectableFileTypes,
-    maxSelectableSize
-  });
-  const refetchQueries = ["GetAccountFolderWithChildrenAndFiles", "GetGlobalFolder"];
-  const allRefetechQueries = refetchQueries.concat(["GetAccountFavorites", "GetAccountTrashBin"]);
-  const [runUploadFiles] = useMutation(UPLOAD_FILES_MUTATION, {
-    refetchQueries
-  });
-  const [runMoveFiles] = useMutation(MOVE_FILES_MUTATION, {
-    refetchQueries
-  });
-  const [runMoveFolders] = useMutation(MOVE_FOLDERS_MUTATION, {
-    refetchQueries
-  });
-  const [runDeleteFiles] = useMutation(DELETE_FILES_MUTATION, {
-    allRefetechQueries
-  });
-  const [runDeleteFolders] = useMutation(DELETE_FOLDERS_MUTATION, {
-    allRefetechQueries
-  });
-  const [runFavoriteFiles] = useMutation(FAVORITE_FILES_MUTATION, {
-    allRefetechQueries
-  });
-  const favoriteFilesAction = defineFileAction({
-    id: "favorite-files",
-    requiresSelection: true,
-    fileFilter: (file) => !file.isDir,
-    button: {
-      name: "Favorite",
-      toolbar: false,
-      contextMenu: true
-    }
-  });
+function useUploadFiles() {
+  const [runUploadFiles] = useMutationAndRefetch(UPLOAD_FILES_MUTATION);
   const uploadFiles = (files2) => {
     if (!files2.every(isValidFile)) {
       W.error("Invalid files!");
@@ -48648,7 +48622,6 @@ function AccountMediaBrowser({
     }
     const uploadPromise = runUploadFiles({
       variables: {
-        folderId: currentFolderId,
         files: files2
       }
     });
@@ -48659,7 +48632,17 @@ function AccountMediaBrowser({
     });
     return uploadPromise;
   };
-  const handleSelectedForUpload = (e2) => {
+  return uploadFiles;
+}
+function UploadArea({
+  children
+}, ref) {
+  const inputRef = useRef();
+  useImperativeHandle(ref, () => ({
+    openFilePicker: () => inputRef.current.click()
+  }));
+  const uploadFiles = useUploadFiles();
+  const onChange2 = (e2) => {
     const {
       files: files2
     } = e2.target;
@@ -48680,267 +48663,225 @@ function AccountMediaBrowser({
       return files2.every(isValidFile);
     }
   });
-  const fileActionHandler = useCallback((action) => {
-    var _a2;
-    switch (action.id) {
-      case ChonkyActions.OpenFiles.id: {
-        const {
-          targetFile,
-          files: filesToOpen
-        } = action.payload;
-        const fileToOpen = targetFile != null ? targetFile : filesToOpen[0];
-        if (filesToOpen.length === 1 && !fileToOpen.isDir) {
-          handleSelected([fileToOpen]);
-        } else if (filesToOpen.length > 1 && filesToOpen.every((f2) => !f2.isDir)) {
-          handleSelected(filesToOpen.slice(0, maxSelectableFiles || 50));
-        } else if (filesToOpen.length === 1 && fileToOpen.isDir) {
-          setCurrentFolderId(fileToOpen.realId);
-        }
-        break;
-      }
-      case ChonkyActions.CreateFolder.id: {
-        setShowNewFolderPrompt(true);
-        break;
-      }
-      case ChonkyActions.UploadFiles.id: {
-        (_a2 = uploadInputRef.current) == null ? void 0 : _a2.click();
-        break;
-      }
-      case ChonkyActions.DeleteFiles.id: {
-        const {
-          selectedFilesForAction
-        } = action.state;
-        const {
-          fileIds,
-          folderIds
-        } = splitFilesAndFolders(selectedFilesForAction);
-        if (fileIds.length) {
-          runDeleteFiles({
-            variables: {
-              fileIds
-            }
-          });
-        }
-        if (folderIds.length) {
-          runDeleteFolders({
-            variables: {
-              folderIds
-            }
-          });
-        }
-        break;
-      }
-      case ChonkyActions.MoveFiles.id: {
-        const {
-          files: filesAndFolders,
-          destination
-        } = action.payload;
-        const {
-          fileIds,
-          folderIds
-        } = splitFilesAndFolders(filesAndFolders);
-        const destinationFolderId = destination.realId || destination.id;
-        if (fileIds.length) {
-          runMoveFiles({
-            variables: {
-              fileIds,
-              destinationFolderId
-            }
-          });
-        }
-        if (folderIds.length) {
-          runMoveFolders({
-            variables: {
-              folderIds,
-              destinationFolderId
-            }
-          });
-        }
-        break;
-      }
-      case favoriteFilesAction.id: {
-        const {
-          selectedFilesForAction
-        } = action.state;
-        if (selectedFilesForAction.length) {
-          runFavoriteFiles({
-            variables: {
-              fileIds: selectedFilesForAction.map((f2) => f2.realId)
-            }
-          });
-        }
-        break;
-      }
-    }
-  }, [
-    setCurrentFolderId,
-    setShowNewFolderPrompt,
-    runDeleteFiles,
-    runDeleteFolders,
-    runMoveFiles,
-    runMoveFolders,
-    runFavoriteFiles,
-    uploadInputRef
-  ]);
-  if (loading)
-    return /* @__PURE__ */ jsx$1("p", {
-      children: "Loading..."
-    });
-  return /* @__PURE__ */ jsxs(Fragment, {
-    children: [/* @__PURE__ */ jsxs(FileBrowser, {
-      disableDragAndDropProvider: true,
-      files: chonkyFoldersAndFiles,
-      folderChain,
-      onFileAction: fileActionHandler,
-      disableDefaultFileActions: [ChonkyActions.ToggleHiddenFiles.id],
-      fileActions: [
-        ChonkyActions.CreateFolder,
-        ChonkyActions.DeleteFiles,
-        ChonkyActions.SelectAllFiles,
-        ChonkyActions.MoveFiles,
-        ChonkyActions.UploadFiles,
-        favoriteFilesAction
-      ],
-      children: [/* @__PURE__ */ jsx$1(FileNavbar, {}), /* @__PURE__ */ jsx$1(FileToolbar, {}), showNewFolderPrompt && /* @__PURE__ */ jsx$1(NewFolderPrompt, {
-        parentId: currentFolderId,
-        close: () => setShowNewFolderPrompt(false)
-      }), /* @__PURE__ */ jsx$1("div", {
-        ref: uploadDropZoneRef,
-        className: "sml-h-full",
-        children: /* @__PURE__ */ jsx$1(FileList$1, {})
-      }), /* @__PURE__ */ jsx$1(FileContextMenu, {})]
-    }), /* @__PURE__ */ jsx$1("input", {
-      ref: uploadInputRef,
+  return /* @__PURE__ */ jsxs("div", {
+    ref: uploadDropZoneRef,
+    className: "sml-h-full",
+    children: [children, /* @__PURE__ */ jsx$1("input", {
+      ref: inputRef,
       type: "file",
       style: {
         display: "none"
       },
       accept: config.acceptedFileTypes.join(),
-      onChange: handleSelectedForUpload,
+      onChange: onChange2,
       multiple: true
     })]
   });
 }
-const QUERY$3 = gql`
-  query GetGlobalFolder(
-    $folderId: ID
+var UploadArea$1 = forwardRef(UploadArea);
+function useFolder() {
+  const [mediaBrowser] = useCurrentMediaBrowser();
+  const [accountId] = useCurrentAccountId();
+  const { selectableFileTypes, maxSelectableSize } = useOptions();
+  const { loading, data } = useQuery(queries[mediaBrowser].query, { skip: !accountId, fetchPolicy: "cache-and-network" });
+  if (loading || !accountId)
+    return { loading: true, files: [], folderChain: [] };
+  const isSelectable = (f2) => {
+    if (selectableFileTypes && (Array.isArray(selectableFileTypes) && !selectableFileTypes.includes(f2.mimetype) || typeof selectableFileTypes === "function" && !selectableFileTypes(f2))) {
+      return false;
+    }
+    if (maxSelectableSize && (Number.isInteger(maxSelectableSize) && f2.size > maxSelectableSize || typeof maxSelectableSize === "function" && !maxSelectableSize(f2))) {
+      return false;
+    }
+    return true;
+  };
+  const { entries, folderChain, id: folderId } = queries[mediaBrowser].extractFolder(data);
+  const files2 = entries.map((f2) => ({
+    ...f2,
+    selectable: isSelectable(f2)
+  }));
+  return {
+    loading,
+    folderId,
+    files: files2,
+    folderChain
+  };
+}
+function splitFilesAndFolders(array) {
+  const fileIds = array.filter((f2) => !f2.isDir).map((f2) => f2.id);
+  const folderIds = array.filter((f2) => f2.isDir).map((f2) => f2.id);
+  return { fileIds, folderIds };
+}
+const DELETE_FILES_MUTATION = gql`
+  mutation DeleteFiles(
+    $fileIds: [GID!]!
   ) {
-    globalFolder(folderId: $folderId) {
+    deleteFiles(
+      input: {
+        fileIds: $fileIds
+      }
+    ) {
       id
       name
-      updatedAt
-      totalChildrenCount
-      parent {
-        id
-        name
-        updatedAt
-        totalChildrenCount
-      }
-      children {
-        id
-        name
-        updatedAt
-        totalChildrenCount
-      }
-      files {
-        id
-        name
-        updatedAt
-        url
-        thumbnailUrl
-        size
-      }
     }
   }
 `;
-function GlobalMediaBrowser({
-  handleSelected,
-  selectableFileTypes,
-  maxSelectableSize,
-  maxSelectableFiles
-}) {
-  const {
-    loading,
-    chonkyFoldersAndFiles,
-    folderChain,
-    setCurrentFolderId
-  } = useFolderQuery(QUERY$3, (data) => data.globalFolder, {}, {
-    selectableFileTypes,
-    maxSelectableSize
-  });
-  const fileActionHandler = useCallback((action) => {
-    switch (action.id) {
-      case ChonkyActions.OpenFiles.id: {
-        const {
-          targetFile,
-          files: filesToOpen
-        } = action.payload;
-        const fileToOpen = targetFile != null ? targetFile : filesToOpen[0];
-        if (filesToOpen.length === 1 && !fileToOpen.isDir) {
-          handleSelected([fileToOpen]);
-        } else if (filesToOpen.length > 1 && filesToOpen.every((f2) => !f2.isDir)) {
-          handleSelected(filesToOpen.slice(0, maxSelectableFiles || 50));
-        } else if (filesToOpen.length === 1 && fileToOpen.isDir) {
-          setCurrentFolderId(fileToOpen.realId);
-        }
-        break;
-      }
-    }
-  }, [setCurrentFolderId]);
-  if (loading)
-    return /* @__PURE__ */ jsx$1("p", {
-      children: "Loading..."
-    });
-  return /* @__PURE__ */ jsxs(FileBrowser, {
-    disableDragAndDropProvider: true,
-    files: chonkyFoldersAndFiles,
-    folderChain,
-    onFileAction: fileActionHandler,
-    disableDefaultFileActions: [ChonkyActions.ToggleHiddenFiles.id],
-    fileActions: [ChonkyActions.SelectAllFiles],
-    children: [/* @__PURE__ */ jsx$1(FileNavbar, {}), /* @__PURE__ */ jsx$1(FileToolbar, {}), /* @__PURE__ */ jsx$1("div", {
-      className: "sml-h-full",
-      children: /* @__PURE__ */ jsx$1(FileList$1, {})
-    }), /* @__PURE__ */ jsx$1(FileContextMenu, {})]
-  });
-}
-const QUERY$2 = gql`
-  query GetAccountTrashBin(
-    $accountId: ID!
-    $folderId: ID
+const DELETE_FOLDERS_MUTATION = gql`
+  mutation DeleteFolders(
+    $folderIds: [GID!]!
   ) {
-    account(accountId: $accountId) {
-      id
-      trashBin(folderId: $folderId) {
-        id
-        name
-        parent {
-          id
-          name
-          updatedAt
-          totalChildrenCount
-        }
-        children {
-          id
-          name
-          updatedAt
-          totalChildrenCount
-        }
-        files {
-          id
-          name
-          updatedAt
-          url
-          thumbnailUrl
-          size
-        }
+    deleteFolders(
+      input: {
+        folderIds: $folderIds
       }
+    ) {
+      id
+      name
     }
   }
 `;
+function useDeleteFilesAction() {
+  const [runDeleteFiles] = useMutationAndRefetch(DELETE_FILES_MUTATION);
+  const [runDeleteFolders] = useMutationAndRefetch(DELETE_FOLDERS_MUTATION);
+  return (action) => {
+    const { selectedFilesForAction } = action.state;
+    const { fileIds, folderIds } = splitFilesAndFolders(selectedFilesForAction);
+    if (fileIds.length) {
+      runDeleteFiles({
+        variables: { fileIds }
+      });
+    }
+    if (folderIds.length) {
+      runDeleteFolders({
+        variables: { folderIds }
+      });
+    }
+  };
+}
+const FAVORITE_FILES_MUTATION = gql`
+  mutation FavoriteFiles(
+    $fileIds: [GID!]!
+  ) {
+    favoriteFiles(
+      input: {
+        fileIds: $fileIds
+      }
+    ) {
+      id
+      name
+      favoritedAt
+    }
+  }
+`;
+function useFavoriteFilesAction() {
+  const [runFavoriteFiles] = useMutationAndRefetch(FAVORITE_FILES_MUTATION);
+  return (action) => {
+    const { selectedFilesForAction } = action.state;
+    if (selectedFilesForAction.length) {
+      runFavoriteFiles({
+        variables: { fileIds: selectedFilesForAction.map((f2) => f2.id) }
+      });
+    }
+  };
+}
+const UNFAVORITE_MUTATION = gql`
+  mutation UnfavoriteFiles(
+    $fileIds: [GID!]!
+  ) {
+    unfavoriteFiles(
+      input: {
+        fileIds: $fileIds
+      }
+    ) {
+      id
+      name
+      favoritedAt
+    }
+  }
+`;
+function useUnfavoriteFilesAction() {
+  const [runUnfavoriteFiles] = useMutationAndRefetch(UNFAVORITE_MUTATION);
+  return (action) => {
+    const { selectedFilesForAction } = action.state;
+    if (selectedFilesForAction.length) {
+      runUnfavoriteFiles({
+        variables: { fileIds: selectedFilesForAction.map((f2) => f2.id) }
+      });
+    }
+  };
+}
+const MOVE_FILES_MUTATION = gql`
+  mutation MoveFiles(
+    $fileIds: [GID!]!
+    $destinationFolderId: GID!
+  ) {
+    moveFiles(
+      input: {
+        fileIds: $fileIds,
+        destinationFolderId: $destinationFolderId
+      }
+    ) {
+      id
+      name
+    }
+  }
+`;
+const MOVE_FOLDERS_MUTATION = gql`
+  mutation MoveFolders(
+    $folderIds: [GID!]!
+    $destinationFolderId: GID!
+  ) {
+    moveFolders(
+      input: {
+        folderIds: $folderIds,
+        destinationFolderId: $destinationFolderId
+      }
+    ) {
+      id
+      name
+    }
+  }
+`;
+function useMoveFilesAction() {
+  const [runMoveFiles] = useMutationAndRefetch(MOVE_FILES_MUTATION);
+  const [runMoveFolders] = useMutationAndRefetch(MOVE_FOLDERS_MUTATION);
+  return (action) => {
+    const { files: filesAndFolders, destination } = action.payload;
+    const { fileIds, folderIds } = splitFilesAndFolders(filesAndFolders);
+    const destinationFolderId = destination.id;
+    if (fileIds.length) {
+      runMoveFiles({
+        variables: { fileIds, destinationFolderId }
+      });
+    }
+    if (folderIds.length) {
+      runMoveFolders({
+        variables: { folderIds, destinationFolderId }
+      });
+    }
+  };
+}
+function useOpenFilesAction() {
+  const {
+    handleSelected,
+    maxSelectableFiles
+  } = useOptions();
+  const [, setCurrentFolderId] = useCurrentFolderId();
+  return async (action) => {
+    const { targetFile, files: filesToOpen } = action.payload;
+    const fileToOpen = targetFile != null ? targetFile : filesToOpen[0];
+    if (filesToOpen.length === 1 && !fileToOpen.isDir) {
+      handleSelected([fileToOpen]);
+    } else if (filesToOpen.length > 1 && filesToOpen.every((f2) => !f2.isDir)) {
+      handleSelected(filesToOpen.slice(0, maxSelectableFiles || 50));
+    } else if (filesToOpen.length === 1 && fileToOpen.isDir) {
+      setCurrentFolderId(fileToOpen.id);
+    }
+  };
+}
 const RESTORE_FILES_MUTATION = gql`
   mutation RestoreFiles(
-    $fileIds: [ID!]!
+    $fileIds: [GID!]!
   ) {
     restoreFiles(
       input: {
@@ -48954,7 +48895,7 @@ const RESTORE_FILES_MUTATION = gql`
 `;
 const RESTORE_FOLDERS_MUTATION = gql`
   mutation RestoreFolders(
-    $folderIds: [ID!]!
+    $folderIds: [GID!]!
   ) {
     restoreFolders(
       input: {
@@ -48966,315 +48907,163 @@ const RESTORE_FOLDERS_MUTATION = gql`
     }
   }
 `;
-function DeletedMediaBrowser({
-  accountId
-}) {
-  const {
-    loading,
-    chonkyFoldersAndFiles,
-    folderChain,
-    setCurrentFolderId
-  } = useFolderQuery(QUERY$2, (data) => data.account.trashBin, {
-    accountId
-  });
-  const refetchQueries = ["GetAccountFolderWithChildrenAndFiles", "GetGlobalFolder", "GetAccountFavorites", "GetAccountTrashBin"];
-  const [runRestoreFiles] = useMutation(RESTORE_FILES_MUTATION, {
-    refetchQueries
-  });
-  const [runRestoreFolders] = useMutation(RESTORE_FOLDERS_MUTATION, {
-    refetchQueries
-  });
-  const restoreFilesAction = defineFileAction({
-    id: "restore-files",
-    requiresSelection: true,
-    button: {
-      name: "Restore files",
-      toolbar: true,
-      contextMenu: true
+function useRestoreFilesAction() {
+  const [runRestoreFiles] = useMutationAndRefetch(RESTORE_FILES_MUTATION);
+  const [runRestoreFolders] = useMutationAndRefetch(RESTORE_FOLDERS_MUTATION);
+  return (action) => {
+    const { selectedFilesForAction } = action.state;
+    const { fileIds, folderIds } = splitFilesAndFolders(selectedFilesForAction);
+    if (fileIds.length) {
+      runRestoreFiles({
+        variables: { fileIds }
+      });
     }
-  });
-  const fileActionHandler = useCallback((action) => {
-    switch (action.id) {
-      case ChonkyActions.OpenFiles.id: {
-        const {
-          targetFile,
-          files: filesToOpen
-        } = action.payload;
-        const fileToOpen = targetFile != null ? targetFile : filesToOpen[0];
-        if (fileToOpen && fileToOpen.isDir) {
-          setCurrentFolderId(fileToOpen.realId);
-        }
-        break;
-      }
-      case restoreFilesAction.id: {
-        const {
-          selectedFilesForAction
-        } = action.state;
-        const {
-          fileIds,
-          folderIds
-        } = splitFilesAndFolders(selectedFilesForAction);
-        if (fileIds.length) {
-          runRestoreFiles({
-            variables: {
-              fileIds
-            }
-          });
-        }
-        if (folderIds.length) {
-          runRestoreFolders({
-            variables: {
-              folderIds
-            }
-          });
-        }
-        break;
-      }
+    if (folderIds.length) {
+      runRestoreFolders({
+        variables: { folderIds }
+      });
     }
-  }, [setCurrentFolderId]);
-  if (loading)
-    return /* @__PURE__ */ jsx$1("p", {
-      children: "Loading..."
-    });
-  return /* @__PURE__ */ jsxs(FileBrowser, {
-    disableDragAndDropProvider: true,
-    files: chonkyFoldersAndFiles,
-    folderChain,
-    onFileAction: fileActionHandler,
-    fileActions: [restoreFilesAction],
-    disableDefaultFileActions: [ChonkyActions.ToggleHiddenFiles.id],
-    children: [/* @__PURE__ */ jsx$1(FileNavbar, {}), /* @__PURE__ */ jsx$1(FileToolbar, {}), /* @__PURE__ */ jsx$1("div", {
-      className: "sml-h-full",
-      children: /* @__PURE__ */ jsx$1(FileList$1, {})
-    }), /* @__PURE__ */ jsx$1(FileContextMenu, {})]
-  });
+  };
 }
-const QUERY$1 = gql`
-  query GetAccountFavorites(
-    $accountId: ID!
-  ) {
-    account(accountId: $accountId) {
-      id
-      favorites {
-        id
-        name
-        updatedAt
-        url
-        thumbnailUrl
-        size
-        favoritedAt
-      }
-    }
+const favoriteFilesAction = defineFileAction({
+  id: "favorite-files",
+  requiresSelection: true,
+  fileFilter: (file) => !file.isDir,
+  button: {
+    name: "Favorite",
+    toolbar: false,
+    contextMenu: true
   }
-`;
-const UNFAVORITE_MUTATION = gql`
-  mutation UnfavoriteFiles(
-    $fileIds: [ID!]!
-  ) {
-    unfavoriteFiles(
-      input: {
-        fileIds: $fileIds
-      }
-    ) {
-      id
-      name
-      favoritedAt
-    }
+});
+const unfavoriteFilesAction = defineFileAction({
+  id: "unfavorite-files",
+  requiresSelection: true,
+  button: {
+    name: "Unfavorite files",
+    toolbar: true,
+    contextMenu: true
   }
-`;
-function FavoritesMediaBrowser({
-  accountId,
-  handleSelected,
-  selectableFileTypes,
-  maxSelectableSize,
-  maxSelectableFiles
-}) {
+});
+const restoreFilesAction = defineFileAction({
+  id: "restore-files",
+  requiresSelection: true,
+  button: {
+    name: "Restore files",
+    toolbar: true,
+    contextMenu: true
+  }
+});
+const actionsByMediaBrowser = {
+  account: [
+    ChonkyActions.OpenFiles,
+    ChonkyActions.CreateFolder,
+    ChonkyActions.UploadFiles,
+    ChonkyActions.DeleteFiles,
+    ChonkyActions.MoveFiles,
+    favoriteFilesAction
+  ],
+  global: [
+    ChonkyActions.OpenFiles
+  ],
+  favorites: [
+    ChonkyActions.OpenFiles,
+    unfavoriteFilesAction
+  ],
+  deleted: [
+    restoreFilesAction
+  ]
+};
+function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt }) {
+  const [mediaBrowser] = useCurrentMediaBrowser();
+  const actions = {
+    [ChonkyActions.OpenFiles.id]: useOpenFilesAction(),
+    [ChonkyActions.CreateFolder.id]: openNewFolderPrompt,
+    [ChonkyActions.UploadFiles.id]: () => {
+      var _a2;
+      return (_a2 = uploadAreaRef.current) == null ? void 0 : _a2.openFilePicker();
+    },
+    [ChonkyActions.DeleteFiles.id]: useDeleteFilesAction(),
+    [ChonkyActions.MoveFiles.id]: useMoveFilesAction(),
+    [favoriteFilesAction.id]: useFavoriteFilesAction(),
+    [unfavoriteFilesAction.id]: useUnfavoriteFilesAction(),
+    [restoreFilesAction.id]: useRestoreFilesAction()
+  };
+  const fileActions = actionsByMediaBrowser[mediaBrowser];
+  const onFileAction = (action) => {
+    const actionHandler = actions[action.id];
+    if (!actionHandler)
+      return;
+    actionHandler(action);
+  };
+  const enableUpload = mediaBrowser === "account";
+  const enableNewFolder = mediaBrowser === "account";
+  return {
+    fileActions,
+    onFileAction,
+    enableUpload,
+    enableNewFolder
+  };
+}
+function MediaBrowser() {
+  const uploadAreaRef = useRef();
+  const [showNewFolderPrompt, setShowNewFolderPrompt] = useState(false);
+  const [mediaBrowser] = useCurrentMediaBrowser();
+  const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
+  const openNewFolderPrompt = () => setShowNewFolderPrompt(true);
+  const closeNewFolderPrompt = () => setShowNewFolderPrompt(false);
   const {
-    loading,
-    chonkyFoldersAndFiles,
+    folderId,
+    files: files2,
     folderChain
-  } = useFolderQuery(QUERY$1, (data) => ({
-    files: data.account.favorites,
-    children: []
-  }), {
-    accountId
-  }, {
-    selectableFileTypes,
-    maxSelectableSize
-  });
-  const refetchQueries = ["GetAccountFavorites"];
-  const [runUnfavorite] = useMutation(UNFAVORITE_MUTATION, {
-    refetchQueries
-  });
-  const unfavoriteAction = defineFileAction({
-    id: "unfavorite-files",
-    requiresSelection: true,
-    button: {
-      name: "Unfavorite files",
-      toolbar: true,
-      contextMenu: true
+  } = useFolder();
+  useEffect(() => {
+    if (mediaBrowser === "account" && !currentFolderId) {
+      setCurrentFolderId(folderId);
     }
+  }, [currentFolderId, setCurrentFolderId, folderId, mediaBrowser]);
+  const {
+    fileActions,
+    onFileAction,
+    enableUpload,
+    enableNewFolder
+  } = useMediaBrowserActions({
+    uploadAreaRef,
+    openNewFolderPrompt
   });
-  const fileActionHandler = useCallback((action) => {
-    switch (action.id) {
-      case ChonkyActions.OpenFiles.id: {
-        const {
-          targetFile,
-          files: filesToOpen
-        } = action.payload;
-        const fileToOpen = targetFile != null ? targetFile : filesToOpen[0];
-        if (filesToOpen.length === 1 && !fileToOpen.isDir) {
-          handleSelected([fileToOpen]);
-        } else if (filesToOpen.length > 1 && filesToOpen.every((f2) => !f2.isDir)) {
-          handleSelected(filesToOpen.slice(0, maxSelectableFiles || 50));
-        }
-        break;
-      }
-      case unfavoriteAction.id: {
-        const {
-          selectedFilesForAction
-        } = action.state;
-        if (selectedFilesForAction.length) {
-          runUnfavorite({
-            variables: {
-              fileIds: selectedFilesForAction.map((f2) => f2.realId)
-            }
-          });
-        }
-        break;
-      }
-    }
-  }, []);
-  if (loading)
-    return /* @__PURE__ */ jsx$1("p", {
-      children: "Loading..."
-    });
   return /* @__PURE__ */ jsxs(FileBrowser, {
     disableDragAndDropProvider: true,
-    files: chonkyFoldersAndFiles,
+    files: files2,
     folderChain,
-    onFileAction: fileActionHandler,
-    fileActions: [unfavoriteAction],
+    onFileAction,
     disableDefaultFileActions: [ChonkyActions.ToggleHiddenFiles.id],
-    children: [/* @__PURE__ */ jsx$1(FileNavbar, {}), /* @__PURE__ */ jsx$1(FileToolbar, {}), /* @__PURE__ */ jsx$1("div", {
-      className: "sml-h-full",
+    fileActions,
+    children: [/* @__PURE__ */ jsx$1(FileNavbar, {}), /* @__PURE__ */ jsx$1(FileToolbar, {}), enableNewFolder && showNewFolderPrompt && /* @__PURE__ */ jsx$1(NewFolderPrompt, {
+      close: closeNewFolderPrompt
+    }), enableUpload ? /* @__PURE__ */ jsx$1(UploadArea$1, {
+      ref: uploadAreaRef,
       children: /* @__PURE__ */ jsx$1(FileList$1, {})
-    }), /* @__PURE__ */ jsx$1(FileContextMenu, {})]
+    }) : /* @__PURE__ */ jsx$1(FileList$1, {}), /* @__PURE__ */ jsx$1(FileContextMenu, {})]
   });
 }
 var ReactToastify_min = /* @__PURE__ */ (() => ":root{--toastify-color-light:#fff;--toastify-color-dark:#121212;--toastify-color-info:#3498db;--toastify-color-success:#07bc0c;--toastify-color-warning:#f1c40f;--toastify-color-error:#e74c3c;--toastify-color-transparent:hsla(0,0%,100%,.7);--toastify-icon-color-info:var(--toastify-color-info);--toastify-icon-color-success:var(--toastify-color-success);--toastify-icon-color-warning:var(--toastify-color-warning);--toastify-icon-color-error:var(--toastify-color-error);--toastify-toast-width:320px;--toastify-toast-background:#fff;--toastify-toast-min-height:64px;--toastify-toast-max-height:800px;--toastify-font-family:sans-serif;--toastify-z-index:9999;--toastify-text-color-light:#757575;--toastify-text-color-dark:#fff;--toastify-text-color-info:#fff;--toastify-text-color-success:#fff;--toastify-text-color-warning:#fff;--toastify-text-color-error:#fff;--toastify-spinner-color:#616161;--toastify-spinner-color-empty-area:#e0e0e0;--toastify-color-progress-light:linear-gradient(90deg,#4cd964,#5ac8fa,#007aff,#34aadc,#5856d6,#ff2d55);--toastify-color-progress-dark:#bb86fc;--toastify-color-progress-info:var(--toastify-color-info);--toastify-color-progress-success:var(--toastify-color-success);--toastify-color-progress-warning:var(--toastify-color-warning);--toastify-color-progress-error:var(--toastify-color-error)}.Toastify__toast-container{z-index:var(--toastify-z-index);-webkit-transform:translateZ(var(--toastify-z-index));position:fixed;padding:4px;width:var(--toastify-toast-width);box-sizing:border-box;color:#fff}.Toastify__toast-container--top-left{top:1em;left:1em}.Toastify__toast-container--top-center{top:1em;left:50%;transform:translate(-50%)}.Toastify__toast-container--top-right{top:1em;right:1em}.Toastify__toast-container--bottom-left{bottom:1em;left:1em}.Toastify__toast-container--bottom-center{bottom:1em;left:50%;transform:translate(-50%)}.Toastify__toast-container--bottom-right{bottom:1em;right:1em}@media only screen and (max-width:480px){.Toastify__toast-container{width:100vw;padding:0;left:0;margin:0}.Toastify__toast-container--top-center,.Toastify__toast-container--top-left,.Toastify__toast-container--top-right{top:0;transform:translate(0)}.Toastify__toast-container--bottom-center,.Toastify__toast-container--bottom-left,.Toastify__toast-container--bottom-right{bottom:0;transform:translate(0)}.Toastify__toast-container--rtl{right:0;left:auto}}.Toastify__toast{position:relative;min-height:var(--toastify-toast-min-height);box-sizing:border-box;margin-bottom:1rem;padding:8px;border-radius:4px;box-shadow:0 1px 10px #0000001a,0 2px 15px #0000000d;display:-ms-flexbox;display:flex;-ms-flex-pack:justify;justify-content:space-between;max-height:var(--toastify-toast-max-height);overflow:hidden;font-family:var(--toastify-font-family);cursor:pointer;direction:ltr}.Toastify__toast--rtl{direction:rtl}.Toastify__toast-body{margin:auto 0;-ms-flex:1 1 auto;flex:1 1 auto;padding:6px;display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center}.Toastify__toast-body>div:last-child{-ms-flex:1;flex:1}.Toastify__toast-icon{-webkit-margin-end:10px;margin-inline-end:10px;width:20px;-ms-flex-negative:0;flex-shrink:0;display:-ms-flexbox;display:flex}.Toastify--animate{animation-fill-mode:both;animation-duration:.7s}.Toastify--animate-icon{animation-fill-mode:both;animation-duration:.3s}@media only screen and (max-width:480px){.Toastify__toast{margin-bottom:0;border-radius:0}}.Toastify__toast-theme--dark{background:var(--toastify-color-dark);color:var(--toastify-text-color-dark)}.Toastify__toast-theme--colored.Toastify__toast--default,.Toastify__toast-theme--light{background:var(--toastify-color-light);color:var(--toastify-text-color-light)}.Toastify__toast-theme--colored.Toastify__toast--info{color:var(--toastify-text-color-info);background:var(--toastify-color-info)}.Toastify__toast-theme--colored.Toastify__toast--success{color:var(--toastify-text-color-success);background:var(--toastify-color-success)}.Toastify__toast-theme--colored.Toastify__toast--warning{color:var(--toastify-text-color-warning);background:var(--toastify-color-warning)}.Toastify__toast-theme--colored.Toastify__toast--error{color:var(--toastify-text-color-error);background:var(--toastify-color-error)}.Toastify__progress-bar-theme--light{background:var(--toastify-color-progress-light)}.Toastify__progress-bar-theme--dark{background:var(--toastify-color-progress-dark)}.Toastify__progress-bar--info{background:var(--toastify-color-progress-info)}.Toastify__progress-bar--success{background:var(--toastify-color-progress-success)}.Toastify__progress-bar--warning{background:var(--toastify-color-progress-warning)}.Toastify__progress-bar--error{background:var(--toastify-color-progress-error)}.Toastify__progress-bar-theme--colored.Toastify__progress-bar--error,.Toastify__progress-bar-theme--colored.Toastify__progress-bar--info,.Toastify__progress-bar-theme--colored.Toastify__progress-bar--success,.Toastify__progress-bar-theme--colored.Toastify__progress-bar--warning{background:var(--toastify-color-transparent)}.Toastify__close-button{color:#fff;background:transparent;outline:none;border:none;padding:0;cursor:pointer;opacity:.7;transition:.3s ease;-ms-flex-item-align:start;align-self:flex-start}.Toastify__close-button--light{color:#000;opacity:.3}.Toastify__close-button>svg{fill:currentColor;height:16px;width:14px}.Toastify__close-button:focus,.Toastify__close-button:hover{opacity:1}@keyframes Toastify__trackProgress{0%{transform:scaleX(1)}to{transform:scaleX(0)}}.Toastify__progress-bar{position:absolute;bottom:0;left:0;width:100%;height:5px;z-index:var(--toastify-z-index);opacity:.7;transform-origin:left}.Toastify__progress-bar--animated{animation:Toastify__trackProgress linear 1 forwards}.Toastify__progress-bar--controlled{transition:transform .2s}.Toastify__progress-bar--rtl{right:0;left:auto;transform-origin:right}.Toastify__spinner{width:20px;height:20px;box-sizing:border-box;border:2px solid;border-radius:100%;border-color:var(--toastify-spinner-color-empty-area);border-right-color:var(--toastify-spinner-color);animation:Toastify__spin .65s linear infinite}@keyframes Toastify__bounceInRight{0%,60%,75%,90%,to{animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;transform:translate3d(3000px,0,0)}60%{opacity:1;transform:translate3d(-25px,0,0)}75%{transform:translate3d(10px,0,0)}90%{transform:translate3d(-5px,0,0)}to{transform:none}}@keyframes Toastify__bounceOutRight{20%{opacity:1;transform:translate3d(-20px,0,0)}to{opacity:0;transform:translate3d(2000px,0,0)}}@keyframes Toastify__bounceInLeft{0%,60%,75%,90%,to{animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;transform:translate3d(-3000px,0,0)}60%{opacity:1;transform:translate3d(25px,0,0)}75%{transform:translate3d(-10px,0,0)}90%{transform:translate3d(5px,0,0)}to{transform:none}}@keyframes Toastify__bounceOutLeft{20%{opacity:1;transform:translate3d(20px,0,0)}to{opacity:0;transform:translate3d(-2000px,0,0)}}@keyframes Toastify__bounceInUp{0%,60%,75%,90%,to{animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;transform:translate3d(0,3000px,0)}60%{opacity:1;transform:translate3d(0,-20px,0)}75%{transform:translate3d(0,10px,0)}90%{transform:translate3d(0,-5px,0)}to{transform:translateZ(0)}}@keyframes Toastify__bounceOutUp{20%{transform:translate3d(0,-10px,0)}40%,45%{opacity:1;transform:translate3d(0,20px,0)}to{opacity:0;transform:translate3d(0,-2000px,0)}}@keyframes Toastify__bounceInDown{0%,60%,75%,90%,to{animation-timing-function:cubic-bezier(.215,.61,.355,1)}0%{opacity:0;transform:translate3d(0,-3000px,0)}60%{opacity:1;transform:translate3d(0,25px,0)}75%{transform:translate3d(0,-10px,0)}90%{transform:translate3d(0,5px,0)}to{transform:none}}@keyframes Toastify__bounceOutDown{20%{transform:translate3d(0,10px,0)}40%,45%{opacity:1;transform:translate3d(0,-20px,0)}to{opacity:0;transform:translate3d(0,2000px,0)}}.Toastify__bounce-enter--bottom-left,.Toastify__bounce-enter--top-left{animation-name:Toastify__bounceInLeft}.Toastify__bounce-enter--bottom-right,.Toastify__bounce-enter--top-right{animation-name:Toastify__bounceInRight}.Toastify__bounce-enter--top-center{animation-name:Toastify__bounceInDown}.Toastify__bounce-enter--bottom-center{animation-name:Toastify__bounceInUp}.Toastify__bounce-exit--bottom-left,.Toastify__bounce-exit--top-left{animation-name:Toastify__bounceOutLeft}.Toastify__bounce-exit--bottom-right,.Toastify__bounce-exit--top-right{animation-name:Toastify__bounceOutRight}.Toastify__bounce-exit--top-center{animation-name:Toastify__bounceOutUp}.Toastify__bounce-exit--bottom-center{animation-name:Toastify__bounceOutDown}@keyframes Toastify__zoomIn{0%{opacity:0;transform:scale3d(.3,.3,.3)}50%{opacity:1}}@keyframes Toastify__zoomOut{0%{opacity:1}50%{opacity:0;transform:scale3d(.3,.3,.3)}to{opacity:0}}.Toastify__zoom-enter{animation-name:Toastify__zoomIn}.Toastify__zoom-exit{animation-name:Toastify__zoomOut}@keyframes Toastify__flipIn{0%{transform:perspective(400px) rotateX(90deg);animation-timing-function:ease-in;opacity:0}40%{transform:perspective(400px) rotateX(-20deg);animation-timing-function:ease-in}60%{transform:perspective(400px) rotateX(10deg);opacity:1}80%{transform:perspective(400px) rotateX(-5deg)}to{transform:perspective(400px)}}@keyframes Toastify__flipOut{0%{transform:perspective(400px)}30%{transform:perspective(400px) rotateX(-20deg);opacity:1}to{transform:perspective(400px) rotateX(90deg);opacity:0}}.Toastify__flip-enter{animation-name:Toastify__flipIn}.Toastify__flip-exit{animation-name:Toastify__flipOut}@keyframes Toastify__slideInRight{0%{transform:translate3d(110%,0,0);visibility:visible}to{transform:translateZ(0)}}@keyframes Toastify__slideInLeft{0%{transform:translate3d(-110%,0,0);visibility:visible}to{transform:translateZ(0)}}@keyframes Toastify__slideInUp{0%{transform:translate3d(0,110%,0);visibility:visible}to{transform:translateZ(0)}}@keyframes Toastify__slideInDown{0%{transform:translate3d(0,-110%,0);visibility:visible}to{transform:translateZ(0)}}@keyframes Toastify__slideOutRight{0%{transform:translateZ(0)}to{visibility:hidden;transform:translate3d(110%,0,0)}}@keyframes Toastify__slideOutLeft{0%{transform:translateZ(0)}to{visibility:hidden;transform:translate3d(-110%,0,0)}}@keyframes Toastify__slideOutDown{0%{transform:translateZ(0)}to{visibility:hidden;transform:translate3d(0,500px,0)}}@keyframes Toastify__slideOutUp{0%{transform:translateZ(0)}to{visibility:hidden;transform:translate3d(0,-500px,0)}}.Toastify__slide-enter--bottom-left,.Toastify__slide-enter--top-left{animation-name:Toastify__slideInLeft}.Toastify__slide-enter--bottom-right,.Toastify__slide-enter--top-right{animation-name:Toastify__slideInRight}.Toastify__slide-enter--top-center{animation-name:Toastify__slideInDown}.Toastify__slide-enter--bottom-center{animation-name:Toastify__slideInUp}.Toastify__slide-exit--bottom-left,.Toastify__slide-exit--top-left{animation-name:Toastify__slideOutLeft}.Toastify__slide-exit--bottom-right,.Toastify__slide-exit--top-right{animation-name:Toastify__slideOutRight}.Toastify__slide-exit--top-center{animation-name:Toastify__slideOutUp}.Toastify__slide-exit--bottom-center{animation-name:Toastify__slideOutDown}@keyframes Toastify__spin{0%{transform:rotate(0)}to{transform:rotate(1turn)}}\n")();
-const libraries = [{
-  key: "account",
-  name: "My Media",
-  icon: "home"
-}, {
-  key: "global",
-  name: "Global",
-  icon: "globe"
-}, {
-  key: "favorites",
-  name: "Favorites",
-  icon: "heart"
-}, {
-  key: "deleted",
-  name: "Deleted",
-  icon: "trash"
-}];
-const QUERY = gql`
-  query GetCurrentUserWithAccounts {
-    currentUser {
-      id
-      role
-      accounts {
-        id
-        name
-      }
-    }
-  }
-`;
-function MediaLibraryContainer({
-  handleSelected,
-  selectableFileTypes,
-  maxSelectableSize,
-  maxSelectableFiles,
-  icons = {}
-}) {
-  var _a2;
-  const [selectedAccountId, setSelectedAccountId] = useState(null);
-  const [activeLibrary, setActiveLibrary] = useState(libraries[0]);
-  const {
-    loading,
-    data
-  } = useQuery(QUERY);
-  useEffect(() => {
-    var _a3, _b;
-    if (!selectedAccountId)
-      setSelectedAccountId((_b = (_a3 = data == null ? void 0 : data.currentUser) == null ? void 0 : _a3.accounts[0]) == null ? void 0 : _b.id);
-  }, [(_a2 = data == null ? void 0 : data.currentUser) == null ? void 0 : _a2.accounts]);
-  const browser2 = useMemo(() => {
-    switch (activeLibrary.key) {
-      case "account":
-        return /* @__PURE__ */ jsx$1(AccountMediaBrowser, {
-          accountId: selectedAccountId,
-          handleSelected,
-          selectableFileTypes,
-          maxSelectableSize,
-          maxSelectableFiles
-        }, selectedAccountId);
-      case "global":
-        return /* @__PURE__ */ jsx$1(GlobalMediaBrowser, {
-          handleSelected,
-          selectableFileTypes,
-          maxSelectableSize,
-          maxSelectableFiles
-        }, selectedAccountId);
-      case "favorites":
-        return /* @__PURE__ */ jsx$1(FavoritesMediaBrowser, {
-          accountId: selectedAccountId,
-          handleSelected,
-          selectableFileTypes,
-          maxSelectableSize,
-          maxSelectableFiles
-        }, selectedAccountId);
-      case "deleted":
-        return /* @__PURE__ */ jsx$1(DeletedMediaBrowser, {
-          accountId: selectedAccountId
-        }, selectedAccountId);
-    }
-  }, [activeLibrary.key, selectedAccountId, handleSelected, selectableFileTypes, maxSelectableSize, maxSelectableFiles]);
-  if (loading || !selectedAccountId)
-    return /* @__PURE__ */ jsx$1("p", {
-      children: "Loading..."
-    });
-  const {
-    accounts
-  } = data.currentUser;
+function MediaLibraryContainer() {
   return /* @__PURE__ */ jsx$1(DndProvider, {
     backend: HTML5Backend,
     children: /* @__PURE__ */ jsx$1("div", {
       className: "spillover-media-library sml-flex sml-h-full sml-justify-center sml-items-center",
       children: /* @__PURE__ */ jsxs("div", {
         className: "sml-w-full sml-h-full sml-flex",
-        children: [/* @__PURE__ */ jsx$1(Sidebar, {
-          libraries,
-          icons,
-          activeLibrary,
-          setActiveLibrary
-        }), /* @__PURE__ */ jsxs("div", {
+        children: [/* @__PURE__ */ jsx$1(Sidebar, {}), /* @__PURE__ */ jsxs("div", {
           className: "sml-w-full sml-h-full",
           children: [/* @__PURE__ */ jsx$1("div", {
             className: "sml-flex sml-bg-gray-50 sml-flex-col sml-w-full sml-pb-0.5 sml-border-b sml-border-spillover-color3 sml-h-14",
             children: /* @__PURE__ */ jsx$1("div", {
               className: "sml-flex sml-justify-evenly sml-py-2",
-              children: /* @__PURE__ */ jsx$1(AccountSwitcher, {
-                accounts,
-                selectedAccountId,
-                setSelectedAccountId
-              })
+              children: /* @__PURE__ */ jsx$1(AccountSwitcher, {})
             })
           }), /* @__PURE__ */ jsx$1("div", {
             className: "sml-p-2 sml-h-[calc(100%_-_4rem)]",
-            children: browser2
+            children: /* @__PURE__ */ jsx$1(MediaBrowser, {})
           })]
         }), /* @__PURE__ */ jsx$1(A, {
           position: "bottom-right",
@@ -49312,10 +49101,9 @@ async function setupClient({
       }
     };
   });
-  const cache2 = new InMemoryCache();
   const client = new ApolloClient({
     link: ApolloLink$1.from([authLink, httpLink]),
-    cache: cache2
+    cache
   });
   return client;
 }
@@ -49324,6 +49112,8 @@ function MediaLibrary({
   mode,
   spilloverToken,
   senalysisToken,
+  onSelectedAccountChange,
+  defaultAccountId,
   selectableFileTypes,
   maxSelectableSize,
   maxSelectableFiles,
@@ -49345,14 +49135,20 @@ function MediaLibrary({
       children: "Initializing..."
     });
   }
-  return /* @__PURE__ */ jsx$1(ApolloProvider, {
-    client,
-    children: /* @__PURE__ */ jsx$1(MediaLibraryContainer, {
-      handleSelected,
-      selectableFileTypes,
-      maxSelectableSize,
-      maxSelectableFiles,
-      icons
+  const options2 = {
+    handleSelected,
+    onSelectedAccountChange,
+    defaultAccountId,
+    selectableFileTypes,
+    maxSelectableSize,
+    maxSelectableFiles,
+    icons
+  };
+  return /* @__PURE__ */ jsx$1(OptionsProvider, {
+    options: options2,
+    children: /* @__PURE__ */ jsx$1(ApolloProvider, {
+      client,
+      children: /* @__PURE__ */ jsx$1(MediaLibraryContainer, {})
     })
   });
 }

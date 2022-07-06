@@ -1,11 +1,14 @@
-import { gql, useMutation } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { Formik, Field, Form } from 'formik';
+
+import useMutationAndRefetch from '../../hooks/useMutationAndRefetch';
 
 const CREATE_FOLDER_MUTATION = gql`
   mutation CreateFolder(
-    $parentId: ID!
+    $parentId: GID!
     $name: String!
   ) {
+    currentFolderId @client @export(as: "parentId")
     createFolder(
       input: {
         parentId: $parentId,
@@ -18,15 +21,12 @@ const CREATE_FOLDER_MUTATION = gql`
   }
 `;
 
-function NewFolderPrompt({ parentId, close }) {
-  const [runCreateFolder] = useMutation(CREATE_FOLDER_MUTATION, {
-    refetchQueries: ['GetAccountFolderWithChildrenAndFiles', 'GetGlobalFolder'],
-  });
+function NewFolderPrompt({ close }) {
+  const [runCreateFolder] = useMutationAndRefetch(CREATE_FOLDER_MUTATION);
 
   const createFolder = ({ name }) => {
     runCreateFolder({
       variables: {
-        parentId,
         name,
       },
     });

@@ -1,8 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 
 import MediaLibrary from '../src/main';
 
 function App() {
+  const [accountId, setAccountId] = useState('Z2lkOi8vYXBpL0FjY291bnQvMTAw');
+
   const handleSelected = async (selectedFiles) => {
     console.log('Selected file:', selectedFiles);
 
@@ -12,12 +14,19 @@ function App() {
     }
   };
 
+  const onSelectedAccountChange = (newAccountId) => {
+    console.log('Changed account', newAccountId);
+    setAccountId(newAccountId);
+  };
+
   return (
     <div className="wrapper">
       <MediaLibrary
         mode="development"
         handleSelected={handleSelected}
-        senalysisToken="45e6c524-4f85-439c-b2ea-b9de1e30d4e3"
+        senalysisToken="e6857c66-0626-4251-b82a-081d8ec98183"
+        defaultAccountId={accountId}
+        onSelectedAccountChange={onSelectedAccountChange}
       />
     </div>
   );
