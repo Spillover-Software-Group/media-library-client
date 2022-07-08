@@ -1,6 +1,6 @@
 {
   "name": "@spillover/media-library",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Media Library react component",
   "license": "UNLICENSED",
   "private": true,
@@ -10,7 +10,6 @@
   "module": "./dist/media-library.es.js",
   "dependencies": {
     "@apollo/client": "^3.6.9",
-    "@headlessui/react": "^1.6.4",
     "apollo-upload-client": "^17.0.0",
     "chonky": "^2.3.2",
     "chonky-icon-fontawesome": "^2.3.2",
@@ -31,8 +30,8 @@
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.5.0",
     "postcss": "^8.4.12",
-    "tailwindcss": "^3.1.2",
-    "vite": "^2.9.13"
+    "tailwindcss": "^3.1.5",
+    "vite": "^2.9.14"
   },
   "peerDependencies": {
     "react": "^16",

@@ -11,7 +11,7 @@ const mediaBrowsers = [
   },
   {
     key: 'global',
-    name: 'Global',
+    name: 'Spillover Stock',
     icon: 'globe',
   },
   {
