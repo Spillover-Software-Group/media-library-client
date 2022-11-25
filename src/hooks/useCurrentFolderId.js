@@ -1,6 +1,6 @@
-import { useReactiveVar } from '@apollo/client';
+import { useReactiveVar } from "@apollo/client";
 
-import { currentFolderIdVar } from '../cache';
+import { currentFolderIdVar } from "../cache";
 
 function useCurrentFolderId() {
   const currentFolderId = useReactiveVar(currentFolderIdVar);
@@ -8,7 +8,7 @@ function useCurrentFolderId() {
   const setCurrentFolderId = (folderId) => {
     let id = folderId;
 
-    if (folderId?.includes('/trash_bin')) {
+    if (folderId?.includes("/trash_bin")) {
       id = null;
     }
 

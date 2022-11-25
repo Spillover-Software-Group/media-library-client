@@ -1,22 +1,22 @@
-import { useEffect, useState } from 'react';
-import { setChonkyDefaults } from 'chonky';
-import { ChonkyIconFA } from 'chonky-icon-fontawesome';
-import { ApolloClient, ApolloLink } from '@apollo/client/core';
-import { setContext } from '@apollo/client/link/context';
-import { ApolloProvider } from '@apollo/client/react';
-import { createUploadLink } from 'apollo-upload-client';
+import { useEffect, useState } from "react";
+import { setChonkyDefaults } from "chonky";
+import { ChonkyIconFA } from "chonky-icon-fontawesome";
+import { ApolloClient, ApolloLink } from "@apollo/client/core";
+import { setContext } from "@apollo/client/link/context";
+import { ApolloProvider } from "@apollo/client/react";
+import { createUploadLink } from "apollo-upload-client";
 
-import './css/style.css';
+import "./css/style.css";
 
-import config from './config';
-import cache from './cache';
-import MediaLibraryContainer from './components/MediaLibraryContainer';
-import { OptionsProvider } from './hooks/useOptions';
+import config from "./config";
+import cache from "./cache";
+import MediaLibraryContainer from "./components/MediaLibraryContainer";
+import { OptionsProvider } from "./hooks/useOptions";
 
 setChonkyDefaults({ iconComponent: ChonkyIconFA });
 
 async function setupClient({ mode, spilloverToken, senalysisToken }) {
-  const uri = mode === 'development' ? config.graphqlDevEndpoint : config.graphqlEndpoint;
+  const uri = mode === "development" ? config.graphqlDevEndpoint : config.graphqlEndpoint;
 
   // This replaces `createHttpLink` to allow multipart (file upload) requests.
   const httpLink = createUploadLink({ uri });

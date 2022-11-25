@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 import {
   ChonkyActions,
@@ -7,14 +7,14 @@ import {
   FileList,
   FileNavbar,
   FileToolbar,
-} from 'chonky';
+} from "chonky";
 
-import NewFolderPrompt from './NewFolderPrompt';
-import UploadArea from './UploadArea';
-import useFolder from '../../hooks/useFolder';
-import useFileActions from '../../hooks/useFileActions';
-import useCurrentMediaBrowser from '../../hooks/useCurrentMediaBrowser';
-import useCurrentFolderId from '../../hooks/useCurrentFolderId';
+import NewFolderPrompt from "./NewFolderPrompt";
+import UploadArea from "./UploadArea";
+import useFolder from "../../hooks/useFolder";
+import useFileActions from "../../hooks/useFileActions";
+import useCurrentMediaBrowser from "../../hooks/useCurrentMediaBrowser";
+import useCurrentFolderId from "../../hooks/useCurrentFolderId";
 
 function MediaBrowser() {
   const uploadAreaRef = useRef();
@@ -28,7 +28,7 @@ function MediaBrowser() {
   const { folderId, files, folderChain } = useFolder();
 
   useEffect(() => {
-    if (mediaBrowser === 'account' && !currentFolderId) {
+    if (mediaBrowser === "account" && !currentFolderId) {
       setCurrentFolderId(folderId);
     }
   }, [currentFolderId, setCurrentFolderId, folderId, mediaBrowser]);

@@ -1,9 +1,9 @@
-import { useQuery } from '@apollo/client';
+import { useQuery } from "@apollo/client";
 
-import useCurrentAccountId from '../useCurrentAccountId';
-import useCurrentMediaBrowser from '../useCurrentMediaBrowser';
-import useOptions from '../useOptions';
-import * as queries from './queries';
+import useCurrentAccountId from "../useCurrentAccountId";
+import useCurrentMediaBrowser from "../useCurrentMediaBrowser";
+import useOptions from "../useOptions";
+import * as queries from "./queries";
 
 function useFolder() {
   const [mediaBrowser] = useCurrentMediaBrowser();
@@ -12,7 +12,7 @@ function useFolder() {
 
   const { loading, data } = useQuery(
     queries[mediaBrowser].query,
-    { skip: !accountId, fetchPolicy: 'cache-and-network' },
+    { skip: !accountId, fetchPolicy: "cache-and-network" },
   );
 
   if (loading || !accountId) return { loading: true, files: [], folderChain: [] };
@@ -25,7 +25,7 @@ function useFolder() {
           Array.isArray(selectableFileTypes)
           && !selectableFileTypes.includes(f.mimetype)
         ) || (
-          typeof selectableFileTypes === 'function'
+          typeof selectableFileTypes === "function"
           && !selectableFileTypes(f)
         )
       )
@@ -40,7 +40,7 @@ function useFolder() {
           Number.isInteger(maxSelectableSize)
           && f.size > maxSelectableSize
         ) || (
-          typeof maxSelectableSize === 'function'
+          typeof maxSelectableSize === "function"
           && !maxSelectableSize(f)
         )
       )

@@ -1,6 +1,6 @@
-import { useReactiveVar } from '@apollo/client';
+import { useReactiveVar } from "@apollo/client";
 
-import { currentAccountIdVar } from '../cache';
+import { currentAccountIdVar } from "../cache";
 
 function useCurrentAccountId() {
   const currentAccountId = useReactiveVar(currentAccountIdVar);

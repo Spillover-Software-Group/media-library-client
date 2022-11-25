@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
-import useMutationAndRefetch from './useMutationAndRefetch';
+import useMutationAndRefetch from "./useMutationAndRefetch";
 
 const UNFAVORITE_MUTATION = gql`
   mutation UnfavoriteFiles(

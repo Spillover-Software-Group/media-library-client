@@ -1,9 +1,9 @@
-import { forwardRef, useImperativeHandle, useRef } from 'react';
-import { useDrop } from 'react-dnd';
-import { NativeTypes } from 'react-dnd-html5-backend';
+import { forwardRef, useImperativeHandle, useRef } from "react";
+import { useDrop } from "react-dnd";
+import { NativeTypes } from "react-dnd-html5-backend";
 
-import config from '../../config';
-import useUploadFiles, { isValidFile } from '../../hooks/useUploadFiles';
+import config from "../../config";
+import useUploadFiles, { isValidFile } from "../../hooks/useUploadFiles";
 
 function UploadArea({ children }, ref) {
   const inputRef = useRef();
@@ -40,7 +40,7 @@ function UploadArea({ children }, ref) {
       <input
         ref={inputRef}
         type="file"
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
         accept={config.acceptedFileTypes.join()}
         onChange={onChange}
         multiple

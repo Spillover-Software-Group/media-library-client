@@ -1,7 +1,7 @@
-import { gql } from '@apollo/client';
-import { Formik, Field, Form } from 'formik';
+import { gql } from "@apollo/client";
+import { Formik, Field, Form } from "formik";
 
-import useMutationAndRefetch from '../../hooks/useMutationAndRefetch';
+import useMutationAndRefetch from "../../hooks/useMutationAndRefetch";
 
 const CREATE_FOLDER_MUTATION = gql`
   mutation CreateFolder(
@@ -37,7 +37,7 @@ function NewFolderPrompt({ close }) {
   return (
     <Formik
       initialValues={{
-        name: '',
+        name: "",
       }}
       onSubmit={createFolder}
     >

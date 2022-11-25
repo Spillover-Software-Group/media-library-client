@@ -1,28 +1,28 @@
-import useCurrentMediaBrowser from '../hooks/useCurrentMediaBrowser';
-import useCurrentFolderId from '../hooks/useCurrentFolderId';
-import useOptions from '../hooks/useOptions';
-import Icon from './Icon';
+import useCurrentMediaBrowser from "../hooks/useCurrentMediaBrowser";
+import useCurrentFolderId from "../hooks/useCurrentFolderId";
+import useOptions from "../hooks/useOptions";
+import Icon from "./Icon";
 
 const mediaBrowsers = [
   {
-    key: 'account',
-    name: 'My Media',
-    icon: 'home',
+    key: "account",
+    name: "My Media",
+    icon: "home",
   },
   {
-    key: 'global',
-    name: 'Spillover Stock',
-    icon: 'globe',
+    key: "global",
+    name: "Spillover Stock",
+    icon: "globe",
   },
   {
-    key: 'favorites',
-    name: 'Favorites',
-    icon: 'heart',
+    key: "favorites",
+    name: "Favorites",
+    icon: "heart",
   },
   {
-    key: 'deleted',
-    name: 'Deleted',
-    icon: 'trash',
+    key: "deleted",
+    name: "Deleted",
+    icon: "trash",
   },
 ];
 
@@ -49,8 +49,8 @@ function Sidebar() {
                 onClick={() => changeBrowser(browser.key)}
                 className={`${
                   currentBrowser === browser.key
-                    ? 'sml-text-spillover-color11 sml-font-bold'
-                    : 'sml-text-spillover-color10 sml-font-medium'
+                    ? "sml-text-spillover-color11 sml-font-bold"
+                    : "sml-text-spillover-color10 sml-font-medium"
                 } sml-py-1 sml-px-4 sml-text-sm sml-flex sml-justify-between sml-items-center sml-cursor-pointer hover:sml-bg-gray-200 sml-media-browser-name`}
               >
                 <div className="sml-flex sml-items-center w-full">

@@ -1,7 +1,7 @@
-import { InMemoryCache, makeVar } from '@apollo/client';
+import { InMemoryCache, makeVar } from "@apollo/client";
 
 const currentAccountIdVar = makeVar(null);
-const currentMediaBrowserVar = makeVar('account');
+const currentMediaBrowserVar = makeVar("account");
 const currentFolderIdVar = makeVar(null);
 
 const cache = new InMemoryCache({

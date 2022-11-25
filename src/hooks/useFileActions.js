@@ -1,19 +1,19 @@
-import { ChonkyActions, defineFileAction } from 'chonky';
+import { ChonkyActions, defineFileAction } from "chonky";
 
-import useCurrentMediaBrowser from './useCurrentMediaBrowser';
-import useDeleteFilesAction from './useDeleteFilesAction';
-import useFavoriteFilesAction from './useFavoriteFilesAction';
-import useUnfavoriteFilesAction from './useUnfavoriteFilesAction';
-import useMoveFilesAction from './useMoveFilesAction';
-import useOpenFilesAction from './useOpenFilesAction';
-import useRestoreFilesAction from './useRestoreFilesAction';
+import useCurrentMediaBrowser from "./useCurrentMediaBrowser";
+import useDeleteFilesAction from "./useDeleteFilesAction";
+import useFavoriteFilesAction from "./useFavoriteFilesAction";
+import useUnfavoriteFilesAction from "./useUnfavoriteFilesAction";
+import useMoveFilesAction from "./useMoveFilesAction";
+import useOpenFilesAction from "./useOpenFilesAction";
+import useRestoreFilesAction from "./useRestoreFilesAction";
 
 const favoriteFilesAction = defineFileAction({
-  id: 'favorite-files',
+  id: "favorite-files",
   requiresSelection: true,
   fileFilter: (file) => !file.isDir,
   button: {
-    name: 'Favorite',
+    name: "Favorite",
     toolbar: false,
     contextMenu: true,
     // icon: ChonkyIconName.
@@ -21,10 +21,10 @@ const favoriteFilesAction = defineFileAction({
 });
 
 const unfavoriteFilesAction = defineFileAction({
-  id: 'unfavorite-files',
+  id: "unfavorite-files",
   requiresSelection: true,
   button: {
-    name: 'Unfavorite files',
+    name: "Unfavorite files",
     toolbar: true,
     contextMenu: true,
     // icon: ChonkyIconName.
@@ -32,10 +32,10 @@ const unfavoriteFilesAction = defineFileAction({
 });
 
 const restoreFilesAction = defineFileAction({
-  id: 'restore-files',
+  id: "restore-files",
   requiresSelection: true,
   button: {
-    name: 'Restore files',
+    name: "Restore files",
     toolbar: true,
     contextMenu: true,
     // icon: ChonkyIconName.
@@ -86,8 +86,8 @@ function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt }) {
     actionHandler(action);
   };
 
-  const enableUpload = mediaBrowser === 'account';
-  const enableNewFolder = mediaBrowser === 'account';
+  const enableUpload = mediaBrowser === "account";
+  const enableNewFolder = mediaBrowser === "account";
 
   return {
     fileActions,

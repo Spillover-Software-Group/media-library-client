@@ -1,6 +1,6 @@
-import { useReactiveVar } from '@apollo/client';
+import { useReactiveVar } from "@apollo/client";
 
-import { currentMediaBrowserVar } from '../cache';
+import { currentMediaBrowserVar } from "../cache";
 
 function useCurrentMediaBrowser() {
   const currentMediaBrowser = useReactiveVar(currentMediaBrowserVar);

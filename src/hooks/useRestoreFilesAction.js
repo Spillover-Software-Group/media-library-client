@@ -1,7 +1,7 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
-import useMutationAndRefetch from './useMutationAndRefetch';
-import { splitFilesAndFolders } from './util';
+import useMutationAndRefetch from "./useMutationAndRefetch";
+import { splitFilesAndFolders } from "./util";
 
 const RESTORE_FILES_MUTATION = gql`
   mutation RestoreFiles(

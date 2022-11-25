@@ -1,24 +1,25 @@
-import path from 'path';
+import path from "path";
 
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-  ],
+  plugins: [react()],
   server: {
     host: true,
     port: 1234,
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/main.jsx'),
-      formats: ['es'],
+      // eslint-disable-next-line no-undef
+      entry: path.resolve(__dirname, "src/main.jsx"),
+      formats: ["es"],
+      // Force extension to .es
+      fileName: () => "media-library.es.js",
     },
     rollupOptions: {
-      external: ['react', 'react-dom'],
+      external: ["react", "react-dom"],
     },
   },
 });

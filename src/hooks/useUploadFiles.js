@@ -1,8 +1,8 @@
-import { gql } from '@apollo/client';
-import { toast } from 'react-toastify';
+import { gql } from "@apollo/client";
+import { toast } from "react-toastify";
 
-import config from '../config';
-import useMutationAndRefetch from './useMutationAndRefetch';
+import config from "../config";
+import useMutationAndRefetch from "./useMutationAndRefetch";
 
 const UPLOAD_FILES_MUTATION = gql`
   mutation UploadFiles(
@@ -48,7 +48,7 @@ function useUploadFiles() {
 
   const uploadFiles = (files) => {
     if (!files.every(isValidFile)) {
-      toast.error('Invalid files!');
+      toast.error("Invalid files!");
       return false;
     }
 
@@ -59,9 +59,9 @@ function useUploadFiles() {
     });
 
     toast.promise(uploadPromise, {
-      pending: 'Uploading files...',
-      success: 'Files uploaded!',
-      error: 'Error uploading files!',
+      pending: "Uploading files...",
+      success: "Files uploaded!",
+      error: "Error uploading files!",
     });
 
     return uploadPromise;

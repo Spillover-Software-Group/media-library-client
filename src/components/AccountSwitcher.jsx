@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { gql, useQuery } from '@apollo/client';
-import Select from 'react-select';
+import { useEffect } from "react";
+import { gql, useQuery } from "@apollo/client";
+import Select from "react-select";
 
-import useCurrentAccountId from '../hooks/useCurrentAccountId';
-import useCurrentFolderId from '../hooks/useCurrentFolderId';
-import useOptions from '../hooks/useOptions';
-import useCurrentMediaBrowser from '../hooks/useCurrentMediaBrowser';
+import useCurrentAccountId from "../hooks/useCurrentAccountId";
+import useCurrentFolderId from "../hooks/useCurrentFolderId";
+import useOptions from "../hooks/useOptions";
+import useCurrentMediaBrowser from "../hooks/useCurrentMediaBrowser";
 
 const QUERY = gql`
   query GetCurrentUserWithAccounts {
@@ -34,7 +34,7 @@ function AccountSwitcher() {
 
   const changeAccount = (newAccount) => {
     if (!newAccount?.id) return;
-    setCurrentBrowser('account');
+    setCurrentBrowser("account");
     setCurrentAccountId(newAccount.id);
     setCurrentFolderId(newAccount.rootFolderId);
     if (onSelectedAccountChange) onSelectedAccountChange(newAccount.id);

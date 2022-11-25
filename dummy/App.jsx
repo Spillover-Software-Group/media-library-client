@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import MediaLibrary from '../src/main';
+import MediaLibrary from "../src/main";
 
 function App() {
-  const [accountId, setAccountId] = useState('Z2lkOi8vYXBpL0FjY291bnQvMTAw');
+  const [accountId, setAccountId] = useState("Z2lkOi8vYXBpL0FjY291bnQvMTAw");
 
   const handleSelected = async (selectedFiles) => {
-    console.log('Selected file:', selectedFiles);
+    console.log("Selected file:", selectedFiles);
 
     for (const f of selectedFiles) {
       const r = await fetch(f.url);
@@ -15,7 +15,7 @@ function App() {
   };
 
   const onSelectedAccountChange = (newAccountId) => {
-    console.log('Changed account', newAccountId);
+    console.log("Changed account", newAccountId);
     setAccountId(newAccountId);
   };
 

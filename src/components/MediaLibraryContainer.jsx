@@ -1,12 +1,12 @@
-import { ToastContainer } from 'react-toastify';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { ToastContainer } from "react-toastify";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
-import AccountSwitcher from './AccountSwitcher';
-import Sidebar from './Sidebar';
-import MediaBrowser from './MediaBrowser';
+import AccountSwitcher from "./AccountSwitcher";
+import Sidebar from "./Sidebar";
+import MediaBrowser from "./MediaBrowser";
 
-import 'react-toastify/dist/ReactToastify.min.css';
+import "react-toastify/dist/ReactToastify.min.css";
 
 function MediaLibraryContainer() {
   return (

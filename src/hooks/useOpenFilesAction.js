@@ -1,5 +1,5 @@
-import useCurrentFolderId from './useCurrentFolderId';
-import useOptions from './useOptions';
+import useCurrentFolderId from "./useCurrentFolderId";
+import useOptions from "./useOptions";
 
 function useOpenFilesAction() {
   const {
