@@ -3,7 +3,7 @@ import { useState } from "react";
 import MediaLibrary from "../src/main";
 
 function App() {
-  const [accountId, setAccountId] = useState("Z2lkOi8vYXBpL0FjY291bnQvMTAw");
+  const [accountId, setAccountId] = useState(null);
 
   const handleSelected = async (selectedFiles) => {
     console.log("Selected file:", selectedFiles);
@@ -24,9 +24,10 @@ function App() {
       <MediaLibrary
         mode="development"
         handleSelected={handleSelected}
-        senalysisToken="e6857c66-0626-4251-b82a-081d8ec98183"
+        engageToken="I_dAWfcx5IcwF4bewGrwtp7lJr3UMVX3xg0AMSAxvTc"
         defaultAccountId={accountId}
         onSelectedAccountChange={onSelectedAccountChange}
+        autoSelect={true}
       />
     </div>
   );

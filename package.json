@@ -1,6 +1,6 @@
 {
   "name": "@spillover/media-library",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "Media Library react component",
   "license": "UNLICENSED",
   "private": true,
@@ -9,7 +9,7 @@
   ],
   "module": "./dist/media-library.es.js",
   "dependencies": {
-    "@apollo/client": "^3.7.12",
+    "@apollo/client": "^3.7.14",
     "apollo-upload-client": "^17.0.0",
     "chonky": "^2.3.2",
     "chonky-icon-fontawesome": "^2.3.2",
@@ -17,18 +17,18 @@
     "graphql": "^16.6.0",
     "react-dnd": "^11",
     "react-dnd-html5-backend": "^11",
-    "react-select": "^5.7.2",
-    "react-toastify": "^9.1.2"
+    "react-select": "^5.7.3",
+    "react-toastify": "^9.1.3"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.4.0",
-    "@vitejs/plugin-react-swc": "^3.3.0",
-    "eslint": "^8.39.0",
+    "@vitejs/plugin-react-swc": "^3.3.1",
+    "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",
     "prettier": "^2.8.8",
-    "tailwindcss": "^3.3.1",
-    "vite": "^4.2.1"
+    "tailwindcss": "^3.3.2",
+    "vite": "^4.3.8"
   },
   "peerDependencies": {
     "react": "^16",
@@ -37,8 +37,8 @@
   "scripts": {
     "start": "vite",
     "build": "NODE_ENV=production vite build",
-    "fixbuild": "./fix_build.sh",
-    "tar": "npm run build && npm run fixbuild && npm pack",
+    "//": "HACK: This is to restore the patch of emotion: https://github.com/emotion-js/emotion/pull/2651, because rollup will concat these strings.",
+    "postbuild": "sed -i '' -e 's/\"useInsertionEffect\"/\"useInsertion\"+\"Effect\"/g' ./dist/media-library.es.js",
     "lint": "eslint --fix --ext .jsx,.js . && prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -15,7 +15,7 @@ import { OptionsProvider } from "./hooks/useOptions";
 
 setChonkyDefaults({ iconComponent: ChonkyIconFA });
 
-async function setupClient({ mode, spilloverToken, senalysisToken }) {
+async function setupClient({ mode, engageToken, spilloverToken, senalysisToken }) {
   const uri = mode === "development" ? config.graphqlDevEndpoint : config.graphqlEndpoint;
 
   // This replaces `createHttpLink` to allow multipart (file upload) requests.
@@ -26,6 +26,8 @@ async function setupClient({ mode, spilloverToken, senalysisToken }) {
 
     if (senalysisToken) {
       authorization = `Senalysis ${senalysisToken}`;
+    } else if (engageToken) {
+      authorization = `Engage ${engageToken}`;
     } else {
       authorization = `Bearer ${spilloverToken}`;
     }
@@ -50,23 +52,25 @@ function MediaLibrary({
   handleSelected,
   mode,
   spilloverToken,
+  engageToken,
   senalysisToken,
   onSelectedAccountChange,
   defaultAccountId,
   selectableFileTypes,
   maxSelectableSize,
   maxSelectableFiles,
+  autoSelect,
   icons = {},
 }) {
   const [client, setClient] = useState();
 
   useEffect(() => {
     async function init() {
-      setClient(await setupClient({ mode, spilloverToken, senalysisToken }));
+      setClient(await setupClient({ mode, spilloverToken, engageToken, senalysisToken }));
     }
 
     init().catch(console.error);
-  }, [mode, spilloverToken, senalysisToken]);
+  }, [mode, spilloverToken, engageToken, senalysisToken]);
 
   if (!client) {
     return <h2>Initializing...</h2>;
@@ -80,6 +84,7 @@ function MediaLibrary({
     maxSelectableSize,
     maxSelectableFiles,
     icons,
+    autoSelect,
   };
 
   return (

@@ -3,6 +3,8 @@ import { toast } from "react-toastify";
 
 import config from "../config";
 import useMutationAndRefetch from "./useMutationAndRefetch";
+import useOptions from "./useOptions";
+import useOpenFilesAction from "./useOpenFilesAction";
 
 const UPLOAD_FILES_MUTATION = gql`
   mutation UploadFiles(
@@ -44,9 +46,11 @@ function isValidFile(file) {
 }
 
 function useUploadFiles() {
+  const { isSelectable, autoSelect } = useOptions();
+  const openFiles = useOpenFilesAction();
   const [runUploadFiles] = useMutationAndRefetch(UPLOAD_FILES_MUTATION);
 
-  const uploadFiles = (files) => {
+  const uploadFiles = async (files) => {
     if (!files.every(isValidFile)) {
       toast.error("Invalid files!");
       return false;
@@ -63,6 +67,20 @@ function useUploadFiles() {
       success: "Files uploaded!",
       error: "Error uploading files!",
     });
+
+    try {
+      const { data } = await uploadPromise;
+
+      if (autoSelect) {
+        openFiles({
+          payload: {
+            files: data.uploadFiles.filter(isSelectable),
+          },
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
 
     return uploadPromise;
   };
