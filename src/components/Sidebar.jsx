@@ -1,3 +1,5 @@
+import Select from "react-select";
+
 import useCurrentMediaBrowser from "../hooks/useCurrentMediaBrowser";
 import useCurrentFolderId from "../hooks/useCurrentFolderId";
 import useOptions from "../hooks/useOptions";
@@ -36,12 +38,29 @@ function Sidebar() {
     setCurrentBrowser(browser);
   };
 
+  const currentBrowerSelected = mediaBrowsers.find((b) => b.key === currentBrowser);
+
   return (
-    <div className="sml-sidebar sml-w-72 sml-bg-gray-50">
-      <div className="sml-border-b sml-border-spillover-color3 sml-font-bold sml-flex sml-items-center sml-justify-between sml-text-spillover-color2 sml-h-14">
-        <span className="sml-title sml-ml-4 sml-uppercase">Media Library</span>
+    <div className="sml-sidebar sml-bg-gray-50">
+      <div className="sml-block sm:sml-hidden sml-w-72 sml-p-4">
+        <Select
+          options={mediaBrowsers}
+          value={currentBrowerSelected}
+          getOptionValue={(option) => option.key}
+          getOptionLabel={(option) => (
+            <span>
+              <Icon
+                name={option.icon}
+                iconStyle="fas"
+                className="sml-browser-icon sml-mr-2 sml-text-xl"
+              />
+              {option.name}
+            </span>
+          )}
+          onChange={(option) => changeBrowser(option.key)}
+        />
       </div>
-      <div>
+      <div className="sml-hidden sm:sml-block sml-w-48">
         <ul className="sml-mt-4">
           {mediaBrowsers.map((browser) => (
             <li key={browser.key}>
