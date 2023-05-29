@@ -13,17 +13,21 @@ function MediaLibraryContainer() {
     <DndProvider backend={HTML5Backend}>
       <div className="spillover-media-library sml-flex sml-h-full sml-justify-center sml-items-center">
         <div className="sml-w-full sml-h-full sml-flex">
-          <Sidebar />
-
           <div className="sml-w-full sml-h-full">
-            <div className="sml-flex sml-bg-gray-50 sml-flex-col sml-w-full sml-pb-0.5 sml-border-b sml-border-spillover-color3 sml-h-14">
-              <div className="sml-flex sml-justify-evenly sml-py-2">
+            <div className="sml-flex sml-bg-gray-50 sml-flex-col sml-items-center sml-pb-0.5 sml-border-b sml-border-spillover-color3">
+              <div className="sml-flex sml-justify-evenly sml-py-2 sml-flex-col sm:sml-flex-row sml-w-full sml-items-center">
+                <div className="sml-font-bold sml-flex sml-items-center sml-text-spillover-color2">
+                  <span className="sml-title sml-ml-4 sml-uppercase">Media Library</span>
+                </div>
                 <AccountSwitcher />
               </div>
             </div>
 
-            <div className="sml-p-2 sml-h-[calc(100%_-_4rem)]">
-              <MediaBrowser />
+            <div className="sml-h-[calc(100%_-_4rem)] sml-flex sml-flex-col sm:sml-flex-row">
+              <Sidebar />
+              <div className="sml-p-2 sml-w-full sml-h-[calc(100%_-_4rem)]">
+                <MediaBrowser />
+              </div>
             </div>
           </div>
 
