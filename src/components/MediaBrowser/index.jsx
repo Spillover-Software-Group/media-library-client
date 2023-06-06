@@ -15,6 +15,7 @@ import useFolder from "../../hooks/useFolder";
 import useFileActions from "../../hooks/useFileActions";
 import useCurrentMediaBrowser from "../../hooks/useCurrentMediaBrowser";
 import useCurrentFolderId from "../../hooks/useCurrentFolderId";
+import Loading from "../Loading";
 
 function MediaBrowser() {
   const uploadAreaRef = useRef();
@@ -25,7 +26,7 @@ function MediaBrowser() {
   const openNewFolderPrompt = () => setShowNewFolderPrompt(true);
   const closeNewFolderPrompt = () => setShowNewFolderPrompt(false);
 
-  const { folderId, files, folderChain } = useFolder();
+  const { folderId, files, folderChain, loading } = useFolder();
 
   useEffect(() => {
     if (mediaBrowser === "account" && !currentFolderId) {
@@ -61,7 +62,9 @@ function MediaBrowser() {
 
       {enableUpload ? (
         <UploadArea ref={uploadAreaRef}>
-          <FileList />
+          {loading ? <Loading /> :
+            <FileList />
+          }
         </UploadArea>
       ) : (
         <FileList />
