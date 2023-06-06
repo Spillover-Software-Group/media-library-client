@@ -62,12 +62,12 @@ function MediaBrowser() {
 
       {enableUpload ? (
         <UploadArea ref={uploadAreaRef}>
-          {loading ? <Loading /> :
-            <FileList />
-          }
+          {loading ? <Loading /> : <FileList />}
         </UploadArea>
       ) : (
-        <FileList />
+        <>
+          {loading ? <Loading /> : <FileList />}
+        </>
       )}
       <FileContextMenu />
     </FileBrowser>
