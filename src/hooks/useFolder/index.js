@@ -5,6 +5,7 @@ import useCurrentMediaBrowser from "../useCurrentMediaBrowser";
 import useOptions from "../useOptions";
 import * as queries from "./queries";
 
+
 function useFolder() {
   const [mediaBrowser] = useCurrentMediaBrowser();
   const [accountId] = useCurrentAccountId();

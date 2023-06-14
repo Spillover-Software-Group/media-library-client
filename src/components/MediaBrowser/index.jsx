@@ -22,6 +22,7 @@ function MediaBrowser() {
   const [showNewFolderPrompt, setShowNewFolderPrompt] = useState(false);
   const [mediaBrowser] = useCurrentMediaBrowser();
   const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
+  const [showLoading, setShowLoading] = useState(false);
 
   const openNewFolderPrompt = () => setShowNewFolderPrompt(true);
   const closeNewFolderPrompt = () => setShowNewFolderPrompt(false);
@@ -33,6 +34,16 @@ function MediaBrowser() {
       setCurrentFolderId(folderId);
     }
   }, [currentFolderId, setCurrentFolderId, folderId, mediaBrowser]);
+
+  useEffect(() => {
+    if (currentFolderId && folderId) {
+      if (currentFolderId !== folderId) {
+        setShowLoading(true);
+      } else if (currentFolderId === folderId) {
+        setShowLoading(false);
+      }
+    }
+  }, [currentFolderId, folderId]);
 
   const {
     fileActions,
@@ -62,11 +73,11 @@ function MediaBrowser() {
 
       {enableUpload ? (
         <UploadArea ref={uploadAreaRef}>
-          {loading ? <Loading /> : <FileList />}
+          {loading || showLoading ? <Loading /> : <FileList />}
         </UploadArea>
       ) : (
         <>
-          {loading ? <Loading /> : <FileList />}
+          {loading || showLoading  ? <Loading /> : <FileList />}
         </>
       )}
       <FileContextMenu />
