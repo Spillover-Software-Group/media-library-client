@@ -9,7 +9,7 @@ import { createUploadLink } from "apollo-upload-client";
 import "./css/style.css";
 
 import config from "./config";
-import cache from "./cache";
+import cache, { marketTypeVar } from "./cache";
 import MediaLibraryContainer from "./components/MediaLibraryContainer";
 import { OptionsProvider } from "./hooks/useOptions";
 
@@ -60,6 +60,7 @@ function MediaLibrary({
   maxSelectableSize,
   maxSelectableFiles,
   autoSelect,
+  marketType,
   icons = {},
 }) {
   const [client, setClient] = useState();
@@ -76,6 +77,8 @@ function MediaLibrary({
     return <h2>Initializing...</h2>;
   }
 
+  marketTypeVar(marketType);
+
   const options = {
     handleSelected,
     onSelectedAccountChange,
@@ -85,6 +88,7 @@ function MediaLibrary({
     maxSelectableFiles,
     icons,
     autoSelect,
+    marketType,
   };
 
   return (

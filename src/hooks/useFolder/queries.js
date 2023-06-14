@@ -50,9 +50,16 @@ const global = {
   extractFolder: (data) => data.globalFolder,
   query: gql`
     ${folderFieldsFragment}
-    query GetGlobalFolder($folderId: GID) {
+    query GetGlobalFolder(
+      $folderId: GID,
+      $marketType: String
+    ) {
       currentFolderId @client @export(as: "folderId")
-      globalFolder(folderId: $folderId) {
+      marketType @client @export(as: "marketType")
+      globalFolder(
+        folderId: $folderId
+        marketType: $marketType
+      ) {
         ...FolderFields
       }
     }
