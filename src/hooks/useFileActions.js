@@ -7,6 +7,7 @@ import useUnfavoriteFilesAction from "./useUnfavoriteFilesAction";
 import useMoveFilesAction from "./useMoveFilesAction";
 import useOpenFilesAction from "./useOpenFilesAction";
 import useRestoreFilesAction from "./useRestoreFilesAction";
+import useChangeSelectionFilesAction from "./useChangeSelectionFilesAction";
 
 const favoriteFilesAction = defineFileAction({
   id: "favorite-files",
@@ -75,6 +76,7 @@ function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt }) {
     [favoriteFilesAction.id]: useFavoriteFilesAction(),
     [unfavoriteFilesAction.id]: useUnfavoriteFilesAction(),
     [restoreFilesAction.id]: useRestoreFilesAction(),
+    [ChonkyActions.ChangeSelection.id]: useChangeSelectionFilesAction(),
   };
 
   const fileActions = actionsByMediaBrowser[mediaBrowser];
