@@ -10,6 +10,7 @@ import {
 } from "chonky";
 
 import NewFolderPrompt from "./NewFolderPrompt";
+import GenerateImage from "./GenerateImage";
 import UploadArea from "./UploadArea";
 import useFolder from "../../hooks/useFolder";
 import useFileActions from "../../hooks/useFileActions";
@@ -20,12 +21,15 @@ import Loading from "../Loading";
 function MediaBrowser() {
   const uploadAreaRef = useRef();
   const [showNewFolderPrompt, setShowNewFolderPrompt] = useState(false);
+  const [showGenerateImage, setShowGenerateImage] = useState(false);
   const [mediaBrowser] = useCurrentMediaBrowser();
   const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
   const [showLoading, setShowLoading] = useState(false);
 
   const openNewFolderPrompt = () => setShowNewFolderPrompt(true);
   const closeNewFolderPrompt = () => setShowNewFolderPrompt(false);
+  const openGenerateImage = () => setShowGenerateImage(true);
+  const closeGenerateImage = () => setShowGenerateImage(false);
 
   const { folderId, files, folderChain, loading } = useFolder();
 
@@ -50,7 +54,7 @@ function MediaBrowser() {
     onFileAction,
     enableUpload,
     enableNewFolder,
-  } = useFileActions({ uploadAreaRef, openNewFolderPrompt });
+  } = useFileActions({ uploadAreaRef, openNewFolderPrompt, openGenerateImage });
 
   return (
     <FileBrowser
@@ -70,6 +74,7 @@ function MediaBrowser() {
       <FileToolbar />
 
       {enableNewFolder && showNewFolderPrompt && <NewFolderPrompt close={closeNewFolderPrompt} />}
+      {showGenerateImage && <GenerateImage close={closeGenerateImage} />}
 
       {enableUpload ? (
         <UploadArea ref={uploadAreaRef}>

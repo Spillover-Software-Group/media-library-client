@@ -42,6 +42,17 @@ const restoreFilesAction = defineFileAction({
   },
 });
 
+const openGenerateImageAction = defineFileAction({
+  id: "open-generate-image",
+  requiresSelection: false,
+  button: {
+    name: "Generate image",
+    toolbar: true,
+    contextMenu: false,
+    // icon: ChonkyIconName.
+  },
+});
+
 const actionsByMediaBrowser = {
   account: [
     ChonkyActions.OpenFiles,
@@ -50,6 +61,7 @@ const actionsByMediaBrowser = {
     ChonkyActions.DeleteFiles,
     ChonkyActions.MoveFiles,
     favoriteFilesAction,
+    openGenerateImageAction,
   ],
   global: [
     ChonkyActions.OpenFiles,
@@ -63,7 +75,7 @@ const actionsByMediaBrowser = {
   ],
 };
 
-function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt }) {
+function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, openGenerateImage }) {
   const [mediaBrowser] = useCurrentMediaBrowser();
 
   const actions = {
@@ -75,6 +87,7 @@ function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt }) {
     [favoriteFilesAction.id]: useFavoriteFilesAction(),
     [unfavoriteFilesAction.id]: useUnfavoriteFilesAction(),
     [restoreFilesAction.id]: useRestoreFilesAction(),
+    [openGenerateImageAction.id]: openGenerateImage,
   };
 
   const fileActions = actionsByMediaBrowser[mediaBrowser];
