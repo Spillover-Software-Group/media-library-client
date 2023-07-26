@@ -79,7 +79,7 @@ function MediaBrowser() {
 
       {enableNewFolder && showNewFolderPrompt && <NewFolderPrompt close={closeNewFolderPrompt} />}
       {showGenerateImage && (
-        <div className="sml-p-2 sml-border-b" style={{marginRight: "-8px", marginLeft: "-8px"}}>
+        <div className="sml-px-2 sml-py-4 sml-mb-4 sml-border-b" style={{marginRight: "-8px", marginLeft: "-8px"}}>
           <GenerateImage close={closeGenerateImage} useImage={useImage} />
         </div>
       )}

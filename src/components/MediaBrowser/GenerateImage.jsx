@@ -9,6 +9,7 @@ import TextInput from "../TextInput";
 import PrimaryButton from "../PrimaryButton";
 import SecondaryButton from "../SecondaryButton";
 import Icon from "../Icon";
+import LoadingSpinner from "../LoadingSpinner";
 
 const GENERATE_IMAGE_MUTATION = gql`
   mutation GenerateImage(
@@ -53,6 +54,8 @@ function GenerateImage({ close, useImage }) {
   };
 
   const generateImage = async ({ prompt }) => {
+    setImage(null);
+
     const { data } = await runGenerateImage({ variables: { prompt }});
 
     if (data.generateImage.errors) {
@@ -117,27 +120,36 @@ function GenerateImage({ close, useImage }) {
           </Form>
 
           {/* Preview */}
-          {image && (
-            <div className="sml-w-full sml-flex sml-flex-col sml-gap-4 sml-items-center">
-              <div>
-                <a href={image.url} target="_blank" rel="noreferrer" title="Open image in new tab">
-                  <img src={image.url} alt="Generated image" className="sml-max-w-full sml-max-h-96" />
-                </a>
-              </div>
+          <div className="sml-w-full sml-flex sml-flex-col sml-gap-4 sml-items-center">
+            {image && (
+              <>
+                <div>
+                  <a href={image.url} target="_blank" rel="noreferrer" title="Open image in new tab">
+                    <img src={image.url} alt="Generated image" className="sml-max-w-full sml-max-h-96" />
+                  </a>
+                </div>
 
-              <div className="sml-flex sml-flex-row sml-gap-2">
-                <PrimaryButton onClick={use}>
-                  <Icon name="confirm" className="sml-mr-1" />
-                  Use this image
-                </PrimaryButton>
+                <div className="sml-flex sml-flex-row sml-gap-2">
+                  <PrimaryButton onClick={use}>
+                    <Icon name="confirm" className="sml-mr-1" />
+                    Use this image
+                  </PrimaryButton>
 
-                <SecondaryButton onClick={submitForm} disabled={isSubmitting}>
-                  <Icon name="reload" className={`sml-mr-1 ${isSubmitting && "fa-spin"}`} />
-                  Generate another
-                </SecondaryButton>
-              </div>
-            </div>
-          )}
+                  <SecondaryButton onClick={submitForm} disabled={isSubmitting}>
+                    <Icon name="reload" className={`sml-mr-1 ${isSubmitting && "fa-spin"}`} />
+                    Generate another
+                  </SecondaryButton>
+                </div>
+              </>
+            )}
+
+            {isSubmitting && (
+              <>
+                <div className="sml-text-gray-500">Generating image...</div>
+                <LoadingSpinner />
+              </>
+            )}
+          </div>
         </div>
       )}
     </Formik>
