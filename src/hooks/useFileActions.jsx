@@ -88,7 +88,7 @@ const accountsAllowedToGenerateImage = [
 function actionsFor(accountId, mediaBrowser, isDev) {
   const actions = [...actionsByMediaBrowser[mediaBrowser]];
 
-  if (isDev || (accountsAllowedToGenerateImage.includes(accountId) && mediaBrowser === "account")) {
+  if (mediaBrowser === "account" && (isDev || accountsAllowedToGenerateImage.includes(accountId))) {
     actions.splice(3, 0, openGenerateImageAction);
   }
 
