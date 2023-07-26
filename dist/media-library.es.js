@@ -45773,7 +45773,8 @@ function oee({
     icons: p,
     autoSelect: c,
     selectOnSingleClick: f,
-    marketType: d
+    marketType: d,
+    mode: t
   };
   return /* @__PURE__ */ oe.jsx(OX, { options: b, children: /* @__PURE__ */ oe.jsx(d_, { client: m, children: /* @__PURE__ */ oe.jsx(JK, {}) }) });
 }

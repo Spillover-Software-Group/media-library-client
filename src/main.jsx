@@ -88,6 +88,7 @@ function MediaLibrary({
     autoSelect,
     selectOnSingleClick,
     marketType,
+    mode,
   };
 
   return (
