@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { gql } from "@apollo/client";
-import { Formik, Field, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
 
 import useMutationAndRefetch from "../../hooks/useMutationAndRefetch";
-import LoadingSpinner from "../LoadingSpinner";
+import TextInput from "../TextInput";
+import PrimaryButton from "../PrimaryButton";
+import SecondaryButton from "../SecondaryButton";
+import Icon from "../Icon";
 
 const GENERATE_IMAGE_MUTATION = gql`
   mutation GenerateImage(
@@ -17,89 +22,123 @@ const GENERATE_IMAGE_MUTATION = gql`
         prompt: $prompt
       }
     ) {
-      id
-      name
-      size
-      url
-      mimetype
+      image {
+        id
+        name
+        url
+        mimetype
+      }
+      errors {
+        message
+      }
     }
   }
 `;
 
-function GenerateImage({ close }) {
+const MAX_PROMPT_LENGTH = 400;
+
+const VALIDATION_SCHEMA = Yup.object().shape({
+  prompt: Yup.string()
+    .required("Prompt is required")
+    .max(MAX_PROMPT_LENGTH, "Prompt must be less than 400 characters"),
+});
+
+function GenerateImage({ close, useImage }) {
   const [runGenerateImage] = useMutationAndRefetch(GENERATE_IMAGE_MUTATION);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [promptSize, setPromptSize] = useState(0);
 
+  const initialValues = {
+    prompt: "",
+  };
+
   const generateImage = async ({ prompt }) => {
-    const { data } = await runGenerateImage({
-      variables: {
-        prompt,
-      },
-    });
+    const { data } = await runGenerateImage({ variables: { prompt }});
 
-    console.log("data", data);
-
-    if (data && data.generateImage) {
-      setPreviewUrl(data.generateImage.url);
+    if (data.generateImage.errors) {
+      data.generateImage.errors.forEach((error) => {
+        toast.error(error.message, { autoClose: false });
+      });
+    } else {
+      toast.success("Image generated!");
+      setPreviewUrl(data.generateImage.image.url);
     }
+  };
 
-    // if (close) close();
+  const use = () => {
+    close();
+    if (useImage) useImage(previewUrl);
   };
 
   return (
     <Formik
-      initialValues={{
-        prompt: "",
-      }}
+      initialValues={initialValues}
       onSubmit={generateImage}
+      validationSchema={VALIDATION_SCHEMA}
     >
-      {({ isSubmitting, setFieldValue }) => (
-        <Form className="sml-flex sml-flex-col sml-space-y-4 sml-border-b sml-mb-4 sml-bg-gray-200 sml-p-4 sml-absolute sml-w-full sml-z-50 sml-top-36 sml-shadow-lg sml-w-full">
-          <div className="sml-flex sml-flex-row sml-space-x-2">
-            <Field
-              name="prompt"
-              placeholder="Prompt"
-              maxLength="400"
-              onChange={(e) => { setPromptSize(e.target.value.length); setFieldValue("prompt", e.target.value); }}
-              className="sml-w-1/2 sml-border-solid sml-bg-gray-50 sml-border sml-border-gray-300 sml-text-gray-900 sml-text-sm sml-rounded-lg sml-focus:ring-spillover-color2 sml-focus:border-spillover-color2 sml-block sml-p-2"
-            />
+      {({ isSubmitting, setFieldValue, submitForm }) => (
+        <div className="sml-flex sml-flex-col sml-gap-4">
+          <Form className="sml-w-full sml-flex sml-flex-row sml-gap-2">
+            {/* Input and validation */}
+            <div className="sml-flex sml-grow sml-flex-col sml-gap-1">
+              <div className="sml-grow">
+                <TextInput
+                  name="prompt"
+                  placeholder="Describe your image..."
+                  maxLength={MAX_PROMPT_LENGTH}
+                  onChange={(e) => { setPromptSize(e.target.value.length); setFieldValue("prompt", e.target.value); }}
+                />
+              </div>
 
-            <button
-              className="sml-bg-spillover-color2 sml-px-3 sml-py-1 sml-text-xs sml-md:text-sm sml-text-white sml-rounded-2xl sml-border-none"
-              type="submit"
-              disabled={isSubmitting}
-            >
-              {isSubmitting && <LoadingSpinner />}
-              Generate
-            </button>
+              <div className="sml-flex sml-shrink sml-flex-row sml-text-xs">
+                <div className="sml-grow sml-text-red-500">
+                  <ErrorMessage name="prompt" />
+                </div>
 
-            <button
-              className="sml-bg-spillover-color3 sml-px-3 sml-py-1 sml-text-xs sml-md:text-sm sml-text-black sml-rounded-2xl sml-border-none"
-              type="button"
-              disabled={isSubmitting}
-              onClick={() => close()}
-            >
-              Cancel
-            </button>
-          </div>
+                <div className="sml-shrink sml-text-gray-500">
+                  {promptSize}/{MAX_PROMPT_LENGTH}
+                </div>
+              </div>
+            </div>
 
-          <div className="sml-text-xs">
-            {promptSize}/400
-          </div>
+            {/* Buttons */}
+            <div className="sml-flex sml-shrink sml-flex-row sml-gap-2">
+              <PrimaryButton disabled={isSubmitting}>
+                <Icon name="magic-wand-sparkles" iconStyle="fa-solid" className={`sml-mr-1 ${isSubmitting && "fa-shake"}`} />
+                Generate
+              </PrimaryButton>
 
-          <div className="sml-flex sml-flex-row">
-            {previewUrl && (
-              <a
-                href={previewUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <img src={previewUrl} alt="Generated Image" />
-              </a>
-            )}
-          </div>
-        </Form>
+              {close && (
+                <SecondaryButton onClick={close}>
+                  Close
+                </SecondaryButton>
+              )}
+            </div>
+          </Form>
+
+          {/* Preview */}
+          {previewUrl && (
+            <div className="sml-w-full sml-flex sml-flex-col sml-gap-4 sml-items-center">
+              <div>
+                <a href={previewUrl} target="_blank" rel="noreferrer" title="Open image in new tab">
+                  <img src={previewUrl} alt="Generated image" className="sml-max-w-full sml-max-h-96" />
+                </a>
+              </div>
+
+              <div className="sml-flex sml-flex-row sml-gap-2">
+                <PrimaryButton onClick={use}>
+                  <Icon name="circle-check" iconStyle="fa-solid" className="sml-mr-1" />
+                  Use this image
+                </PrimaryButton>
+
+                <SecondaryButton onClick={submitForm} disabled={isSubmitting}>
+                  <Icon name="rotate-right" iconStyle="fa-solid" className={`sml-mr-1 ${isSubmitting && "fa-spin"}`} />
+                  Generate another
+                </SecondaryButton>
+              </div>
+            </div>
+          )}
+        </div>
       )}
     </Formik>
   );

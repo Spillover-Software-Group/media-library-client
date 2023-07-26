@@ -74,7 +74,11 @@ function MediaBrowser() {
       <FileToolbar />
 
       {enableNewFolder && showNewFolderPrompt && <NewFolderPrompt close={closeNewFolderPrompt} />}
-      {showGenerateImage && <GenerateImage close={closeGenerateImage} />}
+      {showGenerateImage && (
+        <div className="sml-p-2 sml-border-b" style={{marginRight: "-8px", marginLeft: "-8px"}}>
+          <GenerateImage close={closeGenerateImage} />
+        </div>
+      )}
 
       {enableUpload ? (
         <UploadArea ref={uploadAreaRef}>
