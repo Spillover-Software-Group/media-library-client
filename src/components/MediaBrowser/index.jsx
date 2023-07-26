@@ -16,20 +16,24 @@ import useFolder from "../../hooks/useFolder";
 import useFileActions from "../../hooks/useFileActions";
 import useCurrentMediaBrowser from "../../hooks/useCurrentMediaBrowser";
 import useCurrentFolderId from "../../hooks/useCurrentFolderId";
+import useOptions from "../../hooks/useOptions";
 import Loading from "../Loading";
 
 function MediaBrowser() {
   const uploadAreaRef = useRef();
   const [showNewFolderPrompt, setShowNewFolderPrompt] = useState(false);
   const [showGenerateImage, setShowGenerateImage] = useState(false);
-  const [mediaBrowser] = useCurrentMediaBrowser();
   const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
   const [showLoading, setShowLoading] = useState(false);
+
+  const [mediaBrowser] = useCurrentMediaBrowser();
+  const { handleSelected } = useOptions();
 
   const openNewFolderPrompt = () => setShowNewFolderPrompt(true);
   const closeNewFolderPrompt = () => setShowNewFolderPrompt(false);
   const openGenerateImage = () => setShowGenerateImage(true);
   const closeGenerateImage = () => setShowGenerateImage(false);
+  const useImage = (image) => handleSelected([image]);
 
   const { folderId, files, folderChain, loading } = useFolder();
 
@@ -76,7 +80,7 @@ function MediaBrowser() {
       {enableNewFolder && showNewFolderPrompt && <NewFolderPrompt close={closeNewFolderPrompt} />}
       {showGenerateImage && (
         <div className="sml-p-2 sml-border-b" style={{marginRight: "-8px", marginLeft: "-8px"}}>
-          <GenerateImage close={closeGenerateImage} />
+          <GenerateImage close={closeGenerateImage} useImage={useImage} />
         </div>
       )}
 

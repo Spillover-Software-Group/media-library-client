@@ -45,7 +45,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 
 function GenerateImage({ close, useImage }) {
   const [runGenerateImage] = useMutationAndRefetch(GENERATE_IMAGE_MUTATION);
-  const [previewUrl, setPreviewUrl] = useState(null);
+  const [image, setImage] = useState(null);
   const [promptSize, setPromptSize] = useState(0);
 
   const initialValues = {
@@ -61,13 +61,13 @@ function GenerateImage({ close, useImage }) {
       });
     } else {
       toast.success("Image generated!");
-      setPreviewUrl(data.generateImage.image.url);
+      setImage(data.generateImage.image);
     }
   };
 
   const use = () => {
+    if (useImage) useImage(image);
     close();
-    if (useImage) useImage(previewUrl);
   };
 
   return (
@@ -117,11 +117,11 @@ function GenerateImage({ close, useImage }) {
           </Form>
 
           {/* Preview */}
-          {previewUrl && (
+          {image && (
             <div className="sml-w-full sml-flex sml-flex-col sml-gap-4 sml-items-center">
               <div>
-                <a href={previewUrl} target="_blank" rel="noreferrer" title="Open image in new tab">
-                  <img src={previewUrl} alt="Generated image" className="sml-max-w-full sml-max-h-96" />
+                <a href={image.url} target="_blank" rel="noreferrer" title="Open image in new tab">
+                  <img src={image.url} alt="Generated image" className="sml-max-w-full sml-max-h-96" />
                 </a>
               </div>
 
