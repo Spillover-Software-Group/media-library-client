@@ -7,6 +7,7 @@ import useUnfavoriteFilesAction from "./useUnfavoriteFilesAction";
 import useMoveFilesAction from "./useMoveFilesAction";
 import useOpenFilesAction from "./useOpenFilesAction";
 import useRestoreFilesAction from "./useRestoreFilesAction";
+import useChangeSelectionFilesAction from "./useChangeSelectionFilesAction";
 import useOptions from "./useOptions";
 import config from "../config";
 import useCurrentAccountId from "./useCurrentAccountId";
@@ -108,6 +109,7 @@ function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, openGenera
     [favoriteFilesAction.id]: useFavoriteFilesAction(),
     [unfavoriteFilesAction.id]: useUnfavoriteFilesAction(),
     [restoreFilesAction.id]: useRestoreFilesAction(),
+    [ChonkyActions.ChangeSelection.id]: useChangeSelectionFilesAction(),
     [openGenerateImageAction.id]: openGenerateImage,
   };
 

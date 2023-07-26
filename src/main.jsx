@@ -78,6 +78,7 @@ function MediaLibrary({
   maxSelectableSize,
   maxSelectableFiles,
   autoSelect,
+  selectOnSingleClick,
   marketType,
   icons = {},
 }) {
@@ -106,6 +107,7 @@ function MediaLibrary({
     maxSelectableFiles,
     icons,
     autoSelect,
+    selectOnSingleClick,
     marketType,
   };
 
