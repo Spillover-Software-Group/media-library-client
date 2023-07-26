@@ -11,9 +11,27 @@ import "./css/style.css";
 import config from "./config";
 import cache, { marketTypeVar } from "./cache";
 import MediaLibraryContainer from "./components/MediaLibraryContainer";
+import Icon from "./components/Icon";
+import GenerateImage from "./components/MediaBrowser/GenerateImage";
 import { OptionsProvider } from "./hooks/useOptions";
 
-setChonkyDefaults({ iconComponent: ChonkyIconFA });
+// SEE: https://chonky.io/docs/2.x/basics/icons#defining-a-custom-icon-component
+const iconMap = {
+  generateImage: { name: "magic-wand-sparkles", iconStyle: "fa-solid" },
+  favorite: { name: "heart", iconStyle: "fa-solid" },
+  unfavorite: { name: "heart", iconStyle: "fa-regular" },
+  restore: { name: "trash-arrow-up", iconStyle: "fa-solid" },
+};
+
+function IconComponent(props) {
+  const icon = iconMap[props.icon];
+
+  if (icon) return <Icon {...icon} />;
+
+  return <ChonkyIconFA {...props} />;
+}
+
+setChonkyDefaults({ iconComponent: IconComponent });
 
 async function setupClient({ mode, engageToken, spilloverToken, senalysisToken }) {
   const uri = mode === "development" ? config.graphqlDevEndpoint : config.graphqlEndpoint;
@@ -103,3 +121,4 @@ function MediaLibrary({
 }
 
 export default MediaLibrary;
+export { GenerateImage };
