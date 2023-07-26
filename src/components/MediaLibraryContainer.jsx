@@ -1,14 +1,31 @@
 import { ToastContainer } from "react-toastify";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { setChonkyDefaults } from "chonky";
+import { ChonkyIconFA } from "chonky-icon-fontawesome";
 
 import AccountSwitcher from "./AccountSwitcher";
 import Sidebar from "./Sidebar";
 import MediaBrowser from "./MediaBrowser";
+import useOptions from "../hooks/useOptions";
+import Icon from "./Icon";
 
 import "react-toastify/dist/ReactToastify.min.css";
 
 function MediaLibraryContainer() {
+  const { icons } = useOptions();
+
+  // SEE: https://chonky.io/docs/2.x/basics/icons#defining-a-custom-icon-component
+  const IconComponent = (props) => {
+    // If we have a custom icon, use it.
+    const icon = icons[props.icon];
+    if (icon) return <Icon name={props.icon} />;
+
+    return <ChonkyIconFA {...props} />;
+  }
+
+  setChonkyDefaults({ iconComponent: IconComponent });
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="spillover-media-library sml-flex sml-h-full sml-justify-center sml-items-center">

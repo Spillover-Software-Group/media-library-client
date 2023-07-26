@@ -41,6 +41,29 @@ function OptionsProvider({ children, options = {} }) {
     return true;
   };
 
+  options.isProd = options.mode === "production";
+  options.isDev = !options.isProd;
+
+  options.icons = {
+    // Media browser icons.
+    account: "fa-solid fa-house",
+    global: "fa-solid fa-globe",
+    favorites: "fa-solid fa-heart",
+    deleted: "fa-solid fa-trash",
+
+    // Other icons.
+    loading: "fa-solid fa-circle-notch fa-spin fa-2x sml-text-gray-400",
+    generateImage: "fa-solid fa-magic-wand-sparkles",
+    confirm: "fa-solid fa-circle-check",
+    reload: "fa-solid fa-rotate-right",
+    favorite: "fa-solid fa-heart",
+    unfavorite: "fa-regular fa-heart",
+    restore: "fa-solid fa-trash-arrow-up",
+
+    // Custom overrides.
+    ...options.icons,
+  };
+
   return <context.Provider value={options}>{children}</context.Provider>;
 }
 

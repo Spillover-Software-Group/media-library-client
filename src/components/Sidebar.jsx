@@ -2,34 +2,28 @@ import Select from "react-select";
 
 import useCurrentMediaBrowser from "../hooks/useCurrentMediaBrowser";
 import useCurrentFolderId from "../hooks/useCurrentFolderId";
-import useOptions from "../hooks/useOptions";
 import Icon from "./Icon";
 
 const mediaBrowsers = [
   {
     key: "account",
     name: "My Media",
-    icon: "home",
   },
   {
     key: "global",
     name: "Spillover Stock",
-    icon: "globe",
   },
   {
     key: "favorites",
     name: "Favorites",
-    icon: "heart",
   },
   {
     key: "deleted",
     name: "Deleted",
-    icon: "trash",
   },
 ];
 
 function Sidebar() {
-  const { icons } = useOptions();
   const [currentBrowser, setCurrentBrowser] = useCurrentMediaBrowser();
   const [, setCurrentFolderId] = useCurrentFolderId();
 
@@ -50,8 +44,7 @@ function Sidebar() {
           getOptionLabel={(option) => (
             <span>
               <Icon
-                name={option.icon}
-                iconStyle="fas"
+                name={option.key}
                 className="sml-browser-icon sml-mr-2 sml-text-xl"
               />
               {option.name}
@@ -73,15 +66,7 @@ function Sidebar() {
                 } sml-py-1 sml-px-4 sml-text-sm sml-flex sml-justify-between sml-items-center sml-cursor-pointer hover:sml-bg-gray-200 sml-media-browser-name`}
               >
                 <div className="sml-flex sml-items-center w-full">
-                  {icons[browser.key] ? (
-                    <i className={`sml-browser-icon sml-mr-2 sml-text-xl ${icons[browser.key]}`} />
-                  ) : (
-                    <Icon
-                      name={browser.icon}
-                      iconStyle="fas"
-                      className="sml-browser-icon sml-mr-2 sml-text-xl"
-                    />
-                  )}
+                  <Icon name={browser.key} className="sml-browser-icon sml-mr-2 sml-text-xl" />
                   <span>{browser.name}</span>
                 </div>
               </div>

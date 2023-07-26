@@ -104,7 +104,7 @@ function GenerateImage({ close, useImage }) {
             {/* Buttons */}
             <div className="sml-flex sml-shrink sml-flex-row sml-gap-2">
               <PrimaryButton disabled={isSubmitting}>
-                <Icon name="magic-wand-sparkles" iconStyle="fa-solid" className={`sml-mr-1 ${isSubmitting && "fa-shake"}`} />
+                <Icon name="generateImage" className={`sml-mr-1 ${isSubmitting && "fa-shake"}`} />
                 Generate
               </PrimaryButton>
 
@@ -127,12 +127,12 @@ function GenerateImage({ close, useImage }) {
 
               <div className="sml-flex sml-flex-row sml-gap-2">
                 <PrimaryButton onClick={use}>
-                  <Icon name="circle-check" iconStyle="fa-solid" className="sml-mr-1" />
+                  <Icon name="confirm" className="sml-mr-1" />
                   Use this image
                 </PrimaryButton>
 
                 <SecondaryButton onClick={submitForm} disabled={isSubmitting}>
-                  <Icon name="rotate-right" iconStyle="fa-solid" className={`sml-mr-1 ${isSubmitting && "fa-spin"}`} />
+                  <Icon name="reload" className={`sml-mr-1 ${isSubmitting && "fa-spin"}`} />
                   Generate another
                 </SecondaryButton>
               </div>

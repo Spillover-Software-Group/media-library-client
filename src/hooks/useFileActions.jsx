@@ -9,7 +9,6 @@ import useOpenFilesAction from "./useOpenFilesAction";
 import useRestoreFilesAction from "./useRestoreFilesAction";
 import useChangeSelectionFilesAction from "./useChangeSelectionFilesAction";
 import useOptions from "./useOptions";
-import config from "../config";
 import useCurrentAccountId from "./useCurrentAccountId";
 
 const favoriteFilesAction = defineFileAction({
@@ -86,10 +85,10 @@ const accountsAllowedToGenerateImage = [
   "Z2lkOi8vYXBpL0FjY291bnQvNTQ5",
 ];
 
-function actionsFor(accountId, mediaBrowser) {
+function actionsFor(accountId, mediaBrowser, isDev) {
   const actions = [...actionsByMediaBrowser[mediaBrowser]];
 
-  if (config.isDev || (accountsAllowedToGenerateImage.includes(accountId) && mediaBrowser === "account")) {
+  if (isDev || (accountsAllowedToGenerateImage.includes(accountId) && mediaBrowser === "account")) {
     actions.splice(3, 0, openGenerateImageAction);
   }
 
@@ -97,6 +96,7 @@ function actionsFor(accountId, mediaBrowser) {
 }
 
 function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, openGenerateImage }) {
+  const { isDev } = useOptions();
   const [mediaBrowser] = useCurrentMediaBrowser();
   const [currentAccountId] = useCurrentAccountId();
 
@@ -113,7 +113,7 @@ function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, openGenera
     [openGenerateImageAction.id]: openGenerateImage,
   };
 
-  const fileActions = actionsFor(currentAccountId, mediaBrowser);
+  const fileActions = actionsFor(currentAccountId, mediaBrowser, isDev);
 
   const onFileAction = (action) => {
     const actionHandler = actions[action.id];
