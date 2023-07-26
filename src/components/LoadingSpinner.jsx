@@ -1,9 +1,8 @@
-function LoadingSpinner() {
+import Icon from "./Icon";
+
+function LoadingSpinner({ size = "2xl", color = "[#a8a8a8]" }) {
   return (
-    <div
-      style={{ borderTopColor: "transparent" }}
-      className="sml-w-10 sml-h-10 sml-border-[3px] sml-border-solid sml-rounded-full sml-animate-spin"
-    ></div>
+    <Icon name="circle-notch" className={`sml-text-${color} fa-spin fa-${size}`} iconStyle="fa-solid" />
   );
 }
 

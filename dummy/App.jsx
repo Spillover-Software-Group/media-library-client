@@ -9,6 +9,7 @@ function App() {
     console.log("Selected file:", selectedFiles);
 
     for (const f of selectedFiles) {
+      window.open(f.url);
       const r = await fetch(f.url);
       console.log(await r.blob());
     }
@@ -24,11 +25,12 @@ function App() {
       <MediaLibrary
         mode="development"
         handleSelected={handleSelected}
-        engageToken="pwyOYJyE3qIGR8go-dpgTGJAbFzzzxUSmC0xQxiC9oY"
+        // engageToken="3chzVB-rNvukfRSmQgR7jYbZHrv0Ue17jZl7CCy9oZc"
+        senalysisToken={"test"}
         defaultAccountId={accountId}
         onSelectedAccountChange={onSelectedAccountChange}
         autoSelect={true}
-        marketType={"hvac"}
+        // marketType={"hvac"}
       />
     </div>
   );

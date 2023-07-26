@@ -2,6 +2,8 @@ const acceptedImageTypes = ["image/jpeg", "image/gif", "image/png"];
 const acceptedVideoTypes = ["video/mp4", "video/quicktime"];
 
 const config = {
+  isProd: import.meta.env.PROD,
+  isDev: import.meta.env.DEV,
   graphqlEndpoint: "https://media-library-api.spillover.com/graphql",
   graphqlDevEndpoint: "http://localhost:3030/graphql",
   acceptedImageTypes,
