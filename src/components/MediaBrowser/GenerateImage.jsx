@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { gql } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { Formik, Form, ErrorMessage } from "formik";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
@@ -23,15 +23,35 @@ const GENERATE_IMAGE_MUTATION = gql`
         prompt: $prompt
       }
     ) {
-      image {
-        id
-        name
-        url
-        mimetype
-      }
+      imageUrl
       errors {
         message
       }
+    }
+  }
+`;
+
+const UPLOAD_IMAGE_MUTATION = gql`
+  mutation UploadGeneratedImage(
+    $accountId: GID!
+    $prompt: String!
+    $imageUrl: String!
+  ) {
+    currentAccountId @client @export(as: "accountId")
+    uploadGeneratedImages(
+      input: {
+        accountId: $accountId,
+        images: [
+          {
+            prompt: $prompt,
+            url: $imageUrl
+          }
+        ]
+      }
+    ) {
+      id
+      name
+      url
     }
   }
 `;
@@ -45,16 +65,18 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 });
 
 function GenerateImage({ close, useImage }) {
-  const [runGenerateImage] = useMutationAndRefetch(GENERATE_IMAGE_MUTATION);
-  const [image, setImage] = useState(null);
+  const [runGenerateImage] = useMutation(GENERATE_IMAGE_MUTATION);
+  const [runUploadGeneratedImage] = useMutationAndRefetch(UPLOAD_IMAGE_MUTATION);
+  const [imageUrl, setImageUrl] = useState(null);
   const [promptSize, setPromptSize] = useState(0);
+  const [isSaving, setIsSaving] = useState(false);
 
   const initialValues = {
     prompt: "",
   };
 
   const generateImage = async ({ prompt }) => {
-    setImage(null);
+    setImageUrl(null);
 
     const { data } = await runGenerateImage({ variables: { prompt }});
 
@@ -64,13 +86,35 @@ function GenerateImage({ close, useImage }) {
       });
     } else {
       toast.success("Image generated!");
-      setImage(data.generateImage.image);
+      setImageUrl(data.generateImage.imageUrl);
     }
   };
 
-  const use = () => {
-    if (useImage) useImage(image);
-    close();
+  const save = async (prompt) => {
+    try {
+      setIsSaving(true);
+      const { data } = await runUploadGeneratedImage({ variables: { prompt, imageUrl }});
+      setIsSaving(false);
+      return data.uploadGeneratedImages[0];
+    } catch (e) {
+      setIsSaving(false);
+      toast.error("Failed to save image", { autoClose: false });
+      return false;
+    }
+  };
+
+  const saveAndUse = async (prompt) => {
+    const image = await save(prompt);
+
+    if (useImage && image) {
+      useImage(image);
+      if (close) close();
+    }
+  };
+
+  const saveAndResubmit = async (prompt, submitForm) => {
+    const image = await save(prompt);
+    if (image) submitForm();
   };
 
   return (
@@ -79,7 +123,7 @@ function GenerateImage({ close, useImage }) {
       onSubmit={generateImage}
       validationSchema={VALIDATION_SCHEMA}
     >
-      {({ isSubmitting, setFieldValue, submitForm }) => (
+      {({ isSubmitting, setFieldValue, submitForm, values }) => (
         <div className="sml-flex sml-flex-col sml-gap-4">
           <Form className="sml-w-full sml-flex sml-flex-row sml-gap-2">
             {/* Input and validation */}
@@ -89,6 +133,7 @@ function GenerateImage({ close, useImage }) {
                   name="prompt"
                   placeholder="Describe your image..."
                   maxLength={MAX_PROMPT_LENGTH}
+                  disabled={isSubmitting || isSaving}
                   onChange={(e) => { setPromptSize(e.target.value.length); setFieldValue("prompt", e.target.value); }}
                 />
               </div>
@@ -121,31 +166,38 @@ function GenerateImage({ close, useImage }) {
 
           {/* Preview */}
           <div className="sml-w-full sml-flex sml-flex-col sml-gap-4 sml-items-center">
-            {image && (
+            {imageUrl && (
               <>
                 <div>
-                  <a href={image.url} target="_blank" rel="noreferrer" title="Open image in new tab">
-                    <img src={image.url} alt="Generated image" className="sml-max-w-full sml-max-h-96" />
+                  <a href={imageUrl} target="_blank" rel="noreferrer" title="Open image in new tab">
+                    <img src={imageUrl} alt="Generated image" className="sml-max-w-full sml-max-h-96" />
                   </a>
                 </div>
 
                 <div className="sml-flex sml-flex-row sml-gap-2">
-                  <PrimaryButton onClick={use}>
+                  <PrimaryButton disabled={isSubmitting || isSaving} onClick={() => saveAndUse(values.prompt)}>
                     <Icon name="confirm" className="sml-mr-1" />
                     Use this image
                   </PrimaryButton>
 
-                  <SecondaryButton onClick={submitForm} disabled={isSubmitting}>
+                  <SecondaryButton disabled={isSubmitting || isSaving} onClick={() => saveAndResubmit(values.prompt, submitForm)}>
+                    <Icon name="save" className="sml-mr-1" />
+                    Save and generate another
+                  </SecondaryButton>
+
+                  <SecondaryButton onClick={submitForm} disabled={isSubmitting || isSaving}>
                     <Icon name="reload" className={`sml-mr-1 ${isSubmitting && "fa-spin"}`} />
-                    Generate another
+                    Discard and generate another
                   </SecondaryButton>
                 </div>
               </>
             )}
 
-            {isSubmitting && (
+            {(isSubmitting || isSaving) && (
               <>
-                <div className="sml-text-gray-500">Generating image...</div>
+                <div className="sml-text-gray-500">
+                  {isSaving ? "Saving image..." : "Generating image..."}
+                </div>
                 <LoadingSpinner />
               </>
             )}

@@ -1,4 +1,3 @@
-import { ToastContainer } from "react-toastify";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { setChonkyDefaults } from "chonky";
@@ -47,8 +46,6 @@ function MediaLibraryContainer() {
               </div>
             </div>
           </div>
-
-          <ToastContainer position="bottom-right" autoClose={2500} />
         </div>
       </div>
     </DndProvider>

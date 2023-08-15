@@ -47,16 +47,18 @@ function AccountSwitcher() {
   const currentAccount = accounts.find((a) => a.id === currentAccountId);
 
   return (
-    <Select
-      className="sml-business-select sml-w-1/2"
-      classNamePrefix="sml-business-select-options"
-      isLoading={loading}
-      options={accounts}
-      value={currentAccount}
-      getOptionValue={(option) => option.id}
-      getOptionLabel={(option) => option.name}
-      onChange={(option) => changeAccount(option)}
-    />
+    accounts.length > 1 && (
+      <Select
+        className="sml-business-select sml-w-1/2"
+        classNamePrefix="sml-business-select-options"
+        isLoading={loading}
+        options={accounts}
+        value={currentAccount}
+        getOptionValue={(option) => option.id}
+        getOptionLabel={(option) => option.name}
+        onChange={(option) => changeAccount(option)}
+      />
+    )
   );
 }
 

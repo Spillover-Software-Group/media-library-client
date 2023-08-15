@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import MediaLibrary from "../src/main";
+import GenerateImageStandalone from "../src/components/GenerateImageStandalone";
 
 function App() {
   const [accountId, setAccountId] = useState(null);
@@ -21,7 +22,21 @@ function App() {
   };
 
   return (
-    <div className="wrapper">
+    <div className="wrapper sml-p-4">
+      <GenerateImageStandalone
+        mode="development"
+        handleSelected={handleSelected}
+        // engageToken="3chzVB-rNvukfRSmQgR7jYbZHrv0Ue17jZl7CCy9oZc"
+        senalysisToken={"test"}
+        defaultAccountId={accountId}
+        onSelectedAccountChange={onSelectedAccountChange}
+        autoSelect={true}
+        // marketType={"hvac"}
+      />
+
+      <hr />
+      <br />
+
       <MediaLibrary
         mode="development"
         handleSelected={handleSelected}

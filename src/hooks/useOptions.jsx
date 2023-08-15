@@ -56,6 +56,7 @@ function OptionsProvider({ children, options = {} }) {
     generateImage: "fa-solid fa-magic-wand-sparkles",
     confirm: "fa-solid fa-circle-check",
     reload: "fa-solid fa-rotate-right",
+    save: "fa-solid fa-floppy-disk",
     favorite: "fa-solid fa-heart",
     unfavorite: "fa-regular fa-heart",
     restore: "fa-solid fa-trash-arrow-up",
