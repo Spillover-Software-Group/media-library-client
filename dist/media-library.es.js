@@ -45952,10 +45952,10 @@ function QO({
   ] }) });
 }
 function iee(e) {
-  const { handleSelected: t } = e, r = (n) => t([n]);
+  const { handleSelected: t, showAccountSelector: r } = e, n = (i) => t([i]);
   return /* @__PURE__ */ K.jsx(QO, { ...e, children: /* @__PURE__ */ K.jsxs("div", { className: "spillover-media-library sml-flex sml-flex-col sml-gap-4", children: [
-    showAccountSelector && /* @__PURE__ */ K.jsx(QT, {}),
-    /* @__PURE__ */ K.jsx(HO, { useImage: r })
+    r && /* @__PURE__ */ K.jsx(QT, {}),
+    /* @__PURE__ */ K.jsx(HO, { useImage: n })
   ] }) });
 }
 function aee(e) {
