@@ -41462,25 +41462,25 @@ const KU = Dt`
   }
 `;
 function QT() {
-  var d;
-  const { onSelectedAccountChange: e, defaultAccountId: t } = _n(), [r, n] = Vm(), [, i] = eo(), [, a] = lc(), { loading: o, data: s } = aT(KU), u = ((d = s == null ? void 0 : s.currentUser) == null ? void 0 : d.accounts) || [], l = u.find((v) => v.id === t), c = (v) => {
-    v != null && v.id && (i("account"), n(v.id), a(v.rootFolderId), e && e(v.id));
+  var v;
+  const { showAccountSelector: e, onSelectedAccountChange: t, defaultAccountId: r } = _n(), [n, i] = Vm(), [, a] = eo(), [, o] = lc(), { loading: s, data: u } = aT(KU), l = ((v = u == null ? void 0 : u.currentUser) == null ? void 0 : v.accounts) || [], c = l.find((m) => m.id === r), f = (m) => {
+    m != null && m.id && (a("account"), i(m.id), o(m.rootFolderId), t && t(m.id));
   };
   Fe(() => {
-    r || c(l || u[0]);
-  }, [u, l]);
-  const f = u.find((v) => v.id === r);
-  return u.length > 1 && /* @__PURE__ */ K.jsx(
+    n || f(c || l[0]);
+  }, [l, c]);
+  const d = l.find((m) => m.id === n);
+  return e && l.length > 1 && /* @__PURE__ */ K.jsx(
     ZT,
     {
       className: "sml-business-select sml-w-1/2",
       classNamePrefix: "sml-business-select-options",
-      isLoading: o,
-      options: u,
-      value: f,
-      getOptionValue: (v) => v.id,
-      getOptionLabel: (v) => v.name,
-      onChange: (v) => c(v)
+      isLoading: s,
+      options: l,
+      value: d,
+      getOptionValue: (m) => m.id,
+      getOptionLabel: (m) => m.name,
+      onChange: (m) => f(m)
     }
   );
 }
@@ -45696,11 +45696,11 @@ function AK() {
   );
 }
 function DK() {
-  const { icons: e, showAccountSelector: t } = _n();
-  return RL({ iconComponent: (n) => e[n.icon] ? /* @__PURE__ */ K.jsx(Zn, { name: n.icon }) : /* @__PURE__ */ K.jsx(Jj, { ...n }) }), /* @__PURE__ */ K.jsx(Ap, { backend: DE, children: /* @__PURE__ */ K.jsx("div", { className: "spillover-media-library sml-flex sml-h-full sml-justify-center sml-items-center", children: /* @__PURE__ */ K.jsx("div", { className: "sml-w-full sml-h-full sml-flex", children: /* @__PURE__ */ K.jsxs("div", { className: "sml-w-full sml-h-full", children: [
+  const { icons: e } = _n();
+  return RL({ iconComponent: (r) => e[r.icon] ? /* @__PURE__ */ K.jsx(Zn, { name: r.icon }) : /* @__PURE__ */ K.jsx(Jj, { ...r }) }), /* @__PURE__ */ K.jsx(Ap, { backend: DE, children: /* @__PURE__ */ K.jsx("div", { className: "spillover-media-library sml-flex sml-h-full sml-justify-center sml-items-center", children: /* @__PURE__ */ K.jsx("div", { className: "sml-w-full sml-h-full sml-flex", children: /* @__PURE__ */ K.jsxs("div", { className: "sml-w-full sml-h-full", children: [
     /* @__PURE__ */ K.jsx("div", { className: "sml-flex sml-bg-gray-50 sml-flex-col sml-items-center sml-pb-0.5 sml-border-b sml-border-spillover-color3", children: /* @__PURE__ */ K.jsxs("div", { className: "sml-flex sml-justify-evenly sml-py-2 sml-flex-col sm:sml-flex-row sml-w-full sml-items-center", children: [
       /* @__PURE__ */ K.jsx("div", { className: "sml-font-bold sml-flex sml-items-center sml-text-spillover-color2", children: /* @__PURE__ */ K.jsx("span", { className: "sml-title sml-ml-4 sml-uppercase", children: "Media Library" }) }),
-      t && /* @__PURE__ */ K.jsx(QT, {})
+      /* @__PURE__ */ K.jsx(QT, {})
     ] }) }),
     /* @__PURE__ */ K.jsxs("div", { className: "sml-h-[calc(100%_-_4rem)] sml-flex sml-flex-col sm:sml-flex-row", children: [
       /* @__PURE__ */ K.jsx(eX, {}),
@@ -45952,10 +45952,10 @@ function QO({
   ] }) });
 }
 function iee(e) {
-  const { handleSelected: t, showAccountSelector: r } = e, n = (i) => t([i]);
+  const { handleSelected: t } = e, r = (n) => t([n]);
   return /* @__PURE__ */ K.jsx(QO, { ...e, children: /* @__PURE__ */ K.jsxs("div", { className: "spillover-media-library sml-flex sml-flex-col sml-gap-4", children: [
-    r && /* @__PURE__ */ K.jsx(QT, {}),
-    /* @__PURE__ */ K.jsx(HO, { useImage: n })
+    /* @__PURE__ */ K.jsx(QT, {}),
+    /* @__PURE__ */ K.jsx(HO, { useImage: r })
   ] }) });
 }
 function aee(e) {

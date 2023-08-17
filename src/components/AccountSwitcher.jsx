@@ -22,7 +22,7 @@ const QUERY = gql`
 `;
 
 function AccountSwitcher() {
-  const { onSelectedAccountChange, defaultAccountId } = useOptions();
+  const { showAccountSelector, onSelectedAccountChange, defaultAccountId } = useOptions();
   const [currentAccountId, setCurrentAccountId] = useCurrentAccountId();
   const [, setCurrentBrowser] = useCurrentMediaBrowser();
   const [, setCurrentFolderId] = useCurrentFolderId();
@@ -47,7 +47,7 @@ function AccountSwitcher() {
   const currentAccount = accounts.find((a) => a.id === currentAccountId);
 
   return (
-    accounts.length > 1 && (
+    (showAccountSelector && accounts.length > 1) && (
       <Select
         className="sml-business-select sml-w-1/2"
         classNamePrefix="sml-business-select-options"
