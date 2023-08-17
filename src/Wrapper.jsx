@@ -59,6 +59,7 @@ function Wrapper({
   autoSelect,
   selectOnSingleClick,
   marketType,
+  showAccountSelector,
   icons = {},
 }) {
   const [client, setClient] = useState();
@@ -90,6 +91,7 @@ function Wrapper({
     selectOnSingleClick,
     marketType,
     mode,
+    showAccountSelector: showAccountSelector ?? true,
   };
 
   return (

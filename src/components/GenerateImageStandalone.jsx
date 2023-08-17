@@ -10,7 +10,7 @@ function GenerateImageStandalone(props) {
   return (
     <Wrapper {...props}>
       <div className="spillover-media-library sml-flex sml-flex-col sml-gap-4">
-        <AccountSwitcher />
+        {showAccountSelector && <AccountSwitcher />}
         <GenerateImage useImage={useImage} />
       </div>
     </Wrapper>

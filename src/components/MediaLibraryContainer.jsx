@@ -12,7 +12,7 @@ import Icon from "./Icon";
 import "react-toastify/dist/ReactToastify.min.css";
 
 function MediaLibraryContainer() {
-  const { icons } = useOptions();
+  const { icons, showAccountSelector } = useOptions();
 
   // SEE: https://chonky.io/docs/2.x/basics/icons#defining-a-custom-icon-component
   const IconComponent = (props) => {
@@ -35,7 +35,7 @@ function MediaLibraryContainer() {
                 <div className="sml-font-bold sml-flex sml-items-center sml-text-spillover-color2">
                   <span className="sml-title sml-ml-4 sml-uppercase">Media Library</span>
                 </div>
-                <AccountSwitcher />
+                {showAccountSelector && <AccountSwitcher />}
               </div>
             </div>
 
