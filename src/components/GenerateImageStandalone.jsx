@@ -3,7 +3,7 @@ import AccountSwitcher from "./AccountSwitcher";
 import GenerateImage from "./MediaBrowser/GenerateImage";
 
 function GenerateImageStandalone(props) {
-  const { handleSelected } = props;
+  const { handleSelected, showAccountSelector } = props;
 
   const useImage = (image) => handleSelected([image]);
 
