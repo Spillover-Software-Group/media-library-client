@@ -8,8 +8,6 @@ import useMoveFilesAction from "./useMoveFilesAction";
 import useOpenFilesAction from "./useOpenFilesAction";
 import useRestoreFilesAction from "./useRestoreFilesAction";
 import useChangeSelectionFilesAction from "./useChangeSelectionFilesAction";
-import useOptions from "./useOptions";
-import useCurrentAccountId from "./useCurrentAccountId";
 
 const favoriteFilesAction = defineFileAction({
   id: "favorite-files",
@@ -61,7 +59,7 @@ const actionsByMediaBrowser = {
     ChonkyActions.OpenFiles,
     ChonkyActions.CreateFolder,
     ChonkyActions.UploadFiles,
-    // openGenerateImageAction,
+    openGenerateImageAction,
     ChonkyActions.DeleteFiles,
     ChonkyActions.MoveFiles,
     favoriteFilesAction,
@@ -78,27 +76,8 @@ const actionsByMediaBrowser = {
   ],
 };
 
-// Only Murdoch's for now.
-const accountsAllowedToGenerateImage = [
-  "Z2lkOi8vYXBpL0FjY291bnQvMTc3",
-  "Z2lkOi8vYXBpL0FjY291bnQvNTQ4",
-  "Z2lkOi8vYXBpL0FjY291bnQvNTQ5",
-];
-
-function actionsFor(accountId, mediaBrowser, isDev) {
-  const actions = [...actionsByMediaBrowser[mediaBrowser]];
-
-  if (mediaBrowser === "account" && (isDev || accountsAllowedToGenerateImage.includes(accountId))) {
-    actions.splice(3, 0, openGenerateImageAction);
-  }
-
-  return actions;
-}
-
 function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, openGenerateImage }) {
-  const { isDev } = useOptions();
   const [mediaBrowser] = useCurrentMediaBrowser();
-  const [currentAccountId] = useCurrentAccountId();
 
   let actions = {
     [ChonkyActions.OpenFiles.id]: useOpenFilesAction(),
@@ -113,7 +92,7 @@ function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, openGenera
     [openGenerateImageAction.id]: openGenerateImage,
   };
 
-  const fileActions = actionsFor(currentAccountId, mediaBrowser, isDev);
+  const fileActions = actionsByMediaBrowser[mediaBrowser];
 
   const onFileAction = (action) => {
     const actionHandler = actions[action.id];
