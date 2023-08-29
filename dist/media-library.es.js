@@ -41475,7 +41475,7 @@ function QT() {
     y != null && y.id && (s("account"), o(y.id), u(y.rootFolderId), t && t(y.id));
   };
   Fe(() => {
-    a || v(d || f[0]);
+    v(d || f[0]);
   }, [f, d, n, i]);
   const m = f.find((y) => y.id === a);
   return e && f.length > 1 && /* @__PURE__ */ K.jsx(
