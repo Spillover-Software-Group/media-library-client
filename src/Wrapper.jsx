@@ -53,6 +53,8 @@ function Wrapper({
   senalysisToken,
   onSelectedAccountChange,
   defaultAccountId,
+  engageLocationId,
+  senalysisBusinessId,
   selectableFileTypes,
   maxSelectableSize,
   maxSelectableFiles,
@@ -77,12 +79,13 @@ function Wrapper({
   }
 
   marketTypeVar(marketType);
-  // currentFolderIdVar(defaultAccountId);
 
   const options = {
     handleSelected,
     onSelectedAccountChange,
     defaultAccountId,
+    engageLocationId,
+    senalysisBusinessId,
     selectableFileTypes,
     maxSelectableSize,
     maxSelectableFiles,

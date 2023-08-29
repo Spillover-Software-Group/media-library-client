@@ -14,6 +14,8 @@ const QUERY = gql`
       role
       accounts {
         id
+        engageLocationId
+        senalysisBusinessId
         name
         rootFolderId
       }
@@ -22,7 +24,14 @@ const QUERY = gql`
 `;
 
 function AccountSwitcher() {
-  const { showAccountSelector, onSelectedAccountChange, defaultAccountId } = useOptions();
+  const {
+    showAccountSelector,
+    onSelectedAccountChange,
+    defaultAccountId,
+    engageLocationId,
+    senalysisBusinessId
+  } = useOptions();
+
   const [currentAccountId, setCurrentAccountId] = useCurrentAccountId();
   const [, setCurrentBrowser] = useCurrentMediaBrowser();
   const [, setCurrentFolderId] = useCurrentFolderId();
@@ -30,7 +39,15 @@ function AccountSwitcher() {
 
   const accounts = data?.currentUser?.accounts || [];
 
-  const defaultAccount = accounts.find((a) => a.id === defaultAccountId);
+  const defaultAccount = accounts.find((a) => {
+    if (engageLocationId) {
+      return a.engageLocationId === engageLocationId;
+    } else if (senalysisBusinessId) {
+      return a.senalysisBusinessId === senalysisBusinessId;
+    } else {
+      return a.id === defaultAccountId;
+    }
+  });
 
   const changeAccount = (newAccount) => {
     if (!newAccount?.id) return;
