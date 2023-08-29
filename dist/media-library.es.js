@@ -45173,7 +45173,10 @@ function HO({ close: e, useImage: t }) {
     a(null);
     const { data: y } = await r({ variables: { prompt: p } });
     y.generateImage.errors ? y.generateImage.errors.forEach((h) => {
-      dt.error(h.message, { autoClose: !1 });
+      dt.error(() => (
+        // So links in the error message are clickable.
+        /* @__PURE__ */ K.jsx("div", { dangerouslySetInnerHTML: { __html: h.message } })
+      ), { autoClose: !1, closeOnClick: !1 });
     }) : (dt.success("Image generated!"), a(y.generateImage.imageUrl));
   }, d = async (p) => {
     try {

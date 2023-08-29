@@ -82,7 +82,10 @@ function GenerateImage({ close, useImage }) {
 
     if (data.generateImage.errors) {
       data.generateImage.errors.forEach((error) => {
-        toast.error(error.message, { autoClose: false });
+        toast.error(() => (
+          // So links in the error message are clickable.
+          <div dangerouslySetInnerHTML={{ __html: error.message }} />
+        ), { autoClose: false, closeOnClick: false });
       });
     } else {
       toast.success("Image generated!");
