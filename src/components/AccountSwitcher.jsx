@@ -59,7 +59,7 @@ function AccountSwitcher() {
 
   useEffect(() => {
     if (!currentAccountId) changeAccount(defaultAccount || accounts[0]);
-  }, [accounts, defaultAccount]);
+  }, [accounts, defaultAccount, engageLocationId, senalysisBusinessId]);
 
   const currentAccount = accounts.find((a) => a.id === currentAccountId);
 
