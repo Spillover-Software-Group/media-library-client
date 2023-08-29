@@ -177,7 +177,7 @@ function GenerateImage({ close, useImage }) {
                 <div className="sml-flex sml-flex-row sml-gap-2">
                   <PrimaryButton disabled={isSubmitting || isSaving} onClick={() => saveAndUse(values.prompt)}>
                     <Icon name="confirm" className="sml-mr-1" />
-                    Use this image
+                    Save to library
                   </PrimaryButton>
 
                   <SecondaryButton disabled={isSubmitting || isSaving} onClick={() => saveAndResubmit(values.prompt, submitForm)}>
