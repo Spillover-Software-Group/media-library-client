@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import useMutationAndRefetch from "../../hooks/useMutationAndRefetch";
+import useOptions from "../../hooks/useOptions";
 import TextInput from "../TextInput";
 import PrimaryButton from "../PrimaryButton";
 import SecondaryButton from "../SecondaryButton";
@@ -65,6 +66,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 });
 
 function GenerateImage({ close, useImage }) {
+  const { isFullPage } = useOptions();
   const [runGenerateImage] = useMutation(GENERATE_IMAGE_MUTATION);
   const [runUploadGeneratedImage] = useMutationAndRefetch(UPLOAD_IMAGE_MUTATION);
   const [imageUrl, setImageUrl] = useState(null);
@@ -180,7 +182,7 @@ function GenerateImage({ close, useImage }) {
                 <div className="sml-flex sml-flex-row sml-gap-2">
                   <PrimaryButton disabled={isSubmitting || isSaving} onClick={() => saveAndUse(values.prompt)}>
                     <Icon name="confirm" className="sml-mr-1" />
-                    Save to library
+                    {isFullPage ? "Save image" : "Use image"}
                   </PrimaryButton>
 
                   <SecondaryButton disabled={isSubmitting || isSaving} onClick={() => saveAndResubmit(values.prompt, submitForm)}>

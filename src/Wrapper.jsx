@@ -62,6 +62,7 @@ function Wrapper({
   selectOnSingleClick,
   marketType,
   showAccountSelector,
+  isFullPage,
   icons = {},
 }) {
   const [client, setClient] = useState();
@@ -94,6 +95,7 @@ function Wrapper({
     selectOnSingleClick,
     marketType,
     mode,
+    isFullPage,
     showAccountSelector: showAccountSelector ?? true,
   };
 
