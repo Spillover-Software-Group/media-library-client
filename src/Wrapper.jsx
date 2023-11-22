@@ -1,14 +1,14 @@
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 import { useEffect, useState } from "react";
 import { ApolloClient, ApolloLink } from "@apollo/client/core";
 import { setContext } from "@apollo/client/link/context";
 import { ApolloProvider } from "@apollo/client/react";
-import { createUploadLink } from "apollo-upload-client";
 import { ToastContainer } from "react-toastify";
 
 import "./css/style.css";
 
 import config from "./config";
-import cache, { marketTypeVar, currentFolderIdVar } from "./cache";
+import cache, { marketTypeVar } from "./cache";
 import { OptionsProvider } from "./hooks/useOptions";
 
 async function setupClient({ mode, engageToken, spilloverToken, senalysisToken }) {

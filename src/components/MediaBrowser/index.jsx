@@ -10,6 +10,7 @@ import {
 } from "chonky";
 
 import NewFolderPrompt from "./NewFolderPrompt";
+import RenameEntry from "./RenameEntry";
 import GenerateImage from "./GenerateImage";
 import UploadArea from "./UploadArea";
 import useFolder from "../../hooks/useFolder";
@@ -23,6 +24,7 @@ function MediaBrowser() {
   const uploadAreaRef = useRef();
   const [showNewFolderPrompt, setShowNewFolderPrompt] = useState(false);
   const [showGenerateImage, setShowGenerateImage] = useState(false);
+  const [renamingEntry, setRenamingEntry] = useState(null);
   const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
   const [showLoading, setShowLoading] = useState(false);
 
@@ -33,6 +35,7 @@ function MediaBrowser() {
   const closeNewFolderPrompt = () => setShowNewFolderPrompt(false);
   const openGenerateImage = () => setShowGenerateImage(true);
   const closeGenerateImage = () => setShowGenerateImage(false);
+  const closeRenameEntry = () => setRenamingEntry(null);
   const useImage = (image) => handleSelected([image]);
 
   const { folderId, files, folderChain, loading } = useFolder();
@@ -58,7 +61,7 @@ function MediaBrowser() {
     onFileAction,
     enableUpload,
     enableNewFolder,
-  } = useFileActions({ uploadAreaRef, openNewFolderPrompt, openGenerateImage });
+  } = useFileActions({ uploadAreaRef, openNewFolderPrompt, setRenamingEntry, openGenerateImage });
 
   return (
     <FileBrowser
@@ -78,8 +81,9 @@ function MediaBrowser() {
       <FileToolbar />
 
       {enableNewFolder && showNewFolderPrompt && <NewFolderPrompt close={closeNewFolderPrompt} />}
+      {renamingEntry && <RenameEntry entry={renamingEntry} close={closeRenameEntry} />}
       {showGenerateImage && (
-        <div className="sml-px-2 sml-py-4 sml-mb-4 sml-border-b" style={{marginRight: "-8px", marginLeft: "-8px"}}>
+        <div className="sml-px-2 sml-py-4 sml-mb-4 sml-border-b" style={{ marginRight: "-8px", marginLeft: "-8px" }}>
           <GenerateImage close={closeGenerateImage} useImage={useImage} />
         </div>
       )}
@@ -90,7 +94,7 @@ function MediaBrowser() {
         </UploadArea>
       ) : (
         <>
-          {loading || showLoading  ? <Loading /> : <FileList />}
+          {loading || showLoading ? <Loading /> : <FileList />}
         </>
       )}
       <FileContextMenu />

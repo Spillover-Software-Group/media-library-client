@@ -8,6 +8,18 @@ import useMoveFilesAction from "./useMoveFilesAction";
 import useOpenFilesAction from "./useOpenFilesAction";
 import useRestoreFilesAction from "./useRestoreFilesAction";
 import useChangeSelectionFilesAction from "./useChangeSelectionFilesAction";
+import useRenameEntryAction from "./useRenameEntryAction";
+
+const openRenameEntryAction = defineFileAction({
+  id: "rename-entry",
+  requiresSelection: true,
+  button: {
+    name: "Rename",
+    toolbar: false,
+    contextMenu: true,
+    icon: "terminal",
+  },
+});
 
 const favoriteFilesAction = defineFileAction({
   id: "favorite-files",
@@ -60,6 +72,7 @@ const actionsByMediaBrowser = {
     ChonkyActions.CreateFolder,
     ChonkyActions.UploadFiles,
     openGenerateImageAction,
+    openRenameEntryAction,
     ChonkyActions.DeleteFiles,
     ChonkyActions.MoveFiles,
     favoriteFilesAction,
@@ -76,7 +89,7 @@ const actionsByMediaBrowser = {
   ],
 };
 
-function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, openGenerateImage }) {
+function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, setRenamingEntry, openGenerateImage }) {
   const [mediaBrowser] = useCurrentMediaBrowser();
 
   let actions = {
@@ -90,6 +103,7 @@ function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, openGenera
     [restoreFilesAction.id]: useRestoreFilesAction(),
     [ChonkyActions.ChangeSelection.id]: useChangeSelectionFilesAction(),
     [openGenerateImageAction.id]: openGenerateImage,
+    [openRenameEntryAction.id]: useRenameEntryAction(setRenamingEntry),
   };
 
   const fileActions = actionsByMediaBrowser[mediaBrowser];
