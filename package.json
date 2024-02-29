@@ -1,6 +1,6 @@
 {
   "name": "@spillover/media-library",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "Media Library react component",
   "license": "UNLICENSED",
   "private": true,
@@ -9,12 +9,14 @@
   ],
   "module": "./dist/media-library.es.js",
   "dependencies": {
-    "@apollo/client": "^3.8.10",
+    "@apollo/client": "^3.9.5",
     "apollo-upload-client": "^18.0.1",
+    "apollo3-cache-persist": "^0.14.1",
     "chonky": "^2.3.2",
     "chonky-icon-fontawesome": "^2.3.2",
     "formik": "^2.4.5",
     "graphql": "^16.8.1",
+    "luxon": "^3.4.4",
     "react-dnd": "^11",
     "react-dnd-html5-backend": "^11",
     "react-select": "^5.8.0",
@@ -23,13 +25,13 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.5.1",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^8.56.0",
+    "@vitejs/plugin-react-swc": "^3.6.0",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.33.2",
-    "prettier": "^3.2.4",
+    "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1",
-    "vite": "^5.0.12"
+    "vite": "^5.1.4"
   },
   "peerDependencies": {
     "react": ">= 16",

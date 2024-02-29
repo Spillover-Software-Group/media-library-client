@@ -14,7 +14,6 @@ const QUERY = gql`
       role
       accounts {
         id
-        engageLocationId
         senalysisBusinessId
         name
         rootFolderId
@@ -28,7 +27,6 @@ function AccountSwitcher() {
     showAccountSelector,
     onSelectedAccountChange,
     defaultAccountId,
-    engageLocationId,
     senalysisBusinessId
   } = useOptions();
 
@@ -40,9 +38,7 @@ function AccountSwitcher() {
   const accounts = data?.currentUser?.accounts || [];
 
   const defaultAccount = accounts.find((a) => {
-    if (engageLocationId) {
-      return a.engageLocationId === engageLocationId;
-    } else if (senalysisBusinessId) {
+    if (senalysisBusinessId) {
       return a.senalysisBusinessId === senalysisBusinessId;
     } else {
       return a.id === defaultAccountId;
@@ -59,7 +55,7 @@ function AccountSwitcher() {
 
   useEffect(() => {
     changeAccount(defaultAccount || accounts[0]);
-  }, [accounts, defaultAccount, engageLocationId, senalysisBusinessId]);
+  }, [accounts, defaultAccount, senalysisBusinessId]);
 
   const currentAccount = accounts.find((a) => a.id === currentAccountId);
 

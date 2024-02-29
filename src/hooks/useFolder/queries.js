@@ -51,14 +51,11 @@ const global = {
   query: gql`
     ${folderFieldsFragment}
     query GetGlobalFolder(
-      $folderId: GID,
-      $marketType: String
+      $folderId: GID
     ) {
       currentFolderId @client @export(as: "folderId")
-      marketType @client @export(as: "marketType")
       globalFolder(
         folderId: $folderId
-        marketType: $marketType
       ) {
         ...FolderFields
       }

@@ -2,31 +2,25 @@ import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 import { useEffect, useState } from "react";
 import { ApolloClient, ApolloLink } from "@apollo/client/core";
 import { setContext } from "@apollo/client/link/context";
+import { onError } from "@apollo/client/link/error";
 import { ApolloProvider } from "@apollo/client/react";
 import { ToastContainer } from "react-toastify";
 
 import "./css/style.css";
 
 import config from "./config";
-import cache, { marketTypeVar } from "./cache";
+import cache from "./cache";
 import { OptionsProvider } from "./hooks/useOptions";
+import useAuth from "./hooks/useAuth";
 
-async function setupClient({ mode, engageToken, spilloverToken, senalysisToken }) {
+async function setupClient({ mode, accessToken, reauth }) {
   const uri = mode === "development" ? config.graphqlDevEndpoint : config.graphqlEndpoint;
 
   // This replaces `createHttpLink` to allow multipart (file upload) requests.
   const httpLink = createUploadLink({ uri });
 
   const authLink = setContext((_, { headers }) => {
-    let authorization;
-
-    if (senalysisToken) {
-      authorization = `Senalysis ${senalysisToken}`;
-    } else if (engageToken) {
-      authorization = `Engage ${engageToken}`;
-    } else {
-      authorization = `Bearer ${spilloverToken}`;
-    }
+    const authorization = accessToken ? `Bearer ${accessToken}` : "";
 
     return {
       headers: {
@@ -36,8 +30,16 @@ async function setupClient({ mode, engageToken, spilloverToken, senalysisToken }
     };
   });
 
+  // Re-authenticate on auth errors.
+  const errorLink = onError(({ networkError }) => {
+    if (!networkError) return;
+
+    console.error(networkError);
+    if (networkError.statusCode === 401) reauth();
+  });
+
   const client = new ApolloClient({
-    link: ApolloLink.from([authLink, httpLink]),
+    link: ApolloLink.from([errorLink, authLink, httpLink]),
     cache,
   });
 
@@ -48,44 +50,38 @@ function Wrapper({
   children,
   handleSelected,
   mode,
-  spilloverToken,
-  engageToken,
-  senalysisToken,
   onSelectedAccountChange,
   defaultAccountId,
-  engageLocationId,
   senalysisBusinessId,
   selectableFileTypes,
   maxSelectableSize,
   maxSelectableFiles,
   autoSelect,
   selectOnSingleClick,
-  marketType,
   showAccountSelector,
   isFullPage,
   icons = {},
 }) {
+  const { isAuthenticated, accessToken, reauth } = useAuth();
+
+  if (!isAuthenticated) return <h2>Not authenticated. Try refreshing the page.</h2>;
+
   const [client, setClient] = useState();
 
   useEffect(() => {
     async function init() {
-      setClient(await setupClient({ mode, spilloverToken, engageToken, senalysisToken }));
+      setClient(await setupClient({ mode, accessToken, reauth }));
     }
 
     init().catch(console.error);
-  }, [mode, spilloverToken, engageToken, senalysisToken]);
+  }, [mode, accessToken]);
 
-  if (!client) {
-    return <h2>Initializing...</h2>;
-  }
-
-  marketTypeVar(marketType);
+  if (!client) return <h2>Initializing...</h2>;
 
   const options = {
     handleSelected,
     onSelectedAccountChange,
     defaultAccountId,
-    engageLocationId,
     senalysisBusinessId,
     selectableFileTypes,
     maxSelectableSize,
@@ -93,7 +89,6 @@ function Wrapper({
     icons,
     autoSelect,
     selectOnSingleClick,
-    marketType,
     mode,
     isFullPage,
     showAccountSelector: showAccountSelector ?? true,

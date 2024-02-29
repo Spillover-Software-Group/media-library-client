@@ -1,9 +1,14 @@
 const acceptedImageTypes = ["image/jpeg", "image/gif", "image/png"];
 const acceptedVideoTypes = ["video/mp4", "video/quicktime"];
 
+const isProd = import.meta.env.PROD;
+
+const ssoUrl = isProd ? "https://media-library-api.spillover.com/sso" : "http://localhost:3030/sso";
+
 const config = {
-  isProd: import.meta.env.PROD,
+  isProd,
   isDev: import.meta.env.DEV,
+  ssoUrl,
   graphqlEndpoint: "https://media-library-api.spillover.com/graphql",
   graphqlDevEndpoint: "http://localhost:3030/graphql",
   acceptedImageTypes,

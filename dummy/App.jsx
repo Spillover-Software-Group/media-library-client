@@ -26,13 +26,10 @@ function App() {
       <GenerateImageStandalone
         mode="development"
         handleSelected={handleSelected}
-        // engageToken="3chzVB-rNvukfRSmQgR7jYbZHrv0Ue17jZl7CCy9oZc"
-        senalysisToken={"test"}
-        engageLocationId={"Z2lkOi8vZW5nYWdlL0NvdXJzZS8z"}
+        ownerId={'12346'}
         defaultAccountId={accountId}
         onSelectedAccountChange={onSelectedAccountChange}
         autoSelect={true}
-        // marketType={"hvac"}
       />
 
       <hr />
@@ -41,13 +38,10 @@ function App() {
       <MediaLibrary
         mode="development"
         handleSelected={handleSelected}
-        // engageToken="3chzVB-rNvukfRSmQgR7jYbZHrv0Ue17jZl7CCy9oZc"
-        senalysisToken={"test"}
-        engageLocationId={"Z2lkOi8vZW5nYWdlL0NvdXJzZS8z"}
+        ownerId={'12346'}
         defaultAccountId={accountId}
         onSelectedAccountChange={onSelectedAccountChange}
         autoSelect={true}
-        // marketType={"hvac"}
       />
     </div>
   );
