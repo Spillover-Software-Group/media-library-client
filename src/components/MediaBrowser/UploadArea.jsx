@@ -5,7 +5,7 @@ import { NativeTypes } from "react-dnd-html5-backend";
 import config from "../../config";
 import useUploadFiles, { isValidFile } from "../../hooks/useUploadFiles";
 
-function UploadArea({ children }, ref) {
+function UploadArea({ children, handleUploaded }, ref) {
   const inputRef = useRef();
 
   useImperativeHandle(ref, () => ({
@@ -14,18 +14,20 @@ function UploadArea({ children }, ref) {
 
   const uploadFiles = useUploadFiles();
 
-  const onChange = (e) => {
+  const onChange = async (e) => {
     const { files } = e.target;
     if (!files) return;
 
-    uploadFiles(Array.from(files));
+    const { data } = await uploadFiles(Array.from(files));
+    if (handleUploaded) handleUploaded(data.uploadFiles);
   };
 
   const [, uploadDropZoneRef] = useDrop({
     accept: [NativeTypes.FILE],
 
-    drop({ files }) {
-      uploadFiles(files);
+    async drop({ files }) {
+      const { data } = await uploadFiles(files);
+      if (handleUploaded) handleUploaded(data.uploadFiles);
     },
 
     canDrop({ files }) {
@@ -34,7 +36,7 @@ function UploadArea({ children }, ref) {
   });
 
   return (
-    <div ref={uploadDropZoneRef} className="sml-h-full">
+    <div ref={uploadDropZoneRef} className="sml-h-full sml-w-full">
       { children }
 
       <input
