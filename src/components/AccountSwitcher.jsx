@@ -14,6 +14,7 @@ const QUERY = gql`
       role
       accounts {
         id
+        spilloverId
         senalysisBusinessId
         name
         rootFolderId
