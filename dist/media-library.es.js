@@ -52853,6 +52853,6 @@ function Fae(t) {
 }
 export {
   Rae as GenerateImageStandalone,
-  _ae as UploadInputStandalone,
+  _ae as UploadAreaStandalone,
   Fae as default
 };

@@ -1,6 +1,6 @@
 import MediaLibraryContainer from "./components/MediaLibraryContainer";
 import GenerateImageStandalone from "./components/GenerateImageStandalone";
-import UploadInputStandalone from "./components/UploadAreaStandalone";
+import UploadAreaStandalone from "./components/UploadAreaStandalone";
 import Wrapper from "./Wrapper";
 import { AuthProvider } from "./hooks/useAuth";
 
@@ -19,4 +19,4 @@ function MediaLibrary(props) {
 }
 
 export default MediaLibrary;
-export { GenerateImageStandalone, UploadInputStandalone };
+export { GenerateImageStandalone, UploadAreaStandalone };

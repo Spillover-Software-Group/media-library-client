@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import MediaLibrary from "../src/main";
 import GenerateImageStandalone from "../src/components/GenerateImageStandalone";
-import UploadArea from "../src/components/UploadAreaStandalone";
+import UploadAreaStandalone from "../src/components/UploadAreaStandalone";
 
 function App() {
   const [accountId, setAccountId] = useState(null);
@@ -37,7 +37,7 @@ function App() {
       <br />
 
       <div style={{ height: "200px", width: "800px" }}>
-        <UploadArea
+        <UploadAreaStandalone
           mode="development"
           handleUploaded={handleSelected}
           ownerId={'12346'}
