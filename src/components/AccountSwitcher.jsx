@@ -27,6 +27,7 @@ function AccountSwitcher() {
     showAccountSelector,
     onSelectedAccountChange,
     defaultAccountId,
+    spilloverBusinessId,
     senalysisBusinessId
   } = useOptions();
 
@@ -38,7 +39,9 @@ function AccountSwitcher() {
   const accounts = data?.currentUser?.accounts || [];
 
   const defaultAccount = accounts.find((a) => {
-    if (senalysisBusinessId) {
+    if (spilloverBusinessId) {
+      return a.spilloverId === spilloverBusinessId;
+    } else if (senalysisBusinessId) {
       return a.senalysisBusinessId === senalysisBusinessId;
     } else {
       return a.id === defaultAccountId;
