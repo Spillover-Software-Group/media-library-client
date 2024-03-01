@@ -44112,10 +44112,13 @@ const kf = Mt`
   query: Mt`
     ${kf}
     query GetGlobalFolder(
+      $accountId: GID!,
       $folderId: GID
     ) {
+      currentAccountId @client @export(as: "accountId")
       currentFolderId @client @export(as: "folderId")
       globalFolder(
+        accountId: $accountId,
         folderId: $folderId
       ) {
         ...FolderFields
