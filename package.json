@@ -1,6 +1,6 @@
 {
   "name": "@spillover/media-library",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "Media Library react component",
   "license": "UNLICENSED",
   "private": true,
@@ -28,10 +28,10 @@
     "@vitejs/plugin-react-swc": "^3.6.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react": "^7.34.0",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1",
-    "vite": "^5.1.4"
+    "vite": "^5.1.5"
   },
   "peerDependencies": {
     "react": ">= 16",
@@ -40,6 +40,8 @@
   "scripts": {
     "start": "vite",
     "build": "NODE_ENV=production vite build",
+    "//": "HACK: hack for React 16",
+    "postbuild": "sed -i '' -e 's/.useInsertionEffect/[\"useInsertion\"+\"Effect\"]/g' ./dist/media-library.es.js",
     "lint": "eslint --fix --ext .jsx,.js . && prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

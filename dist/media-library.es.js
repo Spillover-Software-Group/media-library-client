@@ -12289,7 +12289,7 @@ var Q8 = function(e) {
   return i;
 };
 function u1(t) {
-  return t ? Fe : A.useInsertionEffect || // React 18+ (https://github.com/reactwg/react-18/discussions/110)
+  return t ? Fe : A["useInsertion"+"Effect"] || // React 18+ (https://github.com/reactwg/react-18/discussions/110)
   Ro;
 }
 var Md = {}, xC = function(e, r) {
@@ -39083,7 +39083,7 @@ var un, nu = function(e, r, n) {
   };
 }, eX = function(e) {
   return e();
-}, a5 = C.useInsertionEffect ? C.useInsertionEffect : !1, o5 = a5 || eX, $E = a5 || C.useLayoutEffect, h0 = {}.hasOwnProperty, p0 = /* @__PURE__ */ C.createContext(
+}, a5 = C["useInsertion"+"Effect"] ? C["useInsertion"+"Effect"] : !1, o5 = a5 || eX, $E = a5 || C.useLayoutEffect, h0 = {}.hasOwnProperty, p0 = /* @__PURE__ */ C.createContext(
   // we're doing this to avoid preconstruct's dead code elimination in this one case
   // because this module is primarily intended for the browser and node
   // but it's also required in react native and similar environments sometimes
