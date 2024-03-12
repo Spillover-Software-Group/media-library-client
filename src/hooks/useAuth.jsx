@@ -48,7 +48,7 @@ class TokenData {
   }
 }
 
-function SSOFrame({ onComplete }) {
+function SSOFrame({ mode, onComplete }) {
   const iframeRef = useRef();
 
   const handleSSOMessage = useCallback((e) => {
@@ -65,7 +65,7 @@ function SSOFrame({ onComplete }) {
   return (
     <iframe
       ref={iframeRef}
-      src={config.ssoUrl}
+      src={mode === "development" ? config.ssoDevUrl : config.ssoUrl}
       className="sml-w-full sml-h-full sml-border-0"
     />
   );
@@ -80,14 +80,14 @@ const authContext = createContext({
 
 // Provider component that wraps your app and makes auth object
 // available to any child component that calls useAuth().
-function AuthProvider({ children, ownerId }) {
+function AuthProvider({ children, mode, ownerId }) {
   const auth = useProvideAuth({ ownerId });
 
   if (auth.isAuthenticated) {
     return <authContext.Provider value={auth}>{children}</authContext.Provider>;
   }
 
-  return <SSOFrame onComplete={auth.ssoCompleteHandler} />;
+  return <SSOFrame mode={mode} onComplete={auth.ssoCompleteHandler} />;
 }
 
 // Hook for child components to get the auth object

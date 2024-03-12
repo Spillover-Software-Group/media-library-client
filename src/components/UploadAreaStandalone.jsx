@@ -16,7 +16,7 @@ function UploadAreaStandalone({ handleUploaded, ...props }) {
     // and a new one will be requested.
     // This is so that our auth is in sync with the parent app's auth.
     // This could be a userId or a token, for example.
-    <AuthProvider ownerId={props.ownerId}>
+    <AuthProvider mode={props.mode} ownerId={props.ownerId}>
       <Wrapper {...props}>
         <div onClick={openFilePicker} className="spillover-media-library sml-flex sml-h-full sml-w-full">
           <AccountSwitcher />

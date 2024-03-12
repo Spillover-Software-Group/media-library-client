@@ -1,21 +1,36 @@
-const acceptedImageTypes = ["image/jpeg", "image/gif", "image/png"];
 const acceptedVideoTypes = ["video/mp4", "video/quicktime"];
 
-const isProd = import.meta.env.PROD;
+const acceptedImageTypes = [
+  "image/jpeg",
+  "image/gif",
+  "image/png",
+  "image/webp",
+];
 
-const ssoUrl = isProd ? "https://media-library-api.spillover.com/sso" : "http://localhost:3030/sso";
+const acceptedDocumentTypes = [
+  "application/pdf",
+  "application/msword", // .doc
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+];
 
 const config = {
-  isProd,
+  isProd: import.meta.env.PROD,
   isDev: import.meta.env.DEV,
-  ssoUrl,
+  ssoUrl: "https://media-library-api.spillover.com/sso",
+  ssoDevUrl: "http://localhost:3030/sso",
   graphqlEndpoint: "https://media-library-api.spillover.com/graphql",
   graphqlDevEndpoint: "http://localhost:3030/graphql",
   acceptedImageTypes,
   acceptedVideoTypes,
-  acceptedFileTypes: [...acceptedImageTypes, ...acceptedVideoTypes],
-  maxImageSize: 52428800, // 5MB
+  acceptedDocumentTypes,
+  acceptedFileTypes: [
+    ...acceptedImageTypes,
+    ...acceptedVideoTypes,
+    ...acceptedDocumentTypes,
+  ],
+  maxImageSize: 5242880, // 5MB
   maxVideoSize: 2147483648, // 2GB
+  maxDocumentSize: 52428800, // 50MB
 };
 
 export default config;

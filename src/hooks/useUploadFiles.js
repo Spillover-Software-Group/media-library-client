@@ -7,17 +7,9 @@ import useOptions from "./useOptions";
 import useOpenFilesAction from "./useOpenFilesAction";
 
 const UPLOAD_FILES_MUTATION = gql`
-  mutation UploadFiles(
-    $folderId: GID!
-    $files: [Upload!]!
-  ) {
+  mutation UploadFiles($folderId: GID!, $files: [Upload!]!) {
     currentFolderId @client @export(as: "folderId")
-    uploadFiles(
-      input: {
-        folderId: $folderId,
-        files: $files
-      }
-    ) {
+    uploadFiles(input: { folderId: $folderId, files: $files }) {
       id
       name
       mimetype
@@ -38,9 +30,14 @@ function isVideo(file) {
   return config.acceptedVideoTypes.includes(file.type);
 }
 
+function isDocument(file) {
+  return config.acceptedDocumentTypes.includes(file.type);
+}
+
 function isValidFile(file) {
   if (isImage(file) && file.size <= config.maxImageSize) return true;
   if (isVideo(file) && file.size <= config.maxVideoSize) return true;
+  if (isDocument(file) && file.size <= config.maxDocumentSize) return true;
 
   return false;
 }
