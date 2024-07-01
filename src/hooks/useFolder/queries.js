@@ -30,10 +30,7 @@ const account = {
   extractFolder: (data) => data.account.folder,
   query: gql`
     ${folderFieldsFragment}
-    query GetAccountFolder(
-      $accountId: GID!,
-      $folderId: GID
-    ) {
+    query GetAccountFolder($accountId: GID!, $folderId: GID) {
       currentAccountId @client @export(as: "accountId")
       currentFolderId @client @export(as: "folderId")
       account(accountId: $accountId) {
@@ -50,16 +47,10 @@ const global = {
   extractFolder: (data) => data.globalFolder,
   query: gql`
     ${folderFieldsFragment}
-    query GetGlobalFolder(
-      $accountId: GID!,
-      $folderId: GID
-    ) {
+    query GetGlobalFolder($accountId: GID!, $folderId: GID) {
       currentAccountId @client @export(as: "accountId")
       currentFolderId @client @export(as: "folderId")
-      globalFolder(
-        accountId: $accountId,
-        folderId: $folderId
-      ) {
+      globalFolder(accountId: $accountId, folderId: $folderId) {
         ...FolderFields
       }
     }
@@ -99,9 +90,22 @@ const deleted = {
   `,
 };
 
-export {
-  account,
-  global,
-  favorites,
-  deleted,
+const canva = {
+  extractFolder: (data) => {
+    console.log({ data });
+  },
+  query: gql`
+    query GetCanvaFolders($accountId: GID!) {
+      currentAccountId @client @export(as: "accountId")
+      account(accountId: $accountId) {
+        id
+        name
+        canva {
+          test
+        }
+      }
+    }
+  `,
 };
+
+export { account, global, favorites, deleted, canva };

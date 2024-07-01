@@ -1,11 +1,11 @@
 import CanvaIntegration from "./CanvaIntegration";
 
-function ExternalIntegrations() {
+function ExternalIntegrations({ changeBrowser }) {
   return (
     <div>
       <h6 className="sml-ml-4 sml-mb-3 sml-mt-10">External Integrations</h6>
       <ul>
-        <CanvaIntegration />
+        <CanvaIntegration changeBrowser={changeBrowser} />
       </ul>
     </div>
   );

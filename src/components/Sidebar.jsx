@@ -37,6 +37,8 @@ function Sidebar() {
     (b) => b.key === currentBrowser,
   );
 
+  console.log({ currentBrowser, currentBrowerSelected });
+
   return (
     <div className="sml-sidebar sml-bg-gray-50">
       <div className="sml-block sm:sml-hidden sml-w-72 sml-p-4">
@@ -79,7 +81,7 @@ function Sidebar() {
             </li>
           ))}
         </ul>
-        <ExternalIntegrations />
+        <ExternalIntegrations changeBrowser={changeBrowser} />
       </div>
     </div>
   );
