@@ -5,8 +5,8 @@ import CanvaLogo from "../../../images/canva_logo.svg";
 
 function CanvaIntegration({ changeBrowser }) {
   const [loading, setLoading] = useState(false);
-  const [connected, setConnected] = useState(false);
-  // const [connected, setConnected] = useState(true);
+  // const [connected, setConnected] = useState(false);
+  const [connected, setConnected] = useState(true);
 
   const onConnectClick = async () => {
     try {

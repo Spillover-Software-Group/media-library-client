@@ -27,7 +27,10 @@ const folderFieldsFragment = gql`
 `;
 
 const account = {
-  extractFolder: (data) => data.account.folder,
+  extractFolder: (data) => {
+    console.log({ data });
+    return data.account.folder;
+  },
   query: gql`
     ${folderFieldsFragment}
     query GetAccountFolder($accountId: GID!, $folderId: GID) {
@@ -91,17 +94,35 @@ const deleted = {
 };
 
 const canva = {
-  extractFolder: (data) => {
-    console.log({ data });
-  },
+  extractFolder: (data) => data.account.integrations.canva.folder,
   query: gql`
-    query GetCanvaFolders($accountId: GID!) {
+    query GetCanvaFolder($accountId: GID!, $folderId: String) {
       currentAccountId @client @export(as: "accountId")
+      currentFolderId @client @export(as: "folderId")
       account(accountId: $accountId) {
         id
         name
-        canva {
-          test
+        integrations {
+          canva {
+            userDisplayName
+            folder(folderId: $folderId) {
+              name
+              id
+              entries {
+                id
+                name
+                isDir
+                modDate
+                ... on CanvaFolderEntry {
+                  childrenCount
+                }
+                ... on CanvaFileEntry {
+                  editUrl
+                  thumbnailUrl
+                }
+              }
+            }
+          }
         }
       }
     }

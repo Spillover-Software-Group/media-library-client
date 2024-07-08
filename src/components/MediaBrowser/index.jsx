@@ -56,12 +56,13 @@ function MediaBrowser() {
     }
   }, [currentFolderId, folderId]);
 
-  const {
-    fileActions,
-    onFileAction,
-    enableUpload,
-    enableNewFolder,
-  } = useFileActions({ uploadAreaRef, openNewFolderPrompt, setRenamingEntry, openGenerateImage });
+  const { fileActions, onFileAction, enableUpload, enableNewFolder } =
+    useFileActions({
+      uploadAreaRef,
+      openNewFolderPrompt,
+      setRenamingEntry,
+      openGenerateImage,
+    });
 
   return (
     <FileBrowser
@@ -72,18 +73,23 @@ function MediaBrowser() {
       files={files}
       folderChain={folderChain}
       onFileAction={onFileAction}
-      disableDefaultFileActions={[
-        ChonkyActions.ToggleHiddenFiles.id,
-      ]}
+      disableDefaultFileActions={[ChonkyActions.ToggleHiddenFiles.id]}
       fileActions={fileActions}
     >
       <FileNavbar />
       <FileToolbar />
 
-      {enableNewFolder && showNewFolderPrompt && <NewFolderPrompt close={closeNewFolderPrompt} />}
-      {renamingEntry && <RenameEntry entry={renamingEntry} close={closeRenameEntry} />}
+      {enableNewFolder && showNewFolderPrompt && (
+        <NewFolderPrompt close={closeNewFolderPrompt} />
+      )}
+      {renamingEntry && (
+        <RenameEntry entry={renamingEntry} close={closeRenameEntry} />
+      )}
       {showGenerateImage && (
-        <div className="sml-px-2 sml-py-4 sml-mb-4 sml-border-b" style={{ marginRight: "-8px", marginLeft: "-8px" }}>
+        <div
+          className="sml-px-2 sml-py-4 sml-mb-4 sml-border-b"
+          style={{ marginRight: "-8px", marginLeft: "-8px" }}
+        >
           <GenerateImage close={closeGenerateImage} useImage={useImage} />
         </div>
       )}
@@ -93,9 +99,7 @@ function MediaBrowser() {
           {loading || showLoading ? <Loading /> : <FileList />}
         </UploadArea>
       ) : (
-        <>
-          {loading || showLoading ? <Loading /> : <FileList />}
-        </>
+        <>{loading || showLoading ? <Loading /> : <FileList />}</>
       )}
       <FileContextMenu />
     </FileBrowser>

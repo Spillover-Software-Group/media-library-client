@@ -66,6 +66,17 @@ const openGenerateImageAction = defineFileAction({
   },
 });
 
+const openInCanvaAction = defineFileAction({
+  id: "open-in-Canva",
+  requiresSelection: true,
+  button: {
+    name: "Open In Canva",
+    toolbar: false,
+    contextMenu: true,
+    icon: "symlink",
+  },
+});
+
 const actionsByMediaBrowser = {
   account: [
     ChonkyActions.OpenFiles,
@@ -75,27 +86,27 @@ const actionsByMediaBrowser = {
     openRenameEntryAction,
     ChonkyActions.DeleteFiles,
     ChonkyActions.MoveFiles,
+    openInCanvaAction,
     favoriteFilesAction,
   ],
-  global: [
-    ChonkyActions.OpenFiles,
-  ],
-  favorites: [
-    ChonkyActions.OpenFiles,
-    unfavoriteFilesAction,
-  ],
-  deleted: [
-    restoreFilesAction,
-  ],
+  global: [ChonkyActions.OpenFiles],
+  favorites: [ChonkyActions.OpenFiles, unfavoriteFilesAction],
+  deleted: [restoreFilesAction],
 };
 
-function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, setRenamingEntry, openGenerateImage }) {
+function useMediaBrowserActions({
+  uploadAreaRef,
+  openNewFolderPrompt,
+  setRenamingEntry,
+  openGenerateImage,
+}) {
   const [mediaBrowser] = useCurrentMediaBrowser();
 
   let actions = {
     [ChonkyActions.OpenFiles.id]: useOpenFilesAction(),
     [ChonkyActions.CreateFolder.id]: openNewFolderPrompt,
-    [ChonkyActions.UploadFiles.id]: () => uploadAreaRef.current?.openFilePicker(),
+    [ChonkyActions.UploadFiles.id]: () =>
+      uploadAreaRef.current?.openFilePicker(),
     [ChonkyActions.DeleteFiles.id]: useDeleteFilesAction(),
     [ChonkyActions.MoveFiles.id]: useMoveFilesAction(),
     [favoriteFilesAction.id]: useFavoriteFilesAction(),
