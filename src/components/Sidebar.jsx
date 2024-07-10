@@ -24,6 +24,13 @@ const mediaBrowsers = [
   },
 ];
 
+const externalBrowsers = [
+  {
+    key: "canva",
+    name: "Canva",
+  },
+];
+
 function Sidebar() {
   const [currentBrowser, setCurrentBrowser] = useCurrentMediaBrowser();
   const [, setCurrentFolderId] = useCurrentFolderId();
@@ -33,11 +40,9 @@ function Sidebar() {
     setCurrentBrowser(browser);
   };
 
-  const currentBrowerSelected = mediaBrowsers.find(
+  const currentBrowerSelected = [...mediaBrowsers, ...externalBrowsers].find(
     (b) => b.key === currentBrowser,
   );
-
-  console.log({ currentBrowser, currentBrowerSelected });
 
   return (
     <div className="sml-sidebar sml-bg-gray-50">

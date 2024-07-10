@@ -53,10 +53,18 @@ function CanvaIntegration({ changeBrowser }) {
       {connected ? (
         <div
           onClick={loadCanva}
-          className="sml-flex sml-items-center sml-pl-4 sml-text-sm w-full sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2"
+          className="sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm w-full sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2"
         >
-          <img src={CanvaLogo} alt="Engage Logo" className="sml-w-6" />
-          <span className="sml-ml-2">Canva</span>
+          <div className=" sml-flex">
+            <img src={CanvaLogo} alt="Engage Logo" className="sml-w-6" />
+            <span className="sml-ml-2">Canva</span>
+          </div>
+          <div className="sml-text-2xs sml-mt-2">
+            Connected as:
+            <span className="sml-block sml-text-xs sml-font-semibold">
+              Gustavo Camello
+            </span>
+          </div>
         </div>
       ) : (
         <div

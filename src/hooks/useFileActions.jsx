@@ -9,6 +9,8 @@ import useOpenFilesAction from "./useOpenFilesAction";
 import useRestoreFilesAction from "./useRestoreFilesAction";
 import useChangeSelectionFilesAction from "./useChangeSelectionFilesAction";
 import useRenameEntryAction from "./useRenameEntryAction";
+import useOpenOnCanvaAction from "./integrations/canva/useOpenOnCanvaAction";
+import useSaveOnMyMedia from "./integrations/canva/useSaveOnMyMedia";
 
 const openRenameEntryAction = defineFileAction({
   id: "rename-entry",
@@ -69,11 +71,24 @@ const openGenerateImageAction = defineFileAction({
 const openInCanvaAction = defineFileAction({
   id: "open-in-Canva",
   requiresSelection: true,
+  fileFilter: (file) => !file.isDir,
   button: {
     name: "Open In Canva",
     toolbar: false,
     contextMenu: true,
     icon: "symlink",
+  },
+});
+
+const saveOnMyMedia = defineFileAction({
+  id: "save-on-my-media",
+  requiresSelection: true,
+  fileFilter: (file) => !file.isDir,
+  button: {
+    name: "Save on My Media",
+    toolbar: false,
+    contextMenu: true,
+    icon: "upload",
   },
 });
 
@@ -86,12 +101,13 @@ const actionsByMediaBrowser = {
     openRenameEntryAction,
     ChonkyActions.DeleteFiles,
     ChonkyActions.MoveFiles,
-    openInCanvaAction,
     favoriteFilesAction,
+    openInCanvaAction,
   ],
   global: [ChonkyActions.OpenFiles],
   favorites: [ChonkyActions.OpenFiles, unfavoriteFilesAction],
   deleted: [restoreFilesAction],
+  canva: [openInCanvaAction, saveOnMyMedia],
 };
 
 function useMediaBrowserActions({
@@ -110,6 +126,8 @@ function useMediaBrowserActions({
     [ChonkyActions.DeleteFiles.id]: useDeleteFilesAction(),
     [ChonkyActions.MoveFiles.id]: useMoveFilesAction(),
     [favoriteFilesAction.id]: useFavoriteFilesAction(),
+    [openInCanvaAction.id]: useOpenOnCanvaAction(),
+    [saveOnMyMedia.id]: useSaveOnMyMedia(),
     [unfavoriteFilesAction.id]: useUnfavoriteFilesAction(),
     [restoreFilesAction.id]: useRestoreFilesAction(),
     [ChonkyActions.ChangeSelection.id]: useChangeSelectionFilesAction(),

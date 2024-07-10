@@ -27,10 +27,7 @@ const folderFieldsFragment = gql`
 `;
 
 const account = {
-  extractFolder: (data) => {
-    console.log({ data });
-    return data.account.folder;
-  },
+  extractFolder: (data) => data.account.folder,
   query: gql`
     ${folderFieldsFragment}
     query GetAccountFolder($accountId: GID!, $folderId: GID) {
@@ -108,6 +105,11 @@ const canva = {
             folder(folderId: $folderId) {
               name
               id
+              folderChain {
+                id
+                name
+                isDir
+              }
               entries {
                 id
                 name
