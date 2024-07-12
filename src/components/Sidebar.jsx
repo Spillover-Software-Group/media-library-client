@@ -33,7 +33,7 @@ const externalBrowsers = [
 
 function Sidebar() {
   const [currentBrowser, setCurrentBrowser] = useCurrentMediaBrowser();
-  const [, setCurrentFolderId] = useCurrentFolderId();
+  const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
 
   const changeBrowser = (browser) => {
     setCurrentFolderId(null);
@@ -43,6 +43,8 @@ function Sidebar() {
   const currentBrowerSelected = [...mediaBrowsers, ...externalBrowsers].find(
     (b) => b.key === currentBrowser,
   );
+
+  console.log({ currentFolderId });
 
   return (
     <div className="sml-sidebar sml-bg-gray-50">

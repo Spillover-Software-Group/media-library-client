@@ -2,11 +2,15 @@ import { useState } from "react";
 
 import config from "../../../config";
 import CanvaLogo from "../../../images/canva_logo.svg";
+import useCurrentAccountId from "../../../hooks/useCurrentAccountId";
 
 function CanvaIntegration({ changeBrowser }) {
+  const [currentAccountId] = useCurrentAccountId();
   const [loading, setLoading] = useState(false);
   // const [connected, setConnected] = useState(false);
   const [connected, setConnected] = useState(true);
+
+  console.log({ currentAccountId });
 
   const onConnectClick = async () => {
     try {
@@ -24,7 +28,7 @@ function CanvaIntegration({ changeBrowser }) {
     return new Promise((resolve, reject) => {
       try {
         const url = new URL(
-          `${config.apiBaseDevEndpoint}/integrations-api/canva/v1/authorization`,
+          `${config.apiBaseDevEndpoint}/integrations-api/canva-account/v1/oauth2/authorize/${currentAccountId}`,
         );
         const windowFeatures = ["popup", "height=400", "width=400"];
         const authWindow = window.open(url, "", windowFeatures.join(","));

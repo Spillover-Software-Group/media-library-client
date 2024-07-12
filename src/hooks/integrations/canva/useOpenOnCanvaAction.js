@@ -1,49 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { gql, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { toast } from "react-toastify";
 
 import useMutationAndRefetch from "../../useMutationAndRefetch";
-
-const CREATE_ASSET_UPLOAD = gql`
-  mutation createAssetUpload($fileId: GID!) {
-    createAssetUpload(input: { fileId: $fileId }) {
-      status
-      jobId
-    }
-  }
-`;
-
-const GET_ASSET_UPLOAD = gql`
-  query getAssetUpload($accountId: GID!, $jobId: String!) {
-    currentAccountId @client @export(as: "accountId")
-    account(accountId: $accountId) {
-      id
-      integrations {
-        canva {
-          assetUpload(jobId: $jobId) {
-            status
-            jobId
-            assetId
-            name
-          }
-        }
-      }
-    }
-  }
-`;
-
-const CREATE_CANVA_DESIGN = gql`
-  mutation createCanvaDesign($assetId: String!, $name: String!) {
-    createCanvaDesign(input: { assetId: $assetId, name: $name }) {
-      editUrl
-    }
-  }
-`;
+import {
+  CREATE_ASSET_UPLOAD_JOB,
+  CREATE_CANVA_DESIGN,
+  GET_ASSET_UPLOAD,
+} from "./queries";
 
 function useOpenOnCanvaAction() {
   const [jobId, setJobId] = useState();
   const [assetData, setAssetData] = useState(null);
   const toastId = useRef(null);
+  const [createdDesign, setCreatedDesign] = useState(null);
 
   const startCreateDesignToast = () =>
     (toastId.current = toast.loading("Sending file to Canva.com..."));
@@ -55,11 +25,7 @@ function useOpenOnCanvaAction() {
       isLoading: false,
     });
 
-  const [runUploadAsset] = useMutationAndRefetch(CREATE_ASSET_UPLOAD);
-
-  const [runCreateDesign, { data: designData }] =
-    useMutationAndRefetch(CREATE_CANVA_DESIGN);
-
+  const [runUploadAsset] = useMutationAndRefetch(CREATE_ASSET_UPLOAD_JOB);
   const [_pollAssetUpload, { data, startPolling, stopPolling }] = useLazyQuery(
     GET_ASSET_UPLOAD,
     {
@@ -69,7 +35,10 @@ function useOpenOnCanvaAction() {
       fetchPolicy: "network-only",
     },
   );
+  const [runCreateDesign, { data: designData }] =
+    useMutationAndRefetch(CREATE_CANVA_DESIGN);
 
+  // Upload the asset and polling until we got the assetId back from Canva
   useEffect(() => {
     if (data?.account?.integrations?.canva?.assetUpload?.assetId) {
       setAssetData(data?.account?.integrations?.canva?.assetUpload);
@@ -77,6 +46,7 @@ function useOpenOnCanvaAction() {
     }
   }, [data, stopPolling]);
 
+  // Create the Canva Design when we get the assetId
   useEffect(() => {
     if (assetData) {
       runCreateDesign({
@@ -90,34 +60,50 @@ function useOpenOnCanvaAction() {
 
   useEffect(() => {
     if (designData) {
+      setCreatedDesign(designData);
+    }
+  }, [designData]);
+
+  // Open the user's Canva in a new tab
+  useEffect(() => {
+    if (createdDesign) {
       createdDesignToast();
       setTimeout(() => {
         toast.dismiss();
         setAssetData();
         setJobId();
-      }, 5000);
-      window.open(designData?.createCanvaDesign?.editUrl, "");
+        setCreatedDesign();
+      }, 1000);
+      window.open(createdDesign?.createCanvaDesign?.editUrl, "_blank");
     }
-  }, [designData]);
+  }, [createdDesign]);
 
   return async (action) => {
     const { selectedFilesForAction } = action.state;
 
-    const file = selectedFilesForAction[0];
     if (selectedFilesForAction.length) {
+      const file = selectedFilesForAction[0];
       startCreateDesignToast();
 
-      const jobUpload = await runUploadAsset({
-        variables: {
-          fileId: file.id,
-        },
-      });
+      try {
+        const jobUpload = await runUploadAsset({
+          variables: {
+            fileId: file.id,
+          },
+        });
 
-      const jobUploadId = await jobUpload?.data?.createAssetUpload?.jobId;
-      setJobId(jobUploadId);
+        const jobUploadId = await jobUpload?.data?.createAssetUploadJob?.jobId;
 
-      if (jobUploadId) {
-        startPolling(1500);
+        if (jobUploadId) {
+          setJobId(jobUploadId);
+          startPolling(1500);
+        }
+      } catch {
+        toast.update(toastId.current, {
+          render: "Failed to upload file to Canva.",
+          type: "error",
+          isLoading: false,
+        });
       }
     }
   };
