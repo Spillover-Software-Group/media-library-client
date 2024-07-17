@@ -9,9 +9,11 @@ import {
   UPLOAD_CANVA_DESIGN_TO_MEDIA_LIBRARY,
 } from "./queries";
 
-function useSaveOnMyMedia() {
+function useSaveDesignToMyMedia() {
   const toastId = useRef(null);
   const [jobId, setJobId] = useState();
+  const [fileName, setFileName] = useState("");
+  const [mediaLibraryFile, setMediaLibraryFile] = useState(null);
 
   const startCreateDesignToast = () =>
     (toastId.current = toast.loading(
@@ -41,35 +43,42 @@ function useSaveOnMyMedia() {
   );
 
   useEffect(() => {
-    if (data?.account?.integrations?.canva?.designExport?.urls) {
+    const uploadFile = async () => {
       const url = data?.account?.integrations?.canva?.designExport?.urls[0];
 
-      const uploadedFile = runUploadFileToMediaLibrary({
+      const uploadedFile = await runUploadFileToMediaLibrary({
         variables: {
           fileUrl: {
             url,
+            name: fileName,
           },
         },
       });
 
       if (uploadedFile) {
+        const file = uploadedFile.data.uploadCanvaDesignFromUrl;
+
+        setMediaLibraryFile({ ...file });
         exportedDesignToast();
         setTimeout(() => {
           toast.dismiss();
           setJobId();
-        }, 2000);
+        }, 400);
       }
 
       stopPolling();
+    };
+
+    if (data?.account?.integrations?.canva?.designExport?.urls) {
+      uploadFile();
     }
   }, [data, stopPolling]);
 
-  return async (action) => {
-    const { selectedFilesForAction } = action.state;
-
-    if (selectedFilesForAction.length) {
-      const design = selectedFilesForAction[0];
+  const saveOnMyMedia = async (design) => {
+    if (design) {
+      setFileName(design.name);
       startCreateDesignToast();
+
       try {
         const exportJob = await runExportDesign({
           variables: {
@@ -81,7 +90,7 @@ function useSaveOnMyMedia() {
 
         if (jobExportId) {
           setJobId(jobExportId);
-          startPolling(2000);
+          startPolling(500);
         }
       } catch {
         toast.update(toastId.current, {
@@ -92,6 +101,8 @@ function useSaveOnMyMedia() {
       }
     }
   };
+
+  return { saveOnMyMedia, mediaLibraryFile };
 }
 
-export default useSaveOnMyMedia;
+export default useSaveDesignToMyMedia;

@@ -3,24 +3,21 @@ import { useState } from "react";
 import config from "../../../config";
 import CanvaLogo from "../../../images/canva_logo.svg";
 import useCurrentAccountId from "../../../hooks/useCurrentAccountId";
+import useAccounts from "../../../hooks/useAccounts";
 
-function CanvaIntegration({ changeBrowser }) {
+function CanvaIntegration({ currentBrowser, changeBrowser }) {
+  const { currentAccount, loading } = useAccounts();
   const [currentAccountId] = useCurrentAccountId();
-  const [loading, setLoading] = useState(false);
-  // const [connected, setConnected] = useState(false);
-  const [connected, setConnected] = useState(true);
-
-  console.log({ currentAccountId });
+  const [connecting, setConnecting] = useState(false);
 
   const onConnectClick = async () => {
     try {
-      setLoading(true);
+      setConnecting(true);
       await authorization();
-      setConnected(true);
     } catch (error) {
       alert("Something went wrong, please, try again.");
     } finally {
-      setLoading(false);
+      setConnecting(false);
     }
   };
 
@@ -54,19 +51,25 @@ function CanvaIntegration({ changeBrowser }) {
 
   return (
     <li>
-      {connected ? (
+      {loading ? (
+        <div className="sml-pl-4">Loading...</div>
+      ) : currentAccount?.integrations?.canva ? (
         <div
           onClick={loadCanva}
           className="sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm w-full sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2"
         >
           <div className=" sml-flex">
             <img src={CanvaLogo} alt="Engage Logo" className="sml-w-6" />
-            <span className="sml-ml-2">Canva</span>
+            <span
+              className={`${currentBrowser === "canva" ? "sml-text-spillover-color11 sml-font-bold" : "sml-text-spillover-color10 sml-font-medium"} sml-ml-2`}
+            >
+              Canva
+            </span>
           </div>
           <div className="sml-text-2xs sml-mt-2">
             Connected as:
             <span className="sml-block sml-text-xs sml-font-semibold">
-              Gustavo Camello
+              {currentAccount?.integrations?.canva?.userDisplayName}
             </span>
           </div>
         </div>
@@ -78,7 +81,7 @@ function CanvaIntegration({ changeBrowser }) {
           <img src={CanvaLogo} alt="Engage Logo" className="sml-w-6" />
 
           <span className="sml-ml-2">
-            {loading ? "Connecting..." : "Connect To Canva"}
+            {connecting ? "Connecting..." : "Connect To Canva"}
           </span>
         </div>
       )}

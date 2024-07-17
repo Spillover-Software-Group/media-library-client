@@ -93,7 +93,11 @@ const deleted = {
 const canva = {
   extractFolder: (data) => data.account.integrations.canva.folder,
   query: gql`
-    query GetCanvaFolder($accountId: GID!, $folderId: String) {
+    query GetCanvaFolder(
+      $accountId: GID!
+      $folderId: String
+      $continuationToken: String
+    ) {
       currentAccountId @client @export(as: "accountId")
       currentFolderId @client @export(as: "folderId")
       account(accountId: $accountId) {
@@ -102,9 +106,10 @@ const canva = {
         integrations {
           canva {
             userDisplayName
-            folder(folderId: $folderId) {
+            folder(folderId: $folderId, continuationToken: $continuationToken) {
               name
               id
+              continuationToken
               folderChain {
                 id
                 name

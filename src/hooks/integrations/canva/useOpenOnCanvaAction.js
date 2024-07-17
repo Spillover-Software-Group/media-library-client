@@ -26,6 +26,8 @@ function useOpenOnCanvaAction() {
     });
 
   const [runUploadAsset] = useMutationAndRefetch(CREATE_ASSET_UPLOAD_JOB);
+  const [runCreateDesign, { data: designData }] =
+    useMutationAndRefetch(CREATE_CANVA_DESIGN);
   const [_pollAssetUpload, { data, startPolling, stopPolling }] = useLazyQuery(
     GET_ASSET_UPLOAD,
     {
@@ -35,8 +37,6 @@ function useOpenOnCanvaAction() {
       fetchPolicy: "network-only",
     },
   );
-  const [runCreateDesign, { data: designData }] =
-    useMutationAndRefetch(CREATE_CANVA_DESIGN);
 
   // Upload the asset and polling until we got the assetId back from Canva
   useEffect(() => {
@@ -49,7 +49,7 @@ function useOpenOnCanvaAction() {
   // Create the Canva Design when we get the assetId
   useEffect(() => {
     if (assetData) {
-      runCreateDesign({
+      const test = runCreateDesign({
         variables: {
           assetId: assetData.assetId,
           name: assetData.name,
@@ -83,6 +83,11 @@ function useOpenOnCanvaAction() {
 
     if (selectedFilesForAction.length) {
       const file = selectedFilesForAction[0];
+
+      if (file?.editUrl) {
+        return window.open(file?.editUrl, "_blank");
+      }
+
       startCreateDesignToast();
 
       try {
@@ -96,9 +101,9 @@ function useOpenOnCanvaAction() {
 
         if (jobUploadId) {
           setJobId(jobUploadId);
-          startPolling(1500);
+          startPolling(500);
         }
-      } catch {
+      } catch (error) {
         toast.update(toastId.current, {
           render: "Failed to upload file to Canva.",
           type: "error",

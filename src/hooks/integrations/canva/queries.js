@@ -69,6 +69,7 @@ const UPLOAD_CANVA_DESIGN_TO_MEDIA_LIBRARY = gql`
     uploadCanvaDesignFromUrl(
       input: { accountId: $accountId, fileUrl: $fileUrl }
     ) {
+      id
       name
       url
     }

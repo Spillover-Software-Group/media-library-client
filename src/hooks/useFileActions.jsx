@@ -10,7 +10,7 @@ import useRestoreFilesAction from "./useRestoreFilesAction";
 import useChangeSelectionFilesAction from "./useChangeSelectionFilesAction";
 import useRenameEntryAction from "./useRenameEntryAction";
 import useOpenOnCanvaAction from "./integrations/canva/useOpenOnCanvaAction";
-import useSaveOnMyMedia from "./integrations/canva/useSaveOnMyMedia";
+import useSaveOnMyMediaAction from "./integrations/canva/useSaveOnMyMediaAction";
 
 const openRenameEntryAction = defineFileAction({
   id: "rename-entry",
@@ -127,7 +127,7 @@ function useMediaBrowserActions({
     [ChonkyActions.MoveFiles.id]: useMoveFilesAction(),
     [favoriteFilesAction.id]: useFavoriteFilesAction(),
     [openInCanvaAction.id]: useOpenOnCanvaAction(),
-    [saveOnMyMedia.id]: useSaveOnMyMedia(),
+    [saveOnMyMedia.id]: useSaveOnMyMediaAction(),
     [unfavoriteFilesAction.id]: useUnfavoriteFilesAction(),
     [restoreFilesAction.id]: useRestoreFilesAction(),
     [ChonkyActions.ChangeSelection.id]: useChangeSelectionFilesAction(),

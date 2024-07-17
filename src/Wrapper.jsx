@@ -12,9 +12,11 @@ import config from "./config";
 import cache from "./cache";
 import { OptionsProvider } from "./hooks/useOptions";
 import useAuth from "./hooks/useAuth";
+import { AccountsProvider } from "./hooks/useAccounts.jsx";
 
 async function setupClient({ mode, accessToken, reauth }) {
-  const uri = mode === "development" ? config.graphqlDevEndpoint : config.graphqlEndpoint;
+  const uri =
+    mode === "development" ? config.graphqlDevEndpoint : config.graphqlEndpoint;
 
   // This replaces `createHttpLink` to allow multipart (file upload) requests.
   const httpLink = createUploadLink({ uri });
@@ -65,7 +67,8 @@ function Wrapper({
 }) {
   const { isAuthenticated, accessToken, reauth } = useAuth();
 
-  if (!isAuthenticated) return <h2>Not authenticated. Try refreshing the page.</h2>;
+  if (!isAuthenticated)
+    return <h2>Not authenticated. Try refreshing the page.</h2>;
 
   const [client, setClient] = useState();
 
@@ -99,7 +102,7 @@ function Wrapper({
   return (
     <OptionsProvider options={options}>
       <ApolloProvider client={client}>
-        {children}
+        <AccountsProvider>{children}</AccountsProvider>
         <ToastContainer position="bottom-right" autoClose={2500} />
       </ApolloProvider>
     </OptionsProvider>

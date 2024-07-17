@@ -27,6 +27,7 @@ function MediaBrowser() {
   const [renamingEntry, setRenamingEntry] = useState(null);
   const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
   const [showLoading, setShowLoading] = useState(false);
+  const [canvaFiles, setCanvaFiles] = useState([]);
 
   const [mediaBrowser] = useCurrentMediaBrowser();
   const { handleSelected } = useOptions();
@@ -38,7 +39,8 @@ function MediaBrowser() {
   const closeRenameEntry = () => setRenamingEntry(null);
   const useImage = (image) => handleSelected([image]);
 
-  const { folderId, files, folderChain, loading } = useFolder();
+  const { folderId, files, folderChain, loading, continuationToken, refetch } =
+    useFolder();
 
   useEffect(() => {
     if (mediaBrowser === "account" && !currentFolderId) {
@@ -64,17 +66,33 @@ function MediaBrowser() {
       openGenerateImage,
     });
 
+  // To fetch all the files from the Canva account, we need to make
+  // multiple requests passing the continuation token that each
+  // request return.
+  useEffect(() => {
+    const newFiles = [...canvaFiles, ...files];
+    !loading && setCanvaFiles(newFiles);
+    if (continuationToken) {
+      refetch({ continuationToken });
+    }
+  }, [continuationToken]);
+
   return (
     <FileBrowser
       // We're creating our own DndProvider in MediaLibraryContainer
       // so we can use the hook `useDrop` in useUploadFiles.
       // SEE: https://chonky.io/docs/2.x/basics/drag-n-drop#cannot-have-two-html5-backends
       disableDragAndDropProvider
-      files={files}
+      files={mediaBrowser === "canva" ? canvaFiles : files}
       folderChain={folderChain}
       onFileAction={onFileAction}
       disableDefaultFileActions={[ChonkyActions.ToggleHiddenFiles.id]}
       fileActions={fileActions}
+      defaultSortActionId={
+        mediaBrowser === "canva"
+          ? ChonkyActions.SortFilesByDate.id
+          : ChonkyActions.SortFilesByName.id
+      }
     >
       <FileNavbar />
       <FileToolbar />
