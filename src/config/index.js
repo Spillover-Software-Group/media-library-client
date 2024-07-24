@@ -21,7 +21,7 @@ const config = {
   graphqlEndpoint: "https://media-library-api.spillover.com/graphql",
   apiBaseEndpoint: "https://media-library-api.spillover.com",
   graphqlDevEndpoint: "http://localhost:3030/graphql",
-  apiBaseDevEndpoint: "http://localhost:3030",
+  apiBaseDevEndpoint: "http://127.0.0.1:3030",
   acceptedImageTypes,
   acceptedVideoTypes,
   acceptedDocumentTypes,

@@ -11,6 +11,7 @@ import useChangeSelectionFilesAction from "./useChangeSelectionFilesAction";
 import useRenameEntryAction from "./useRenameEntryAction";
 import useOpenOnCanvaAction from "./integrations/canva/useOpenOnCanvaAction";
 import useSaveOnMyMediaAction from "./integrations/canva/useSaveOnMyMediaAction";
+import useAccounts from "./useAccounts";
 
 const openRenameEntryAction = defineFileAction({
   id: "rename-entry",
@@ -92,24 +93,6 @@ const saveOnMyMedia = defineFileAction({
   },
 });
 
-const actionsByMediaBrowser = {
-  account: [
-    ChonkyActions.OpenFiles,
-    ChonkyActions.CreateFolder,
-    ChonkyActions.UploadFiles,
-    openGenerateImageAction,
-    openRenameEntryAction,
-    ChonkyActions.DeleteFiles,
-    ChonkyActions.MoveFiles,
-    favoriteFilesAction,
-    openInCanvaAction,
-  ],
-  global: [ChonkyActions.OpenFiles],
-  favorites: [ChonkyActions.OpenFiles, unfavoriteFilesAction],
-  deleted: [restoreFilesAction],
-  canva: [openInCanvaAction, saveOnMyMedia],
-};
-
 function useMediaBrowserActions({
   uploadAreaRef,
   openNewFolderPrompt,
@@ -117,6 +100,24 @@ function useMediaBrowserActions({
   openGenerateImage,
 }) {
   const [mediaBrowser] = useCurrentMediaBrowser();
+  const { currentAccount, loading } = useAccounts();
+  const canvaIsConnected = !loading && currentAccount?.integrations?.canva;
+
+  let actionsByMediaBrowser = {
+    account: [
+      ChonkyActions.OpenFiles,
+      ChonkyActions.CreateFolder,
+      ChonkyActions.UploadFiles,
+      openGenerateImageAction,
+      openRenameEntryAction,
+      ChonkyActions.DeleteFiles,
+      ChonkyActions.MoveFiles,
+      favoriteFilesAction,
+    ],
+    global: [ChonkyActions.OpenFiles],
+    favorites: [ChonkyActions.OpenFiles, unfavoriteFilesAction],
+    deleted: [restoreFilesAction],
+  };
 
   let actions = {
     [ChonkyActions.OpenFiles.id]: useOpenFilesAction(),
@@ -126,14 +127,25 @@ function useMediaBrowserActions({
     [ChonkyActions.DeleteFiles.id]: useDeleteFilesAction(),
     [ChonkyActions.MoveFiles.id]: useMoveFilesAction(),
     [favoriteFilesAction.id]: useFavoriteFilesAction(),
-    [openInCanvaAction.id]: useOpenOnCanvaAction(),
-    [saveOnMyMedia.id]: useSaveOnMyMediaAction(),
     [unfavoriteFilesAction.id]: useUnfavoriteFilesAction(),
     [restoreFilesAction.id]: useRestoreFilesAction(),
     [ChonkyActions.ChangeSelection.id]: useChangeSelectionFilesAction(),
     [openGenerateImageAction.id]: openGenerateImage,
     [openRenameEntryAction.id]: useRenameEntryAction(setRenamingEntry),
+    [openInCanvaAction.id]: useOpenOnCanvaAction(),
+    [saveOnMyMedia.id]: useSaveOnMyMediaAction(),
   };
+
+  // Canva Actions
+  if (canvaIsConnected) {
+    actionsByMediaBrowser = {
+      ...actionsByMediaBrowser,
+      account: [...actionsByMediaBrowser.account, openInCanvaAction],
+      global: [...actionsByMediaBrowser.global, openInCanvaAction],
+      favorites: [...actionsByMediaBrowser.favorites, openInCanvaAction],
+      canva: [openInCanvaAction, saveOnMyMedia],
+    };
+  }
 
   const fileActions = actionsByMediaBrowser[mediaBrowser];
 

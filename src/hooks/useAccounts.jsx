@@ -31,7 +31,7 @@ const useAccounts = () => useContext(context);
 function AccountsProvider({ children }) {
   const [currentAccountId] = useCurrentAccountId();
 
-  const { loading, data } = useQuery(QUERY);
+  const { loading, data, refetch } = useQuery(QUERY);
 
   const accounts = data?.currentUser?.accounts || [];
 
@@ -41,6 +41,7 @@ function AccountsProvider({ children }) {
     loading,
     accounts,
     currentAccount,
+    refetch,
   };
 
   return <context.Provider value={value}>{children}</context.Provider>;

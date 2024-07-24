@@ -2,12 +2,12 @@ import { useState } from "react";
 
 import config from "../../../config";
 import CanvaLogo from "../../../images/canva_logo.svg";
-import useCurrentAccountId from "../../../hooks/useCurrentAccountId";
 import useAccounts from "../../../hooks/useAccounts";
+import useAuth from "../../../hooks/useAuth";
 
 function CanvaIntegration({ currentBrowser, changeBrowser }) {
-  const { currentAccount, loading } = useAccounts();
-  const [currentAccountId] = useCurrentAccountId();
+  const { currentAccount, loading, refetch } = useAccounts();
+  const { accessToken } = useAuth();
   const [connecting, setConnecting] = useState(false);
 
   const onConnectClick = async () => {
@@ -25,7 +25,7 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
     return new Promise((resolve, reject) => {
       try {
         const url = new URL(
-          `${config.apiBaseDevEndpoint}/integrations-api/canva-account/v1/oauth2/authorize/${currentAccountId}`,
+          `${config.apiBaseDevEndpoint}/integrations-api/canva-account/v1/oauth2/authorize?access_token=${accessToken}`,
         );
         const windowFeatures = ["popup", "height=400", "width=400"];
         const authWindow = window.open(url, "", windowFeatures.join(","));
@@ -33,6 +33,7 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
         window.addEventListener("message", (event) => {
           if (event.data === "authorization_success") {
             resolve(true);
+            refetch(); // Refetch the currentUser to access the Canva Int details
             authWindow?.close();
           } else if (event.data === "authorization_error") {
             reject(new Error("Authorization failed"));
