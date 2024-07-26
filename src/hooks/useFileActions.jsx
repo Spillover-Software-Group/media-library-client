@@ -12,6 +12,7 @@ import useRenameEntryAction from "./useRenameEntryAction";
 import useOpenOnCanvaAction from "./integrations/canva/useOpenOnCanvaAction";
 import useSaveOnMyMediaAction from "./integrations/canva/useSaveOnMyMediaAction";
 import useAccounts from "./useAccounts";
+import useRefreshFolder from "./useRefreshFolder";
 
 const openRenameEntryAction = defineFileAction({
   id: "rename-entry",
@@ -69,6 +70,17 @@ const openGenerateImageAction = defineFileAction({
   },
 });
 
+const refreshFolderAction = defineFileAction({
+  id: "refresh-folder-action",
+  requiresSelection: false,
+  button: {
+    name: "Refresh folder",
+    toolbar: true,
+    contextMenu: false,
+    icon: "syncFolder",
+  },
+});
+
 const openInCanvaAction = defineFileAction({
   id: "open-in-Canva",
   requiresSelection: true,
@@ -109,6 +121,7 @@ function useMediaBrowserActions({
       ChonkyActions.CreateFolder,
       ChonkyActions.UploadFiles,
       openGenerateImageAction,
+      refreshFolderAction,
       openRenameEntryAction,
       ChonkyActions.DeleteFiles,
       ChonkyActions.MoveFiles,
@@ -131,6 +144,7 @@ function useMediaBrowserActions({
     [restoreFilesAction.id]: useRestoreFilesAction(),
     [ChonkyActions.ChangeSelection.id]: useChangeSelectionFilesAction(),
     [openGenerateImageAction.id]: openGenerateImage,
+    [refreshFolderAction.id]: useRefreshFolder(),
     [openRenameEntryAction.id]: useRenameEntryAction(setRenamingEntry),
     [openInCanvaAction.id]: useOpenOnCanvaAction(),
     [saveOnMyMedia.id]: useSaveOnMyMediaAction(),

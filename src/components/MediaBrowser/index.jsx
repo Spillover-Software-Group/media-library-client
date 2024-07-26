@@ -69,13 +69,42 @@ function MediaBrowser() {
   // To fetch all the files from the Canva account, we need to make
   // multiple requests passing the continuation token that each
   // request return.
+  // useEffect(() => {
+  //   const newFiles = [...canvaFiles, ...files];
+  //   !loading && setCanvaFiles(newFiles);
+  //   if (continuationToken) {
+  //     refetch({ continuationToken });
+  //   }
+  // }, [continuationToken]);
+
   useEffect(() => {
-    const newFiles = [...canvaFiles, ...files];
-    !loading && setCanvaFiles(newFiles);
-    if (continuationToken) {
-      refetch({ continuationToken });
+    if (mediaBrowser === "canva") {
+      // console.log({ element });
+      // const { scrollTop, clientHeight, scrollHeight } = element;
+      // console.log({ scrollTop, clientHeight, scrollHeight });
+      const newFiles = [...canvaFiles, ...files];
+      !loading && setCanvaFiles(newFiles);
+
+      const handleScroll = () => {
+        const element = document.querySelector(".chonky-fileListWrapper");
+        const { scrollTop, clientHeight, scrollHeight } = element;
+
+        // const { scrollTop, clientHeight, scrollHeight } =
+        //   document.documentElement;
+        if (scrollTop + clientHeight >= scrollHeight - 20) {
+          if (continuationToken) {
+            refetch({ continuationToken });
+          }
+          console.log("SHOULD FETCH MORE");
+        }
+      };
+
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
     }
-  }, [continuationToken]);
+  }, [continuationToken, mediaBrowser]);
 
   return (
     <FileBrowser
@@ -120,6 +149,7 @@ function MediaBrowser() {
         <>{loading || showLoading ? <Loading /> : <FileList />}</>
       )}
       <FileContextMenu />
+      {loading && <div>Loading more files...</div>}
     </FileBrowser>
   );
 }
