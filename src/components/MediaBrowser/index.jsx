@@ -69,42 +69,45 @@ function MediaBrowser() {
   // To fetch all the files from the Canva account, we need to make
   // multiple requests passing the continuation token that each
   // request return.
-  // useEffect(() => {
-  //   const newFiles = [...canvaFiles, ...files];
-  //   !loading && setCanvaFiles(newFiles);
-  //   if (continuationToken) {
-  //     refetch({ continuationToken });
-  //   }
-  // }, [continuationToken]);
-
   useEffect(() => {
-    if (mediaBrowser === "canva") {
-      // console.log({ element });
-      // const { scrollTop, clientHeight, scrollHeight } = element;
-      // console.log({ scrollTop, clientHeight, scrollHeight });
-      const newFiles = [...canvaFiles, ...files];
-      !loading && setCanvaFiles(newFiles);
-
-      const handleScroll = () => {
-        const element = document.querySelector(".chonky-fileListWrapper");
-        const { scrollTop, clientHeight, scrollHeight } = element;
-
-        // const { scrollTop, clientHeight, scrollHeight } =
-        //   document.documentElement;
-        if (scrollTop + clientHeight >= scrollHeight - 20) {
-          if (continuationToken) {
-            refetch({ continuationToken });
-          }
-          console.log("SHOULD FETCH MORE");
-        }
-      };
-
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
+    const newFiles = [...canvaFiles, ...files];
+    !loading && setCanvaFiles(newFiles);
+    if (continuationToken) {
+      refetch({ continuationToken });
     }
-  }, [continuationToken, mediaBrowser]);
+  }, [continuationToken]);
+
+  // TODO: Implement infinit scroll
+  // useEffect(() => {
+  //   if (mediaBrowser === "canva") {
+  //     const newFiles = [...canvaFiles, ...files];
+  //     !loading && setCanvaFiles(newFiles);
+
+  //     const element = document.querySelector(".chonky-fileListWrapper");
+  //     if (element) {
+  //       const handleScroll = (e) => {
+  //         const { scrollTop, clientHeight, scrollHeight } = element;
+
+  //         // const { scrollTop, clientHeight, scrollHeight } =
+  //         //   document.documentElement;
+  //         if (scrollTop + clientHeight >= scrollHeight - 2) {
+  //           if (continuationToken && !loading) {
+  //             refetch({ continuationToken });
+  //           }
+  //           console.log("SHOULD FETCH MORE");
+  //         }
+
+  //         e.stopPropagation();
+  //       };
+
+  //       console.log({ element });
+  //       element.addEventListener("scroll", handleScroll);
+  //       return () => {
+  //         element.removeEventListener("scroll", handleScroll);
+  //       };
+  //     }
+  //   }
+  // }, [continuationToken, mediaBrowser]);
 
   return (
     <FileBrowser
@@ -149,7 +152,6 @@ function MediaBrowser() {
         <>{loading || showLoading ? <Loading /> : <FileList />}</>
       )}
       <FileContextMenu />
-      {loading && <div>Loading more files...</div>}
     </FileBrowser>
   );
 }

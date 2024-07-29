@@ -29,8 +29,15 @@ const GET_ASSET_UPLOAD = gql`
 `;
 
 const CREATE_CANVA_DESIGN = gql`
-  mutation createCanvaDesign($assetId: String!, $name: String!) {
-    createCanvaDesign(input: { assetId: $assetId, name: $name }) {
+  mutation createCanvaDesign(
+    $assetId: String!
+    $name: String!
+    $width: Int!
+    $height: Int!
+  ) {
+    createCanvaDesign(
+      input: { assetId: $assetId, name: $name, width: $width, height: $height }
+    ) {
       editUrl
     }
   }

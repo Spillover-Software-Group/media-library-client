@@ -14,6 +14,7 @@ function useOpenOnCanvaAction() {
   const [assetData, setAssetData] = useState(null);
   const toastId = useRef(null);
   const [createdDesign, setCreatedDesign] = useState(null);
+  const [imageDimensions, setImageDimensions] = useState({});
 
   const startCreateDesignToast = () =>
     (toastId.current = toast.loading("Sending file to Canva.com..."));
@@ -49,10 +50,12 @@ function useOpenOnCanvaAction() {
   // Create the Canva Design when we get the assetId
   useEffect(() => {
     if (assetData) {
-      const test = runCreateDesign({
+      runCreateDesign({
         variables: {
           assetId: assetData.assetId,
           name: assetData.name,
+          height: imageDimensions.height,
+          width: imageDimensions.width,
         },
       });
     }
@@ -83,6 +86,16 @@ function useOpenOnCanvaAction() {
 
     if (selectedFilesForAction.length) {
       const file = selectedFilesForAction[0];
+
+      // We save the dimensions of the image to create the Canva Design
+      const img = new Image();
+      img.src = file.url;
+      img.onload = () => {
+        setImageDimensions({
+          width: img.width,
+          height: img.height,
+        });
+      };
 
       if (file?.editUrl) {
         return window.open(file?.editUrl, "_blank");

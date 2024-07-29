@@ -114,13 +114,8 @@ const canva = {
                 id
                 name
                 isDir
-                ... on CanvaFolderEntry {
-                  childrenCount
-                }
-                ... on CanvaFileEntry {
-                  editUrl
-                  thumbnailUrl
-                }
+                editUrl
+                thumbnailUrl
               }
             }
           }
