@@ -52326,7 +52326,7 @@ function oae() {
     Tg,
     {
       disableDragAndDropProvider: !0,
-      files: f === "canva" ? canvaFiles : S,
+      files: S,
       folderChain: E,
       onFileAction: O,
       disableDefaultFileActions: [Ie.ToggleHiddenFiles.id],

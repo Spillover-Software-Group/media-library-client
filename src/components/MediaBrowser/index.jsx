@@ -70,7 +70,7 @@ function MediaBrowser() {
       // so we can use the hook `useDrop` in useUploadFiles.
       // SEE: https://chonky.io/docs/2.x/basics/drag-n-drop#cannot-have-two-html5-backends
       disableDragAndDropProvider
-      files={mediaBrowser === "canva" ? canvaFiles : files}
+      files={files}
       folderChain={folderChain}
       onFileAction={onFileAction}
       disableDefaultFileActions={[ChonkyActions.ToggleHiddenFiles.id]}
