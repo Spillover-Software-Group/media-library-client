@@ -9,31 +9,18 @@ function OptionsProvider({ children, options = {} }) {
 
   options.isSelectable = (f) => {
     if (
-      selectableFileTypes
-      && (
-        (
-          Array.isArray(selectableFileTypes)
-          && !selectableFileTypes.includes(f.mimetype)
-        ) || (
-          typeof selectableFileTypes === "function"
-          && !selectableFileTypes(f)
-        )
-      )
+      selectableFileTypes &&
+      ((Array.isArray(selectableFileTypes) &&
+        !selectableFileTypes.includes(f.mimetype)) ||
+        (typeof selectableFileTypes === "function" && !selectableFileTypes(f)))
     ) {
       return false;
     }
 
     if (
-      maxSelectableSize
-      && (
-        (
-          Number.isInteger(maxSelectableSize)
-          && f.size > maxSelectableSize
-        ) || (
-          typeof maxSelectableSize === "function"
-          && !maxSelectableSize(f)
-        )
-      )
+      maxSelectableSize &&
+      ((Number.isInteger(maxSelectableSize) && f.size > maxSelectableSize) ||
+        (typeof maxSelectableSize === "function" && !maxSelectableSize(f)))
     ) {
       return false;
     }
@@ -54,6 +41,7 @@ function OptionsProvider({ children, options = {} }) {
     // Other icons.
     loading: "fa-solid fa-circle-notch fa-spin fa-2x sml-text-gray-400",
     generateImage: "fa-solid fa-magic-wand-sparkles",
+    syncFolder: "fa-solid fa-sync",
     confirm: "fa-solid fa-circle-check",
     reload: "fa-solid fa-rotate-right",
     save: "fa-solid fa-floppy-disk",

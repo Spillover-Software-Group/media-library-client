@@ -30,10 +30,7 @@ const account = {
   extractFolder: (data) => data.account.folder,
   query: gql`
     ${folderFieldsFragment}
-    query GetAccountFolder(
-      $accountId: GID!,
-      $folderId: GID
-    ) {
+    query GetAccountFolder($accountId: GID!, $folderId: GID) {
       currentAccountId @client @export(as: "accountId")
       currentFolderId @client @export(as: "folderId")
       account(accountId: $accountId) {
@@ -50,16 +47,10 @@ const global = {
   extractFolder: (data) => data.globalFolder,
   query: gql`
     ${folderFieldsFragment}
-    query GetGlobalFolder(
-      $accountId: GID!,
-      $folderId: GID
-    ) {
+    query GetGlobalFolder($accountId: GID!, $folderId: GID) {
       currentAccountId @client @export(as: "accountId")
       currentFolderId @client @export(as: "folderId")
-      globalFolder(
-        accountId: $accountId,
-        folderId: $folderId
-      ) {
+      globalFolder(accountId: $accountId, folderId: $folderId) {
         ...FolderFields
       }
     }
@@ -99,9 +90,39 @@ const deleted = {
   `,
 };
 
-export {
-  account,
-  global,
-  favorites,
-  deleted,
+const canva = {
+  extractFolder: (data) => data.account.integrations.canva.folder,
+  query: gql`
+    query GetCanvaFolder($accountId: GID!, $continuationToken: String) {
+      currentAccountId @client @export(as: "accountId")
+      account(accountId: $accountId) {
+        id
+        name
+        integrations {
+          canva {
+            userDisplayName
+            folder(continuationToken: $continuationToken) {
+              name
+              id
+              continuationToken
+              folderChain {
+                id
+                name
+                isDir
+              }
+              entries {
+                id
+                name
+                isDir
+                editUrl
+                thumbnailUrl
+              }
+            }
+          }
+        }
+      }
+    }
+  `,
 };
+
+export { account, global, favorites, deleted, canva };

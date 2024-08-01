@@ -9,6 +9,10 @@ import useOpenFilesAction from "./useOpenFilesAction";
 import useRestoreFilesAction from "./useRestoreFilesAction";
 import useChangeSelectionFilesAction from "./useChangeSelectionFilesAction";
 import useRenameEntryAction from "./useRenameEntryAction";
+import useOpenOnCanvaAction from "./integrations/canva/useOpenOnCanvaAction";
+import useSaveOnMyMediaAction from "./integrations/canva/useSaveOnMyMediaAction";
+import useAccounts from "./useAccounts";
+import useRefreshFolder from "./useRefreshFolder";
 
 const openRenameEntryAction = defineFileAction({
   id: "rename-entry",
@@ -66,36 +70,73 @@ const openGenerateImageAction = defineFileAction({
   },
 });
 
-const actionsByMediaBrowser = {
-  account: [
-    ChonkyActions.OpenFiles,
-    ChonkyActions.CreateFolder,
-    ChonkyActions.UploadFiles,
-    openGenerateImageAction,
-    openRenameEntryAction,
-    ChonkyActions.DeleteFiles,
-    ChonkyActions.MoveFiles,
-    favoriteFilesAction,
-  ],
-  global: [
-    ChonkyActions.OpenFiles,
-  ],
-  favorites: [
-    ChonkyActions.OpenFiles,
-    unfavoriteFilesAction,
-  ],
-  deleted: [
-    restoreFilesAction,
-  ],
-};
+const refreshFolderAction = defineFileAction({
+  id: "refresh-folder-action",
+  requiresSelection: false,
+  button: {
+    name: "Refresh folder",
+    toolbar: true,
+    contextMenu: false,
+    icon: "syncFolder",
+  },
+});
 
-function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, setRenamingEntry, openGenerateImage }) {
+const openInCanvaAction = defineFileAction({
+  id: "open-in-Canva",
+  requiresSelection: true,
+  fileFilter: (file) => !file.isDir,
+  button: {
+    name: "Open In Canva",
+    toolbar: false,
+    contextMenu: true,
+    icon: "symlink",
+  },
+});
+
+const saveOnMyMedia = defineFileAction({
+  id: "save-on-my-media",
+  requiresSelection: true,
+  fileFilter: (file) => !file.isDir,
+  button: {
+    name: "Save on My Media",
+    toolbar: false,
+    contextMenu: true,
+    icon: "upload",
+  },
+});
+
+function useMediaBrowserActions({
+  uploadAreaRef,
+  openNewFolderPrompt,
+  setRenamingEntry,
+  openGenerateImage,
+}) {
   const [mediaBrowser] = useCurrentMediaBrowser();
+  const { currentAccount, loading } = useAccounts();
+  const canvaIsConnected = !loading && currentAccount?.integrations?.canva;
+
+  let actionsByMediaBrowser = {
+    account: [
+      ChonkyActions.OpenFiles,
+      ChonkyActions.CreateFolder,
+      ChonkyActions.UploadFiles,
+      openGenerateImageAction,
+      refreshFolderAction,
+      openRenameEntryAction,
+      ChonkyActions.DeleteFiles,
+      ChonkyActions.MoveFiles,
+      favoriteFilesAction,
+    ],
+    global: [ChonkyActions.OpenFiles],
+    favorites: [ChonkyActions.OpenFiles, unfavoriteFilesAction],
+    deleted: [restoreFilesAction],
+  };
 
   let actions = {
     [ChonkyActions.OpenFiles.id]: useOpenFilesAction(),
     [ChonkyActions.CreateFolder.id]: openNewFolderPrompt,
-    [ChonkyActions.UploadFiles.id]: () => uploadAreaRef.current?.openFilePicker(),
+    [ChonkyActions.UploadFiles.id]: () =>
+      uploadAreaRef.current?.openFilePicker(),
     [ChonkyActions.DeleteFiles.id]: useDeleteFilesAction(),
     [ChonkyActions.MoveFiles.id]: useMoveFilesAction(),
     [favoriteFilesAction.id]: useFavoriteFilesAction(),
@@ -103,8 +144,22 @@ function useMediaBrowserActions({ uploadAreaRef, openNewFolderPrompt, setRenamin
     [restoreFilesAction.id]: useRestoreFilesAction(),
     [ChonkyActions.ChangeSelection.id]: useChangeSelectionFilesAction(),
     [openGenerateImageAction.id]: openGenerateImage,
+    [refreshFolderAction.id]: useRefreshFolder(),
     [openRenameEntryAction.id]: useRenameEntryAction(setRenamingEntry),
+    [openInCanvaAction.id]: useOpenOnCanvaAction(),
+    [saveOnMyMedia.id]: useSaveOnMyMediaAction(),
   };
+
+  // Canva Actions
+  if (canvaIsConnected) {
+    actionsByMediaBrowser = {
+      ...actionsByMediaBrowser,
+      account: [...actionsByMediaBrowser.account, openInCanvaAction],
+      global: [...actionsByMediaBrowser.global, openInCanvaAction],
+      favorites: [...actionsByMediaBrowser.favorites, openInCanvaAction],
+      canva: [openInCanvaAction, saveOnMyMedia],
+    };
+  }
 
   const fileActions = actionsByMediaBrowser[mediaBrowser];
 

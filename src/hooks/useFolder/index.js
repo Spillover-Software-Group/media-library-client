@@ -10,14 +10,20 @@ function useFolder() {
   const [accountId] = useCurrentAccountId();
   const { isSelectable } = useOptions();
 
-  const { loading, data } = useQuery(
-    queries[mediaBrowser].query,
-    { skip: !accountId, fetchPolicy: "cache-and-network" },
-  );
+  const { loading, data, refetch } = useQuery(queries[mediaBrowser].query, {
+    skip: !accountId,
+    fetchPolicy: "cache-and-network",
+  });
 
-  if (loading || !accountId) return { loading: true, files: [], folderChain: [] };
+  if (loading || !accountId)
+    return { loading: true, files: [], folderChain: [] };
 
-  const { entries, folderChain, id: folderId } = queries[mediaBrowser].extractFolder(data);
+  const {
+    entries,
+    folderChain,
+    id: folderId,
+    continuationToken,
+  } = queries[mediaBrowser].extractFolder(data);
 
   const files = entries.map((f) => ({
     ...f,
@@ -29,6 +35,8 @@ function useFolder() {
     folderId,
     files,
     folderChain,
+    refetch, // Used by Canva Integration only
+    continuationToken, // Used by Canva Integration only
   };
 }
 

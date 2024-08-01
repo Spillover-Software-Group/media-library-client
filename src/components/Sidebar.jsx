@@ -3,6 +3,7 @@ import Select from "react-select";
 import useCurrentMediaBrowser from "../hooks/useCurrentMediaBrowser";
 import useCurrentFolderId from "../hooks/useCurrentFolderId";
 import Icon from "./Icon";
+import ExternalIntegrations from "./externalIntegrations";
 
 const mediaBrowsers = [
   {
@@ -23,16 +24,25 @@ const mediaBrowsers = [
   },
 ];
 
+const externalBrowsers = [
+  {
+    key: "canva",
+    name: "Canva",
+  },
+];
+
 function Sidebar() {
   const [currentBrowser, setCurrentBrowser] = useCurrentMediaBrowser();
-  const [, setCurrentFolderId] = useCurrentFolderId();
+  const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
 
   const changeBrowser = (browser) => {
     setCurrentFolderId(null);
     setCurrentBrowser(browser);
   };
 
-  const currentBrowerSelected = mediaBrowsers.find((b) => b.key === currentBrowser);
+  const currentBrowerSelected = [...mediaBrowsers, ...externalBrowsers].find(
+    (b) => b.key === currentBrowser,
+  );
 
   return (
     <div className="sml-sidebar sml-bg-gray-50">
@@ -66,13 +76,20 @@ function Sidebar() {
                 } sml-py-1 sml-px-4 sml-text-sm sml-flex sml-justify-between sml-items-center sml-cursor-pointer hover:sml-bg-gray-200 sml-media-browser-name`}
               >
                 <div className="sml-flex sml-items-center w-full">
-                  <Icon name={browser.key} className="sml-browser-icon sml-mr-2 sml-text-xl" />
+                  <Icon
+                    name={browser.key}
+                    className="sml-browser-icon sml-mr-2 sml-text-xl"
+                  />
                   <span>{browser.name}</span>
                 </div>
               </div>
             </li>
           ))}
         </ul>
+        <ExternalIntegrations
+          currentBrowser={currentBrowser}
+          changeBrowser={changeBrowser}
+        />
       </div>
     </div>
   );

@@ -27,6 +27,7 @@ function MediaBrowser() {
   const [renamingEntry, setRenamingEntry] = useState(null);
   const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
   const [showLoading, setShowLoading] = useState(false);
+  const [canvaFiles, setCanvaFiles] = useState([]);
 
   const [mediaBrowser] = useCurrentMediaBrowser();
   const { handleSelected } = useOptions();
@@ -38,7 +39,8 @@ function MediaBrowser() {
   const closeRenameEntry = () => setRenamingEntry(null);
   const useImage = (image) => handleSelected([image]);
 
-  const { folderId, files, folderChain, loading } = useFolder();
+  const { folderId, files, folderChain, loading, continuationToken, refetch } =
+    useFolder();
 
   useEffect(() => {
     if (mediaBrowser === "account" && !currentFolderId) {
@@ -56,12 +58,56 @@ function MediaBrowser() {
     }
   }, [currentFolderId, folderId]);
 
-  const {
-    fileActions,
-    onFileAction,
-    enableUpload,
-    enableNewFolder,
-  } = useFileActions({ uploadAreaRef, openNewFolderPrompt, setRenamingEntry, openGenerateImage });
+  const { fileActions, onFileAction, enableUpload, enableNewFolder } =
+    useFileActions({
+      uploadAreaRef,
+      openNewFolderPrompt,
+      setRenamingEntry,
+      openGenerateImage,
+    });
+
+  // To fetch all the files from the Canva account, we need to make
+  // multiple requests passing the continuation token that each
+  // request return.
+  useEffect(() => {
+    const newFiles = [...canvaFiles, ...files];
+    !loading && setCanvaFiles(newFiles);
+    if (continuationToken) {
+      refetch({ continuationToken });
+    }
+  }, [continuationToken]);
+
+  // TODO: Implement infinit scroll
+  // useEffect(() => {
+  //   if (mediaBrowser === "canva") {
+  //     const newFiles = [...canvaFiles, ...files];
+  //     !loading && setCanvaFiles(newFiles);
+
+  //     const element = document.querySelector(".chonky-fileListWrapper");
+  //     if (element) {
+  //       const handleScroll = (e) => {
+  //         const { scrollTop, clientHeight, scrollHeight } = element;
+
+  //         // const { scrollTop, clientHeight, scrollHeight } =
+  //         //   document.documentElement;
+  //         if (scrollTop + clientHeight >= scrollHeight - 2) {
+  //           if (continuationToken && !loading) {
+  //             refetch({ continuationToken });
+  //           }
+  //           console.log("SHOULD FETCH MORE");
+  //         }
+
+  //         e.stopPropagation();
+  //       };
+
+  //       console.log({ element });
+  //       element.addEventListener("scroll", handleScroll);
+  //       return () => {
+  //         element.removeEventListener("scroll", handleScroll);
+  //       };
+  //     }
+  //   }
+  // }, [continuationToken, mediaBrowser]);
 
   return (
     <FileBrowser
@@ -69,21 +115,31 @@ function MediaBrowser() {
       // so we can use the hook `useDrop` in useUploadFiles.
       // SEE: https://chonky.io/docs/2.x/basics/drag-n-drop#cannot-have-two-html5-backends
       disableDragAndDropProvider
-      files={files}
+      files={mediaBrowser === "canva" ? canvaFiles : files}
       folderChain={folderChain}
       onFileAction={onFileAction}
-      disableDefaultFileActions={[
-        ChonkyActions.ToggleHiddenFiles.id,
-      ]}
+      disableDefaultFileActions={[ChonkyActions.ToggleHiddenFiles.id]}
       fileActions={fileActions}
+      defaultSortActionId={
+        mediaBrowser === "canva"
+          ? ChonkyActions.SortFilesByDate.id
+          : ChonkyActions.SortFilesByName.id
+      }
     >
       <FileNavbar />
       <FileToolbar />
 
-      {enableNewFolder && showNewFolderPrompt && <NewFolderPrompt close={closeNewFolderPrompt} />}
-      {renamingEntry && <RenameEntry entry={renamingEntry} close={closeRenameEntry} />}
+      {enableNewFolder && showNewFolderPrompt && (
+        <NewFolderPrompt close={closeNewFolderPrompt} />
+      )}
+      {renamingEntry && (
+        <RenameEntry entry={renamingEntry} close={closeRenameEntry} />
+      )}
       {showGenerateImage && (
-        <div className="sml-px-2 sml-py-4 sml-mb-4 sml-border-b" style={{ marginRight: "-8px", marginLeft: "-8px" }}>
+        <div
+          className="sml-px-2 sml-py-4 sml-mb-4 sml-border-b"
+          style={{ marginRight: "-8px", marginLeft: "-8px" }}
+        >
           <GenerateImage close={closeGenerateImage} useImage={useImage} />
         </div>
       )}
@@ -93,9 +149,7 @@ function MediaBrowser() {
           {loading || showLoading ? <Loading /> : <FileList />}
         </UploadArea>
       ) : (
-        <>
-          {loading || showLoading ? <Loading /> : <FileList />}
-        </>
+        <>{loading || showLoading ? <Loading /> : <FileList />}</>
       )}
       <FileContextMenu />
     </FileBrowser>

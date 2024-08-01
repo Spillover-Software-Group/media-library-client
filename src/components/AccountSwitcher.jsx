@@ -1,27 +1,11 @@
 import { useEffect } from "react";
-import { gql, useQuery } from "@apollo/client";
 import Select from "react-select";
 
 import useCurrentAccountId from "../hooks/useCurrentAccountId";
 import useCurrentFolderId from "../hooks/useCurrentFolderId";
 import useOptions from "../hooks/useOptions";
 import useCurrentMediaBrowser from "../hooks/useCurrentMediaBrowser";
-
-const QUERY = gql`
-  query GetCurrentUserWithAccounts {
-    currentUser {
-      id
-      role
-      accounts {
-        id
-        spilloverId
-        senalysisBusinessId
-        name
-        rootFolderId
-      }
-    }
-  }
-`;
+import useAccounts from "../hooks/useAccounts";
 
 function AccountSwitcher() {
   const {
@@ -29,15 +13,13 @@ function AccountSwitcher() {
     onSelectedAccountChange,
     defaultAccountId,
     spilloverBusinessId,
-    senalysisBusinessId
+    senalysisBusinessId,
   } = useOptions();
 
   const [currentAccountId, setCurrentAccountId] = useCurrentAccountId();
   const [, setCurrentBrowser] = useCurrentMediaBrowser();
   const [, setCurrentFolderId] = useCurrentFolderId();
-  const { loading, data } = useQuery(QUERY);
-
-  const accounts = data?.currentUser?.accounts || [];
+  const { accounts, currentAccount } = useAccounts();
 
   const defaultAccount = accounts.find((a) => {
     if (spilloverBusinessId) {
@@ -61,10 +43,9 @@ function AccountSwitcher() {
     changeAccount(defaultAccount || accounts[0]);
   }, [accounts, defaultAccount, spilloverBusinessId, senalysisBusinessId]);
 
-  const currentAccount = accounts.find((a) => a.id === currentAccountId);
-
   return (
-    (showAccountSelector && accounts.length > 1) && (
+    showAccountSelector &&
+    accounts.length > 1 && (
       <Select
         className="sml-business-select sml-w-1/2"
         classNamePrefix="sml-business-select-options"
