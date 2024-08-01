@@ -24,8 +24,12 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
   const authorization = () => {
     return new Promise((resolve, reject) => {
       try {
+        const apiBaseEndpoint = config.isDev
+          ? config.apiBaseDevEndpoint
+          : config.apiBaseEndpoint;
+
         const url = new URL(
-          `${config.apiBaseDevEndpoint}/integrations-api/canva-account/v1/oauth2/authorize?access_token=${accessToken}`,
+          `${apiBaseEndpoint}/integrations-api/canva-account/v1/oauth2/authorize?access_token=${accessToken}`,
         );
         const windowFeatures = ["popup", "height=400", "width=400"];
         const authWindow = window.open(url, "", windowFeatures.join(","));
