@@ -10,10 +10,12 @@ function useFolder() {
   const [accountId] = useCurrentAccountId();
   const { isSelectable } = useOptions();
 
-  const { loading, data } = useQuery(queries[mediaBrowser].query, {
+  const { loading, data, refetch } = useQuery(queries[mediaBrowser].query, {
     skip: !accountId,
     fetchPolicy: "cache-and-network",
   });
+
+  console.log("useFolder", mediaBrowser, accountId);
 
   if (loading || !accountId)
     return { loading: true, files: [], folderChain: [] };
@@ -34,6 +36,7 @@ function useFolder() {
     folderId,
     files,
     folderChain,
+    refetch,
   };
 }
 

@@ -51887,25 +51887,26 @@ function Bie({ children: t, handleUploaded: e }, r) {
 }
 const x6 = lu(Bie);
 function O6() {
-  const [t] = zo(), [e] = I0(), { isSelectable: r } = oi(), { loading: n, data: i } = y5(rm[t].query, {
+  const [t] = zo(), [e] = I0(), { isSelectable: r } = oi(), { loading: n, data: i, refetch: a } = y5(rm[t].query, {
     skip: !e,
     fetchPolicy: "cache-and-network"
   });
-  if (n || !e)
+  if (console.log("useFolder", t, e), n || !e)
     return { loading: !0, files: [], folderChain: [] };
   const {
-    entries: a,
-    folderChain: o,
-    id: s
-  } = rm[t].extractFolder(i), u = a.map((l) => ({
-    ...l,
-    selectable: r(l)
+    entries: o,
+    folderChain: s,
+    id: u
+  } = rm[t].extractFolder(i), l = o.map((c) => ({
+    ...c,
+    selectable: r(c)
   }));
   return {
     loading: n,
-    folderId: s,
-    files: u,
-    folderChain: o
+    folderId: u,
+    files: l,
+    folderChain: s,
+    refetch: a
   };
 }
 function ty(t) {
