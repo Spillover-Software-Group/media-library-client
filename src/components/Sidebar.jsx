@@ -31,16 +31,18 @@ const externalBrowsers = [
   },
 ];
 
+const allBrowsers = [...mediaBrowsers, ...externalBrowsers];
+
 function Sidebar() {
   const [currentBrowser, setCurrentBrowser] = useCurrentMediaBrowser();
-  const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
+  const [, setCurrentFolderId] = useCurrentFolderId();
 
   const changeBrowser = (browser) => {
     setCurrentFolderId(null);
     setCurrentBrowser(browser);
   };
 
-  const currentBrowerSelected = [...mediaBrowsers, ...externalBrowsers].find(
+  const currentBrowerSelected = allBrowsers.find(
     (b) => b.key === currentBrowser,
   );
 
