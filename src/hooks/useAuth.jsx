@@ -51,14 +51,19 @@ class TokenData {
 function SSOFrame({ mode, onComplete }) {
   const iframeRef = useRef();
 
-  const handleSSOMessage = useCallback((e) => {
-    if (iframeRef.current?.contentWindow !== e.source) return;
-    if (config.isDev) console.log("Received message", e);
+  const handleSSOMessage = useCallback(
+    (e) => {
+      if (iframeRef.current?.contentWindow !== e.source) return;
+      if (config.isDev) console.log("Received message", e);
 
-    const { data: { type, payload } } = e;
+      const {
+        data: { type, payload },
+      } = e;
 
-    if (onComplete && type == "SSO_CALLBACK") onComplete(payload);
-  }, [iframeRef, onComplete]);
+      if (onComplete && type == "SSO_CALLBACK") onComplete(payload);
+    },
+    [iframeRef, onComplete],
+  );
 
   useEventListener("message", handleSSOMessage);
 

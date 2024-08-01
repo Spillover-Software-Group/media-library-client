@@ -132,7 +132,7 @@ function useMediaBrowserActions({
     deleted: [restoreFilesAction],
   };
 
-  let actions = {
+  const actions = {
     [ChonkyActions.OpenFiles.id]: useOpenFilesAction(),
     [ChonkyActions.CreateFolder.id]: openNewFolderPrompt,
     [ChonkyActions.UploadFiles.id]: () =>

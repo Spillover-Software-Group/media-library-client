@@ -18,7 +18,10 @@ function UploadAreaStandalone({ handleUploaded, ...props }) {
     // This could be a userId or a token, for example.
     <AuthProvider mode={props.mode} ownerId={props.ownerId}>
       <Wrapper {...props}>
-        <div onClick={openFilePicker} className="spillover-media-library sml-flex sml-h-full sml-w-full">
+        <div
+          onClick={openFilePicker}
+          className="spillover-media-library sml-flex sml-h-full sml-w-full"
+        >
           <AccountSwitcher />
           <DndProvider backend={HTML5Backend}>
             <UploadArea ref={uploadAreaRef} handleUploaded={handleUploaded}>

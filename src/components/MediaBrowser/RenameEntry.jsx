@@ -42,11 +42,15 @@ function RenamePrompt({ entry, close }) {
     if (close) close();
   };
 
-  const nameWithoutExtension = entry.isDir ? entry.name : entry.name.split(".").slice(0, -1).join(".");
+  const nameWithoutExtension = entry.isDir
+    ? entry.name
+    : entry.name.split(".").slice(0, -1).join(".");
 
   return (
     <div>
-      <p className="sml-text-sm sml-font-semibold sml-mb-0">Rename {entry.isDir ? "folder" : "file"} "{entry.name}"</p>
+      <p className="sml-text-sm sml-font-semibold sml-mb-0">
+        Rename {entry.isDir ? "folder" : "file"} "{entry.name}"
+      </p>
       <Formik
         initialValues={{
           name: nameWithoutExtension,
@@ -56,7 +60,10 @@ function RenamePrompt({ entry, close }) {
         onSubmit={renameEntry}
       >
         {({ isSubmitting }) => (
-          <Form style={{ marginRight: "-8px", marginLeft: "-8px" }} className="sml-flex sml-flex-row sml-space-x-2 sml-p-2 sml-border-b sml-mb-4">
+          <Form
+            style={{ marginRight: "-8px", marginLeft: "-8px" }}
+            className="sml-flex sml-flex-row sml-space-x-2 sml-p-2 sml-border-b sml-mb-4"
+          >
             <TextInput
               name="name"
               placeholder="Name"
@@ -65,7 +72,9 @@ function RenamePrompt({ entry, close }) {
             />
 
             <PrimaryButton disabled={isSubmitting}>Save</PrimaryButton>
-            <SecondaryButton disabled={isSubmitting} onClick={() => close()}>Cancel</SecondaryButton>
+            <SecondaryButton disabled={isSubmitting} onClick={() => close()}>
+              Cancel
+            </SecondaryButton>
           </Form>
         )}
       </Formik>

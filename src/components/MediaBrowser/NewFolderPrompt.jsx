@@ -45,14 +45,16 @@ function NewFolderPrompt({ close }) {
       onSubmit={createFolder}
     >
       {({ isSubmitting }) => (
-        <Form style={{marginRight: "-8px", marginLeft: "-8px"}} className="sml-flex sml-flex-row sml-space-x-2 sml-p-2 sml-border-b sml-mb-4">
-          <TextInput
-            name="name"
-            placeholder="Folder name"
-          />
+        <Form
+          style={{ marginRight: "-8px", marginLeft: "-8px" }}
+          className="sml-flex sml-flex-row sml-space-x-2 sml-p-2 sml-border-b sml-mb-4"
+        >
+          <TextInput name="name" placeholder="Folder name" />
 
           <PrimaryButton disabled={isSubmitting}>Create</PrimaryButton>
-          <SecondaryButton disabled={isSubmitting} onClick={() => close()}>Cancel</SecondaryButton>
+          <SecondaryButton disabled={isSubmitting} onClick={() => close()}>
+            Cancel
+          </SecondaryButton>
         </Form>
       )}
     </Formik>

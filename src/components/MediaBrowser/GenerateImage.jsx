@@ -68,7 +68,9 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 function GenerateImage({ close, useImage }) {
   const { isFullPage } = useOptions();
   const [runGenerateImage] = useMutation(GENERATE_IMAGE_MUTATION);
-  const [runUploadGeneratedImage] = useMutationAndRefetch(UPLOAD_IMAGE_MUTATION);
+  const [runUploadGeneratedImage] = useMutationAndRefetch(
+    UPLOAD_IMAGE_MUTATION,
+  );
   const [imageUrl, setImageUrl] = useState(null);
   const [promptSize, setPromptSize] = useState(0);
   const [isSaving, setIsSaving] = useState(false);
@@ -80,14 +82,17 @@ function GenerateImage({ close, useImage }) {
   const generateImage = async ({ prompt }) => {
     setImageUrl(null);
 
-    const { data } = await runGenerateImage({ variables: { prompt }});
+    const { data } = await runGenerateImage({ variables: { prompt } });
 
     if (data.generateImage.errors) {
       data.generateImage.errors.forEach((error) => {
-        toast.error(() => (
-          // So links in the error message are clickable.
-          <div dangerouslySetInnerHTML={{ __html: error.message }} />
-        ), { autoClose: false, closeOnClick: false });
+        toast.error(
+          () => (
+            // So links in the error message are clickable.
+            <div dangerouslySetInnerHTML={{ __html: error.message }} />
+          ),
+          { autoClose: false, closeOnClick: false },
+        );
       });
     } else {
       toast.success("Image generated!");
@@ -98,7 +103,9 @@ function GenerateImage({ close, useImage }) {
   const save = async (prompt) => {
     try {
       setIsSaving(true);
-      const { data } = await runUploadGeneratedImage({ variables: { prompt, imageUrl }});
+      const { data } = await runUploadGeneratedImage({
+        variables: { prompt, imageUrl },
+      });
       setIsSaving(false);
       return data.uploadGeneratedImages[0];
     } catch (e) {
@@ -139,7 +146,10 @@ function GenerateImage({ close, useImage }) {
                   placeholder="Describe your image..."
                   maxLength={MAX_PROMPT_LENGTH}
                   disabled={isSubmitting || isSaving}
-                  onChange={(e) => { setPromptSize(e.target.value.length); setFieldValue("prompt", e.target.value); }}
+                  onChange={(e) => {
+                    setPromptSize(e.target.value.length);
+                    setFieldValue("prompt", e.target.value);
+                  }}
                 />
               </div>
 
@@ -157,14 +167,15 @@ function GenerateImage({ close, useImage }) {
             {/* Buttons */}
             <div className="sml-flex sml-shrink sml-flex-row sml-gap-2">
               <PrimaryButton disabled={isSubmitting}>
-                <Icon name="generateImage" className={`sml-mr-1 ${isSubmitting && "fa-shake"}`} />
+                <Icon
+                  name="generateImage"
+                  className={`sml-mr-1 ${isSubmitting && "fa-shake"}`}
+                />
                 Generate
               </PrimaryButton>
 
               {close && (
-                <SecondaryButton onClick={close}>
-                  Close
-                </SecondaryButton>
+                <SecondaryButton onClick={close}>Close</SecondaryButton>
               )}
             </div>
           </Form>
@@ -174,24 +185,45 @@ function GenerateImage({ close, useImage }) {
             {imageUrl && (
               <>
                 <div>
-                  <a href={imageUrl} target="_blank" rel="noreferrer" title="Open image in new tab">
-                    <img src={imageUrl} alt="Generated image" className="sml-max-w-full sml-max-h-96" />
+                  <a
+                    href={imageUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    title="Open image in new tab"
+                  >
+                    <img
+                      src={imageUrl}
+                      alt="Generated image"
+                      className="sml-max-w-full sml-max-h-96"
+                    />
                   </a>
                 </div>
 
                 <div className="sml-flex sml-flex-row sml-gap-2">
-                  <PrimaryButton disabled={isSubmitting || isSaving} onClick={() => saveAndUse(values.prompt)}>
+                  <PrimaryButton
+                    disabled={isSubmitting || isSaving}
+                    onClick={() => saveAndUse(values.prompt)}
+                  >
                     <Icon name="confirm" className="sml-mr-1" />
                     {isFullPage ? "Save image" : "Use image"}
                   </PrimaryButton>
 
-                  <SecondaryButton disabled={isSubmitting || isSaving} onClick={() => saveAndResubmit(values.prompt, submitForm)}>
+                  <SecondaryButton
+                    disabled={isSubmitting || isSaving}
+                    onClick={() => saveAndResubmit(values.prompt, submitForm)}
+                  >
                     <Icon name="save" className="sml-mr-1" />
                     Save and generate another
                   </SecondaryButton>
 
-                  <SecondaryButton onClick={submitForm} disabled={isSubmitting || isSaving}>
-                    <Icon name="reload" className={`sml-mr-1 ${isSubmitting && "fa-spin"}`} />
+                  <SecondaryButton
+                    onClick={submitForm}
+                    disabled={isSubmitting || isSaving}
+                  >
+                    <Icon
+                      name="reload"
+                      className={`sml-mr-1 ${isSubmitting && "fa-spin"}`}
+                    />
                     Discard and generate another
                   </SecondaryButton>
                 </div>

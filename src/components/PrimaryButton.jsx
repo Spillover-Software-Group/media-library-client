@@ -7,7 +7,7 @@ function PrimaryButton({ type = "submit", ...props }) {
       type={type}
       {...props}
     />
-  )
+  );
 }
 
 export default PrimaryButton;

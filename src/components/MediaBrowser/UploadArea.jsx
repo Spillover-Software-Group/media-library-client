@@ -37,7 +37,7 @@ function UploadArea({ children, handleUploaded }, ref) {
 
   return (
     <div ref={uploadDropZoneRef} className="sml-h-full sml-w-full">
-      { children }
+      {children}
 
       <input
         ref={inputRef}

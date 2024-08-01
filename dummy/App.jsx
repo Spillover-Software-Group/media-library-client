@@ -27,7 +27,7 @@ function App() {
       <GenerateImageStandalone
         mode="development"
         handleSelected={handleSelected}
-        ownerId={'12346'}
+        ownerId={"12346"}
         defaultAccountId={accountId}
         onSelectedAccountChange={onSelectedAccountChange}
         autoSelect={true}
@@ -40,7 +40,7 @@ function App() {
         <UploadAreaStandalone
           mode="development"
           handleUploaded={handleSelected}
-          ownerId={'12346'}
+          ownerId={"12346"}
           // spilloverBusinessId={'12346'} Apps should use this.
         />
       </div>
@@ -51,7 +51,7 @@ function App() {
       <MediaLibrary
         mode="development"
         handleSelected={handleSelected}
-        ownerId={'12346'}
+        ownerId={"12346"}
         defaultAccountId={accountId}
         onSelectedAccountChange={onSelectedAccountChange}
         autoSelect={true}

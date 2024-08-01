@@ -5,10 +5,7 @@ import { currentMediaBrowserVar } from "../cache";
 function useCurrentMediaBrowser() {
   const currentMediaBrowser = useReactiveVar(currentMediaBrowserVar);
 
-  return [
-    currentMediaBrowser,
-    currentMediaBrowserVar,
-  ];
+  return [currentMediaBrowser, currentMediaBrowserVar];
 }
 
 export default useCurrentMediaBrowser;

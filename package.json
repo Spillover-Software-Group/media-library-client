@@ -1,6 +1,6 @@
 {
   "name": "@spillover/media-library",
-  "version": "1.9.3",
+  "version": "1.10.0",
   "description": "Media Library react component",
   "license": "UNLICENSED",
   "private": true,
@@ -9,13 +9,13 @@
   ],
   "module": "./dist/media-library.es.js",
   "dependencies": {
-    "@apollo/client": "^3.9.6",
+    "@apollo/client": "^3.11.2",
     "apollo-upload-client": "^18.0.1",
-    "apollo3-cache-persist": "^0.14.1",
+    "apollo3-cache-persist": "^0.15.0",
     "chonky": "^2.3.2",
     "chonky-icon-fontawesome": "^2.3.2",
-    "formik": "^2.4.5",
-    "graphql": "^16.8.1",
+    "formik": "^2.4.6",
+    "graphql": "^16.9.0",
     "luxon": "^3.4.4",
     "react-dnd": "^11",
     "react-dnd-html5-backend": "^11",
@@ -24,14 +24,11 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^6.5.1",
-    "@vitejs/plugin-react-swc": "^3.6.0",
-    "eslint": "^8.57.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-react": "^7.34.0",
-    "prettier": "^3.2.5",
-    "tailwindcss": "^3.4.1",
-    "vite": "^5.1.6"
+    "@biomejs/biome": "1.8.3",
+    "@fortawesome/fontawesome-free": "^6.6.0",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "tailwindcss": "^3.4.7",
+    "vite": "^5.3.5"
   },
   "peerDependencies": {
     "react": ">= 16",
@@ -42,8 +39,7 @@
     "build": "NODE_ENV=production vite build",
     "//": "HACK: hack for React 16",
     "postbuild": "sed -i '' -e 's/.useInsertionEffect/[\"useInsertion\"+\"Effect\"]/g' ./dist/media-library.es.js",
-    "lint": "eslint --fix --ext .jsx,.js . && prettier --write .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "biome check --write ./**/*"
   },
   "engines": {
     "node": ">= 16"

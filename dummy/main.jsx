@@ -6,7 +6,4 @@ import App from "./App";
 import "@fortawesome/fontawesome-free/css/all.css";
 import "./main.css";
 
-render(
-  <App />,
-  document.getElementById("app"),
-);
+render(<App />, document.getElementById("app"));

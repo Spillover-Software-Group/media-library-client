@@ -15,10 +15,7 @@ function useCurrentFolderId() {
     currentFolderIdVar(id);
   };
 
-  return [
-    currentFolderId,
-    setCurrentFolderId,
-  ];
+  return [currentFolderId, setCurrentFolderId];
 }
 
 export default useCurrentFolderId;
