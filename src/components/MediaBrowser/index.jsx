@@ -27,7 +27,6 @@ function MediaBrowser() {
   const [renamingEntry, setRenamingEntry] = useState(null);
   const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
   const [showLoading, setShowLoading] = useState(false);
-  const [canvaFiles, setCanvaFiles] = useState([]);
 
   const [mediaBrowser] = useCurrentMediaBrowser();
   const { handleSelected } = useOptions();
@@ -39,8 +38,7 @@ function MediaBrowser() {
   const closeRenameEntry = () => setRenamingEntry(null);
   const useImage = (image) => handleSelected([image]);
 
-  const { folderId, files, folderChain, loading, continuationToken, refetch } =
-    useFolder();
+  const { folderId, files, folderChain, loading } = useFolder();
 
   useEffect(() => {
     if (mediaBrowser === "account" && !currentFolderId) {
@@ -65,49 +63,6 @@ function MediaBrowser() {
       setRenamingEntry,
       openGenerateImage,
     });
-
-  // To fetch all the files from the Canva account, we need to make
-  // multiple requests passing the continuation token that each
-  // request return.
-  useEffect(() => {
-    const newFiles = [...canvaFiles, ...files];
-    !loading && setCanvaFiles(newFiles);
-    if (continuationToken) {
-      refetch({ continuationToken });
-    }
-  }, [continuationToken]);
-
-  // TODO: Implement infinit scroll
-  // useEffect(() => {
-  //   if (mediaBrowser === "canva") {
-  //     const newFiles = [...canvaFiles, ...files];
-  //     !loading && setCanvaFiles(newFiles);
-
-  //     const element = document.querySelector(".chonky-fileListWrapper");
-  //     if (element) {
-  //       const handleScroll = (e) => {
-  //         const { scrollTop, clientHeight, scrollHeight } = element;
-
-  //         // const { scrollTop, clientHeight, scrollHeight } =
-  //         //   document.documentElement;
-  //         if (scrollTop + clientHeight >= scrollHeight - 2) {
-  //           if (continuationToken && !loading) {
-  //             refetch({ continuationToken });
-  //           }
-  //           console.log("SHOULD FETCH MORE");
-  //         }
-
-  //         e.stopPropagation();
-  //       };
-
-  //       console.log({ element });
-  //       element.addEventListener("scroll", handleScroll);
-  //       return () => {
-  //         element.removeEventListener("scroll", handleScroll);
-  //       };
-  //     }
-  //   }
-  // }, [continuationToken, mediaBrowser]);
 
   return (
     <FileBrowser
