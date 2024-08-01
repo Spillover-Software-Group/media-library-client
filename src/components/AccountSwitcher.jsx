@@ -16,7 +16,7 @@ function AccountSwitcher() {
     senalysisBusinessId,
   } = useOptions();
 
-  const [currentAccountId, setCurrentAccountId] = useCurrentAccountId();
+  const [, setCurrentAccountId] = useCurrentAccountId();
   const [, setCurrentBrowser] = useCurrentMediaBrowser();
   const [, setCurrentFolderId] = useCurrentFolderId();
   const { accounts, currentAccount } = useAccounts();
@@ -49,7 +49,6 @@ function AccountSwitcher() {
       <Select
         className="sml-business-select sml-w-1/2"
         classNamePrefix="sml-business-select-options"
-        isLoading={loading}
         options={accounts}
         value={currentAccount}
         getOptionValue={(option) => option.id}

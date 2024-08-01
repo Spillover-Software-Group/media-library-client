@@ -41829,22 +41829,21 @@ function T0() {
     defaultAccountId: r,
     spilloverBusinessId: n,
     senalysisBusinessId: i
-  } = oi(), [a, o] = I0(), [, s] = zo(), [, u] = _f(), { accounts: l, currentAccount: c } = C0(), f = l.find((h) => n ? h.spilloverId === n : i ? h.senalysisBusinessId === i : h.id === r), d = (h) => {
-    h != null && h.id && (s("account"), o(h.id), u(h.rootFolderId), e && e(h.id));
+  } = oi(), [, a] = I0(), [, o] = zo(), [, s] = _f(), { accounts: u, currentAccount: l } = C0(), c = u.find((d) => n ? d.spilloverId === n : i ? d.senalysisBusinessId === i : d.id === r), f = (d) => {
+    d != null && d.id && (o("account"), a(d.id), s(d.rootFolderId), e && e(d.id));
   };
   return xe(() => {
-    d(f || l[0]);
-  }, [l, f, n, i]), t && l.length > 1 && /* @__PURE__ */ H.jsx(
+    f(c || u[0]);
+  }, [u, c, n, i]), t && u.length > 1 && /* @__PURE__ */ H.jsx(
     GO,
     {
       className: "sml-business-select sml-w-1/2",
       classNamePrefix: "sml-business-select-options",
-      isLoading: loading,
-      options: l,
-      value: c,
-      getOptionValue: (h) => h.id,
-      getOptionLabel: (h) => h.name,
-      onChange: (h) => d(h)
+      options: u,
+      value: l,
+      getOptionValue: (d) => d.id,
+      getOptionLabel: (d) => d.name,
+      onChange: (d) => f(d)
     }
   );
 }
