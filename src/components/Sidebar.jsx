@@ -41,7 +41,7 @@ function Sidebar() {
   // Reset current folder id when changing browser.
   useEffect(() => {
     setCurrentFolderId(null);
-  }, [currentBrowser, setCurrentFolderId]);
+  }, [currentBrowser]);
 
   const currentBrowerSelected = allBrowsers.find(
     (b) => b.key === currentBrowser,

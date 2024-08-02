@@ -47764,7 +47764,7 @@ function WQ() {
   const [t, e] = zo(), [, r] = _f();
   xe(() => {
     r(null);
-  }, [t, r]);
+  }, [t]);
   const n = HQ.find(
     (i) => i.key === t
   );
