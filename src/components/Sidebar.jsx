@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Select from "react-select";
 
 import useCurrentMediaBrowser from "../hooks/useCurrentMediaBrowser";
@@ -37,10 +38,10 @@ function Sidebar() {
   const [currentBrowser, setCurrentBrowser] = useCurrentMediaBrowser();
   const [, setCurrentFolderId] = useCurrentFolderId();
 
-  const changeBrowser = (browser) => {
+  // Reset current folder id when changing browser.
+  useEffect(() => {
     setCurrentFolderId(null);
-    setCurrentBrowser(browser);
-  };
+  }, [currentBrowser, setCurrentFolderId]);
 
   const currentBrowerSelected = allBrowsers.find(
     (b) => b.key === currentBrowser,
@@ -62,7 +63,7 @@ function Sidebar() {
               {option.name}
             </span>
           )}
-          onChange={(option) => changeBrowser(option.key)}
+          onChange={(option) => setCurrentBrowser(option.key)}
         />
       </div>
       <div className="sml-hidden sm:sml-block sml-w-48">
@@ -70,7 +71,7 @@ function Sidebar() {
           {mediaBrowsers.map((browser) => (
             <li key={browser.key}>
               <div
-                onClick={() => changeBrowser(browser.key)}
+                onClick={() => setCurrentBrowser(browser.key)}
                 className={`${
                   currentBrowser === browser.key
                     ? "sml-text-spillover-color11 sml-font-bold"
@@ -90,7 +91,7 @@ function Sidebar() {
         </ul>
         <ExternalIntegrations
           currentBrowser={currentBrowser}
-          changeBrowser={changeBrowser}
+          changeBrowser={setCurrentBrowser}
         />
       </div>
     </div>
