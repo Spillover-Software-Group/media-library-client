@@ -15,8 +15,6 @@ function useFolder() {
     fetchPolicy: "cache-and-network",
   });
 
-  console.log("useFolder", mediaBrowser, accountId);
-
   if (loading || !accountId)
     return { loading: true, files: [], folderChain: [] };
 

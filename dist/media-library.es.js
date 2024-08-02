@@ -51891,7 +51891,7 @@ function O6() {
     skip: !e,
     fetchPolicy: "cache-and-network"
   });
-  if (console.log("useFolder", t, e), n || !e)
+  if (n || !e)
     return { loading: !0, files: [], folderChain: [] };
   const {
     entries: o,
@@ -52323,7 +52323,7 @@ function sae() {
     setRenamingEntry: o,
     openGenerateImage: v
   });
-  return /* @__PURE__ */ H.jsxs(
+  return console.log("MediaBrowser", { mediaBrowser: f, folderId: w, currentFolderId: s }), /* @__PURE__ */ H.jsxs(
     Tg,
     {
       disableDragAndDropProvider: !0,

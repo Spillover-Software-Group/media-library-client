@@ -64,6 +64,8 @@ function MediaBrowser() {
       openGenerateImage,
     });
 
+  console.log("MediaBrowser", { mediaBrowser, folderId, currentFolderId });
+
   return (
     <FileBrowser
       // We're creating our own DndProvider in MediaLibraryContainer
