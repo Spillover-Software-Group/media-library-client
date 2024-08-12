@@ -1,14 +1,31 @@
 import { useState } from "react";
+import { gql } from "@apollo/client";
 
 import config from "../../../config";
 import CanvaLogo from "../../../images/canva_logo.svg";
 import useAccounts from "../../../hooks/useAccounts";
 import useAuth from "../../../hooks/useAuth";
+import useMutationAndRefetch from "../../../hooks/useMutationAndRefetch";
+
+const DESTROY_CANVA_INTEGRATION = gql`
+  mutation destroyCanvaIntegration($accountId: GID!) {
+    currentAccountId @client @export(as: "accountId")
+    destroyCanvaIntegration(
+      input: {
+        accountId: $accountId
+      }
+    ) {
+      id
+    }
+  }
+`;
 
 function CanvaIntegration({ currentBrowser, changeBrowser }) {
   const { currentAccount, loading, refetch } = useAccounts();
   const { accessToken } = useAuth();
   const [connecting, setConnecting] = useState(false);
+
+  const [disconnectCanva] = useMutationAndRefetch(DESTROY_CANVA_INTEGRATION);
 
   const onConnectClick = async () => {
     try {
@@ -54,6 +71,10 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
     changeBrowser("canva");
   };
 
+  const disconnect = async () => {
+    await disconnectCanva();
+  };
+
   return (
     <li>
       {loading ? (
@@ -63,13 +84,18 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
           onClick={loadCanva}
           className="sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm w-full sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2"
         >
-          <div className=" sml-flex">
+          <div className="sml-w-full sml-flex sml-justify-between">
+           <div className="sml-flex">
             <img src={CanvaLogo} alt="Engage Logo" className="sml-w-6" />
-            <span
-              className={`${currentBrowser === "canva" ? "sml-text-spillover-color11 sml-font-bold" : "sml-text-spillover-color10 sml-font-medium"} sml-ml-2`}
-            >
-              Canva
-            </span>
+              <span
+                className={`${currentBrowser === "canva" ? "sml-text-spillover-color11 sml-font-bold" : "sml-text-spillover-color10 sml-font-medium"} sml-ml-2`}
+              >
+                Canva
+              </span>
+           </div>
+           <div>
+            <span onClick={disconnect} className="sml-text-xs hover:sml-text-spillover-color11 hover:sml-underline">Disconnect</span>
+           </div>
           </div>
           <div className="sml-text-2xs sml-mt-2">
             Connected as:
