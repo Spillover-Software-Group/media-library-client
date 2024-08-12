@@ -59,6 +59,9 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
           } else if (event.data === "authorization_error") {
             reject(new Error("Authorization failed"));
             authWindow?.close();
+          } else if (event.data === "authorization_cancelled") {
+            setConnecting(false);
+            authWindow?.close();
           }
         });
       } catch (error) {
