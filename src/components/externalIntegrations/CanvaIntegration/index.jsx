@@ -62,6 +62,14 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
             authWindow?.close();
           }
         });
+
+        // If user closes the authorization window
+        const checkWindowClosed = setInterval(() => {
+          if (authWindow?.closed) {
+            clearInterval(checkWindowClosed);
+            setConnecting(false);
+          }
+        }, 1000);
       } catch (error) {
         reject(error);
       }
@@ -74,13 +82,14 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
 
   const disconnect = async () => {
     await disconnectCanva();
+    changeBrowser("account");
   };
 
   return (
     <li>
       {loading ? (
         <div className="sml-pl-4">Loading...</div>
-      ) : currentAccount?.integrations?.canva ? (
+      ) : currentAccount?.integrations?.canva?.isAuthorized ? (
         <div
           onClick={loadCanva}
           className="sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm w-full sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2"

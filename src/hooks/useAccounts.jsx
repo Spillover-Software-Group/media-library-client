@@ -17,6 +17,7 @@ const QUERY = gql`
         integrations {
           canva {
             userDisplayName
+            isAuthorized
           }
         }
       }
