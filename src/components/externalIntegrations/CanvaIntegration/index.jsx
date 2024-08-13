@@ -32,7 +32,7 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
       setConnecting(true);
       await authorization();
     } catch (error) {
-      alert("Something went wrong, please, try again.");
+      setConnecting(false);
     } finally {
       setConnecting(false);
     }
@@ -57,10 +57,8 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
             refetch(); // Refetch the currentUser to access the Canva Int details
             authWindow?.close();
           } else if (event.data === "authorization_error") {
-            reject(new Error("Authorization failed"));
-            authWindow?.close();
-          } else if (event.data === "authorization_cancelled") {
             setConnecting(false);
+            reject(new Error("Authorization failed"));
             authWindow?.close();
           }
         });
