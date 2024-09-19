@@ -13,6 +13,7 @@ import useOpenOnCanvaAction from "./integrations/canva/useOpenOnCanvaAction";
 import useSaveOnMyMediaAction from "./integrations/canva/useSaveOnMyMediaAction";
 import useAccounts from "./useAccounts";
 import useRefreshFolder from "./useRefreshFolder";
+import useCopyToClipboardAction from "./useCopyToClipboardAction";
 
 const openRenameEntryAction = defineFileAction({
   id: "rename-entry",
@@ -86,19 +87,31 @@ const openInCanvaAction = defineFileAction({
   requiresSelection: true,
   fileFilter: (file) => !file.isDir,
   button: {
-    name: "Open In Canva",
+    name: "Open in Canva",
     toolbar: false,
     contextMenu: true,
     icon: "symlink",
   },
 });
 
+const copyLinkToClipboardAction = defineFileAction({
+  id: "copy-link-to-clipboard",
+  requiresSelection: true,
+  fileFilter: (file) => !file.isDir,
+  button: {
+    name: "Copy link",
+    toolbar: false,
+    contextMenu: true,
+    icon: "copy",
+  },
+})
+
 const saveOnMyMedia = defineFileAction({
   id: "save-on-my-media",
   requiresSelection: true,
   fileFilter: (file) => !file.isDir,
   button: {
-    name: "Save on My Media",
+    name: "Save on my media",
     toolbar: false,
     contextMenu: true,
     icon: "upload",
@@ -126,6 +139,7 @@ function useMediaBrowserActions({
       ChonkyActions.DeleteFiles,
       ChonkyActions.MoveFiles,
       favoriteFilesAction,
+      copyLinkToClipboardAction
     ],
     global: [ChonkyActions.OpenFiles],
     favorites: [ChonkyActions.OpenFiles, unfavoriteFilesAction],
@@ -147,6 +161,7 @@ function useMediaBrowserActions({
     [refreshFolderAction.id]: useRefreshFolder(),
     [openRenameEntryAction.id]: useRenameEntryAction(setRenamingEntry),
     [openInCanvaAction.id]: useOpenOnCanvaAction(),
+    [copyLinkToClipboardAction.id]: useCopyToClipboardAction(),
     [saveOnMyMedia.id]: useSaveOnMyMediaAction(),
   };
 
