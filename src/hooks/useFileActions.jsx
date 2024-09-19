@@ -126,7 +126,7 @@ function useMediaBrowserActions({
 }) {
   const [mediaBrowser] = useCurrentMediaBrowser();
   const { currentAccount, loading } = useAccounts();
-  const canvaIsConnected = !loading && currentAccount?.integrations?.canva;
+  const canvaIsConnected = !loading && currentAccount?.integrations?.canva?.userDisplayName;
 
   let actionsByMediaBrowser = {
     account: [
