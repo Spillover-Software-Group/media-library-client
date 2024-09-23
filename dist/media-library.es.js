@@ -52863,7 +52863,11 @@ function Kae() {
   return (t) => {
     var r;
     const { selectedFilesForAction: e } = t.state;
-    navigator.clipboard.writeText((r = e[0]) == null ? void 0 : r.url), Be.success("Link copied to the clipboard!");
+    navigator.clipboard.writeText((r = e[0]) == null ? void 0 : r.url), Be.success("Link copied to the clipboard!", {
+      progress: 0,
+      hideProgressBar: !0,
+      autoClose: 2e3
+    });
   };
 }
 const $I = He({
