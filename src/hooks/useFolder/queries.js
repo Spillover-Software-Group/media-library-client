@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 const folderFieldsFragment = gql`
   fragment FolderFields on Folder {
     id
+    name
     folderChain {
       id
       name
