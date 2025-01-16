@@ -3,6 +3,7 @@ import { InMemoryCache, makeVar } from "@apollo/client";
 const currentAccountIdVar = makeVar(null);
 const currentMediaBrowserVar = makeVar("account");
 const currentFolderIdVar = makeVar(null);
+const currentFolderNameVar = makeVar("Home");
 
 const cache = new InMemoryCache({
   typePolicies: {
@@ -12,6 +13,11 @@ const cache = new InMemoryCache({
           read() {
             return currentAccountIdVar();
           },
+        },
+        currentFolderName: {
+          read() {
+            return currentFolderNameVar();
+          }
         },
         currentMediaBrowser: {
           read() {
@@ -30,4 +36,4 @@ const cache = new InMemoryCache({
 
 export default cache;
 
-export { currentAccountIdVar, currentMediaBrowserVar, currentFolderIdVar };
+export { currentAccountIdVar, currentMediaBrowserVar, currentFolderIdVar, currentFolderNameVar };

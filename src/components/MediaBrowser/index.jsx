@@ -19,13 +19,16 @@ import useCurrentMediaBrowser from "../../hooks/useCurrentMediaBrowser";
 import useCurrentFolderId from "../../hooks/useCurrentFolderId";
 import useOptions from "../../hooks/useOptions";
 import Loading from "../Loading";
+import useCurrentFolderName from "../../hooks/useCurrentFolderName";
 
 function MediaBrowser() {
   const uploadAreaRef = useRef();
   const [showNewFolderPrompt, setShowNewFolderPrompt] = useState(false);
   const [showGenerateImage, setShowGenerateImage] = useState(false);
   const [renamingEntry, setRenamingEntry] = useState(null);
+  const [currentFiles, setCurrentFiles] = useState();
   const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
+  const [currentFolderName, setCurrentFolderName] = useCurrentFolderName();
   const [showLoading, setShowLoading] = useState(false);
 
   const [mediaBrowser] = useCurrentMediaBrowser();
@@ -38,7 +41,13 @@ function MediaBrowser() {
   const closeRenameEntry = () => setRenamingEntry(null);
   const useImage = (image) => handleSelected([image]);
 
-  const { folderId, files, folderChain, loading } = useFolder();
+  const { folderId, folderName, files, folderChain, loading } = useFolder();
+
+  useEffect(() => {
+    if (files?.length !== currentFiles?.length) {
+      setCurrentFiles(files);
+    }
+  }, [files])
 
   useEffect(() => {
     if (mediaBrowser === "account" && !currentFolderId) {
@@ -56,6 +65,10 @@ function MediaBrowser() {
     }
   }, [currentFolderId, folderId]);
 
+  useEffect(() => {
+    setCurrentFolderName(folderName);
+  }, [folderId])
+
   const { fileActions, onFileAction, enableUpload, enableNewFolder } =
     useFileActions({
       uploadAreaRef,
@@ -64,15 +77,13 @@ function MediaBrowser() {
       openGenerateImage,
     });
 
-  console.log("MediaBrowser", { mediaBrowser, folderId, currentFolderId });
-
   return (
     <FileBrowser
       // We're creating our own DndProvider in MediaLibraryContainer
       // so we can use the hook `useDrop` in useUploadFiles.
       // SEE: https://chonky.io/docs/2.x/basics/drag-n-drop#cannot-have-two-html5-backends
       disableDragAndDropProvider
-      files={files}
+      files={currentFiles}
       folderChain={folderChain}
       onFileAction={onFileAction}
       disableDefaultFileActions={[ChonkyActions.ToggleHiddenFiles.id]}
