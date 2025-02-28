@@ -53045,10 +53045,13 @@ function YI() {
     /* @__PURE__ */ z.jsx("p", { className: "sml-text-center sml-text-sm sml-text-[#a8a8a8]", children: "This may take a few seconds." })
   ] });
 }
-function ioe() {
-  const t = Re(), [e, r] = ze(!1), [n, i] = ze(!1), [a, o] = ze(null), [s, u] = ze(), [l, c] = Pf(), [f, d] = r6(), [h, m] = ze(!1), [v] = Ho(), { handleSelected: b } = ai(), p = () => r(!0), y = () => r(!1), w = () => i(!0), I = () => i(!1), E = () => o(null), S = (B) => b([B]), { folderId: C, folderName: O, files: A, folderChain: N, loading: P } = n6();
+const ioe = (t, e) => !t || !e ? !0 : t.length !== e.length ? !1 : t.every(
+  (r, n) => JSON.stringify(r) === JSON.stringify(e[n])
+);
+function aoe() {
+  const t = Re(), [e, r] = ze(!1), [n, i] = ze(!1), [a, o] = ze(null), [s, u] = ze([]), [l, c] = Pf(), [f, d] = r6(), [h, m] = ze(!1), [v] = Ho(), { handleSelected: b } = ai(), p = () => r(!0), y = () => r(!1), w = () => i(!0), I = () => i(!1), E = () => o(null), S = (B) => b([B]), { folderId: C, folderName: O, files: A, folderChain: N, loading: P } = n6();
   Te(() => {
-    (A == null ? void 0 : A.length) !== (s == null ? void 0 : s.length) && u(A);
+    O === "Exported from Canva" ? (A == null ? void 0 : A.length) !== (s == null ? void 0 : s.length) && u(A) : ioe(A, s) || u(A);
   }, [A]), Te(() => {
     v === "account" && !l && c(C);
   }, [l, c, C, v]), Te(() => {
@@ -53091,7 +53094,7 @@ function ioe() {
     }
   );
 }
-function aoe() {
+function ooe() {
   const { icons: t } = ai();
   return DB({ iconComponent: (r) => t[r.icon] ? /* @__PURE__ */ z.jsx(Oi, { name: r.icon }) : /* @__PURE__ */ z.jsx(qH, { ...r }) }), /* @__PURE__ */ z.jsx(Kc, { backend: Tm, children: /* @__PURE__ */ z.jsx("div", { className: "spillover-media-library sml-flex sml-h-full sml-justify-center sml-items-center", children: /* @__PURE__ */ z.jsx("div", { className: "sml-w-full sml-h-full sml-flex", children: /* @__PURE__ */ z.jsxs("div", { className: "sml-w-full sml-h-full", children: [
     /* @__PURE__ */ z.jsx("div", { className: "sml-flex sml-bg-gray-50 sml-flex-col sml-items-center sml-pb-0.5 sml-border-b sml-border-spillover-color3", children: /* @__PURE__ */ z.jsxs("div", { className: "sml-flex sml-justify-evenly sml-py-2 sml-flex-col sm:sml-flex-row sml-w-full sml-items-center", children: [
@@ -53105,19 +53108,19 @@ function aoe() {
         {
           className: "sml-p-2 sml-w-full sml-h-[calc(100%_-_4rem)]",
           id: "media-library-container",
-          children: /* @__PURE__ */ z.jsx(ioe, {})
+          children: /* @__PURE__ */ z.jsx(aoe, {})
         }
       )
     ] })
   ] }) }) }) });
 }
-function ooe(t) {
+function soe(t) {
   if (typeof t != "object" || t === null)
     return !1;
   const e = Object.getPrototypeOf(t);
   return (e === null || e === Object.prototype || Object.getPrototypeOf(e) === null) && !(Symbol.toStringTag in t) && !(Symbol.iterator in t);
 }
-function soe(t, e, r = "") {
+function uoe(t, e, r = "") {
   if (!arguments.length)
     throw new TypeError("Argument 1 `value` is required.");
   if (typeof e != "function")
@@ -53130,7 +53133,7 @@ function soe(t, e, r = "") {
       const f = i.get(o);
       return f ? f.push(s) : i.set(o, [s]), null;
     }
-    const l = Array.isArray(o) || typeof FileList < "u" && o instanceof FileList, c = ooe(o);
+    const l = Array.isArray(o) || typeof FileList < "u" && o instanceof FileList, c = soe(o);
     if (l || c) {
       let f = n.get(o);
       const d = !f;
@@ -53173,18 +53176,18 @@ function soe(t, e, r = "") {
     files: i
   };
 }
-function uoe(t, e, r) {
+function loe(t, e, r) {
   "name" in r ? t.append(e, r, r.name) : t.append(e, r);
 }
-function loe(t) {
+function coe(t) {
   return typeof File < "u" && t instanceof File || typeof Blob < "u" && t instanceof Blob;
 }
-function coe({
+function foe({
   uri: t = "/graphql",
   useGETForQueries: e,
-  isExtractableFile: r = loe,
+  isExtractableFile: r = coe,
   FormData: n,
-  formDataAppendFile: i = uoe,
+  formDataAppendFile: i = loe,
   print: a = I5,
   fetch: o,
   fetchOptions: s,
@@ -53231,7 +53234,7 @@ function coe({
       w5,
       f,
       p
-    ), { clone: I, files: E } = soe(w, r, "");
+    ), { clone: I, files: E } = uoe(w, r, "");
     let S = C5(d, t);
     if (E.size) {
       y.headers && delete y.headers["content-type"];
@@ -53288,7 +53291,7 @@ function coe({
     });
   });
 }
-function foe(t) {
+function doe(t) {
   return new Fn(function(e, r) {
     var n = Pr(e, []);
     return new ht(function(i) {
@@ -53369,8 +53372,8 @@ function i6(t) {
     return this.link.request(r, n);
   }, e;
 })(Fn);
-async function doe({ mode: t, accessToken: e, reauth: r }) {
-  const n = t === "development" ? Fr.graphqlDevEndpoint : Fr.graphqlEndpoint, i = coe({ uri: n }), a = foe((u, { headers: l }) => {
+async function hoe({ mode: t, accessToken: e, reauth: r }) {
+  const n = t === "development" ? Fr.graphqlDevEndpoint : Fr.graphqlEndpoint, i = foe({ uri: n }), a = doe((u, { headers: l }) => {
     const c = e ? `Bearer ${e}` : "";
     return {
       headers: {
@@ -53409,7 +53412,7 @@ function oy({
   const [y, w] = ze();
   if (Te(() => {
     async function E() {
-      w(await doe({ mode: r, accessToken: b, reauth: p }));
+      w(await hoe({ mode: r, accessToken: b, reauth: p }));
     }
     E().catch(console.error);
   }, [r, b]), !y)
@@ -53435,7 +53438,7 @@ function oy({
     /* @__PURE__ */ z.jsx(cm, { position: "bottom-right", autoClose: 2500 })
   ] }) });
 }
-function goe(t) {
+function yoe(t) {
   const { handleSelected: e } = t, r = (n) => e([n]);
   return (
     // If `ownerId` changes, the current token will be invalidated
@@ -53448,7 +53451,7 @@ function goe(t) {
     ] }) }) })
   );
 }
-function yoe({ handleUploaded: t, ...e }) {
+function boe({ handleUploaded: t, ...e }) {
   const r = Re(), n = () => {
     var i;
     return (i = r.current) == null ? void 0 : i.openFilePicker();
@@ -53471,17 +53474,17 @@ function yoe({ handleUploaded: t, ...e }) {
     ) }) })
   );
 }
-function boe(t) {
+function Eoe(t) {
   return (
     // If `ownerId` changes, the current token will be invalidated
     // and a new one will be requested.
     // This is so that our auth is in sync with the parent app's auth.
     // This could be a userId or a token, for example.
-    /* @__PURE__ */ z.jsx(V0, { mode: t.mode, ownerId: t.ownerId, children: /* @__PURE__ */ z.jsx(oy, { ...t, children: /* @__PURE__ */ z.jsx(aoe, {}) }) })
+    /* @__PURE__ */ z.jsx(V0, { mode: t.mode, ownerId: t.ownerId, children: /* @__PURE__ */ z.jsx(oy, { ...t, children: /* @__PURE__ */ z.jsx(ooe, {}) }) })
   );
 }
 export {
-  goe as GenerateImageStandalone,
-  yoe as UploadAreaStandalone,
-  boe as default
+  yoe as GenerateImageStandalone,
+  boe as UploadAreaStandalone,
+  Eoe as default
 };

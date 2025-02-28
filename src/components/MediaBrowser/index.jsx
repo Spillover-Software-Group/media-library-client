@@ -21,12 +21,21 @@ import useOptions from "../../hooks/useOptions";
 import Loading from "../Loading";
 import useCurrentFolderName from "../../hooks/useCurrentFolderName";
 
+const currentFilesIsEqualFiles = (files, currentFiles) => {
+  if (!files || !currentFiles) return true;
+
+  if (files.length !== currentFiles.length) return false;
+  return files.every(
+    (obj, index) => JSON.stringify(obj) === JSON.stringify(currentFiles[index])
+  );
+};
+
 function MediaBrowser() {
   const uploadAreaRef = useRef();
   const [showNewFolderPrompt, setShowNewFolderPrompt] = useState(false);
   const [showGenerateImage, setShowGenerateImage] = useState(false);
   const [renamingEntry, setRenamingEntry] = useState(null);
-  const [currentFiles, setCurrentFiles] = useState();
+  const [currentFiles, setCurrentFiles] = useState([]);
   const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
   const [currentFolderName, setCurrentFolderName] = useCurrentFolderName();
   const [showLoading, setShowLoading] = useState(false);
@@ -44,10 +53,16 @@ function MediaBrowser() {
   const { folderId, folderName, files, folderChain, loading } = useFolder();
 
   useEffect(() => {
-    if (files?.length !== currentFiles?.length) {
-      setCurrentFiles(files);
+    if (folderName === "Exported from Canva") {
+      if (files?.length !== currentFiles?.length) {
+        setCurrentFiles(files);
+      }
+    } else {
+      if (!currentFilesIsEqualFiles(files, currentFiles)) {
+        setCurrentFiles(files);
+      }
     }
-  }, [files])
+  }, [files]);
 
   useEffect(() => {
     if (mediaBrowser === "account" && !currentFolderId) {
