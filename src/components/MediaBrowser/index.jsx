@@ -26,7 +26,7 @@ const currentFilesIsEqualFiles = (files, currentFiles) => {
 
   if (files.length !== currentFiles.length) return false;
   return files.every(
-    (obj, index) => JSON.stringify(obj) === JSON.stringify(currentFiles[index])
+    (obj, index) => JSON.stringify(obj) === JSON.stringify(currentFiles[index]),
   );
 };
 
@@ -82,7 +82,7 @@ function MediaBrowser() {
 
   useEffect(() => {
     setCurrentFolderName(folderName);
-  }, [folderId])
+  }, [folderId]);
 
   const { fileActions, onFileAction, enableUpload, enableNewFolder } =
     useFileActions({

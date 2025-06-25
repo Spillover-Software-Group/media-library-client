@@ -43,7 +43,7 @@ function useFolder() {
     entries,
     folderChain,
     id: folderId,
-    name: folderName
+    name: folderName,
   } = queries[mediaBrowser].extractFolder(data);
 
   const files = entries.map((f) => ({

@@ -17,7 +17,7 @@ const cache = new InMemoryCache({
         currentFolderName: {
           read() {
             return currentFolderNameVar();
-          }
+          },
         },
         currentMediaBrowser: {
           read() {
@@ -36,4 +36,9 @@ const cache = new InMemoryCache({
 
 export default cache;
 
-export { currentAccountIdVar, currentMediaBrowserVar, currentFolderIdVar, currentFolderNameVar };
+export {
+  currentAccountIdVar,
+  currentMediaBrowserVar,
+  currentFolderIdVar,
+  currentFolderNameVar,
+};

@@ -166,7 +166,11 @@ function GenerateImage({ close, useImage }) {
 
             {/* Buttons */}
             <div className="sml-flex sml-shrink sml-flex-row sml-gap-2">
-              <PrimaryButton disabled={isSubmitting}>
+              <PrimaryButton
+                disabled={isSubmitting}
+                type="button"
+                onClick={submitForm}
+              >
                 <Icon
                   name="generateImage"
                   className={`sml-mr-1 ${isSubmitting && "fa-shake"}`}
@@ -201,6 +205,7 @@ function GenerateImage({ close, useImage }) {
 
                 <div className="sml-flex sml-flex-row sml-gap-2">
                   <PrimaryButton
+                    type="button"
                     disabled={isSubmitting || isSaving}
                     onClick={() => saveAndUse(values.prompt)}
                   >

@@ -104,7 +104,7 @@ const copyLinkToClipboardAction = defineFileAction({
     contextMenu: true,
     icon: "copy",
   },
-})
+});
 
 const saveOnMyMedia = defineFileAction({
   id: "save-on-my-media",
@@ -126,7 +126,8 @@ function useMediaBrowserActions({
 }) {
   const [mediaBrowser] = useCurrentMediaBrowser();
   const { currentAccount, loading } = useAccounts();
-  const canvaIsConnected = !loading && currentAccount?.integrations?.canva?.userDisplayName;
+  const canvaIsConnected =
+    !loading && currentAccount?.integrations?.canva?.userDisplayName;
 
   let actionsByMediaBrowser = {
     account: [
@@ -139,7 +140,7 @@ function useMediaBrowserActions({
       ChonkyActions.DeleteFiles,
       ChonkyActions.MoveFiles,
       favoriteFilesAction,
-      copyLinkToClipboardAction
+      copyLinkToClipboardAction,
     ],
     global: [ChonkyActions.OpenFiles],
     favorites: [ChonkyActions.OpenFiles, unfavoriteFilesAction],
