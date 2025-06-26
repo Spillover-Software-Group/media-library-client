@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Formik, ErrorMessage } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
@@ -129,17 +129,29 @@ function GenerateImage({ close, useImage }) {
     if (image) submitForm();
   };
 
+  // All this manual submit handling is because in SENALYSIS
+  // the media library is nested inside a form,
+  // so by default when the user presses Enter or clicks a submit button,
+  // it submits the parent form instead of the media library form...
+  const onKeyDownCapture = (e, submitForm) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      submitForm();
+    }
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={generateImage}
       validationSchema={VALIDATION_SCHEMA}
     >
-      {({ isSubmitting, setFieldValue, submitForm, handleSubmit, values }) => (
+      {({ isSubmitting, setFieldValue, submitForm, values }) => (
         <div className="sml-flex sml-flex-col sml-gap-4">
-          <form
+          <div
+            role="form"
+            onKeyDownCapture={(e) => onKeyDownCapture(e, submitForm)}
             className="sml-w-full sml-flex sml-flex-row sml-gap-2"
-            onSubmit={handleSubmit}
           >
             {/* Input and validation */}
             <div className="sml-flex sml-grow sml-flex-col sml-gap-1">
@@ -169,7 +181,11 @@ function GenerateImage({ close, useImage }) {
 
             {/* Buttons */}
             <div className="sml-flex sml-shrink sml-flex-row sml-gap-2">
-              <PrimaryButton disabled={isSubmitting}>
+              <PrimaryButton
+                disabled={isSubmitting}
+                type="button"
+                onClick={submitForm}
+              >
                 <Icon
                   name="generateImage"
                   className={`sml-mr-1 ${isSubmitting && "fa-shake"}`}
@@ -181,7 +197,7 @@ function GenerateImage({ close, useImage }) {
                 <SecondaryButton onClick={close}>Close</SecondaryButton>
               )}
             </div>
-          </form>
+          </div>
 
           {/* Preview */}
           <div className="sml-w-full sml-flex sml-flex-col sml-gap-4 sml-items-center">
