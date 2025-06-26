@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik, ErrorMessage } from "formik";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
@@ -135,9 +135,12 @@ function GenerateImage({ close, useImage }) {
       onSubmit={generateImage}
       validationSchema={VALIDATION_SCHEMA}
     >
-      {({ isSubmitting, setFieldValue, submitForm, values }) => (
+      {({ isSubmitting, setFieldValue, submitForm, handleSubmit, values }) => (
         <div className="sml-flex sml-flex-col sml-gap-4">
-          <Form className="sml-w-full sml-flex sml-flex-row sml-gap-2">
+          <form
+            className="sml-w-full sml-flex sml-flex-row sml-gap-2"
+            onSubmit={handleSubmit}
+          >
             {/* Input and validation */}
             <div className="sml-flex sml-grow sml-flex-col sml-gap-1">
               <div className="sml-grow">
@@ -166,11 +169,7 @@ function GenerateImage({ close, useImage }) {
 
             {/* Buttons */}
             <div className="sml-flex sml-shrink sml-flex-row sml-gap-2">
-              <PrimaryButton
-                disabled={isSubmitting}
-                type="button"
-                onClick={submitForm}
-              >
+              <PrimaryButton disabled={isSubmitting}>
                 <Icon
                   name="generateImage"
                   className={`sml-mr-1 ${isSubmitting && "fa-shake"}`}
@@ -182,7 +181,7 @@ function GenerateImage({ close, useImage }) {
                 <SecondaryButton onClick={close}>Close</SecondaryButton>
               )}
             </div>
-          </Form>
+          </form>
 
           {/* Preview */}
           <div className="sml-w-full sml-flex sml-flex-col sml-gap-4 sml-items-center">
