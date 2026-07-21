@@ -12,7 +12,7 @@ const mediaBrowsers = [
   },
   {
     key: "global",
-    name: "Spillover Stock",
+    name: "Stock Library",
   },
   {
     key: "favorites",
