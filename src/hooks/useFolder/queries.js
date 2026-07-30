@@ -53,6 +53,7 @@ const global = {
       currentFolderId @client @export(as: "folderId")
       globalFolder(accountId: $accountId, folderId: $folderId) {
         ...FolderFields
+        canManage
       }
     }
   `,
