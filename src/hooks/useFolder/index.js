@@ -44,6 +44,7 @@ function useFolder() {
     folderChain,
     id: folderId,
     name: folderName,
+    canManage,
   } = queries[mediaBrowser].extractFolder(data);
 
   const files = entries.map((f) => ({
@@ -55,6 +56,9 @@ function useFolder() {
     loading,
     folderId,
     folderName,
+    // Only the global query asks for it: stock curators (partner admins,
+    // superusers) get true and with it the write actions.
+    canManage: Boolean(canManage),
     files,
     folderChain,
     refetch,

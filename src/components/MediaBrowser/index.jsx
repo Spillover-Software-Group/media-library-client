@@ -50,7 +50,8 @@ function MediaBrowser() {
   const closeRenameEntry = () => setRenamingEntry(null);
   const useImage = (image) => handleSelected([image]);
 
-  const { folderId, folderName, files, folderChain, loading } = useFolder();
+  const { folderId, folderName, files, folderChain, loading, canManage } =
+    useFolder();
 
   useEffect(() => {
     if (folderName === "Exported from Canva") {
@@ -65,10 +66,13 @@ function MediaBrowser() {
   }, [files]);
 
   useEffect(() => {
-    if (mediaBrowser === "account" && !currentFolderId) {
+    // Curators land on the stock library's real root folder so upload and
+    // new-folder (which target currentFolderId) write to the right place.
+    const managedGlobal = mediaBrowser === "global" && canManage;
+    if ((mediaBrowser === "account" || managedGlobal) && !currentFolderId) {
       setCurrentFolderId(folderId);
     }
-  }, [currentFolderId, setCurrentFolderId, folderId, mediaBrowser]);
+  }, [currentFolderId, setCurrentFolderId, folderId, mediaBrowser, canManage]);
 
   useEffect(() => {
     if (currentFolderId && folderId) {
@@ -90,6 +94,7 @@ function MediaBrowser() {
       openNewFolderPrompt,
       setRenamingEntry,
       openGenerateImage,
+      canManage,
     });
 
   return (

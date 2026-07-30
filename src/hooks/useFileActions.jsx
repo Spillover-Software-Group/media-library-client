@@ -123,6 +123,7 @@ function useMediaBrowserActions({
   openNewFolderPrompt,
   setRenamingEntry,
   openGenerateImage,
+  canManage,
 }) {
   const [mediaBrowser] = useCurrentMediaBrowser();
   const { currentAccount, loading } = useAccounts();
@@ -142,7 +143,21 @@ function useMediaBrowserActions({
       favoriteFilesAction,
       copyLinkToClipboardAction,
     ],
-    global: [ChonkyActions.OpenFiles],
+    // Stock curators (canManage from the globalFolder query) get the write
+    // actions; favorites and image generation stay out because both target
+    // the viewer's own account, not the stock library.
+    global: canManage
+      ? [
+          ChonkyActions.OpenFiles,
+          ChonkyActions.CreateFolder,
+          ChonkyActions.UploadFiles,
+          refreshFolderAction,
+          openRenameEntryAction,
+          ChonkyActions.DeleteFiles,
+          ChonkyActions.MoveFiles,
+          copyLinkToClipboardAction,
+        ]
+      : [ChonkyActions.OpenFiles],
     favorites: [ChonkyActions.OpenFiles, unfavoriteFilesAction],
     deleted: [restoreFilesAction],
   };
@@ -186,8 +201,9 @@ function useMediaBrowserActions({
     actionHandler(action);
   };
 
-  const enableUpload = mediaBrowser === "account";
-  const enableNewFolder = mediaBrowser === "account";
+  const managedGlobal = mediaBrowser === "global" && Boolean(canManage);
+  const enableUpload = mediaBrowser === "account" || managedGlobal;
+  const enableNewFolder = mediaBrowser === "account" || managedGlobal;
 
   return {
     fileActions,
