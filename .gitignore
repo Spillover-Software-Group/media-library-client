@@ -105,3 +105,6 @@ typings/
 .parcel-cache
 
 .DS_Store
+
+# Coding agent working dirs (local settings, worktrees, scratch)
+.claude/
