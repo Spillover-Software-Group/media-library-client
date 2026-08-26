@@ -2,6 +2,21 @@
 
 Guidance for coding agents working in this repository. `CLAUDE.md` is a symlink to this file.
 
+## Before you branch
+
+This checkout is shared with other people and with coding agents, so it may be sitting on someone
+else's feature branch with uncommitted work. Never branch off whatever `HEAD` happens to be.
+Confirm where you are, then branch off the remote default, which in this repo is **`master`**:
+
+```shell
+git status -sb
+git fetch origin && git switch -c <ticket> origin/master
+```
+
+Default branches are not uniform across the Spillover repos: `main` in `oo`, `media-library`
+and `printer_manager`, `master` everywhere else, so a hardcoded `git checkout master` fails in
+three of them.
+
 ## What this is
 
 `@spillover/media-library`: an **embeddable React component library, not a standalone app**. Other Spillover apps (SENALYSIS, ENGAGE, Accounts) import the default `MediaLibrary` component, or the `GenerateImageStandalone` / `UploadAreaStandalone` exports, from `src/main.jsx`, and mount it inside their own pages. It talks to the media-library Rails API (`../api`) over GraphQL. Both repos are submodules of the `media-library` orchestrator, which owns the Docker/dip dev environment.
