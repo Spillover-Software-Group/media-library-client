@@ -28,8 +28,12 @@ Being embedded is the central constraint here, and it has its own section below.
 ```shell
 npm start          # Vite dev server on :1234, serves the dummy harness app
 npm run build      # builds dist/media-library.es.js + dist/style.css (ES lib)
-npm run lint       # biome check --write (Biome is the linter/formatter)
+npm run check      # biome check . - read-only, this is the verification command
+npm run fix        # biome check --write . - MODIFIES FILES, never run it to verify
 ```
+
+`npm run check` reports **39 pre-existing findings** (measured 2026-08-26), so a non-zero exit is the
+baseline, not your change.
 
 Or via Docker/DIP from the `media-library/` repo root: `dip provision` (once), `dip up -d`, `dip c s` (client dev server), `dip c npm <cmd>`, `dip a s` (API server on :3030). There is no test suite.
 
