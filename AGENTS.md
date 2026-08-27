@@ -32,6 +32,13 @@ npm run check      # biome check . - read-only, this is the verification command
 npm run fix        # biome check --write . - MODIFIES FILES, never run it to verify
 ```
 
+CI (`.github/workflows/ci.yml`) runs the same checks on every pull request. It is **advisory**: the
+organisation is on GitHub's free plan, so branch protection and required status checks are
+unavailable and nothing stops a red branch from merging. **Check `gh pr checks` yourself before
+calling a pull request done.** Note that CI also runs `npm run build`, which is
+this package's only other check: three apps install it straight from git, so a tree that does not
+build breaks them.
+
 `npm run check` **exits 0**, so any finding it reports is yours. It gets there through a list of
 per-file rule suppressions at the end of `biome.jsonc`, covering the 54 findings that already existed
 on 2026-08-27 under Biome 2.5.10. **Do not add an entry there to make your own code pass; fix the code.** Deleting an
