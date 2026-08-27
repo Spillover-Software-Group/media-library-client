@@ -50,6 +50,9 @@ while the host-side one passes, that is what happened.
 
 Local development uses the dummy app (`index.html` → `dummy/App.jsx`), which mounts the components with `mode="development"` so they hit the local API at `localhost:3030` instead of production. Endpoints are hardcoded in `src/config/index.js` and switched by the `mode` prop.
 
+Runtime versions are pinned in `mise.toml` (Node 20.16.0). Run `mise install` once so a host-native
+run uses the same version the container does.
+
 ## Releasing
 
 `dist/` is committed — it IS the consumable artifact (consumers install from this git repo). To release: bump `version` in `package.json`, run `npm run build`, and commit `dist/` along with the source. The `postbuild` script is a `sed` hack that hides `useInsertionEffect` from bundlers so the build stays compatible with React 16 hosts (`sed -i ''` is macOS-flavored). React/ReactDOM are externals/peer deps (>= 16) — never bundle them.

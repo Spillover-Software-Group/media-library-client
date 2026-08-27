@@ -1,6 +1,6 @@
 # syntax = docker/dockerfile:1
 
-ARG NODE_MAJOR=16
+ARG NODE_MAJOR=20
 ARG DISTRO_NAME=bullseye
 
 FROM node:$NODE_MAJOR-$DISTRO_NAME
