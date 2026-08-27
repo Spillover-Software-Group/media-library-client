@@ -33,8 +33,8 @@ npm run fix        # biome check --write . - MODIFIES FILES, never run it to ver
 ```
 
 `npm run check` **exits 0**, so any finding it reports is yours. It gets there through a list of
-per-file rule suppressions at the end of `biome.jsonc`, covering the 39 findings that already existed
-on 2026-08-27. **Do not add an entry there to make your own code pass; fix the code.** Deleting an
+per-file rule suppressions at the end of `biome.jsonc`, covering the 54 findings that already existed
+on 2026-08-27 under Biome 2.5.10. **Do not add an entry there to make your own code pass; fix the code.** Deleting an
 entry after cleaning a file up is always welcome, and is how that list is meant to shrink. Note there
 is no test suite here, so a fix in this package cannot be verified by running anything.
 
