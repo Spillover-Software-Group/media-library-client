@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+# A branch only needs its newest commit checked, and Actions minutes are
+# capped on the organisation's plan.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # setup-node advertises mise.toml support but its parser returns the
+      # literal "[tools]" header as the version, so read the pin ourselves.
+      - name: Read the Node version from mise.toml
+        id: node
+        run: sed -n 's/^node *= *"\(.*\)"/version=\1/p' mise.toml >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ steps.node.outputs.version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint and format check
+        run: npm run check
+
+      # There is no test step because this package has no tests. Add one here
+      # the day it gets a `test` script.
+      - name: Build
+        run: npm run build
