@@ -32,8 +32,11 @@ npm run check      # biome check . - read-only, this is the verification command
 npm run fix        # biome check --write . - MODIFIES FILES, never run it to verify
 ```
 
-`npm run check` reports **39 pre-existing findings** (measured 2026-08-26), so a non-zero exit is the
-baseline, not your change.
+`npm run check` **exits 0**, so any finding it reports is yours. It gets there through a list of
+per-file rule suppressions at the end of `biome.jsonc`, covering the 39 findings that already existed
+on 2026-08-27. **Do not add an entry there to make your own code pass; fix the code.** Deleting an
+entry after cleaning a file up is always welcome, and is how that list is meant to shrink. Note there
+is no test suite here, so a fix in this package cannot be verified by running anything.
 
 Or via Docker/DIP from the `media-library/` repo root: `dip provision` (once), `dip up -d`, `dip c s` (client dev server), `dip c npm <cmd>`, `dip a s` (API server on :3030). There is no test suite.
 

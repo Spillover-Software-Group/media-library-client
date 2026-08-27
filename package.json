@@ -4,9 +4,7 @@
   "description": "Media Library react component",
   "license": "UNLICENSED",
   "private": true,
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "module": "./dist/media-library.es.js",
   "dependencies": {
     "@apollo/client": "^3.11.4",
