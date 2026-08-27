@@ -38,7 +38,15 @@ on 2026-08-27 under Biome 2.5.10. **Do not add an entry there to make your own c
 entry after cleaning a file up is always welcome, and is how that list is meant to shrink. Note there
 is no test suite here, so a fix in this package cannot be verified by running anything.
 
-Or via Docker/DIP from the `media-library/` repo root: `dip provision` (once), `dip up -d`, `dip c s` (client dev server), `dip c npm <cmd>`, `dip a s` (API server on :3030). There is no test suite.
+Or via Docker/DIP from the `media-library/` repo root: `dip provision` (once), `dip up -d`, `dip c check` (this package's lint), `dip c s` (client dev server), `dip c npm <cmd>`, `dip a s` (API server on :3030). There is **no `dip c test`**, because there is no test suite to run: add a `test` script and a line in the parent's `dip.yml` on the day this package gets its first test.
+The container has its **own `node_modules`**, a named Docker volume, not the host tree, so the two can
+hold different dependency versions and the container is stale after any `package-lock.json` change
+until someone runs `dip c npm ci` in it. If a container-side `check` fails on the config itself
+while the host-side one passes, that is what happened.
+
+`dip check` and `dip test` in the parent repo run every service's `check`/`test`; `dip c check` and
+`dip c test` run only this one.
+
 
 Local development uses the dummy app (`index.html` → `dummy/App.jsx`), which mounts the components with `mode="development"` so they hit the local API at `localhost:3030` instead of production. Endpoints are hardcoded in `src/config/index.js` and switched by the `mode` prop.
 
