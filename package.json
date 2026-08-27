@@ -39,7 +39,7 @@
     "build": "NODE_ENV=production vite build",
     "//": "HACK: hack for React 16",
     "postbuild": "sed -i '' -e 's/.useInsertionEffect/[\"useInsertion\"+\"Effect\"]/g' ./dist/media-library.es.js",
-    "check": "biome check .",
+    "check": "biome check --error-on-warnings .",
     "fix": "biome check --write .",
     "lint": "npm run fix"
   },
