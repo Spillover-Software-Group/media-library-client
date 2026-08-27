@@ -1,14 +1,12 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.10/schema.json",
   "files": {
     // Build output, not source. This package ships its `dist/` in git and is consumed as a git
     // dependency by `engage/src/front_end_v6` and `accounts/src/frontend`, so these files have to
     // stay byte-identical to what Vite emits; formatting them would be undone by the next build.
-    "ignore": ["dist/**"]
+    "includes": ["**", "!dist"]
   },
-  "organizeImports": {
-    "enabled": false
-  },
+  "assist": { "actions": { "source": { "organizeImports": "off" } } },
   "formatter": {
     "indentStyle": "space",
     "indentWidth": 2
@@ -16,18 +14,28 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "preset": "recommended",
+      "suspicious": {
+        // Tailwind syntax, not errors: `@tailwind` and `@apply` are directives Tailwind strips
+        // before the CSS ever reaches a browser. Biome has no Tailwind awareness, so these two rules
+        // are wrong for any package with a Tailwind stylesheet and are off in all of them.
+        "noUnknownAtRules": "off"
+      },
+      "correctness": {
+        // Same: `theme()` is a Tailwind function call.
+        "noUnknownFunction": "off"
+      }
     }
   },
   "overrides": [
     // ---------------------------------------------------------------------------------------------
     // Pre-existing lint baseline. Generated, do not hand-edit and DO NOT ADD TO IT.
     //
-    // This package carried a 39-finding lint baseline: small, but still enough that `npm run check`
-    // had never once passed, so nobody could rely on it. Every finding that existed on 2026-08-27 is
-    // suppressed below by exact file and exact rule, so the check now exits 0 and any finding it
-    // reports is new and real. The 21 `useExhaustiveDependencies` hits in particular are real work
-    // for whoever next touches those hooks, not noise; they are parked here, not dismissed.
+    // This package's baseline was 39 findings on Biome 1.8.3 and is 54 on 2.5.10: the newer
+    // recommended preset adds rules (unused variables and imports, hooks called conditionally,
+    // static elements with click handlers) that the old version simply did not have. Every finding
+    // that exists today is suppressed below by exact file and exact rule, so the check exits 0 and
+    // any finding it reports is new and real.
     //
     // Two consequences worth understanding before touching this block:
     //
@@ -37,11 +45,12 @@
     //   - Removing an entry is always welcome. When you clean a file up, delete its line; the rule
     //     goes back to being enforced there. That is how this list is meant to shrink.
     //
-    // Nothing here was auto-fixed. Several of these would fix cleanly, but this package has no test
-    // suite at all, so there is no way to show that a "safe" fix changed nothing.
+    // Regenerated 2026-08-27 for Biome 2.5.10, from scratch rather than appended to: the block is
+    // exactly the set of findings that exist today, so nothing stale hides in it. Nothing here was
+    // auto-fixed.
     // ---------------------------------------------------------------------------------------------
     {
-      "include": ["src/components/MediaBrowser/GenerateImage.jsx"],
+      "includes": ["src/components/MediaBrowser/GenerateImage.jsx"],
       "linter": {
         "rules": {
           "a11y": {
@@ -51,7 +60,41 @@
       }
     },
     {
-      "include": ["src/hooks/useAuth.jsx"],
+      "includes": [
+        "src/components/Sidebar.jsx",
+        "src/components/UploadAreaStandalone.jsx",
+        "src/components/externalIntegrations/CanvaIntegration/index.jsx"
+      ],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noStaticElementInteractions": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/images/canva_logo.svg"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noSvgWithoutTitle": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["index.html"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useHtmlLang": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/hooks/useAuth.jsx"],
       "linter": {
         "rules": {
           "a11y": {
@@ -61,7 +104,7 @@
       }
     },
     {
-      "include": [
+      "includes": [
         "src/components/Sidebar.jsx",
         "src/components/UploadAreaStandalone.jsx",
         "src/components/externalIntegrations/CanvaIntegration/index.jsx"
@@ -75,17 +118,37 @@
       }
     },
     {
-      "include": ["src/components/MediaBrowser/GenerateImage.jsx"],
+      "includes": ["src/components/MediaBrowser/GenerateImage.jsx"],
       "linter": {
         "rules": {
-          "complexity": {
-            "noForEach": "off"
+          "a11y": {
+            "useSemanticElements": "off"
           }
         }
       }
     },
     {
-      "include": ["src/hooks/useEventListener.js"],
+      "includes": ["src/css/style.css"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noImportantStyles": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/components/MediaBrowser/index.jsx"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noUselessFragments": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/hooks/useEventListener.js"],
       "linter": {
         "rules": {
           "complexity": {
@@ -95,7 +158,35 @@
       }
     },
     {
-      "include": [
+      "includes": [
+        "dummy/main.jsx",
+        "src/components/MediaBrowser/GenerateImage.jsx"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedImports": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "src/components/MediaBrowser/GenerateImage.jsx",
+        "src/components/MediaBrowser/index.jsx",
+        "src/components/externalIntegrations/CanvaIntegration/index.jsx",
+        "src/hooks/integrations/canva/useOpenOnCanvaAction.js"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedVariables": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
         "src/Wrapper.jsx",
         "src/components/AccountSwitcher.jsx",
         "src/components/MediaBrowser/index.jsx",
@@ -115,7 +206,33 @@
       }
     },
     {
-      "include": ["src/components/MediaBrowser/GenerateImage.jsx"],
+      "includes": [
+        "src/Wrapper.jsx",
+        "src/components/MediaBrowser/GenerateImage.jsx"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useHookAtTopLevel": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "src/hooks/useFolder/index.js",
+        "src/hooks/useMutationAndRefetch.js"
+      ],
+      "linter": {
+        "rules": {
+          "performance": {
+            "noDynamicNamespaceImportAccess": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/components/MediaBrowser/GenerateImage.jsx"],
       "linter": {
         "rules": {
           "security": {
@@ -125,17 +242,7 @@
       }
     },
     {
-      "include": ["src/components/AccountSwitcher.jsx"],
-      "linter": {
-        "rules": {
-          "style": {
-            "noUselessElse": "off"
-          }
-        }
-      }
-    },
-    {
-      "include": ["vite.config.js"],
+      "includes": ["vite.config.js"],
       "linter": {
         "rules": {
           "style": {
@@ -145,20 +252,7 @@
       }
     },
     {
-      "include": [
-        "src/hooks/integrations/canva/useOpenOnCanvaAction.js",
-        "src/hooks/integrations/canva/useSaveDesignToMyMedia.js"
-      ],
-      "linter": {
-        "rules": {
-          "suspicious": {
-            "noAssignInExpressions": "off"
-          }
-        }
-      }
-    },
-    {
-      "include": ["src/hooks/useAuth.jsx"],
+      "includes": ["src/hooks/useAuth.jsx"],
       "linter": {
         "rules": {
           "suspicious": {
