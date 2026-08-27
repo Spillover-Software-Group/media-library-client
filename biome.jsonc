@@ -7,6 +7,15 @@
     "includes": ["**", "!dist"]
   },
   "assist": { "actions": { "source": { "organizeImports": "off" } } },
+  "css": {
+    "parser": {
+      // Biome 2 recognises Tailwind's at-rules behind this flag, but only Tailwind 4's set
+      // (`@plugin`, `@source`, `@theme`). This package is still on Tailwind 3, whose `@tailwind` and
+      // `theme()` it does not cover, hence the override on the stylesheet below. Keeping the flag on
+      // means the override can go when this package moves to Tailwind 4.
+      "tailwindDirectives": true
+    }
+  },
   "formatter": {
     "indentStyle": "space",
     "indentWidth": 2
@@ -14,20 +23,27 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "preset": "recommended",
-      "suspicious": {
-        // Tailwind syntax, not errors: `@tailwind` and `@apply` are directives Tailwind strips
-        // before the CSS ever reaches a browser. Biome has no Tailwind awareness, so these two rules
-        // are wrong for any package with a Tailwind stylesheet and are off in all of them.
-        "noUnknownAtRules": "off"
-      },
-      "correctness": {
-        // Same: `theme()` is a Tailwind function call.
-        "noUnknownFunction": "off"
-      }
+      "preset": "recommended"
     }
   },
   "overrides": [
+    {
+      // Tailwind 3 syntax, not code debt and never something to "fix": `@tailwind` pulls in the
+      // framework's layers and `theme()` reads the Tailwind config. Both are stripped long before
+      // this CSS reaches a browser. Separate from the generated baseline below because it is
+      // permanent for as long as this package is on Tailwind 3.
+      "includes": ["src/css/style.css"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noUnknownAtRules": "off"
+          },
+          "correctness": {
+            "noUnknownFunction": "off"
+          }
+        }
+      }
+    },
     // ---------------------------------------------------------------------------------------------
     // Pre-existing lint baseline. Generated, do not hand-edit and DO NOT ADD TO IT.
     //
