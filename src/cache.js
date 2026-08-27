@@ -38,7 +38,7 @@ export default cache;
 
 export {
   currentAccountIdVar,
-  currentMediaBrowserVar,
   currentFolderIdVar,
   currentFolderNameVar,
+  currentMediaBrowserVar,
 };

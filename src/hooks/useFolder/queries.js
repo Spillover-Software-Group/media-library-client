@@ -126,4 +126,4 @@ const canva = {
   `,
 };
 
-export { account, global, favorites, deleted, canva };
+export { account, canva, deleted, favorites, global };

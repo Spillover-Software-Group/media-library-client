@@ -1,5 +1,3 @@
-import { useEffect, useRef, useState } from "react";
-
 import {
   ChonkyActions,
   FileBrowser,
@@ -8,18 +6,18 @@ import {
   FileNavbar,
   FileToolbar,
 } from "chonky";
-
-import NewFolderPrompt from "./NewFolderPrompt";
-import RenameEntry from "./RenameEntry";
-import GenerateImage from "./GenerateImage";
-import UploadArea from "./UploadArea";
-import useFolder from "../../hooks/useFolder";
-import useFileActions from "../../hooks/useFileActions";
-import useCurrentMediaBrowser from "../../hooks/useCurrentMediaBrowser";
+import { useEffect, useRef, useState } from "react";
 import useCurrentFolderId from "../../hooks/useCurrentFolderId";
+import useCurrentFolderName from "../../hooks/useCurrentFolderName";
+import useCurrentMediaBrowser from "../../hooks/useCurrentMediaBrowser";
+import useFileActions from "../../hooks/useFileActions";
+import useFolder from "../../hooks/useFolder";
 import useOptions from "../../hooks/useOptions";
 import Loading from "../Loading";
-import useCurrentFolderName from "../../hooks/useCurrentFolderName";
+import GenerateImage from "./GenerateImage";
+import NewFolderPrompt from "./NewFolderPrompt";
+import RenameEntry from "./RenameEntry";
+import UploadArea from "./UploadArea";
 
 const currentFilesIsEqualFiles = (files, currentFiles) => {
   if (!files || !currentFiles) return true;

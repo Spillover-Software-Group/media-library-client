@@ -1,15 +1,12 @@
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { setChonkyDefaults } from "chonky";
 import { ChonkyIconFA } from "chonky-icon-fontawesome";
-
-import AccountSwitcher from "./AccountSwitcher";
-import Sidebar from "./Sidebar";
-import MediaBrowser from "./MediaBrowser";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import useOptions from "../hooks/useOptions";
+import AccountSwitcher from "./AccountSwitcher";
 import Icon from "./Icon";
-
-import "react-toastify/dist/ReactToastify.min.css";
+import MediaBrowser from "./MediaBrowser";
+import Sidebar from "./Sidebar";
 
 function MediaLibraryContainer() {
   const { icons } = useOptions();

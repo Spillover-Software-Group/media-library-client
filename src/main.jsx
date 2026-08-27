@@ -1,8 +1,8 @@
-import MediaLibraryContainer from "./components/MediaLibraryContainer";
 import GenerateImageStandalone from "./components/GenerateImageStandalone";
+import MediaLibraryContainer from "./components/MediaLibraryContainer";
 import UploadAreaStandalone from "./components/UploadAreaStandalone";
-import Wrapper from "./Wrapper";
 import { AuthProvider } from "./hooks/useAuth";
+import Wrapper from "./Wrapper";
 
 function MediaLibrary(props) {
   return (

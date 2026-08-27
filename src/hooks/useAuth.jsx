@@ -1,9 +1,9 @@
-import { useContext, useCallback, createContext, useRef } from "react";
 import { DateTime } from "luxon";
+import { createContext, useCallback, useContext, useRef } from "react";
 
 import config from "../config";
-import useLocalStorage from "./useLocalStorage";
 import useEventListener from "./useEventListener";
+import useLocalStorage from "./useLocalStorage";
 
 class TokenData {
   constructor(data) {
@@ -145,4 +145,4 @@ function useProvideAuth({ ownerId }) {
 
 export default useAuth;
 
-export { useAuth, AuthProvider };
+export { AuthProvider, useAuth };

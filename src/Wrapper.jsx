@@ -1,18 +1,23 @@
-import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
-import { useEffect, useState } from "react";
 import { ApolloClient, ApolloLink } from "@apollo/client/core";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/client/link/error";
 import { ApolloProvider } from "@apollo/client/react";
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
+import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 
+// Ahead of the app stylesheet on purpose: both end up in one bundled `style.css`
+// in source order, and the app rules have to be able to override the toast ones.
+// Biome will not sort across a bare import, so keeping the two adjacent pins the
+// cascade instead of leaving it to whichever module happened to load first.
+import "react-toastify/dist/ReactToastify.min.css";
 import "./css/style.css";
 
-import config from "./config";
 import cache from "./cache";
-import { OptionsProvider } from "./hooks/useOptions";
-import useAuth from "./hooks/useAuth";
+import config from "./config";
 import { AccountsProvider } from "./hooks/useAccounts.jsx";
+import useAuth from "./hooks/useAuth";
+import { OptionsProvider } from "./hooks/useOptions";
 
 async function setupClient({ mode, accessToken, reauth }) {
   const uri =

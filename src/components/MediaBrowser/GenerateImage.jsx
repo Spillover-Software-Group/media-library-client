@@ -1,16 +1,16 @@
-import { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Formik, Form, ErrorMessage } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import useMutationAndRefetch from "../../hooks/useMutationAndRefetch";
 import useOptions from "../../hooks/useOptions";
-import TextInput from "../TextInput";
-import PrimaryButton from "../PrimaryButton";
-import SecondaryButton from "../SecondaryButton";
 import Icon from "../Icon";
 import LoadingSpinner from "../LoadingSpinner";
+import PrimaryButton from "../PrimaryButton";
+import SecondaryButton from "../SecondaryButton";
+import TextInput from "../TextInput";
 
 const GENERATE_IMAGE_MUTATION = gql`
   mutation GenerateImage(

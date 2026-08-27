@@ -1,11 +1,10 @@
 import { useEffect } from "react";
 import Select from "react-select";
-
+import useAccounts from "../hooks/useAccounts";
 import useCurrentAccountId from "../hooks/useCurrentAccountId";
 import useCurrentFolderId from "../hooks/useCurrentFolderId";
-import useOptions from "../hooks/useOptions";
 import useCurrentMediaBrowser from "../hooks/useCurrentMediaBrowser";
-import useAccounts from "../hooks/useAccounts";
+import useOptions from "../hooks/useOptions";
 
 function AccountSwitcher() {
   const {

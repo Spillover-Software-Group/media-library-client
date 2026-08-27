@@ -1,8 +1,7 @@
 import { useState } from "react";
-
-import MediaLibrary from "../src/main";
 import GenerateImageStandalone from "../src/components/GenerateImageStandalone";
 import UploadAreaStandalone from "../src/components/UploadAreaStandalone";
+import MediaLibrary from "../src/main";
 
 function App() {
   const [accountId, setAccountId] = useState(null);
