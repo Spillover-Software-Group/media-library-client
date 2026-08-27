@@ -1,9 +1,8 @@
 import Select from "react-select";
-
-import useCurrentMediaBrowser from "../hooks/useCurrentMediaBrowser";
 import useCurrentFolderId from "../hooks/useCurrentFolderId";
-import Icon from "./Icon";
+import useCurrentMediaBrowser from "../hooks/useCurrentMediaBrowser";
 import ExternalIntegrations from "./externalIntegrations";
+import Icon from "./Icon";
 
 const mediaBrowsers = [
   {

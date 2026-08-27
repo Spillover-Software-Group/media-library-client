@@ -1,7 +1,7 @@
+import { AuthProvider } from "../hooks/useAuth";
 import Wrapper from "../Wrapper";
 import AccountSwitcher from "./AccountSwitcher";
 import GenerateImage from "./MediaBrowser/GenerateImage";
-import { AuthProvider } from "../hooks/useAuth";
 
 function GenerateImageStandalone(props) {
   const { handleSelected } = props;

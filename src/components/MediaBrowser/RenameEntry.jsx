@@ -1,11 +1,11 @@
 import { gql } from "@apollo/client";
-import { Formik, Form } from "formik";
+import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
 import useMutationAndRefetch from "../../hooks/useMutationAndRefetch";
-import TextInput from "../TextInput";
 import PrimaryButton from "../PrimaryButton";
 import SecondaryButton from "../SecondaryButton";
+import TextInput from "../TextInput";
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   name: Yup.string().required("Required"),

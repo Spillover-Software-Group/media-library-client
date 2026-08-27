@@ -3,8 +3,8 @@ import { toast } from "react-toastify";
 
 import config from "../config";
 import useMutationAndRefetch from "./useMutationAndRefetch";
-import useOptions from "./useOptions";
 import useOpenFilesAction from "./useOpenFilesAction";
+import useOptions from "./useOptions";
 
 const UPLOAD_FILES_MUTATION = gql`
   mutation UploadFiles($folderId: GID!, $files: [Upload!]!) {

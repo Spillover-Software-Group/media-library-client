@@ -1,5 +1,5 @@
-import { createContext, useContext } from "react";
 import { gql, useQuery } from "@apollo/client";
+import { createContext, useContext } from "react";
 
 import useCurrentAccountId from "./useCurrentAccountId";
 

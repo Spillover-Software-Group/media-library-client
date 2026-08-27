@@ -1,11 +1,11 @@
-import { useState } from "react";
 import { gql } from "@apollo/client";
+import { useState } from "react";
 
 import config from "../../../config";
-import CanvaLogo from "../../../images/canva_logo.svg";
 import useAccounts from "../../../hooks/useAccounts";
 import useAuth from "../../../hooks/useAuth";
 import useMutationAndRefetch from "../../../hooks/useMutationAndRefetch";
+import CanvaLogo from "../../../images/canva_logo.svg";
 
 const DESTROY_CANVA_INTEGRATION = gql`
   mutation destroyCanvaIntegration($accountId: GID!) {

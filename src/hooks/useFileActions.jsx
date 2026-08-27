@@ -1,19 +1,18 @@
 import { ChonkyActions, defineFileAction } from "chonky";
-
-import useCurrentMediaBrowser from "./useCurrentMediaBrowser";
-import useDeleteFilesAction from "./useDeleteFilesAction";
-import useFavoriteFilesAction from "./useFavoriteFilesAction";
-import useUnfavoriteFilesAction from "./useUnfavoriteFilesAction";
-import useMoveFilesAction from "./useMoveFilesAction";
-import useOpenFilesAction from "./useOpenFilesAction";
-import useRestoreFilesAction from "./useRestoreFilesAction";
-import useChangeSelectionFilesAction from "./useChangeSelectionFilesAction";
-import useRenameEntryAction from "./useRenameEntryAction";
 import useOpenOnCanvaAction from "./integrations/canva/useOpenOnCanvaAction";
 import useSaveOnMyMediaAction from "./integrations/canva/useSaveOnMyMediaAction";
 import useAccounts from "./useAccounts";
-import useRefreshFolder from "./useRefreshFolder";
+import useChangeSelectionFilesAction from "./useChangeSelectionFilesAction";
 import useCopyToClipboardAction from "./useCopyToClipboardAction";
+import useCurrentMediaBrowser from "./useCurrentMediaBrowser";
+import useDeleteFilesAction from "./useDeleteFilesAction";
+import useFavoriteFilesAction from "./useFavoriteFilesAction";
+import useMoveFilesAction from "./useMoveFilesAction";
+import useOpenFilesAction from "./useOpenFilesAction";
+import useRefreshFolder from "./useRefreshFolder";
+import useRenameEntryAction from "./useRenameEntryAction";
+import useRestoreFilesAction from "./useRestoreFilesAction";
+import useUnfavoriteFilesAction from "./useUnfavoriteFilesAction";
 
 const openRenameEntryAction = defineFileAction({
   id: "rename-entry",

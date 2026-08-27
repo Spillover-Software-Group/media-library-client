@@ -6,7 +6,7 @@
     // stay byte-identical to what Vite emits; formatting them would be undone by the next build.
     "includes": ["**", "!dist"]
   },
-  "assist": { "actions": { "source": { "organizeImports": "off" } } },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "css": {
     "parser": {
       // Biome 2 recognises Tailwind's at-rules behind this flag, but only Tailwind 4's set

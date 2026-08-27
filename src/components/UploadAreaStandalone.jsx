@@ -1,10 +1,9 @@
 import { useRef } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-
+import { AuthProvider } from "../hooks/useAuth";
 import Wrapper from "../Wrapper";
 import AccountSwitcher from "./AccountSwitcher";
-import { AuthProvider } from "../hooks/useAuth";
 import UploadArea from "./MediaBrowser/UploadArea";
 
 function UploadAreaStandalone({ handleUploaded, ...props }) {

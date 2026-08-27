@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 import useMutationAndRefetch from "../../useMutationAndRefetch";

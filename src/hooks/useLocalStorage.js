@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
 import { LocalStorageWrapper } from "apollo3-cache-persist";
+import { useCallback, useState } from "react";
 
 import useEventListener from "./useEventListener";
 

@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useRef } from "react";
 import { useQuery } from "@apollo/client";
+import { useCallback, useEffect, useRef } from "react";
 
 import useCurrentAccountId from "../useCurrentAccountId";
+import useCurrentFolderName from "../useCurrentFolderName";
 import useCurrentMediaBrowser from "../useCurrentMediaBrowser";
 import useOptions from "../useOptions";
 import * as queries from "./queries";
-import useCurrentFolderName from "../useCurrentFolderName";
 
 const CANVA_FOLDER_NAME = "Exported from Canva";
 
