@@ -55,7 +55,7 @@ run uses the same version the container does.
 
 ## Releasing
 
-`dist/` is committed — it IS the consumable artifact (consumers install from this git repo). To release: bump `version` in `package.json`, run `npm run build`, and commit `dist/` along with the source. The `postbuild` script is a `sed` hack that hides `useInsertionEffect` from bundlers so the build stays compatible with React 16 hosts (`sed -i ''` is macOS-flavored). React/ReactDOM are externals/peer deps (>= 16) — never bundle them.
+`dist/` is committed — it IS the consumable artifact (consumers install from this git repo). To release: bump `version` in `package.json`, run `npm run build`, and commit `dist/` along with the source. The `postbuild` script is a `perl -pi` hack that hides `useInsertionEffect` from bundlers so the build stays compatible with React 16 hosts. It used to be `sed -i ''`, which is macOS-only syntax and made `npm run build` fail on any Linux host, including CI and the dev container; keep any replacement portable. React/ReactDOM are externals/peer deps (>= 16) — never bundle them.
 
 ## Architecture
 
