@@ -1,0 +1,177 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+  "files": {
+    // Build output, not source. This package ships its `dist/` in git and is consumed as a git
+    // dependency by `engage/src/front_end_v6` and `accounts/src/frontend`, so these files have to
+    // stay byte-identical to what Vite emits; formatting them would be undone by the next build.
+    "ignore": ["dist/**"]
+  },
+  "organizeImports": {
+    "enabled": false
+  },
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "overrides": [
+    // ---------------------------------------------------------------------------------------------
+    // Pre-existing lint baseline. Generated, do not hand-edit and DO NOT ADD TO IT.
+    //
+    // This package carried a 39-finding lint baseline: small, but still enough that `npm run check`
+    // had never once passed, so nobody could rely on it. Every finding that existed on 2026-08-27 is
+    // suppressed below by exact file and exact rule, so the check now exits 0 and any finding it
+    // reports is new and real. The 21 `useExhaustiveDependencies` hits in particular are real work
+    // for whoever next touches those hooks, not noise; they are parked here, not dismissed.
+    //
+    // Two consequences worth understanding before touching this block:
+    //
+    //   - Adding an entry here silences a finding in NEW code, which defeats the entire point. Fix
+    //     the code instead. If a rule is genuinely wrong for this codebase, turn it off in the
+    //     top-level `linter.rules` with a comment saying why, rather than listing files here.
+    //   - Removing an entry is always welcome. When you clean a file up, delete its line; the rule
+    //     goes back to being enforced there. That is how this list is meant to shrink.
+    //
+    // Nothing here was auto-fixed. Several of these would fix cleanly, but this package has no test
+    // suite at all, so there is no way to show that a "safe" fix changed nothing.
+    // ---------------------------------------------------------------------------------------------
+    {
+      "include": ["src/components/MediaBrowser/GenerateImage.jsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noRedundantAlt": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["src/hooks/useAuth.jsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useIframeTitle": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": [
+        "src/components/Sidebar.jsx",
+        "src/components/UploadAreaStandalone.jsx",
+        "src/components/externalIntegrations/CanvaIntegration/index.jsx"
+      ],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "useKeyWithClickEvents": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["src/components/MediaBrowser/GenerateImage.jsx"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noForEach": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["src/hooks/useEventListener.js"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "useOptionalChain": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": [
+        "src/Wrapper.jsx",
+        "src/components/AccountSwitcher.jsx",
+        "src/components/MediaBrowser/index.jsx",
+        "src/hooks/integrations/canva/useOpenOnCanvaAction.js",
+        "src/hooks/integrations/canva/useSaveDesignToMyMedia.js",
+        "src/hooks/useAuth.jsx",
+        "src/hooks/useFolder/index.js",
+        "src/hooks/useLocalStorage.js",
+        "src/hooks/useOpenFilesAction.js"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useExhaustiveDependencies": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["src/components/MediaBrowser/GenerateImage.jsx"],
+      "linter": {
+        "rules": {
+          "security": {
+            "noDangerouslySetInnerHtml": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["src/components/AccountSwitcher.jsx"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noUselessElse": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["vite.config.js"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNodejsImportProtocol": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": [
+        "src/hooks/integrations/canva/useOpenOnCanvaAction.js",
+        "src/hooks/integrations/canva/useSaveDesignToMyMedia.js"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noAssignInExpressions": "off"
+          }
+        }
+      }
+    },
+    {
+      "include": ["src/hooks/useAuth.jsx"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noDoubleEquals": "off"
+          }
+        }
+      }
+    }
+  ],
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true,
+    "defaultBranch": "master"
+  }
+}
