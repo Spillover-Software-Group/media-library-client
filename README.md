@@ -33,7 +33,7 @@ and switched by that `mode` prop, so the API (and Accounts, for sign-in) has to 
 ```shell
 npm start          # Vite dev server on :1234
 npm run build      # dist/media-library.es.js + dist/style.css
-npm run lint       # biome check --write (lint + format, autofix)
+npm run fix        # biome check --write (lint + format, autofix)
 ```
 
 There is no test suite.

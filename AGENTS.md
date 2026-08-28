@@ -13,10 +13,6 @@ git status -sb
 git fetch origin && git switch -c <ticket> origin/master
 ```
 
-Default branches are not uniform across the Spillover repos: `main` in `oo`, `media-library`
-and `printer_manager`, `master` everywhere else, so a hardcoded `git checkout master` fails in
-three of them.
-
 ## What this is
 
 `@spillover/media-library`: an **embeddable React component library, not a standalone app**. Other Spillover apps (SENALYSIS, ENGAGE, Accounts) import the default `MediaLibrary` component, or the `GenerateImageStandalone` / `UploadAreaStandalone` exports, from `src/main.jsx`, and mount it inside their own pages. It talks to the media-library Rails API (`../api`) over GraphQL. Both repos are submodules of the `media-library` orchestrator, which owns the Docker/dip dev environment.
@@ -32,16 +28,13 @@ npm run check      # biome check . - read-only, this is the verification command
 npm run fix        # biome check --write . - MODIFIES FILES, never run it to verify
 ```
 
-CI (`.github/workflows/ci.yml`) runs the same checks on every pull request. It is **advisory**: the
-organisation is on GitHub's free plan, so branch protection and required status checks are
-unavailable and nothing stops a red branch from merging. **Check `gh pr checks` yourself before
-calling a pull request done.** Note that CI also runs `npm run build`, which is
+CI (`.github/workflows/ci.yml`) runs the same checks on every pull request. It is **advisory**. Note that CI also runs `npm run build`, which is
 this package's only other check: three apps install it straight from git, so a tree that does not
 build breaks them.
 
-`npm run check` **exits 0**, so any finding it reports is yours. It gets there through a list of
+`npm run check` gets there through a list of
 per-file rule suppressions at the end of `biome.jsonc`, covering the 54 findings that already existed
-on 2026-08-27 under Biome 2.5.10. **Do not add an entry there to make your own code pass; fix the code.** Deleting an
+when Biome landed. **Do not add an entry there to make your own code pass; fix the code.** Deleting an
 entry after cleaning a file up is always welcome, and is how that list is meant to shrink. Note there
 is no test suite here, so a fix in this package cannot be verified by running anything.
 
@@ -54,15 +47,14 @@ while the host-side one passes, that is what happened.
 `dip check` and `dip test` in the parent repo run every service's `check`/`test`; `dip c check` and
 `dip c test` run only this one.
 
-
 Local development uses the dummy app (`index.html` → `dummy/App.jsx`), which mounts the components with `mode="development"` so they hit the local API at `localhost:3030` instead of production. Endpoints are hardcoded in `src/config/index.js` and switched by the `mode` prop.
 
-Runtime versions are pinned in `mise.toml` (Node 20.16.0). Run `mise install` once so a host-native
+Runtime versions are pinned in `mise.toml`. Run `mise install` once so a host-native
 run uses the same version the container does.
 
 ## Releasing
 
-`dist/` is committed — it IS the consumable artifact (consumers install from this git repo). To release: bump `version` in `package.json`, run `npm run build`, and commit `dist/` along with the source. The `postbuild` script is a `perl -pi` hack that hides `useInsertionEffect` from bundlers so the build stays compatible with React 16 hosts. It used to be `sed -i ''`, which is macOS-only syntax and made `npm run build` fail on any Linux host, including CI and the dev container; keep any replacement portable. React/ReactDOM are externals/peer deps (>= 16) — never bundle them.
+`dist/` is committed — it IS the consumable artifact (consumers install from this git repo). To release: bump `version` in `package.json`, run `npm run build`, and commit `dist/` along with the source. The `postbuild` script is a `perl -pi` hack that hides `useInsertionEffect` from bundlers so the build stays compatible with React 16 hosts. Keep it portable: this build runs on Linux in CI and in the dev container as well as on macOS, so BSD-only `sed -i ''` syntax breaks it. React/ReactDOM are externals/peer deps (>= 16) — never bundle them.
 
 ## Architecture
 
