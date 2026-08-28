@@ -40,8 +40,7 @@
     "//": "HACK: hack for React 16",
     "postbuild": "perl -pi -e 's/\\.useInsertionEffect/[\"useInsertion\"+\"Effect\"]/g' ./dist/media-library.es.js",
     "check": "biome check --error-on-warnings .",
-    "fix": "biome check --write .",
-    "lint": "npm run fix"
+    "fix": "biome check --write ."
   },
   "engines": {
     "node": ">= 16"
