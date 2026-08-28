@@ -61,9 +61,8 @@
     //   - Removing an entry is always welcome. When you clean a file up, delete its line; the rule
     //     goes back to being enforced there. That is how this list is meant to shrink.
     //
-    // Regenerated 2026-08-27 for Biome 2.5.10, from scratch rather than appended to: the block is
-    // exactly the set of findings that exist today, so nothing stale hides in it. Nothing here was
-    // auto-fixed.
+    // Generated from scratch rather than appended to, so the block is exactly the set of findings
+    // that exist, with nothing stale hiding in it. Regenerate it the same way; never auto-fix into it.
     // ---------------------------------------------------------------------------------------------
     {
       "includes": ["src/components/MediaBrowser/GenerateImage.jsx"],
