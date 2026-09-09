@@ -27,6 +27,7 @@
     "@biomejs/biome": "2.5.10",
     "@fortawesome/fontawesome-free": "^6.6.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
+    "knip": "^5.88.1",
     "tailwindcss": "^3.4.9",
     "vite": "^5.4.0"
   },
@@ -39,7 +40,7 @@
     "build": "NODE_ENV=production vite build",
     "//": "HACK: hack for React 16",
     "postbuild": "perl -pi -e 's/\\.useInsertionEffect/[\"useInsertion\"+\"Effect\"]/g' ./dist/media-library.es.js",
-    "check": "biome check --error-on-warnings .",
+    "check": "biome check --error-on-warnings . && knip",
     "fix": "biome check --write ."
   },
   "engines": {

@@ -145,4 +145,5 @@ function useProvideAuth({ ownerId }) {
 
 export default useAuth;
 
-export { AuthProvider, useAuth };
+// Only `AuthProvider` needs a named export: every consumer of the hook itself imports the default.
+export { AuthProvider };

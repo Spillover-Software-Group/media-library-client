@@ -33,10 +33,11 @@ and switched by that `mode` prop, so the API (and Accounts, for sign-in) has to 
 ```shell
 npm start          # Vite dev server on :1234
 npm run build      # dist/media-library.es.js + dist/style.css
+npm run check      # biome check && knip - lint, format and dead-code check, read-only
 npm run fix        # biome check --write (lint + format, autofix)
 ```
 
-There is no test suite.
+There is no test suite, so `npm run check` is as far as verification goes here.
 
 ## Releasing
 
@@ -48,9 +49,10 @@ until you rebuild and commit it:
 3. Commit the source **and** `dist/`.
 4. Bump the lockfile in each consuming app.
 
-Two details to be aware of: the `postbuild` script is a `sed` hack that hides `useInsertionEffect` from
-bundlers so the build stays compatible with React 16 hosts (and it is macOS-flavored `sed -i ''`), and
-React and ReactDOM are peer dependencies and externals — **never bundle them**.
+Two details to be aware of: the `postbuild` script is a `perl -pi` hack that hides `useInsertionEffect`
+from bundlers so the build stays compatible with React 16 hosts (portable, unlike BSD-only `sed -i ''`,
+so it runs the same in CI and the dev container as on macOS), and React and ReactDOM are peer
+dependencies and externals — **never bundle them**.
 
 ## Working inside a host page
 

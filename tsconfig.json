@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "baseUrl": ".",
+    "paths": {
+      // Biome's resolver reads a package's `exports` map, and falls back to an index file in the
+      // directory. It never reads `main` or `module`. These five declare no `exports` map and no
+      // index file at the path a bare import names, so the entry point has to be named here.
+      "chonky": ["node_modules/chonky/dist/chonky.esm.js"],
+      "chonky-icon-fontawesome": [
+        "node_modules/chonky-icon-fontawesome/dist/chonky-icon-fontawesome.esm.js"
+      ],
+      "apollo3-cache-persist": [
+        "node_modules/apollo3-cache-persist/lib/index.js"
+      ],
+      "react-dnd": ["node_modules/react-dnd/dist/esm/index.js"],
+      "react-dnd-html5-backend": [
+        "node_modules/react-dnd-html5-backend/dist/esm/index.js"
+      ]
+    },
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ES2022"
+  },
+  "include": ["src", "dummy", "vite.config.js"]
+}
