@@ -23,7 +23,69 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "preset": "recommended"
+      "preset": "recommended",
+      "complexity": {
+        "noRedundantDefaultExport": "error",
+        "useMaxParams": "error",
+        // Ceilings, not targets. A JSX component is a function, so the line limit is generous;
+        // what these catch is the 300-line component and the branch pile nobody meant to grow.
+        // Measured against this repo's own distribution (52 files): the longest function was 115
+        // lines and the deepest cognitive complexity was 14, so both ceilings sit a little above
+        // what already exists, matching the convention `accounts/src/frontend` and
+        // `engage/src/front_end_v6` also use for the same reason.
+        "noExcessiveCognitiveComplexity": {
+          "level": "error",
+          "options": { "maxAllowedComplexity": 20 }
+        },
+        "noExcessiveLinesPerFunction": {
+          "level": "error",
+          "options": {
+            "maxLines": 120,
+            "skipBlankLines": true,
+            "skipIifes": true
+          }
+        }
+      },
+      "correctness": {
+        // Needs the aliases in `tsconfig.json`, which is the only place Biome reads them from.
+        "noUnresolvedImports": "error",
+        "noUndeclaredVariables": "error",
+        // A component defined inside another one is a new type on every render, so it remounts
+        // and loses its state.
+        "noNestedComponentDefinitions": "error",
+        "useUniqueElementIds": "error",
+        "noUndeclaredDependencies": "error"
+      },
+      "performance": {
+        "noAwaitInLoops": "error"
+      },
+      "style": {
+        // Measured: the longest file was 192 lines, so 200 is the smallest round ceiling above it.
+        "noExcessiveLinesPerFile": {
+          "level": "error",
+          "options": { "maxLines": 200, "skipBlankLines": true }
+        }
+      },
+      "suspicious": {
+        // A cycle makes every conclusion about a module wrong, including a reader's.
+        "noImportCycles": "error",
+        "noShadow": "error",
+        "useAwait": "error",
+        "noUnusedExpressions": "error",
+        // Test hygiene, at a zero baseline. There is no test suite yet, but the ceiling is cheap to
+        // hold from day one and applies the moment one exists.
+        "noExportsInTest": "error",
+        "noMisplacedAssertion": "error"
+      },
+      "nursery": {
+        "useSortedClasses": {
+          "level": "error",
+          "options": { "functions": ["clsx", "cn", "cva", "twMerge"] }
+        },
+        "noConditionalExpect": "error",
+        "noIdenticalTestTitle": "error",
+        "useExpect": "error"
+      }
     }
   },
   "overrides": [
@@ -173,6 +235,21 @@
       }
     },
     {
+      // `IconComponent` is redefined on every render and handed straight to `setChonkyDefaults`,
+      // a module-level side effect. Fixing it means hoisting the component out of the function (or
+      // memoizing it) and deciding whether the `setChonkyDefaults` call belongs in an effect
+      // instead of the render body — real restructuring, not a rename.
+      // TODO: hoist `IconComponent` and reconsider where `setChonkyDefaults` is called from.
+      "includes": ["src/components/MediaLibraryContainer.jsx"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noNestedComponentDefinitions": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": [
         "dummy/main.jsx",
         "src/components/MediaBrowser/GenerateImage.jsx"
@@ -229,6 +306,35 @@
         "rules": {
           "correctness": {
             "useHookAtTopLevel": "off"
+          }
+        }
+      }
+    },
+    {
+      // A plain hardcoded id, not a CSS/JS anchor (nothing else in the repo selects on it), so this
+      // isn't the "real anchor" case a `biome-ignore` would document. `useId()` is the idiomatic
+      // fix, but it is React 18+ and this package promises React 16 compatibility (see AGENTS.md):
+      // needs a different unique-id strategy that still works on the peer-dep floor.
+      // TODO: give this a React-16-safe unique id if the component is ever rendered more than once.
+      "includes": ["src/components/MediaLibraryContainer.jsx"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "useUniqueElementIds": "off"
+          }
+        }
+      }
+    },
+    {
+      // The dev-only dummy harness, not shipped code. Each iteration opens the file's URL and
+      // fetches it in turn on purpose: rewriting to `Promise.all` would fire every fetch and every
+      // `window.open` at once, popping a window per selected file simultaneously.
+      // TODO: keep sequential, or switch to a rewrite that opens/fetches one at a time on purpose.
+      "includes": ["dummy/App.jsx"],
+      "linter": {
+        "rules": {
+          "performance": {
+            "noAwaitInLoops": "off"
           }
         }
       }

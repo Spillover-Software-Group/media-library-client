@@ -1,0 +1,16 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  // Dead files and dependency drift only. Unused *exports* are not reported: `useFolder/queries.js`
+  // reaches most of its named exports through `queries[mediaBrowserKey]`, a dynamic namespace
+  // access neither knip nor Biome's `noDynamicNamespaceImportAccess` (baselined on that file) can
+  // trace, so sorting genuine dead exports from that pattern is its own pass.
+  "include": ["files", "dependencies", "unlisted", "duplicates"],
+  "ignore": [
+    // Committed build output, not source. Same reason `biome.jsonc` excludes `dist/`.
+    "dist/**"
+  ],
+  "ignoreDependencies": [
+    // Read from `.postcssrc.json` as `"tailwindcss": {}`, which knip does not follow.
+    "tailwindcss"
+  ]
+}

@@ -19,7 +19,10 @@ import { AccountsProvider } from "./hooks/useAccounts.jsx";
 import useAuth from "./hooks/useAuth";
 import { OptionsProvider } from "./hooks/useOptions";
 
-async function setupClient({ mode, accessToken, reauth }) {
+// Not async: nothing in the body awaits. The sole caller (`init`, below) already wraps its call in
+// its own async function whose rejection is caught by `.catch(console.error)`, so a synchronous
+// throw here still propagates the same way.
+function setupClient({ mode, accessToken, reauth }) {
   const uri =
     mode === "development" ? config.graphqlDevEndpoint : config.graphqlEndpoint;
 

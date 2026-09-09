@@ -24,7 +24,7 @@ Being embedded is the central constraint here, and it has its own section below.
 ```shell
 npm start          # Vite dev server on :1234, serves the dummy harness app
 npm run build      # builds dist/media-library.es.js + dist/style.css (ES lib)
-npm run check      # biome check . - read-only, this is the verification command
+npm run check      # biome check . && knip - read-only, this is the verification command
 npm run fix        # biome check --write . - MODIFIES FILES, never run it to verify
 ```
 
@@ -33,10 +33,21 @@ this package's only other check: three apps install it straight from git, so a t
 build breaks them.
 
 `npm run check` gets there through a list of
-per-file rule suppressions at the end of `biome.jsonc`, covering the 54 findings that already existed
-when Biome landed. **Do not add an entry there to make your own code pass; fix the code.** Deleting an
-entry after cleaning a file up is always welcome, and is how that list is meant to shrink. Note there
-is no test suite here, so a fix in this package cannot be verified by running anything.
+per-file rule suppressions at the end of `biome.jsonc`, covering findings that already existed when
+a rule was turned on. **Do not add an entry there to make your own code pass; fix the code.** Deleting an
+entry after cleaning a file up is always welcome, and is how that list is meant to shrink. There is
+no test suite here (see below), so a fix in this package cannot be verified by running anything
+beyond `npm run check` itself — read the diff by hand before trusting it, and never run
+`biome check --write` on a rule you have not first confirmed by reading the code.
+
+`tsconfig.json` exists only so Biome's `noUnresolvedImports` can read path aliases from it
+(`allowJs: true, checkJs: false`; this package has no TypeScript files and none are planned). A
+package with no `exports` map and no root `index` file — `chonky`, `react-dnd`, and their kin —
+needs its real entry point named under `paths`, because Biome's resolver never reads `main` or
+`module`. `knip.jsonc` restricts knip to dead files, dependency drift, unlisted imports and
+duplicates: unused *exports* are not checked, because `useFolder/queries.js` reaches most of its
+named exports through a dynamic `queries[key]` lookup that no static tool can trace, and sorting
+genuine dead exports from that pattern is its own pass.
 
 Or via Docker/DIP from the `media-library/` repo root: `dip provision` (once), `dip up -d`, `dip c check` (this package's lint), `dip c s` (client dev server), `dip c npm <cmd>`, `dip a s` (API server on :3030). There is **no `dip c test`**, because there is no test suite to run: add a `test` script and a line in the parent's `dip.yml` on the day this package gets its first test.
 The container has its **own `node_modules`**, a named Docker volume, not the host tree, so the two can

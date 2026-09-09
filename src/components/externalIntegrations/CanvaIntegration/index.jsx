@@ -5,6 +5,7 @@ import config from "../../../config";
 import useAccounts from "../../../hooks/useAccounts";
 import useAuth from "../../../hooks/useAuth";
 import useMutationAndRefetch from "../../../hooks/useMutationAndRefetch";
+// biome-ignore lint/correctness/noUnresolvedImports: Vite turns this into a URL string at build time; Biome's resolver only sees the file on disk and reports a missing default export.
 import CanvaLogo from "../../../images/canva_logo.svg";
 
 const DESTROY_CANVA_INTEGRATION = gql`
@@ -92,7 +93,7 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
       ) : currentAccount?.integrations?.canva?.isAuthorized ? (
         <div
           onClick={loadCanva}
-          className="sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm w-full sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2"
+          className="sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 w-full"
         >
           <div className="sml-w-full sml-flex sml-justify-between">
             <div className="sml-flex">
@@ -122,7 +123,7 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
       ) : (
         <div
           onClick={onConnectClick}
-          className="sml-flex sml-items-center sml-pl-4 sml-text-sm w-full sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2"
+          className="sml-flex sml-items-center sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 w-full"
         >
           <img src={CanvaLogo} alt="Engage Logo" className="sml-w-6" />
 

@@ -15,7 +15,9 @@ function useOpenFilesAction() {
     }
   }, [mediaLibraryFile]);
 
-  return async (action) => {
+  // Not async: `useFileActions`' dispatcher calls this handler and discards the result, so nothing
+  // ever depended on it returning a promise.
+  return (action) => {
     const { targetFile, files: filesToOpen } = action.payload;
     const fileToOpen = targetFile ?? filesToOpen[0];
 
