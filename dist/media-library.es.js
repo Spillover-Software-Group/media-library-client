@@ -16421,7 +16421,7 @@ function sM({ children: t, options: e = {} }) {
     ...e.icons
   }, /* @__PURE__ */ z.jsx(T4.Provider, { value: e, children: t });
 }
-async function uM({ mode: t, accessToken: e, reauth: r }) {
+function uM({ mode: t, accessToken: e, reauth: r }) {
   const n = t === "development" ? Pr.graphqlDevEndpoint : Pr.graphqlEndpoint, i = YP({ uri: n }), a = xP((u, { headers: l }) => {
     const c = e ? `Bearer ${e}` : "";
     return {
@@ -52176,14 +52176,14 @@ function F6() {
 }
 function Wie() {
   const { saveOnMyMedia: t } = F6();
-  return async (e) => {
+  return (e) => {
     const { selectedFilesForAction: r } = e.state;
     r.length && t(r[0]);
   };
 }
 function Gie() {
   const { handleSelected: t, selectOnSingleClick: e } = ti();
-  return async (r) => {
+  return (r) => {
     const { selectedFiles: n } = r.state;
     n && e && t(n);
   };
@@ -52311,7 +52311,7 @@ function P6() {
   const { handleSelected: t, maxSelectableFiles: e } = ti(), { mediaLibraryFile: r, saveOnMyMedia: n } = F6(), [, i] = wf();
   return Te(() => {
     r && t([r]);
-  }, [r]), async (a) => {
+  }, [r]), (a) => {
     const { targetFile: o, files: s } = a.payload, u = o ?? s[0];
     s.length === 1 && !u.isDir && (u != null && u.editUrl) ? n(u) : s.length === 1 && !u.isDir ? t([u]) : s.length > 1 && s.every((l) => !l.isDir) ? t(s.slice(0, e || 50)) : s.length === 1 && u.isDir && i(u.id);
   };
@@ -52896,7 +52896,7 @@ function Cae({ currentBrowser: t, changeBrowser: e }) {
     "div",
     {
       onClick: f,
-      className: "sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm w-full sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2",
+      className: "sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 w-full",
       children: [
         /* @__PURE__ */ z.jsxs("div", { className: "sml-w-full sml-flex sml-justify-between", children: [
           /* @__PURE__ */ z.jsxs("div", { className: "sml-flex", children: [
@@ -52928,7 +52928,7 @@ function Cae({ currentBrowser: t, changeBrowser: e }) {
     "div",
     {
       onClick: l,
-      className: "sml-flex sml-items-center sml-pl-4 sml-text-sm w-full sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2",
+      className: "sml-flex sml-items-center sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 w-full",
       children: [
         /* @__PURE__ */ z.jsx("img", { src: NS, alt: "Engage Logo", className: "sml-w-6" }),
         /* @__PURE__ */ z.jsx("span", { className: "sml-ml-2", children: o ? "Connecting..." : "Connect To Canva" })
