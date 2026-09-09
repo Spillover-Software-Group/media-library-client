@@ -76,7 +76,7 @@ function Sidebar() {
                     : "sml-text-spillover-color10 sml-font-medium"
                 } sml-py-1 sml-px-4 sml-text-sm sml-flex sml-justify-between sml-items-center sml-cursor-pointer hover:sml-bg-gray-200 sml-media-browser-name`}
               >
-                <div className="sml-flex sml-items-center w-full">
+                <div className="sml-flex sml-items-center sml-w-full">
                   <Icon
                     name={browser.key}
                     className="sml-browser-icon sml-mr-2 sml-text-xl"

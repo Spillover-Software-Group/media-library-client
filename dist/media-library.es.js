@@ -52896,7 +52896,7 @@ function Cae({ currentBrowser: t, changeBrowser: e }) {
     "div",
     {
       onClick: f,
-      className: "sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 w-full",
+      className: "sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 sml-w-full",
       children: [
         /* @__PURE__ */ z.jsxs("div", { className: "sml-w-full sml-flex sml-justify-between", children: [
           /* @__PURE__ */ z.jsxs("div", { className: "sml-flex", children: [
@@ -52928,7 +52928,7 @@ function Cae({ currentBrowser: t, changeBrowser: e }) {
     "div",
     {
       onClick: l,
-      className: "sml-flex sml-items-center sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 w-full",
+      className: "sml-flex sml-items-center sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 sml-w-full",
       children: [
         /* @__PURE__ */ z.jsx("img", { src: NS, alt: "Engage Logo", className: "sml-w-6" }),
         /* @__PURE__ */ z.jsx("span", { className: "sml-ml-2", children: o ? "Connecting..." : "Connect To Canva" })
@@ -53003,7 +53003,7 @@ function Aae() {
         {
           onClick: () => n(a.key),
           className: `${t === a.key ? "sml-text-spillover-color11 sml-font-bold" : "sml-text-spillover-color10 sml-font-medium"} sml-py-1 sml-px-4 sml-text-sm sml-flex sml-justify-between sml-items-center sml-cursor-pointer hover:sml-bg-gray-200 sml-media-browser-name`,
-          children: /* @__PURE__ */ z.jsxs("div", { className: "sml-flex sml-items-center w-full", children: [
+          children: /* @__PURE__ */ z.jsxs("div", { className: "sml-flex sml-items-center sml-w-full", children: [
             /* @__PURE__ */ z.jsx(
               Ti,
               {
