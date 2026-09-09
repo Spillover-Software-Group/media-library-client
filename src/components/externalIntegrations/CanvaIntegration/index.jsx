@@ -93,7 +93,7 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
       ) : currentAccount?.integrations?.canva?.isAuthorized ? (
         <div
           onClick={loadCanva}
-          className="sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 w-full"
+          className="sml-flex sml-flex-col sml-items-start sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 sml-w-full"
         >
           <div className="sml-w-full sml-flex sml-justify-between">
             <div className="sml-flex">
@@ -123,7 +123,7 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
       ) : (
         <div
           onClick={onConnectClick}
-          className="sml-flex sml-items-center sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 w-full"
+          className="sml-flex sml-items-center sml-pl-4 sml-text-sm sml-cursor-pointer hover:sml-bg-gray-200 sml-p-2 sml-w-full"
         >
           <img src={CanvaLogo} alt="Engage Logo" className="sml-w-6" />
 
