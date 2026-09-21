@@ -28,9 +28,8 @@ npm run check      # biome check . && knip - read-only, this is the verification
 npm run fix        # biome check --write . - MODIFIES FILES, never run it to verify
 ```
 
-CI (`.github/workflows/ci.yml`) runs the same checks on every pull request. It is **advisory**. Note that CI also runs `npm run build`, which is
-this package's only other check: three apps install it straight from git, so a tree that does not
-build breaks them.
+`npm run build` is this package's only other check: three apps install it straight from git, so a
+tree that does not build breaks them.
 
 `npm run check` gets there through a list of
 per-file rule suppressions at the end of `biome.jsonc`, covering findings that already existed when
@@ -65,7 +64,7 @@ run uses the same version the container does.
 
 ## Releasing
 
-`dist/` is committed — it IS the consumable artifact (consumers install from this git repo). To release: bump `version` in `package.json`, run `npm run build`, and commit `dist/` along with the source. The `postbuild` script is a `perl -pi` hack that hides `useInsertionEffect` from bundlers so the build stays compatible with React 16 hosts. Keep it portable: this build runs on Linux in CI and in the dev container as well as on macOS, so BSD-only `sed -i ''` syntax breaks it. React/ReactDOM are externals/peer deps (>= 16) — never bundle them.
+`dist/` is committed — it IS the consumable artifact (consumers install from this git repo). To release: bump `version` in `package.json`, run `npm run build`, and commit `dist/` along with the source. The `postbuild` script is a `perl -pi` hack that hides `useInsertionEffect` from bundlers so the build stays compatible with React 16 hosts. Keep it portable: this build runs on Linux in the dev container as well as on macOS, so BSD-only `sed -i ''` syntax breaks it. React/ReactDOM are externals/peer deps (>= 16) — never bundle them.
 
 ## Architecture
 

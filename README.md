@@ -51,7 +51,7 @@ until you rebuild and commit it:
 
 Two details to be aware of: the `postbuild` script is a `perl -pi` hack that hides `useInsertionEffect`
 from bundlers so the build stays compatible with React 16 hosts (portable, unlike BSD-only `sed -i ''`,
-so it runs the same in CI and the dev container as on macOS), and React and ReactDOM are peer
+so it runs the same in the dev container as on macOS), and React and ReactDOM are peer
 dependencies and externals — **never bundle them**.
 
 ## Working inside a host page
