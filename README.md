@@ -23,6 +23,10 @@ npm start          # Vite dev server on :1234, serving the dummy harness app
 Or from the orchestrator repo: `dip up -d`, then `dip c s` for this dev server and `dip c npm …` for any
 npm command.
 
+`package.json` names the exact Node and npm this package develops with under `devEngines`, so npm
+stops with an `EBADDEVENGINES` error under any other pair rather than writing a lockfile the next
+machine cannot install from. `mise install` is the fix.
+
 There is no way to run the library by itself, so local development goes through the **dummy harness**
 (`index.html` → `dummy/App.jsx`), which mounts the components with `mode="development"` so they hit the
 local API at `localhost:3030` instead of production. The endpoints are hardcoded in `src/config/index.js`

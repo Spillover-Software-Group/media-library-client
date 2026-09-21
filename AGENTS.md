@@ -59,8 +59,15 @@ while the host-side one passes, that is what happened.
 
 Local development uses the dummy app (`index.html` → `dummy/App.jsx`), which mounts the components with `mode="development"` so they hit the local API at `localhost:3030` instead of production. Endpoints are hardcoded in `src/config/index.js` and switched by the `mode` prop.
 
-Runtime versions are pinned in `mise.toml`. Run `mise install` once so a host-native
-run uses the same version the container does.
+Runtime versions are pinned in `mise.toml`, and `package.json` repeats the Node and the npm it
+ships with under `devEngines`, so `npm install`, `npm ci` and `npm run` stop with an
+`EBADDEVENGINES` error under anything else. Run `mise install` once so a host-native run uses the
+same versions the container does. The pin lives in `devEngines` rather than `engines` because the
+host apps install this package from git with `engine-strict` on, across three different Node
+majors, and an exact `engines` here would make their installs refuse too: the loose `engines.node`
+stays, since it is what the built bundle really needs. One gap to know about: an npm older than the
+pinned one has never heard of the field and installs in silence, so a Node installed outside your
+version manager gets no warning at all.
 
 ## Releasing
 
