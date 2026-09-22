@@ -4,6 +4,7 @@
   "description": "Media Library react component",
   "license": "UNLICENSED",
   "private": true,
+  "packageManager": "npm@10.9.8",
   "files": [
     "dist"
   ],
@@ -45,5 +46,17 @@
   },
   "engines": {
     "node": ">= 16"
+  },
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": "22.23.2",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": "10.9.8",
+      "onFail": "error"
+    }
   }
 }
