@@ -19,6 +19,9 @@ const folderFieldsFragment = gql`
         url
         thumbnailUrl
         mimetype
+        aiLabel {
+          caption
+        }
       }
       ... on FolderEntry {
         childrenCount
