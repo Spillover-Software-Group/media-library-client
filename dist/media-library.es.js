@@ -23780,6 +23780,9 @@ const Df = et`
         url
         thumbnailUrl
         mimetype
+        aiLabel {
+          caption
+        }
       }
       ... on FolderEntry {
         childrenCount
