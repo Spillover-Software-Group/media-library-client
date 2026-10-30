@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.min.css";
 import "./css/style.css";
 
 import cache from "./cache";
-import config from "./config";
+import { endpointsFor } from "./config";
 import { AccountsProvider } from "./hooks/useAccounts.jsx";
 import useAuth from "./hooks/useAuth";
 import { OptionsProvider } from "./hooks/useOptions";
@@ -23,11 +23,8 @@ import { OptionsProvider } from "./hooks/useOptions";
 // its own async function whose rejection is caught by `.catch(console.error)`, so a synchronous
 // throw here still propagates the same way.
 function setupClient({ mode, accessToken, reauth }) {
-  const uri =
-    mode === "development" ? config.graphqlDevEndpoint : config.graphqlEndpoint;
-
   // This replaces `createHttpLink` to allow multipart (file upload) requests.
-  const httpLink = createUploadLink({ uri });
+  const httpLink = createUploadLink({ uri: endpointsFor(mode).graphql });
 
   const authLink = setContext((_, { headers }) => {
     const authorization = accessToken ? `Bearer ${accessToken}` : "";

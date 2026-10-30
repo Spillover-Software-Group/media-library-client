@@ -13,15 +13,32 @@ const acceptedDocumentTypes = [
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
 ];
 
+const apiEndpoints = (origin) => ({
+  graphql: `${origin}/graphql`,
+  sso: `${origin}/sso`,
+  apiBase: origin,
+});
+
+const endpointsByMode = new Map([
+  ["production", apiEndpoints("https://media-library-api.spillover.com")],
+  ["staging", apiEndpoints("https://media-library-api-staging.spillover.com")],
+  [
+    "development",
+    {
+      ...apiEndpoints("http://localhost:3030"),
+      // Canva accepts 127.0.0.1, not localhost, as a local OAuth redirect, so its flow starts there.
+      apiBase: "http://127.0.0.1:3030",
+    },
+  ],
+]);
+
+// The API endpoints for a host app's `mode` prop. Any mode not listed resolves to production.
+export const endpointsFor = (mode) =>
+  endpointsByMode.get(mode) ?? endpointsByMode.get("production");
+
 const config = {
   isProd: import.meta.env.PROD,
   isDev: import.meta.env.DEV,
-  ssoUrl: "https://media-library-api.spillover.com/sso",
-  ssoDevUrl: "http://localhost:3030/sso",
-  graphqlEndpoint: "https://media-library-api.spillover.com/graphql",
-  apiBaseEndpoint: "https://media-library-api.spillover.com",
-  graphqlDevEndpoint: "http://localhost:3030/graphql",
-  apiBaseDevEndpoint: "http://127.0.0.1:3030",
   acceptedImageTypes,
   acceptedVideoTypes,
   acceptedDocumentTypes,

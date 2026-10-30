@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { createContext, useCallback, useContext, useRef } from "react";
 
-import config from "../config";
+import config, { endpointsFor } from "../config";
 import useEventListener from "./useEventListener";
 import useLocalStorage from "./useLocalStorage";
 
@@ -70,7 +70,7 @@ function SSOFrame({ mode, onComplete }) {
   return (
     <iframe
       ref={iframeRef}
-      src={mode === "development" ? config.ssoDevUrl : config.ssoUrl}
+      src={endpointsFor(mode).sso}
       className="sml-w-full sml-h-full sml-border-0"
     />
   );

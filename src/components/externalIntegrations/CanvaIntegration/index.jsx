@@ -1,10 +1,11 @@
 import { gql } from "@apollo/client";
 import { useState } from "react";
 
-import config from "../../../config";
+import { endpointsFor } from "../../../config";
 import useAccounts from "../../../hooks/useAccounts";
 import useAuth from "../../../hooks/useAuth";
 import useMutationAndRefetch from "../../../hooks/useMutationAndRefetch";
+import useOptions from "../../../hooks/useOptions";
 // biome-ignore lint/correctness/noUnresolvedImports: Vite turns this into a URL string at build time; Biome's resolver only sees the file on disk and reports a missing default export.
 import CanvaLogo from "../../../images/canva_logo.svg";
 
@@ -24,6 +25,7 @@ const DESTROY_CANVA_INTEGRATION = gql`
 function CanvaIntegration({ currentBrowser, changeBrowser }) {
   const { currentAccount, loading, refetch } = useAccounts();
   const { accessToken } = useAuth();
+  const { mode } = useOptions();
   const [connecting, setConnecting] = useState(false);
 
   const [disconnectCanva] = useMutationAndRefetch(DESTROY_CANVA_INTEGRATION);
@@ -42,12 +44,8 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
   const authorization = () => {
     return new Promise((resolve, reject) => {
       try {
-        const apiBaseEndpoint = config.isDev
-          ? config.apiBaseDevEndpoint
-          : config.apiBaseEndpoint;
-
         const url = new URL(
-          `${apiBaseEndpoint}/integrations-api/canva-account/v1/oauth2/authorize?access_token=${accessToken}`,
+          `${endpointsFor(mode).apiBase}/integrations-api/canva-account/v1/oauth2/authorize?access_token=${accessToken}`,
         );
         const windowFeatures = ["popup", "height=400", "width=400"];
         const authWindow = window.open(url, "", windowFeatures.join(","));

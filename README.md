@@ -11,7 +11,8 @@ orchestrator repo, which owns the Docker/dip dev environment.
 
 From `src/main.jsx`: the default `MediaLibrary` component, plus the `GenerateImageStandalone` and
 `UploadAreaStandalone` exports. Host apps pass in their own props (selection handlers, allowed file types,
-size limits, icons) and an `ownerId` that scopes the stored auth token.
+size limits, icons), an `ownerId` that scopes the stored auth token, and a `mode` (`production`,
+`staging` or `development`) that picks which API the components talk to.
 
 ## Running it
 

@@ -57,7 +57,7 @@ while the host-side one passes, that is what happened.
 `dip check` and `dip test` in the parent repo run every service's `check`/`test`; `dip c check` and
 `dip c test` run only this one.
 
-Local development uses the dummy app (`index.html` → `dummy/App.jsx`), which mounts the components with `mode="development"` so they hit the local API at `localhost:3030` instead of production. Endpoints are hardcoded in `src/config/index.js` and switched by the `mode` prop.
+Local development uses the dummy app (`index.html` → `dummy/App.jsx`), which mounts the components with `mode="development"` so they hit the local API at `localhost:3030` instead of production. Endpoints are hardcoded in `src/config/index.js`, one set per `mode` prop value (`production`, `staging`, `development`); any other value gets production's.
 
 Runtime versions are pinned in `mise.toml`, and `package.json` repeats the Node and the npm it
 ships with under `devEngines`, so `npm install`, `npm ci` and `npm run` stop with an
