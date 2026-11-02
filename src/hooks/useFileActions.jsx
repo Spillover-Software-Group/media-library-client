@@ -122,6 +122,7 @@ function useMediaBrowserActions({
   openNewFolderPrompt,
   setRenamingEntry,
   openGenerateImage,
+  refreshCanvaDesigns,
   canManage,
 }) {
   const [mediaBrowser] = useCurrentMediaBrowser();
@@ -161,6 +162,8 @@ function useMediaBrowserActions({
     deleted: [restoreFilesAction],
   };
 
+  const refreshFolder = useRefreshFolder();
+
   const actions = {
     [ChonkyActions.OpenFiles.id]: useOpenFilesAction(),
     [ChonkyActions.CreateFolder.id]: openNewFolderPrompt,
@@ -173,7 +176,10 @@ function useMediaBrowserActions({
     [restoreFilesAction.id]: useRestoreFilesAction(),
     [ChonkyActions.ChangeSelection.id]: useChangeSelectionFilesAction(),
     [openGenerateImageAction.id]: openGenerateImage,
-    [refreshFolderAction.id]: useRefreshFolder(),
+    // Refetching the Canva folder would answer from the API's kept listing, so a refresh there
+    // asks Canva again.
+    [refreshFolderAction.id]:
+      mediaBrowser === "canva" ? refreshCanvaDesigns : refreshFolder,
     [openRenameEntryAction.id]: useRenameEntryAction(setRenamingEntry),
     [openInCanvaAction.id]: useOpenOnCanvaAction(),
     [copyLinkToClipboardAction.id]: useCopyToClipboardAction(),
@@ -187,7 +193,7 @@ function useMediaBrowserActions({
       account: [...actionsByMediaBrowser.account, openInCanvaAction],
       global: [...actionsByMediaBrowser.global, openInCanvaAction],
       favorites: [...actionsByMediaBrowser.favorites, openInCanvaAction],
-      canva: [openInCanvaAction, saveOnMyMedia],
+      canva: [refreshFolderAction, openInCanvaAction, saveOnMyMedia],
     };
   }
 

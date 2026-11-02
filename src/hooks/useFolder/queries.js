@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client";
 
+import { CANVA_FOLDER_FIELDS } from "../integrations/canva/queries";
+
 const folderFieldsFragment = gql`
   fragment FolderFields on Folder {
     id
@@ -96,8 +98,10 @@ const deleted = {
 };
 
 const canva = {
-  extractFolder: (data) => data.account.integrations.canva.folder,
+  // The canva link is null when the caller has no Canva connection.
+  extractFolder: (data) => data.account.integrations?.canva?.folder,
   query: gql`
+    ${CANVA_FOLDER_FIELDS}
     query GetCanvaFolder($accountId: GID!) {
       currentAccountId @client @export(as: "accountId")
       account(accountId: $accountId) {
@@ -107,20 +111,7 @@ const canva = {
           canva {
             userDisplayName
             folder {
-              id
-              name
-              folderChain {
-                id
-                name
-                isDir
-              }
-              entries {
-                id
-                name
-                isDir
-                editUrl
-                thumbnailUrl
-              }
+              ...CanvaFolderFields
             }
           }
         }

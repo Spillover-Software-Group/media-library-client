@@ -1,5 +1,36 @@
 import { gql } from "@apollo/client";
 
+// The Canva browser's folder, as both the folder query and refreshCanvaDesigns select it.
+const CANVA_FOLDER_FIELDS = gql`
+  fragment CanvaFolderFields on CanvaFolder {
+    id
+    name
+    folderChain {
+      id
+      name
+      isDir
+    }
+    entries {
+      id
+      name
+      isDir
+      editUrl
+      thumbnailUrl
+    }
+  }
+`;
+
+const REFRESH_CANVA_DESIGNS = gql`
+  ${CANVA_FOLDER_FIELDS}
+  mutation refreshCanvaDesigns {
+    refreshCanvaDesigns(input: {}) {
+      folder {
+        ...CanvaFolderFields
+      }
+    }
+  }
+`;
+
 const CREATE_ASSET_UPLOAD_JOB = gql`
   mutation createAssetUploadJob($fileId: GID!) {
     createAssetUploadJob(input: { fileId: $fileId }) {
@@ -84,10 +115,12 @@ const UPLOAD_CANVA_DESIGN_TO_MEDIA_LIBRARY = gql`
 `;
 
 export {
+  CANVA_FOLDER_FIELDS,
   CREATE_ASSET_UPLOAD_JOB,
   CREATE_CANVA_DESIGN,
   CREATE_DESIGN_EXPORT_JOB,
   GET_ASSET_UPLOAD,
   GET_DESIGN_EXPORT,
+  REFRESH_CANVA_DESIGNS,
   UPLOAD_CANVA_DESIGN_TO_MEDIA_LIBRARY,
 };

@@ -7,6 +7,7 @@ import {
   FileToolbar,
 } from "chonky";
 import { useEffect, useRef, useState } from "react";
+import useRefreshCanvaDesigns from "../../hooks/integrations/canva/useRefreshCanvaDesigns";
 import useCurrentFolderId from "../../hooks/useCurrentFolderId";
 import useCurrentFolderName from "../../hooks/useCurrentFolderName";
 import useCurrentMediaBrowser from "../../hooks/useCurrentMediaBrowser";
@@ -14,6 +15,9 @@ import useFileActions from "../../hooks/useFileActions";
 import useFolder from "../../hooks/useFolder";
 import useOptions from "../../hooks/useOptions";
 import Loading from "../Loading";
+import FolderError from "./FolderError";
+import FolderNotice from "./FolderNotice";
+import folderErrorCopy from "./folderErrorCopy";
 import GenerateImage from "./GenerateImage";
 import NewFolderPrompt from "./NewFolderPrompt";
 import RenameEntry from "./RenameEntry";
@@ -37,6 +41,7 @@ function MediaBrowser() {
   const [currentFolderId, setCurrentFolderId] = useCurrentFolderId();
   const [currentFolderName, setCurrentFolderName] = useCurrentFolderName();
   const [showLoading, setShowLoading] = useState(false);
+  const [retrying, setRetrying] = useState(false);
 
   const [mediaBrowser] = useCurrentMediaBrowser();
   const { handleSelected } = useOptions();
@@ -48,8 +53,30 @@ function MediaBrowser() {
   const closeRenameEntry = () => setRenamingEntry(null);
   const useImage = (image) => handleSelected([image]);
 
-  const { folderId, folderName, files, folderChain, loading, canManage } =
-    useFolder();
+  const {
+    folderId,
+    folderName,
+    files,
+    folderChain,
+    loading,
+    canManage,
+    error,
+    refetch,
+  } = useFolder();
+  const {
+    refreshCanvaDesigns,
+    refreshingCanvaDesigns,
+    refreshCanvaDesignsError,
+    dismissRefreshCanvaDesignsError,
+  } = useRefreshCanvaDesigns();
+
+  // The query's own error carries what went wrong, so a failed retry needs nothing caught here.
+  const retry = () => {
+    setRetrying(true);
+    refetch()
+      .catch(() => {})
+      .finally(() => setRetrying(false));
+  };
 
   useEffect(() => {
     if (folderName === "Exported from Canva") {
@@ -92,8 +119,20 @@ function MediaBrowser() {
       openNewFolderPrompt,
       setRenamingEntry,
       openGenerateImage,
+      refreshCanvaDesigns,
       canManage,
     });
+
+  let content;
+  if (loading || showLoading || retrying || refreshingCanvaDesigns) {
+    content = <Loading />;
+  } else if (error) {
+    content = (
+      <FolderError {...folderErrorCopy(error, mediaBrowser)} onRetry={retry} />
+    );
+  } else {
+    content = <FileList />;
+  }
 
   return (
     <FileBrowser
@@ -130,12 +169,17 @@ function MediaBrowser() {
         </div>
       )}
 
+      {mediaBrowser === "canva" && !error && refreshCanvaDesignsError && (
+        <FolderNotice onDismiss={dismissRefreshCanvaDesignsError}>
+          {folderErrorCopy(refreshCanvaDesignsError, mediaBrowser).body} These
+          are the designs we loaded earlier.
+        </FolderNotice>
+      )}
+
       {enableUpload ? (
-        <UploadArea ref={uploadAreaRef}>
-          {loading || showLoading ? <Loading /> : <FileList />}
-        </UploadArea>
+        <UploadArea ref={uploadAreaRef}>{content}</UploadArea>
       ) : (
-        <>{loading || showLoading ? <Loading /> : <FileList />}</>
+        content
       )}
       <FileContextMenu />
     </FileBrowser>

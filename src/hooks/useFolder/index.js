@@ -28,7 +28,7 @@ function useFolder() {
   }, [currentFolderName]);
 
   const query = queries[mediaBrowser]?.query;
-  const { loading, data, refetch } = useQuery(query, {
+  const { loading, data, error, refetch } = useQuery(query, {
     skip: !accountId,
     fetchPolicy: "cache-and-network",
     pollInterval: 1500,
@@ -39,13 +39,20 @@ function useFolder() {
     return { loading: true, files: [], folderChain: [] };
   }
 
+  // A failed query has no data to read, and the browser shows the error instead of a folder.
+  const folder = error ? null : queries[mediaBrowser].extractFolder(data);
+
+  if (!folder) {
+    return { loading: false, error, files: [], folderChain: [], refetch };
+  }
+
   const {
     entries,
     folderChain,
     id: folderId,
     name: folderName,
     canManage,
-  } = queries[mediaBrowser].extractFolder(data);
+  } = folder;
 
   const files = entries.map((f) => ({
     ...f,
