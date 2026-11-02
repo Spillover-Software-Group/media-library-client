@@ -38,9 +38,13 @@ function AccountSwitcher() {
     if (onSelectedAccountChange) onSelectedAccountChange(newAccount.id);
   };
 
+  // Keyed on which account it would pick, not on the accounts list: Apollo hands back a new list
+  // whenever any field of any account changes in its cache (a Canva profile name arriving, say),
+  // and switching again then would throw the user out of the browser they were in.
+  const startingAccount = defaultAccount || accounts[0];
   useEffect(() => {
-    changeAccount(defaultAccount || accounts[0]);
-  }, [accounts, defaultAccount, spilloverBusinessId, senalysisBusinessId]);
+    changeAccount(startingAccount);
+  }, [startingAccount?.id]);
 
   return (
     showAccountSelector &&

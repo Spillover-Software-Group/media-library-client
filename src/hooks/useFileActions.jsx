@@ -127,8 +127,9 @@ function useMediaBrowserActions({
 }) {
   const [mediaBrowser] = useCurrentMediaBrowser();
   const { currentAccount, loading } = useAccounts();
+  // The profile name is null whenever Canva fails to answer, so it cannot say whether Canva is linked.
   const canvaIsConnected =
-    !loading && currentAccount?.integrations?.canva?.userDisplayName;
+    !loading && currentAccount?.integrations?.canva?.isAuthorized;
 
   let actionsByMediaBrowser = {
     account: [
