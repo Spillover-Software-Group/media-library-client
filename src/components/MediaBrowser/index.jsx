@@ -17,7 +17,7 @@ import useOptions from "../../hooks/useOptions";
 import Loading from "../Loading";
 import FolderError from "./FolderError";
 import FolderNotice from "./FolderNotice";
-import folderErrorCopy from "./folderErrorCopy";
+import folderErrorCopy, { SHOWING_EARLIER } from "./folderErrorCopy";
 import GenerateImage from "./GenerateImage";
 import NewFolderPrompt from "./NewFolderPrompt";
 import RenameEntry from "./RenameEntry";
@@ -109,9 +109,19 @@ function MediaBrowser() {
     }
   }, [currentFolderId, folderId]);
 
+  // A folder that failed to open never reports its id, so the switch above would wait forever.
+  useEffect(() => {
+    if (error) setShowLoading(false);
+  }, [error]);
+
   useEffect(() => {
     setCurrentFolderName(folderName);
   }, [folderId]);
+
+  // A refresh's failure is about the Canva listing it was asked from, not whatever comes next.
+  useEffect(() => {
+    dismissRefreshCanvaDesignsError();
+  }, [mediaBrowser]);
 
   const { fileActions, onFileAction, enableUpload, enableNewFolder } =
     useFileActions({
@@ -124,14 +134,37 @@ function MediaBrowser() {
     });
 
   let content;
-  if (loading || showLoading || retrying || refreshingCanvaDesigns) {
+  let notice;
+  if (loading || showLoading || retrying) {
     content = <Loading />;
-  } else if (error) {
+  } else if (error && !folderId) {
     content = (
       <FolderError {...folderErrorCopy(error, mediaBrowser)} onRetry={retry} />
     );
   } else {
     content = <FileList />;
+
+    if (error) {
+      notice = (
+        <FolderNotice actionLabel="Try again" onAction={retry}>
+          {folderErrorCopy(error, mediaBrowser).body} {SHOWING_EARLIER}
+        </FolderNotice>
+      );
+    } else if (mediaBrowser === "canva" && refreshingCanvaDesigns) {
+      notice = (
+        <FolderNotice>Refreshing your designs from Canva...</FolderNotice>
+      );
+    } else if (mediaBrowser === "canva" && refreshCanvaDesignsError) {
+      notice = (
+        <FolderNotice
+          actionLabel="Dismiss"
+          onAction={dismissRefreshCanvaDesignsError}
+        >
+          {folderErrorCopy(refreshCanvaDesignsError, mediaBrowser).body}{" "}
+          {SHOWING_EARLIER}
+        </FolderNotice>
+      );
+    }
   }
 
   return (
@@ -169,12 +202,7 @@ function MediaBrowser() {
         </div>
       )}
 
-      {mediaBrowser === "canva" && !error && refreshCanvaDesignsError && (
-        <FolderNotice onDismiss={dismissRefreshCanvaDesignsError}>
-          {folderErrorCopy(refreshCanvaDesignsError, mediaBrowser).body} These
-          are the designs we loaded earlier.
-        </FolderNotice>
-      )}
+      {notice}
 
       {enableUpload ? (
         <UploadArea ref={uploadAreaRef}>{content}</UploadArea>

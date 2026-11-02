@@ -39,8 +39,9 @@ function useFolder() {
     return { loading: true, files: [], folderChain: [] };
   }
 
-  // A failed query has no data to read, and the browser shows the error instead of a folder.
-  const folder = error ? null : queries[mediaBrowser].extractFolder(data);
+  // After a failed fetch Apollo keeps the last data it had, so the browser can go on showing that
+  // folder beside the error. A first load that failed has none.
+  const folder = data && queries[mediaBrowser].extractFolder(data);
 
   if (!folder) {
     return { loading: false, error, files: [], folderChain: [], refetch };
@@ -61,6 +62,7 @@ function useFolder() {
 
   return {
     loading,
+    error,
     folderId,
     folderName,
     // Only the global query asks for it: stock curators (partner admins,
