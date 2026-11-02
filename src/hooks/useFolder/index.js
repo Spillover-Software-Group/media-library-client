@@ -28,7 +28,7 @@ function useFolder() {
   }, [currentFolderName]);
 
   const query = queries[mediaBrowser]?.query;
-  const { loading, data, refetch } = useQuery(query, {
+  const { loading, data, error, refetch } = useQuery(query, {
     skip: !accountId,
     fetchPolicy: "cache-and-network",
     pollInterval: 1500,
@@ -39,13 +39,21 @@ function useFolder() {
     return { loading: true, files: [], folderChain: [] };
   }
 
+  // After a failed fetch Apollo keeps the last data it had, so the browser can go on showing that
+  // folder beside the error. A first load that failed has none.
+  const folder = data && queries[mediaBrowser].extractFolder(data);
+
+  if (!folder) {
+    return { loading: false, error, files: [], folderChain: [], refetch };
+  }
+
   const {
     entries,
     folderChain,
     id: folderId,
     name: folderName,
     canManage,
-  } = queries[mediaBrowser].extractFolder(data);
+  } = folder;
 
   const files = entries.map((f) => ({
     ...f,
@@ -54,6 +62,7 @@ function useFolder() {
 
   return {
     loading,
+    error,
     folderId,
     folderName,
     // Only the global query asks for it: stock curators (partner admins,

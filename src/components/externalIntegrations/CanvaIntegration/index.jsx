@@ -111,12 +111,15 @@ function CanvaIntegration({ currentBrowser, changeBrowser }) {
               </span>
             </div>
           </div>
-          <div className="sml-text-2xs sml-mt-2">
-            Connected as:
-            <span className="sml-block sml-text-xs sml-font-semibold">
-              {currentAccount?.integrations?.canva?.userDisplayName}
-            </span>
-          </div>
+          {/* Null when Canva did not answer, and then there is no name to show. */}
+          {currentAccount?.integrations?.canva?.userDisplayName && (
+            <div className="sml-text-2xs sml-mt-2">
+              Connected as:
+              <span className="sml-block sml-text-xs sml-font-semibold">
+                {currentAccount.integrations.canva.userDisplayName}
+              </span>
+            </div>
+          )}
         </div>
       ) : (
         <div
