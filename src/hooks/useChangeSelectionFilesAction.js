@@ -1,7 +1,9 @@
+import useHandOverFiles from "./useHandOverFiles";
 import useOptions from "./useOptions";
 
 function useChangeSelectionFilesAction() {
-  const { handleSelected, selectOnSingleClick } = useOptions();
+  const { selectOnSingleClick } = useOptions();
+  const handOver = useHandOverFiles();
 
   // Not async: `useFileActions`' dispatcher calls this handler and discards the result, so nothing
   // ever depended on it returning a promise.
@@ -9,7 +11,7 @@ function useChangeSelectionFilesAction() {
     const { selectedFiles } = action.state;
 
     if (selectedFiles && selectOnSingleClick) {
-      handleSelected(selectedFiles);
+      handOver(selectedFiles);
     }
   };
 }

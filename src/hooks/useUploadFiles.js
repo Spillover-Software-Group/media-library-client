@@ -2,8 +2,8 @@ import { gql } from "@apollo/client";
 import { toast } from "react-toastify";
 
 import config from "../config";
+import useHandOverFiles from "./useHandOverFiles";
 import useMutationAndRefetch from "./useMutationAndRefetch";
-import useOpenFilesAction from "./useOpenFilesAction";
 import useOptions from "./useOptions";
 
 const UPLOAD_FILES_MUTATION = gql`
@@ -43,8 +43,8 @@ function isValidFile(file) {
 }
 
 function useUploadFiles() {
-  const { isSelectable, autoSelect } = useOptions();
-  const openFiles = useOpenFilesAction();
+  const { autoSelect } = useOptions();
+  const handOver = useHandOverFiles();
   const [runUploadFiles] = useMutationAndRefetch(UPLOAD_FILES_MUTATION);
 
   const uploadFiles = async (files) => {
@@ -68,13 +68,7 @@ function useUploadFiles() {
     try {
       const { data } = await uploadPromise;
 
-      if (autoSelect) {
-        openFiles({
-          payload: {
-            files: data.uploadFiles.filter(isSelectable),
-          },
-        });
-      }
+      if (autoSelect) handOver(data.uploadFiles, { capped: true });
     } catch (e) {
       console.error(e);
     }

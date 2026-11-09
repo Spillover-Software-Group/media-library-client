@@ -1,5 +1,7 @@
 import { createContext, useContext } from "react";
 
+import { takenMedia } from "../media";
+
 const context = createContext({});
 
 const useOptions = () => useContext(context);
@@ -7,14 +9,15 @@ const useOptions = () => useContext(context);
 function OptionsProvider({ children, options = {} }) {
   const { selectableFileTypes, maxSelectableSize } = options;
 
-  options.isSelectable = (f) => {
+  // Why the host's rules refuse a file ("type" or "size"), or null when they take it.
+  options.refusalOf = (f) => {
     if (
       selectableFileTypes &&
       ((Array.isArray(selectableFileTypes) &&
         !selectableFileTypes.includes(f.mimetype)) ||
         (typeof selectableFileTypes === "function" && !selectableFileTypes(f)))
     ) {
-      return false;
+      return "type";
     }
 
     if (
@@ -22,11 +25,14 @@ function OptionsProvider({ children, options = {} }) {
       ((Number.isInteger(maxSelectableSize) && f.size > maxSelectableSize) ||
         (typeof maxSelectableSize === "function" && !maxSelectableSize(f)))
     ) {
-      return false;
+      return "size";
     }
 
-    return true;
+    return null;
   };
+
+  options.isSelectable = (f) => !options.refusalOf(f);
+  options.selectableMedia = takenMedia(options.selectableMedia);
 
   options.isProd = options.mode === "production";
   options.isDev = !options.isProd;
