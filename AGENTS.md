@@ -75,7 +75,7 @@ version manager gets no warning at all.
 
 ## Architecture
 
-**Provider stack** (`src/main.jsx` → `src/Wrapper.jsx`): `AuthProvider` → `OptionsProvider` → `ApolloProvider` → `AccountsProvider`. All host-app props (`handleSelected`, `selectableFileTypes`, `maxSelectableSize`, `autoSelect`, `icons`, …) flow into `OptionsProvider` and are read anywhere via `useOptions()`. Several options accept a value or a predicate function.
+**Provider stack** (`src/main.jsx` → `src/Wrapper.jsx`): `AuthProvider` → `OptionsProvider` → `ApolloProvider` → `AccountsProvider`. All host-app props (`handleSelected`, `selectableFileTypes`, `maxSelectableSize`, `autoSelect`, `icons`, …) flow into `OptionsProvider` and are read anywhere via `useOptions()`. Several options accept a value or a predicate function. Every file reaches the host's `handleSelected` through `useHandOverFiles`, which keeps back what `selectableFileTypes` or `maxSelectableSize` refuses and says why; a new path that hands files over goes through it too.
 
 **Auth** (`src/hooks/useAuth.jsx`): self-contained SSO. If no valid token, `AuthProvider` renders an iframe pointing at the API's `/sso` endpoint; the iframe posts an `SSO_CALLBACK` message with an OAuth token, which is stored in localStorage keyed to the `ownerId` prop. Changing `ownerId` invalidates the token (keeps auth in sync with the host app); a GraphQL 401 triggers `reauth()` via the Apollo error link. The Apollo link chain uses `createUploadLink` so mutations can carry multipart file uploads.
 

@@ -14,6 +14,11 @@ From `src/main.jsx`: the default `MediaLibrary` component, plus the `GenerateIma
 size limits, icons), an `ownerId` that scopes the stored auth token, and a `mode` (`production`,
 `staging` or `development`) that picks which API the components talk to.
 
+`selectableMedia` says what the host's form takes, as `["video"]`, `["image"]` or both. It decides what an
+opened Canva design comes in as: an MP4 for videos only, a JPEG for pictures only, and a "Video or
+picture?" question when the form takes both. A host that leaves it out gets a JPEG. Whatever comes in, a
+file reaches the host only if its `selectableFileTypes` and `maxSelectableSize` take it.
+
 ## Running it
 
 ```shell
