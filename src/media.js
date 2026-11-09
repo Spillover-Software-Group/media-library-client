@@ -19,6 +19,10 @@ const MEDIA = {
 const takenMedia = (selectableMedia) =>
   Object.keys(MEDIA).filter((kind) => selectableMedia?.includes(kind));
 
+// Whatever else the host put in the prop, so it can be told rather than quietly ignored.
+const unknownMedia = (selectableMedia) =>
+  (selectableMedia ?? []).filter((kind) => !MEDIA[kind]);
+
 const mediaKindOf = (file) => file.mimetype?.split("/")[0];
 
 // What a Canva design can be brought in as. A host that does not say what it takes gets a picture.
@@ -29,4 +33,11 @@ const canvaKindsFor = (selectableMedia) =>
 const pluralOf = (selectableMedia) =>
   selectableMedia.map((kind) => MEDIA[kind].plural).join(" and ");
 
-export { canvaKindsFor, MEDIA, mediaKindOf, pluralOf, takenMedia };
+export {
+  canvaKindsFor,
+  MEDIA,
+  mediaKindOf,
+  pluralOf,
+  takenMedia,
+  unknownMedia,
+};

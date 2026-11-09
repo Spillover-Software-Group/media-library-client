@@ -43,7 +43,7 @@ function isValidFile(file) {
 }
 
 function useUploadFiles() {
-  const { autoSelect } = useOptions();
+  const { autoSelect, gatesFiles, isSelectable } = useOptions();
   const handOver = useHandOverFiles();
   const [runUploadFiles] = useMutationAndRefetch(UPLOAD_FILES_MUTATION);
 
@@ -68,7 +68,13 @@ function useUploadFiles() {
     try {
       const { data } = await uploadPromise;
 
-      if (autoSelect) handOver(data.uploadFiles, { capped: true });
+      // A host that does not say what it takes never hears why an upload was not selected.
+      if (autoSelect) {
+        handOver(
+          gatesFiles ? data.uploadFiles : data.uploadFiles.filter(isSelectable),
+          { capped: true },
+        );
+      }
     } catch (e) {
       console.error(e);
     }

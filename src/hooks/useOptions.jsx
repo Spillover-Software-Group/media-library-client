@@ -1,6 +1,6 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 
-import { takenMedia } from "../media";
+import { takenMedia, unknownMedia } from "../media";
 
 const context = createContext({});
 
@@ -8,6 +8,15 @@ const useOptions = () => useContext(context);
 
 function OptionsProvider({ children, options = {} }) {
   const { selectableFileTypes, maxSelectableSize } = options;
+  const ignoredMedia = unknownMedia(options.selectableMedia).join(", ");
+
+  useEffect(() => {
+    if (ignoredMedia) {
+      console.error(
+        `Media Library: selectableMedia takes "video" and "image", so ${ignoredMedia} is ignored.`,
+      );
+    }
+  }, [ignoredMedia]);
 
   // Why the host's rules refuse a file ("type" or "size"), or null when they take it.
   options.refusalOf = (f) => {
@@ -33,6 +42,9 @@ function OptionsProvider({ children, options = {} }) {
 
   options.isSelectable = (f) => !options.refusalOf(f);
   options.selectableMedia = takenMedia(options.selectableMedia);
+  // Only a host that says what it takes has files kept back by its rules; any other gets every file
+  // it opens, as a full-page library that opens files in a new tab needs.
+  options.gatesFiles = options.selectableMedia.length > 0;
 
   options.isProd = options.mode === "production";
   options.isDev = !options.isProd;

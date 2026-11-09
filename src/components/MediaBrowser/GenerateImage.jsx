@@ -120,10 +120,8 @@ function GenerateImage({ close }) {
   const saveAndUse = async (prompt) => {
     const image = await save(prompt);
 
-    if (image) {
-      handOver([image]);
-      if (close) close();
-    }
+    // A refused image stays on screen, so it can still be saved or regenerated.
+    if (image && handOver([image]) && close) close();
   };
 
   const saveAndResubmit = async (prompt, submitForm) => {

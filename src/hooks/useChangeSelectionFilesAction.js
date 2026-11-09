@@ -11,7 +11,7 @@ function useChangeSelectionFilesAction() {
     const { selectedFiles } = action.state;
 
     if (selectedFiles && selectOnSingleClick) {
-      handOver(selectedFiles);
+      handOver(selectedFiles, { selection: true });
     }
   };
 }
