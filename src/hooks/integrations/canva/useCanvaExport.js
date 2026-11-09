@@ -51,14 +51,21 @@ function useCanvaExport() {
     };
   }, []);
 
-  // Reads the job until Canva finishes it, one read at a time. Null once the widget has gone.
+  // Every step after a wait checks the widget is still there, so a host that closed it is never
+  // handed a file, and no more reads go out.
+  const stillOpen = () => {
+    if (!mounted.current) throw new CanvaExportError("CLOSED");
+  };
+
+  // Reads the job until Canva finishes it, one read at a time.
   const finished = async (job, deadline) => {
+    stillOpen();
     if (job.urls) return job;
     if (job.errorCode) throw new CanvaExportError(job.errorCode);
     if (Date.now() > deadline) throw new CanvaExportError("TIMED_OUT");
 
     await wait(POLL_INTERVAL_MS);
-    if (!mounted.current) return null;
+    stillOpen();
 
     const { data } = await client.query({
       query: GET_DESIGN_EXPORT,
@@ -96,10 +103,10 @@ function useCanvaExport() {
         data.createDesignExportJob,
         Date.now() + GIVE_UP_AFTER_MS,
       );
-      if (!job) return;
 
       // Only the first page is kept (media-library-client#29).
       const file = await store(job.urls[0], design.name, format);
+      stillOpen();
       toast.update(toastId, {
         ...SETTLED,
         render: `"${design.name}" was saved on your My Media folder as a ${noun}.`,
@@ -107,6 +114,7 @@ function useCanvaExport() {
       });
       if (handsOver) handOver([file]);
     } catch (error) {
+      if (!mounted.current) return;
       toast.update(toastId, {
         ...SETTLED,
         render: exportErrorSentence(error),
