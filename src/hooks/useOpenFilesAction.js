@@ -1,19 +1,12 @@
-import { useEffect } from "react";
-import useSaveDesignToMyMedia from "./integrations/canva/useSaveDesignToMyMedia";
 import useCurrentFolderId from "./useCurrentFolderId";
-import useOptions from "./useOptions";
+import useHandOverFiles from "./useHandOverFiles";
 
-function useOpenFilesAction() {
-  const { handleSelected, maxSelectableFiles } = useOptions();
-  const { mediaLibraryFile, saveOnMyMedia } = useSaveDesignToMyMedia();
+// Opening is how most files reach the host, so it goes through the same check as a selection:
+// chonky opens a file the host's rules made unselectable.
+function useOpenFilesAction(exportDesign) {
+  const handOver = useHandOverFiles();
 
   const [, setCurrentFolderId] = useCurrentFolderId();
-
-  useEffect(() => {
-    if (mediaLibraryFile) {
-      handleSelected([mediaLibraryFile]);
-    }
-  }, [mediaLibraryFile]);
 
   // Not async: `useFileActions`' dispatcher calls this handler and discards the result, so nothing
   // ever depended on it returning a promise.
@@ -22,13 +15,13 @@ function useOpenFilesAction() {
     const fileToOpen = targetFile ?? filesToOpen[0];
 
     if (filesToOpen.length === 1 && !fileToOpen.isDir && fileToOpen?.editUrl) {
-      // If the file has editUrl, means it is a canva design
-      // save the design to My Media folder and select the Media Library file
-      saveOnMyMedia(fileToOpen);
+      // A file with an editUrl is a Canva design: it is stored in My Media first, as what the host
+      // takes, and the stored file is what the host gets.
+      exportDesign(fileToOpen, { handsOver: true });
     } else if (filesToOpen.length === 1 && !fileToOpen.isDir) {
-      handleSelected([fileToOpen]);
+      handOver([fileToOpen]);
     } else if (filesToOpen.length > 1 && filesToOpen.every((f) => !f.isDir)) {
-      handleSelected(filesToOpen.slice(0, maxSelectableFiles || 50));
+      handOver(filesToOpen, { capped: true });
     } else if (filesToOpen.length === 1 && fileToOpen.isDir) {
       setCurrentFolderId(fileToOpen.id);
     }

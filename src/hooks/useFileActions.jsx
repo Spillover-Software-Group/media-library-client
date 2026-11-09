@@ -123,6 +123,7 @@ function useMediaBrowserActions({
   setRenamingEntry,
   openGenerateImage,
   refreshCanvaDesigns,
+  exportDesign,
   canManage,
 }) {
   const [mediaBrowser] = useCurrentMediaBrowser();
@@ -166,7 +167,7 @@ function useMediaBrowserActions({
   const refreshFolder = useRefreshFolder();
 
   const actions = {
-    [ChonkyActions.OpenFiles.id]: useOpenFilesAction(),
+    [ChonkyActions.OpenFiles.id]: useOpenFilesAction(exportDesign),
     [ChonkyActions.CreateFolder.id]: openNewFolderPrompt,
     [ChonkyActions.UploadFiles.id]: () =>
       uploadAreaRef.current?.openFilePicker(),
@@ -184,7 +185,7 @@ function useMediaBrowserActions({
     [openRenameEntryAction.id]: useRenameEntryAction(setRenamingEntry),
     [openInCanvaAction.id]: useOpenOnCanvaAction(),
     [copyLinkToClipboardAction.id]: useCopyToClipboardAction(),
-    [saveOnMyMedia.id]: useSaveOnMyMediaAction(),
+    [saveOnMyMedia.id]: useSaveOnMyMediaAction(exportDesign),
   };
 
   // Canva Actions

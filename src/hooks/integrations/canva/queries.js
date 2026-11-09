@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client";
 
+import HANDED_FILE_FIELDS from "../../handedFileFields";
+
 // The Canva browser's folder, as both the folder query and refreshCanvaDesigns select it.
 const CANVA_FOLDER_FIELDS = gql`
   fragment CanvaFolderFields on CanvaFolder {
@@ -74,16 +76,30 @@ const CREATE_CANVA_DESIGN = gql`
   }
 `;
 
+// A job is read the same way when it is created and each time it is polled.
+const DESIGN_EXPORT_FIELDS = gql`
+  fragment DesignExportFields on CanvaDesignExport {
+    jobId
+    status
+    urls
+    errorCode
+  }
+`;
+
 const CREATE_DESIGN_EXPORT_JOB = gql`
-  mutation createDesignExportJob($designId: String!) {
-    createDesignExportJob(input: { designId: $designId }) {
-      jobId
-      status
+  ${DESIGN_EXPORT_FIELDS}
+  mutation createDesignExportJob(
+    $designId: String!
+    $format: CanvaExportFormat!
+  ) {
+    createDesignExportJob(input: { designId: $designId, format: $format }) {
+      ...DesignExportFields
     }
   }
 `;
 
 const GET_DESIGN_EXPORT = gql`
+  ${DESIGN_EXPORT_FIELDS}
   query getDesignExport($accountId: GID!, $jobId: String!) {
     currentAccountId @client @export(as: "accountId")
     account(accountId: $accountId) {
@@ -91,9 +107,7 @@ const GET_DESIGN_EXPORT = gql`
       integrations {
         canva {
           designExport(jobId: $jobId) {
-            status
-            jobId
-            urls
+            ...DesignExportFields
           }
         }
       }
@@ -102,14 +116,17 @@ const GET_DESIGN_EXPORT = gql`
 `;
 
 const UPLOAD_CANVA_DESIGN_TO_MEDIA_LIBRARY = gql`
-  mutation uploadCanvaDesignFromUrl($accountId: GID!, $fileUrl: FileUrlInput!) {
+  ${HANDED_FILE_FIELDS}
+  mutation uploadCanvaDesignFromUrl(
+    $accountId: GID!
+    $fileUrl: FileUrlInput!
+    $format: CanvaExportFormat!
+  ) {
     currentAccountId @client @export(as: "accountId")
     uploadCanvaDesignFromUrl(
-      input: { accountId: $accountId, fileUrl: $fileUrl }
+      input: { accountId: $accountId, fileUrl: $fileUrl, format: $format }
     ) {
-      id
-      name
-      url
+      ...HandedFileFields
     }
   }
 `;
