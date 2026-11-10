@@ -4,10 +4,6 @@ import AccountSwitcher from "./AccountSwitcher";
 import GenerateImage from "./MediaBrowser/GenerateImage";
 
 function GenerateImageStandalone(props) {
-  const { handleSelected } = props;
-
-  const useImage = (image) => handleSelected([image]);
-
   return (
     // If `ownerId` changes, the current token will be invalidated
     // and a new one will be requested.
@@ -17,7 +13,7 @@ function GenerateImageStandalone(props) {
       <Wrapper {...props}>
         <div className="spillover-media-library sml-flex sml-flex-col sml-gap-4">
           <AccountSwitcher />
-          <GenerateImage useImage={useImage} />
+          <GenerateImage />
         </div>
       </Wrapper>
     </AuthProvider>

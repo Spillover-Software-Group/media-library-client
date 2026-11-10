@@ -4,6 +4,8 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
+import HANDED_FILE_FIELDS from "../../hooks/handedFileFields";
+import useHandOverFiles from "../../hooks/useHandOverFiles";
 import useMutationAndRefetch from "../../hooks/useMutationAndRefetch";
 import useOptions from "../../hooks/useOptions";
 import Icon from "../Icon";
@@ -33,6 +35,7 @@ const GENERATE_IMAGE_MUTATION = gql`
 `;
 
 const UPLOAD_IMAGE_MUTATION = gql`
+  ${HANDED_FILE_FIELDS}
   mutation UploadGeneratedImage(
     $accountId: GID!
     $prompt: String!
@@ -50,9 +53,7 @@ const UPLOAD_IMAGE_MUTATION = gql`
         ]
       }
     ) {
-      id
-      name
-      url
+      ...HandedFileFields
     }
   }
 `;
@@ -65,8 +66,9 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     .max(MAX_PROMPT_LENGTH, "Prompt must be less than 400 characters"),
 });
 
-function GenerateImage({ close, useImage }) {
+function GenerateImage({ close }) {
   const { isFullPage } = useOptions();
+  const handOver = useHandOverFiles();
   const [runGenerateImage] = useMutation(GENERATE_IMAGE_MUTATION);
   const [runUploadGeneratedImage] = useMutationAndRefetch(
     UPLOAD_IMAGE_MUTATION,
@@ -118,10 +120,8 @@ function GenerateImage({ close, useImage }) {
   const saveAndUse = async (prompt) => {
     const image = await save(prompt);
 
-    if (useImage && image) {
-      useImage(image);
-      if (close) close();
-    }
+    // A refused image stays on screen, so it can still be saved or regenerated.
+    if (image && handOver([image]) && close) close();
   };
 
   const saveAndResubmit = async (prompt, submitForm) => {

@@ -32,5 +32,5 @@ function folderErrorCopy(error, mediaBrowser) {
   return FOLDER_UNAVAILABLE;
 }
 
-export { SHOWING_EARLIER };
+export { CANVA_UNAUTHORIZED, SHOWING_EARLIER };
 export default folderErrorCopy;

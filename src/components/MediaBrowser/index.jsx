@@ -7,14 +7,15 @@ import {
   FileToolbar,
 } from "chonky";
 import { useEffect, useRef, useState } from "react";
+import useCanvaExport from "../../hooks/integrations/canva/useCanvaExport";
 import useRefreshCanvaDesigns from "../../hooks/integrations/canva/useRefreshCanvaDesigns";
 import useCurrentFolderId from "../../hooks/useCurrentFolderId";
 import useCurrentFolderName from "../../hooks/useCurrentFolderName";
 import useCurrentMediaBrowser from "../../hooks/useCurrentMediaBrowser";
 import useFileActions from "../../hooks/useFileActions";
 import useFolder from "../../hooks/useFolder";
-import useOptions from "../../hooks/useOptions";
 import Loading from "../Loading";
+import CanvaKindPrompt from "./CanvaKindPrompt";
 import FolderError from "./FolderError";
 import FolderNotice from "./FolderNotice";
 import folderErrorCopy, { SHOWING_EARLIER } from "./folderErrorCopy";
@@ -44,14 +45,12 @@ function MediaBrowser() {
   const [retrying, setRetrying] = useState(false);
 
   const [mediaBrowser] = useCurrentMediaBrowser();
-  const { handleSelected } = useOptions();
 
   const openNewFolderPrompt = () => setShowNewFolderPrompt(true);
   const closeNewFolderPrompt = () => setShowNewFolderPrompt(false);
   const openGenerateImage = () => setShowGenerateImage(true);
   const closeGenerateImage = () => setShowGenerateImage(false);
   const closeRenameEntry = () => setRenamingEntry(null);
-  const useImage = (image) => handleSelected([image]);
 
   const {
     folderId,
@@ -69,6 +68,7 @@ function MediaBrowser() {
     refreshCanvaDesignsError,
     dismissRefreshCanvaDesignsError,
   } = useRefreshCanvaDesigns();
+  const { exportDesign, awaitingKind } = useCanvaExport();
 
   // The query's own error carries what went wrong, so a failed retry needs nothing caught here.
   const retry = () => {
@@ -130,6 +130,7 @@ function MediaBrowser() {
       setRenamingEntry,
       openGenerateImage,
       refreshCanvaDesigns,
+      exportDesign,
       canManage,
     });
 
@@ -198,9 +199,11 @@ function MediaBrowser() {
           className="sml-px-2 sml-py-4 sml-mb-4 sml-border-b"
           style={{ marginRight: "-8px", marginLeft: "-8px" }}
         >
-          <GenerateImage close={closeGenerateImage} useImage={useImage} />
+          <GenerateImage close={closeGenerateImage} />
         </div>
       )}
+
+      {awaitingKind && <CanvaKindPrompt {...awaitingKind} />}
 
       {notice}
 
